@@ -30,11 +30,37 @@
         <div class="player bg-black">
           <player-x></player-x>
         </div>
-        <div class="controls my-4">
-          <div class="controls-1">
+        <div class="controls mt-4">
+          <div id="controls-1">
             <button class="btn play-pause">Play</button>
             <button class="btn stop">Stop</button>
           </div>
+          <div id="controls-2" class="my-4 mt-8">
+            <span class="inline-block w-1/5 text-right pr-3 font-bold">Speed</span>
+            <button class="btn rate-0.5">0.5x</button>
+            <button class="btn rate-1">1x</button>
+            <button class="btn rate-2">2x</button>
+          </div>
+          <div class="block my-4 flex">
+            <span class="inline-block w-1/5 text-right pr-3 font-bold">Seek</span>
+            <input id="current-time-range" class="flex-grow self-center appearance-none bg-gray-400 h-2 rounded-lg" type="range" min="0" max="1" step="any" value="0">
+          </div>
+          <div class="block my-4 flex">
+            <span class="inline-block w-1/5 text-right pr-3 font-bold">Volume</span>
+            <input id="volume-range" class="flex-grow self-center appearance-none bg-gray-400 h-2 rounded-lg" type="range" min="0" max="1" step="any" value="1">
+          </div>
+          <label class="block my-4">
+            <span class="inline-block w-1/5 text-right pr-3 font-bold">Muted</span>
+            <input id="muted" type="checkbox">
+          </label>
+          <label class="block my-4">
+            <span class="inline-block w-1/5 text-right pr-3 font-bold">Loop</span>
+            <input id="loop" type="checkbox">
+          </label>
+          <label class="block my-4">
+            <span class="inline-block w-1/5 text-right pr-3 font-bold">Controls</span>
+            <input id="controls" type="checkbox">
+          </label>
         </div>
       </div>
       <div class="w-full lg:w-1/2 px-4">
@@ -47,6 +73,7 @@
           <div class="mb-4">
             <b class="inline-block w-1/4 text-right pr-3">YouTube</b>
             <button class="btn src-btn" data-src="https://www.youtube.com/watch?v=BK1JIjLPwaA">Clip 1</button>
+            <button class="btn src-btn" data-src="https://www.youtube.com/watch?v=ssdng3QeFnA">Clip 2</button>
           </div>
         </div>
 
@@ -56,7 +83,9 @@
             <b class="inline-block w-1/4 text-right pr-3">src</b><i class="inline-block w-3/4"></i>
             <b class="inline-block w-1/4 text-right pr-3">paused</b><i class="inline-block w-3/4"></i>
             <b class="inline-block w-1/4 text-right pr-3">volume</b><i class="inline-block w-3/4"></i>
+            <b class="inline-block w-1/4 text-right pr-3">buffered</b><i class="inline-block w-3/4"></i>
             <b class="inline-block w-1/4 text-right pr-3">duration</b><i class="inline-block w-3/4"></i>
+            <b class="inline-block w-1/4 text-right pr-3">current time</b><i class="inline-block w-3/4"></i>
           </div>
         </div>
       </div>

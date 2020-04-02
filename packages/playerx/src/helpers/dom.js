@@ -1,4 +1,4 @@
-import { createElement } from '../utils/index.js';
+import { createElement } from '../utils/dom.js';
 
 export function createEmbedIframe({ src, ...props }) {
   return createElement('iframe', {

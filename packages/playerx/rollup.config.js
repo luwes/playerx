@@ -11,11 +11,11 @@ const terserPlugin = terser({
   compress: {
     passes: 2
   },
-  mangle: {
-    properties: {
-      regex: /^_/
-    }
-  }
+  // mangle: {
+  //   properties: {
+  //     regex: /^_\w/
+  //   }
+  // }
 });
 
 const config = {
@@ -59,5 +59,14 @@ export default [
       ...config.plugins,
       babel()
     ]
-  }
+  },
+  {
+    ...config,
+    input: 'src/players/vimeo.js',
+    output: {
+      ...config.output,
+      file: 'module/player-vimeo.js',
+      format: 'es'
+    }
+  },
 ];

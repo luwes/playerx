@@ -3,6 +3,7 @@ const purgecss = require('@fullhuman/postcss-purgecss');
 const plugins = [
   require('postcss-import'),
   require('tailwindcss'),
+  require('autoprefixer'),
   // require('postcss-comment'),
   // require('postcss-mixins'),
   // require('postcss-color-mix'),
@@ -19,7 +20,6 @@ if (process.env.NODE_ENV === 'prod') {
         }
       ]
     }),
-    require('autoprefixer'),
     require('cssnano')
   );
 }

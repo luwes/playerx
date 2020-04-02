@@ -7,7 +7,7 @@ body {
   height: 100%;
 }
 
-body:not(.showfocus) button {
+body:not(.showfocus) button, input[type="range"] {
   outline: none;
 }
 

@@ -1,17 +1,17 @@
-import { observedAttributes } from './defaults.js';
+import { define } from './define.js';
 import * as players from './players/index.js';
-import { playerx } from './playerx.js';
-import { define } from './utils/define.js';
+import * as Events from './constants/events.js';
+export { Events };
 
-function findActivePlayer(instance, props) {
+function x(element, ...args) {
   for (let key in players) {
-    if (players[key].canPlay(props.src)) {
-      return players[key](instance, props);
+    const f = players[key];
+    if (f.canPlay(element.src)) {
+      const player = f(element, ...args);
+      player.f = f;
+      return player;
     }
   }
 }
 
-export const Playerx = define('player-x', (...args) =>
-  playerx(findActivePlayer, ...args), observedAttributes);
-
-export { events } from './playerx.js';
+export const Playerx = define('player-x', x);

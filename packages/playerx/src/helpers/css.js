@@ -1,33 +1,39 @@
 import { addCssRule, boxUnit } from '../utils/css.js';
 
-export function createResponsiveStyle({ src, width, height, aspectRatio }) {
-  const selector = `player-x[src="${src}"]`;
+export function createResponsiveStyle(props) {
+  let element;
+  let before;
+  update(props);
 
-  const element = addCssRule(selector, {
-    width,
-    height,
-    display: 'block',
-    position: 'relative',
-  });
+  function update({ src, width, height, aspectRatio }) {
+    const selector = `player-x[src="${src}"]`;
 
-  const before = addCssRule(`${selector}::before`, {
-    content: '""',
-    'padding-top': `${aspectRatio * 100}%`,
-    'margin-left': boxUnit(-1),
-    width: boxUnit(1),
-    height: 0,
-    float: 'left',
-  });
+    element = addCssRule(selector, {
+      width,
+      height,
+      display: 'block',
+      position: 'relative',
+    });
 
-  addCssRule(`${selector}::after`, {
-    content: '""',
-    display: 'table',
-    clear: 'both',
-  });
+    before = addCssRule(`${selector}::before`, {
+      content: '""',
+      'padding-top': `${aspectRatio * 100}%`,
+      'margin-left': boxUnit(-1),
+      width: boxUnit(1),
+      height: 0,
+      float: 'left',
+    });
 
-  addCssRule(`${selector} iframe`, {
-    position: 'absolute'
-  });
+    addCssRule(`${selector}::after`, {
+      content: '""',
+      display: 'table',
+      clear: 'both',
+    });
+
+    addCssRule(`${selector} iframe`, {
+      position: 'absolute'
+    });
+  }
 
   function setWidth(width) {
     element.style.width = width == null ? '' : boxUnit(width);
@@ -42,8 +48,11 @@ export function createResponsiveStyle({ src, width, height, aspectRatio }) {
   }
 
   return {
-    setWidth,
-    setHeight,
-    setAspectRatio
+    update,
+    methods: {
+      setWidth,
+      setHeight,
+      setAspectRatio
+    }
   };
 }

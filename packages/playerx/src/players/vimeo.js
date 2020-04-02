@@ -1,21 +1,12 @@
-import { observedAttributes } from '../defaults.js';
-import { playerx, methodNames } from '../playerx.js';
-import {
-  createEmbedIframe,
-  createResponsiveStyle,
-  getName,
-  setName
-} from '../helpers/index.js';
-import {
-  assign,
-  define,
-  loadScript,
-  pick,
-  bindAll,
-  publicPromise,
-  serialize,
-  replaceKeys
-} from '../utils/index.js';
+import { define } from '../define.js';
+import { createEmbedIframe } from '../helpers/dom.js';
+import { createResponsiveStyle } from '../helpers/css.js';
+import { extend } from '../utils/object.js';
+import { loadScript } from '../utils/load-script.js';
+import { publicPromise } from '../utils/promise.js';
+import { serialize } from '../utils/url.js';
+import { once } from '../utils/utils.js';
+import { createTimeRanges } from '../utils/time-ranges.js';
 
 const EMBED_BASE = 'https://player.vimeo.com/video';
 const API_URL = 'https://player.vimeo.com/api/player.js';
@@ -24,78 +15,125 @@ const MATCH_URL = /vimeo\.com\/(?:video\/)?(\d+)/;
 
 vimeo.canPlay = src => MATCH_URL.test(src);
 
-export function vimeo(element, props) {
-  let instance = { f: vimeo };
-  let player;
+export function vimeo(element) {
+  let api;
   let iframe;
+  let firePlaying;
   let ready = publicPromise();
-  let styleMethods = createResponsiveStyle(props);
+  let style = createResponsiveStyle(element);
+
+  function getOptions() {
+    return {
+      autoplay: element.playing || element.autoplay,
+      muted: element.muted,
+      loop: element.loop,
+      playsinline: element.playsinline,
+      controls: element.controls,
+      url: element.src,
+    };
+  }
 
   async function init() {
-    const videoId = props.src.match(MATCH_URL)[1];
-    const options = {
-      autoplay: props.autoplay ? 1 : 0,
-      muted: props.muted ? 1 : 0,
-      loop: props.loop ? 1 : 0,
-      playsinline: props.playsinline ? 1 : 0,
-      controls: props.controls ? 1 : 0
-    };
+    const options = getOptions();
+    const videoId = options.url.match(MATCH_URL)[1];
     const src = `${EMBED_BASE}/${videoId}?${serialize(options)}`;
     iframe = createEmbedIframe({ src });
 
     const Vimeo = await loadScript(API_URL, API_GLOBAL);
-    player = new Vimeo.Player(iframe);
-    await player.ready();
-    ready._resolve();
+    api = new Vimeo.Player(iframe);
 
-    const playerMethodNames = replaceKeys(aliases, methodNames);
-    const playerBound = bindAll(playerMethodNames, player);
-    const playerMethods = pick(playerMethodNames, playerBound);
-    Object.keys(aliases).forEach(
-      name => (methods[name] = playerMethods[aliases[name]])
-    );
-    assign(instance, playerMethods, methods);
+    api.on('durationchange', ({ duration }) => {
+      element.refresh('duration', duration);
+    });
+
+    api.on('progress', async () => {
+      element.refresh('buffered', createTimeRanges(await api.getBuffered()));
+      element.fire('progress');
+    });
+
+    api.on('play', () => {
+      firePlaying = once(() => element.fire('playing'));
+    });
+
+    api.on('timeupdate', ({ seconds }) => {
+      firePlaying();
+      element.refresh('currentTime', seconds);
+    });
+
+    api.on('playbackratechange', ({ playbackRate }) => {
+      element.refresh('playbackRate', playbackRate);
+    });
+
+    api.on('volumechange', async ({ volume }) => {
+      element.refresh('volume', volume);
+      element.refresh('muted', await api.get('muted'));
+    });
+
+    const [duration, volume] = await Promise.all([
+      api.get('duration'),
+      api.get('volume'),
+      api.ready(),
+    ]);
+
+    element.refresh('duration', duration);
+    element.refresh('volume', volume);
+
+    ready._resolve();
   }
 
-  const aliases = {
-    stop: 'unload'
+  const eventAliases = {
+    ratechange: 'playbackratechange',
+  };
+
+  const customEvents = {
+    playing: undefined,
+    progress: undefined,
   };
 
   const methods = {
-    get _element() {
+    // disable getters because they return promises.
+    get: null,
+
+    get element() {
       return iframe;
+    },
+
+    get api() {
+      return api;
     },
 
     ready() {
       return ready;
     },
 
-    set(name, value) {
-      return instance[setName(name)](value);
+    stop() {
+      return api.unload();
     },
 
-    get(name) {
-      return instance[getName(name)]();
+    on(eventName, callback) {
+      if (eventName in customEvents) return;
+      api.on(eventAliases[eventName] || eventName, callback);
     },
 
-    setSrc(src) {
-      assign(createResponsiveStyle({ ...props, src }));
-
-      return player.loadVideo({
-        url: src
-      });
+    off(eventName, callback) {
+      if (eventName in customEvents) return;
+      api.off(eventAliases[eventName] || eventName, callback);
     },
 
-    async setPlaying(playing) {
-      return playing ? instance.play() : instance.pause();
+    set src(value) {
+      style.update(element);
+      api.loadVideo(getOptions());
+    },
+
+    set controls(value) {
+      api.loadVideo(getOptions());
     },
 
   };
 
   init();
 
-  return assign(instance, styleMethods, methods);
+  return extend(style.methods, methods);
 }
 
-export const Vimeo = define('player-vimeo', (...args) =>
-  playerx(vimeo, ...args), observedAttributes);
+export const Vimeo = define('player-vimeo', vimeo);

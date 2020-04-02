@@ -1,23 +1,32 @@
-import { kebabCase } from './utils/index.js';
 
-export const defaultProps = {
+export const readonly = {
+  buffered: undefined,
+  duration: NaN,
+  ended: false,
+  paused: true,
+  played: undefined,
+  videoHeight: 0,
+  videoWidth: 0,
+};
+
+export const reflect = {
   aspectRatio: 0.5625,
   autoplay: false,
   controls: false,
-  currentTime: 0,
   height: undefined,
   loop: false,
   muted: false,
-  pip: false,
-  playbackRate: 1,
   playing: false,
   playsinline: false,
   preload: undefined,
   src: undefined,
-  volume: 1,
   width: '100%',
 };
 
-export const defaultPropNames = Object.keys(defaultProps);
-
-export const observedAttributes = defaultPropNames.map(kebabCase);
+export const defaultProps = {
+  ...readonly,
+  ...reflect,
+  currentTime: 0,
+  playbackRate: 1,
+  volume: 1,
+};

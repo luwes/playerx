@@ -1,2 +1,2 @@
-export * from './vimeo.js';
-export * from './youtube.js';
+export { vimeo } from './vimeo.js';
+export { youtube } from './youtube.js';

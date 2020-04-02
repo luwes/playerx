@@ -1,21 +1,8 @@
-import { defaultProps, defaultPropNames } from './defaults.js';
-import {
-  getName,
-  setName,
-  isBooleanProp,
-  toPropDefaultTo,
-  attrToProp
-} from './helpers/index.js';
-import {
-  assign,
-  completeAssign,
-  publicPromise,
-  getAttrsAsProps,
-  camelCase,
-  kebabCase
-} from './utils/index.js';
+import { base } from './base.js';
+import * as Events from './constants/events.js';
+import { extend } from './utils/object.js';
+import { publicPromise } from './utils/promise.js';
 
-// defaultProps are also transformed to core methods.
 export const coreMethodNames = [
   'set',
   'get',
@@ -26,97 +13,51 @@ export const coreMethodNames = [
   'pause',
   'stop',
   'destroy',
-  'getPaused',
-  'getDuration',
-  'getEnded',
-  'getVideoWidth',
-  'getVideoHeight',
 ];
 
-export const methodNames = [
-  ...coreMethodNames,
-  ...defaultPropNames.map(getName),
-  ...defaultPropNames.map(setName)
-];
+const events = Object.values(Events);
 
-export const events = [
-  'play',
-  'pause',
-  'ended',
-  'loadstart',
-  'progress',
-  'timeupdate',
-  'seeking',
-  'seeked',
-  'cuechange',
-  'volumechange',
-  'ratechange',
-  'durationchange',
-  'error',
-];
-
-export function playerx(createPlayer, element, options = {}) {
-  const api = {};
-  const promises = {};
-  const tick = publicPromise();
-  let ready = publicPromise();
+export function playerx(createPlayer, element) {
   let player;
-  let ignoreAttributeChange;
+  let ready = publicPromise();
 
-  // Attributes can not be set in the constructor, wait one tick.
-  tick
-    ._resolve()
-    .then(() =>
-      Object.keys(options).forEach(propName =>
-        api[setName(propName)](options[propName])
-      )
-    );
+  function init() {
+    coreMethodNames.forEach(name => {
+      methods[name] = async function(...args) {
+        await ready;
+        return player[name](...args);
+      };
+    });
+  }
 
-  const internalMethods = {
-    async _connected() {},
-    async _disconnected() {},
+  const methods = {
+    fire,
 
-    async _attributeChanged(attrName, oldValue, newValue) {
-      if (ignoreAttributeChange) {
-        return;
+    _getProp(name) {
+      if (player && player.get) {
+        const value = player.get(name);
+        if (value !== undefined) return value;
       }
+      return element._props[name];
+    },
 
-      if (oldValue != newValue) {
-        if (attrName === 'src' && (!player || !player.f.canPlay(newValue))) {
-          if (newValue) loadPlayer();
-        } else {
-          await ready;
-          callPlayer(attrName, newValue);
-        }
+    async _update(changedProps) {
+      if (!element.src) return;
+
+      const src = 'src' in changedProps && element.src;
+      if (src && (!player || !player.f.canPlay(src))) {
+        if (src) loadPlayer();
+      } else {
+        await ready;
+        Object.keys(changedProps).forEach(callPlayer);
       }
     },
-
-    async getSrc() {
-      await tick;
-      return toPropDefaultTo(element, defaultProps, 'src');
-    },
-
-    async getWidth() {
-      await tick;
-      return toPropDefaultTo(element, defaultProps, 'width');
-    },
-
-    async getHeight() {
-      await tick;
-      return toPropDefaultTo(element, defaultProps, 'height');
-    },
-
-    async getAspectRatio() {
-      await tick;
-      return toPropDefaultTo(element, defaultProps, 'aspect-ratio');
-    },
-
-    async getPlaying() {
-      await tick;
-      return toPropDefaultTo(element, defaultProps, 'playing');
-    },
-
   };
+
+  async function callPlayer(name) {
+    const value = element._props[name];
+    player.set(name, value);
+  }
 
   async function loadPlayer() {
     let oldPlayer = player;
@@ -124,13 +65,14 @@ export function playerx(createPlayer, element, options = {}) {
       ready = publicPromise();
     }
 
-    const props = assign(options, defaultProps, getAttrsAsProps(element));
-    player = createPlayer(element, props);
+    player = {};
+    player = extend(player, base(player), createPlayer(element, loadPlayer));
+    player.f = player.f || createPlayer;
 
     if (oldPlayer) {
-      element.replaceChild(player._element, oldPlayer._element);
+      element.replaceChild(player.element, oldPlayer.element);
     } else {
-      element.append(player._element);
+      element.append(player.element);
     }
 
     await player.ready();
@@ -139,77 +81,22 @@ export function playerx(createPlayer, element, options = {}) {
   }
 
   function attachEvents() {
-    events.forEach(event => player.on(event, handleEvent.bind(null, event)));
+    player.on(Events.PLAY, () => element.refresh('playing', true));
+    player.on(Events.PLAYING, () => element.refresh('playing', true));
+    player.on(Events.PAUSE, () => element.refresh('playing', false));
+    player.on(Events.ENDED, () => element.refresh('playing', false));
 
-    player.on('play', () => ensureProp('playing', true));
-    player.on('pause', () => ensureProp('playing', false));
+    events.forEach(event => player.on(event, fire.bind(null, event)));
   }
 
-  function handleEvent(name, detail) {
+  function fire(name, detail = {}) {
     const event = new CustomEvent(name, { detail });
     element.dispatchEvent(event);
+
+    console.warn(event);
   }
 
-  async function callPlayer(attrName, value) {
-    value = attrToProp(defaultProps, attrName, value);
+  init();
 
-    const propName = camelCase(attrName);
-    const promise = promises[propName];
-    if (promise) {
-      delete promises[propName];
-      const result = await player.set(propName, value);
-      promise._resolve(result);
-    } else {
-      player.set(propName, value);
-    }
-  }
-
-  function createMethods() {
-    const methods = {};
-
-    defaultPropNames.forEach(propName => {
-      methods[getName(propName)] = async function() {
-        await ready;
-        return player.get(propName);
-      };
-
-      methods[setName(propName)] = async function(value) {
-        promises[propName] = publicPromise();
-        setProp(propName, value);
-        return promises[propName];
-      };
-
-      Object.defineProperty(methods, propName, {
-        configurable: true,
-        enumerable: true,
-        set: (value) => setProp(propName, value)
-      });
-    });
-
-    coreMethodNames.forEach(name => {
-      methods[name] = async function(...args) {
-        await ready;
-        return player[name](...args);
-      };
-    });
-
-    return methods;
-  }
-
-  function setProp(propName, value) {
-    if (value == null || value === false) {
-      element.removeAttribute(kebabCase(propName));
-    } else {
-      if (isBooleanProp(defaultProps, propName)) value = '';
-      element.setAttribute(kebabCase(propName), '' + value);
-    }
-  }
-
-  function ensureProp(propName, value) {
-    ignoreAttributeChange = true;
-    setProp(propName, value);
-    ignoreAttributeChange = false;
-  }
-
-  return completeAssign(api, createMethods(), internalMethods);
+  return methods;
 }

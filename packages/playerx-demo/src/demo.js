@@ -2,18 +2,39 @@ import { observable } from 'sinuous';
 import { dhtml, hydrate } from 'sinuous/hydrate';
 import { toHHMMSS, round } from './utils.js';
 
-let src = observable();
+let src = observable('https://vimeo.com/357274789');
+// let src = observable('https://www.youtube.com/watch?v=BK1JIjLPwaA');
 let playing = observable(false);
-let paused = observable(true);
-let volume = observable(0);
+let volume = observable(1);
+let volumeValue = observable(1);
+let buffered = observable(0);
 let duration = observable(0);
+let currentTime = observable(0);
+let currentTimeValue = observable(0);
+let muted = observable(true);
+let loop = observable(false);
+let controls = observable(true);
 
 const props = {
   src,
   playing,
-  onplay: () => paused(false),
-  onpause: () => paused(true),
-  onvolumechange: (e) => volume(e.detail.volume)
+  muted,
+  loop,
+  controls,
+  currentTime,
+  volume,
+  ondurationchange: () => player.duration && duration(player.duration),
+  onseeking: () => currentTimeValue(player.currentTime),
+  onseeked: () => currentTimeValue(player.currentTime),
+  ontimeupdate: () => currentTimeValue(player.currentTime),
+  onvolumechange: () => {
+    volumeValue(player.volume);
+    muted(player.muted);
+  },
+  onprogress: () => {
+    const len = player.buffered.length;
+    buffered(len ? player.buffered.end(len - 1) / duration() : 0);
+  },
 };
 
 const player = hydrate(dhtml`
@@ -21,30 +42,73 @@ const player = hydrate(dhtml`
 `);
 
 hydrate(dhtml`
-  <div class="sources" onclick=${(e) => src(e.target.dataset.src)} />
+  <div class="sources" onclick=${e => src(e.target.dataset.src)} />
 `);
 
 hydrate(dhtml`
-  <div class="controls-1">
-    <button onclick=${() => playing(paused())}>
-      ${() => paused() ? 'Play' : 'Pause'}
+  <div id="controls-1">
+    <button onclick=${() => playing(!playing())}>
+      ${() => (playing() ? 'Pause' : 'Play')}
     </button>
-    <button onclick=${() => player.stop()} />
+    <button onclick=${stop} />
   </div>
+`);
+
+function stop() {
+  playing(false);
+  player.stop();
+}
+
+hydrate(dhtml`
+  <div id="controls-2">
+    <span />
+    <button onclick=${() => player.set('playbackRate', 0.5)} />
+    <button onclick=${() => player.set('playbackRate', 1)} />
+    <button onclick=${() => player.set('playbackRate', 2)} />
+  </div>
+`);
+
+hydrate(dhtml`
+  <input id="current-time-range"
+    value=${() => (currentTimeValue() / duration()) || 0}
+    oninput=${e => currentTime(e.target.value * duration())} />
+`);
+
+hydrate(dhtml`
+  <input id="volume-range"
+    value=${() => volumeValue() || 0}
+    oninput=${e => volume(e.target.value)} />
+`);
+
+hydrate(dhtml`
+  <input id="muted" oninput=${e => muted(e.target.checked)} checked=${muted} />
+`);
+
+hydrate(dhtml`
+  <input id="loop" oninput=${e => loop(e.target.checked)} checked=${loop} />
+`);
+
+hydrate(dhtml`
+  <input id="controls" oninput=${e =>
+    controls(e.target.checked)} checked=${controls} />
 `);
 
 hydrate(dhtml`
   <div class="state-values">
     <b /><i>${src}</i>
-    <b /><i>${() => String(paused())}</i>
-    <b /><i>${() => round(volume(), 2)}</i>
+    <b /><i>${() => String(!playing())}</i>
+    <b /><i>${() => round(volumeValue(), 2)}</i>
+    <b /><i>${() => round(buffered(), 2)}</i>
     <b /><i>${() => toHHMMSS(duration())}</i>
+    <b /><i>${() => toHHMMSS(currentTimeValue())}</i>
   </div>
 `);
 
 async function initState() {
-  volume(await player.getVolume());
-  duration(await player.getDuration());
+  await player.ready();
+
+  if (player.volume != null) volumeValue(player.volume);
+  if (player.duration) duration(player.duration);
 }
 
 initState();

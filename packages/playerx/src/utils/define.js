@@ -1,12 +1,12 @@
 /* eslint fp/no-this:0 */
-import { completeAssign } from './assign.js';
+import { extend } from './object.js';
 
 export function define(name, fn, observedAttributes) {
 
   const CE = class extends HTMLElement {
-    constructor(options) {
+    constructor(...args) {
       super();
-      completeAssign(this, fn(this, options));
+      extend(this, fn(this, ...args));
       console.dir(this);
     }
 

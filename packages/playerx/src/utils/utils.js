@@ -9,3 +9,9 @@ export function bindAll(methodNames, obj) {
 export function replaceKeys(map, keys) {
   return keys.map(key => map[key] || key);
 }
+
+export const once = fn => () => {
+  if (!fn) return;
+  fn();
+  fn = null;
+};

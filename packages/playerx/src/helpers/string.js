@@ -1,4 +1,4 @@
-import { startCase, camelCase } from '../utils/index.js';
+import { startCase, camelCase } from '../utils/string.js';
 
 export function prefixName(prefix, name) {
   return `${prefix}${startCase(camelCase(name))}`;
