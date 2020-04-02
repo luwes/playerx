@@ -8,8 +8,8 @@ export function createEmbedIframe({ src, ...props }) {
     width: '100%',
     height: '100%',
     allow,
-    allowFullscreen: true,
-    frameBorder: 0,
+    allowfullscreen: '',
+    frameborder: 0,
     ...props,
   });
 }

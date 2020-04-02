@@ -49,27 +49,27 @@ export default [
       format: 'es'
     }
   },
-  {
-    ...config,
-    output: {
-      ...config.output,
-      file: 'dist/playerx.js',
-      format: 'umd'
-    },
-    plugins: [
-      ...config.plugins,
-      babel({
-        compact: false,
-      })
-    ]
-  },
-  {
-    ...config,
-    input: 'src/players/vimeo.js',
-    output: {
-      ...config.output,
-      file: 'module/player-vimeo.js',
-      format: 'es'
-    }
-  },
+  // {
+  //   ...config,
+  //   output: {
+  //     ...config.output,
+  //     file: 'dist/playerx.js',
+  //     format: 'umd'
+  //   },
+  //   plugins: [
+  //     ...config.plugins,
+  //     babel({
+  //       compact: false,
+  //     })
+  //   ]
+  // },
+  // {
+  //   ...config,
+  //   input: 'src/players/vimeo.js',
+  //   output: {
+  //     ...config.output,
+  //     file: 'module/player-vimeo.js',
+  //     format: 'es'
+  //   }
+  // },
 ];

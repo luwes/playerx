@@ -22,7 +22,8 @@ export function promisify(fn, ctx) {
   return (...args) => new Promise((resolve) => {
     // fn.call() didn't work for some reason.
     fn.bind(ctx)(...args, (...res) => {
-      resolve(...res);
+      if (res.length > 1) resolve(res);
+      else resolve(res[0]);
     });
   });
 }
