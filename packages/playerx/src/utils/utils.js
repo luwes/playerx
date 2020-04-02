@@ -5,3 +5,7 @@ export function bindAll(methodNames, obj) {
   });
   return obj;
 }
+
+export function replaceKeys(map, keys) {
+  return keys.map(key => map[key] || key);
+}

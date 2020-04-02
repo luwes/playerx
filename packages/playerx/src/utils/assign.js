@@ -24,7 +24,7 @@ export function createCompleteAssign(options) {
     sources.forEach(source => {
       Object.keys(source).forEach(prop => {
         const descriptor = Object.getOwnPropertyDescriptor(source, prop);
-        Object.defineProperty(target, prop, Object.assign(descriptor, options));
+        Object.defineProperty(target, prop, assign(descriptor, options));
       });
     });
     return target;

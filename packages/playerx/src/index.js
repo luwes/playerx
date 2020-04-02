@@ -11,4 +11,7 @@ function findActivePlayer(instance, props) {
   }
 }
 
-export default define('player-x', (...args) => playerx(findActivePlayer, ...args), observedAttributes);
+export const Playerx = define('player-x', (...args) =>
+  playerx(findActivePlayer, ...args), observedAttributes);
+
+export { events } from './playerx.js';

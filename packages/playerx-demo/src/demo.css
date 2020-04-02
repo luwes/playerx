@@ -14,3 +14,16 @@ body:not(.showfocus) button {
 ::selection {
   background: #AEFCE2;
 }
+
+.player {
+  padding-bottom: 56.25%;
+  height: 0;
+}
+
+.btn {
+  @apply bg-gray-500 text-white text-sm py-1 px-2 rounded mr-1;
+}
+
+.btn:hover {
+  @apply bg-gray-700;
+}

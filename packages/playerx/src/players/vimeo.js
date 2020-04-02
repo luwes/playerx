@@ -1,7 +1,21 @@
 import { observedAttributes } from '../defaults.js';
-import { playerx, allMethodNames } from '../playerx.js';
-import { createEmbedIframe, createResponsiveStyle, getName, setName } from '../helpers/index.js';
-import { assign, define, loadScript, pick, bindAll, publicPromise, serialize } from '../utils/index.js';
+import { playerx, methodNames } from '../playerx.js';
+import {
+  createEmbedIframe,
+  createResponsiveStyle,
+  getName,
+  setName
+} from '../helpers/index.js';
+import {
+  assign,
+  define,
+  loadScript,
+  pick,
+  bindAll,
+  publicPromise,
+  serialize,
+  replaceKeys
+} from '../utils/index.js';
 
 const EMBED_BASE = 'https://player.vimeo.com/video';
 const API_URL = 'https://player.vimeo.com/api/player.js';
@@ -24,7 +38,7 @@ export function vimeo(element, props) {
       muted: props.muted ? 1 : 0,
       loop: props.loop ? 1 : 0,
       playsinline: props.playsinline ? 1 : 0,
-      controls: props.controls ? 1 : 0,
+      controls: props.controls ? 1 : 0
     };
     const src = `${EMBED_BASE}/${videoId}?${serialize(options)}`;
     iframe = createEmbedIframe({ src });
@@ -34,13 +48,20 @@ export function vimeo(element, props) {
     await player.ready();
     ready._resolve();
 
-    const playerBound = bindAll(allMethodNames, player);
-    const playerMethods = pick(allMethodNames, playerBound);
+    const playerMethodNames = replaceKeys(aliases, methodNames);
+    const playerBound = bindAll(playerMethodNames, player);
+    const playerMethods = pick(playerMethodNames, playerBound);
+    Object.keys(aliases).forEach(
+      name => (methods[name] = playerMethods[aliases[name]])
+    );
     assign(instance, playerMethods, methods);
   }
 
-  const methods = {
+  const aliases = {
+    stop: 'unload'
+  };
 
+  const methods = {
     get _element() {
       return iframe;
     },
@@ -57,13 +78,16 @@ export function vimeo(element, props) {
       return instance[getName(name)]();
     },
 
-    async setSrc(src) {
-      const videoId = src.match(MATCH_URL)[1];
-      return player.loadVideo(videoId);
+    setSrc(src) {
+      assign(createResponsiveStyle({ ...props, src }));
+
+      return player.loadVideo({
+        url: src
+      });
     },
 
-    stop() {
-      return player.unload();
+    async setPlaying(playing) {
+      return playing ? instance.play() : instance.pause();
     },
 
   };
@@ -73,4 +97,5 @@ export function vimeo(element, props) {
   return assign(instance, styleMethods, methods);
 }
 
-export default define('player-vimeo', (...args) => playerx(vimeo, ...args), observedAttributes);
+export const Vimeo = define('player-vimeo', (...args) =>
+  playerx(vimeo, ...args), observedAttributes);

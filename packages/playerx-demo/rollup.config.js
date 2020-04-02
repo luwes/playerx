@@ -2,6 +2,7 @@ import nodeResolve from '@rollup/plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 import bundleSize from 'rollup-plugin-size';
+import sourcemaps from 'rollup-plugin-sourcemaps';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -26,38 +27,25 @@ const config = {
   output: {
     format: 'iife',
     sourcemap: true,
-    file: 'dist/demo.js',
-    name: 'playerxDemo'
+    file: 'dist/playerx-demo.js',
+    name: 'playerxDemo',
+    strict: false, // Remove `use strict;`
+    interop: false, // Remove `r=r&&r.hasOwnProperty("default")?r.default:r;`
+    freeze: false, // Remove `Object.freeze()`
+    esModule: false // Remove `esModule` property
   },
   plugins: [
     bundleSize(),
+    sourcemaps(),
     nodeResolve(),
+    babel({
+      inputSourceMap: false,
+    }),
 
     // If we're building for production (npm run build
     // instead of npm run dev), minify
-    production && terserPlugin
+    terserPlugin
   ]
 };
 
-export default [
-  {
-    ...config,
-    output: {
-      ...config.output,
-      file: 'module/playerx-demo.js',
-      format: 'es'
-    }
-  },
-  {
-    ...config,
-    output: {
-      ...config.output,
-      file: 'dist/playerx-demo.js',
-      format: 'umd'
-    },
-    plugins: [
-      ...config.plugins,
-      babel(),
-    ]
-  }
-];
+export default [config];

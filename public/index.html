@@ -7,10 +7,61 @@
   <link rel="stylesheet" href="dist/playerx-demo.css">
 
   <script src="dist/playerx.js"></script>
-  <script src="dist/playerx-demo.js"></script>
 </head>
 <body>
 
-  <player-x src="https://vimeo.com/357274789" width="640"></player-x>
+  <div class="container mx-auto overflow-hidden">
 
+    <nav class="flex-shrink-0 px-12 py-6 h-20 flex relative z-20 mb-4" role="navigation" aria-label="main navigation">
+      <div class="container mx-auto flex items-center justify-between flex-wrap">
+        <div class="flex items-center flex-shrink-0 text-black mr-10">
+          <h1 class="text-2xl">
+            <a href="/">
+              <img class="logo h-8 inline" src="/images/playerx-logo.svg" alt="Playerx">
+              <span class="relative top-1 ml-2">API Demo</span>
+            </a>
+          </h1>
+        </div>
+      </div>
+    </nav>
+
+    <div class="flex flex-wrap mb-4 px-12 -mx-4">
+      <div class="w-full lg:w-1/2 px-4">
+        <div class="player bg-black">
+          <player-x></player-x>
+        </div>
+        <div class="controls my-4">
+          <div class="controls-1">
+            <button class="btn play-pause">Play</button>
+            <button class="btn stop">Stop</button>
+          </div>
+        </div>
+      </div>
+      <div class="w-full lg:w-1/2 px-4">
+        <div class="sources">
+          <div class="mb-4">
+            <b class="inline-block w-1/4 text-right pr-3">Vimeo</b>
+            <button class="btn src-btn" data-src="https://vimeo.com/357274789">Clip 1</button>
+            <button class="btn src-btn" data-src="https://vimeo.com/327204597">Clip 2</button>
+          </div>
+          <div class="mb-4">
+            <b class="inline-block w-1/4 text-right pr-3">YouTube</b>
+            <button class="btn src-btn" data-src="https://www.youtube.com/watch?v=BK1JIjLPwaA">Clip 1</button>
+          </div>
+        </div>
+
+        <div class="state mt-8">
+          <h3 class="text-xl mb-4">State</h3>
+          <div class="state-values">
+            <b class="inline-block w-1/4 text-right pr-3">src</b><i class="inline-block w-3/4"></i>
+            <b class="inline-block w-1/4 text-right pr-3">paused</b><i class="inline-block w-3/4"></i>
+            <b class="inline-block w-1/4 text-right pr-3">volume</b><i class="inline-block w-3/4"></i>
+            <b class="inline-block w-1/4 text-right pr-3">duration</b><i class="inline-block w-3/4"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="dist/playerx-demo.js"></script>
 </body>

@@ -8,6 +8,7 @@ import {
 } from './helpers/index.js';
 import {
   assign,
+  completeAssign,
   publicPromise,
   getAttrsAsProps,
   camelCase,
@@ -28,18 +29,30 @@ export const coreMethodNames = [
   'getPaused',
   'getDuration',
   'getEnded',
-  'getCurrentTime',
-  'setCurrentTime',
-  'getVolume',
-  'setVolume',
   'getVideoWidth',
-  'getVideoHeight'
+  'getVideoHeight',
 ];
 
-export const allMethodNames = [
+export const methodNames = [
   ...coreMethodNames,
   ...defaultPropNames.map(getName),
   ...defaultPropNames.map(setName)
+];
+
+export const events = [
+  'play',
+  'pause',
+  'ended',
+  'loadstart',
+  'progress',
+  'timeupdate',
+  'seeking',
+  'seeked',
+  'cuechange',
+  'volumechange',
+  'ratechange',
+  'durationchange',
+  'error',
 ];
 
 export function playerx(createPlayer, element, options = {}) {
@@ -48,6 +61,7 @@ export function playerx(createPlayer, element, options = {}) {
   const tick = publicPromise();
   let ready = publicPromise();
   let player;
+  let ignoreAttributeChange;
 
   // Attributes can not be set in the constructor, wait one tick.
   tick
@@ -63,12 +77,16 @@ export function playerx(createPlayer, element, options = {}) {
     async _disconnected() {},
 
     async _attributeChanged(attrName, oldValue, newValue) {
+      if (ignoreAttributeChange) {
+        return;
+      }
+
       if (oldValue != newValue) {
         if (attrName === 'src' && (!player || !player.f.canPlay(newValue))) {
-          loadPlayer();
+          if (newValue) loadPlayer();
         } else {
           await ready;
-          setProp(attrName, newValue);
+          callPlayer(attrName, newValue);
         }
       }
     },
@@ -93,6 +111,11 @@ export function playerx(createPlayer, element, options = {}) {
       return toPropDefaultTo(element, defaultProps, 'aspect-ratio');
     },
 
+    async getPlaying() {
+      await tick;
+      return toPropDefaultTo(element, defaultProps, 'playing');
+    },
+
   };
 
   async function loadPlayer() {
@@ -111,10 +134,23 @@ export function playerx(createPlayer, element, options = {}) {
     }
 
     await player.ready();
+    attachEvents();
     ready._resolve();
   }
 
-  async function setProp(attrName, value) {
+  function attachEvents() {
+    events.forEach(event => player.on(event, handleEvent.bind(null, event)));
+
+    player.on('play', () => ensureProp('playing', true));
+    player.on('pause', () => ensureProp('playing', false));
+  }
+
+  function handleEvent(name, detail) {
+    const event = new CustomEvent(name, { detail });
+    element.dispatchEvent(event);
+  }
+
+  async function callPlayer(attrName, value) {
     value = attrToProp(defaultProps, attrName, value);
 
     const propName = camelCase(attrName);
@@ -139,14 +175,15 @@ export function playerx(createPlayer, element, options = {}) {
 
       methods[setName(propName)] = async function(value) {
         promises[propName] = publicPromise();
-        if (value == null || value === false) {
-          element.removeAttribute(kebabCase(propName));
-        } else {
-          if (isBooleanProp(defaultProps, propName)) value = '';
-          element.setAttribute(kebabCase(propName), '' + value);
-        }
+        setProp(propName, value);
         return promises[propName];
       };
+
+      Object.defineProperty(methods, propName, {
+        configurable: true,
+        enumerable: true,
+        set: (value) => setProp(propName, value)
+      });
     });
 
     coreMethodNames.forEach(name => {
@@ -159,5 +196,20 @@ export function playerx(createPlayer, element, options = {}) {
     return methods;
   }
 
-  return assign(api, createMethods(), internalMethods);
+  function setProp(propName, value) {
+    if (value == null || value === false) {
+      element.removeAttribute(kebabCase(propName));
+    } else {
+      if (isBooleanProp(defaultProps, propName)) value = '';
+      element.setAttribute(kebabCase(propName), '' + value);
+    }
+  }
+
+  function ensureProp(propName, value) {
+    ignoreAttributeChange = true;
+    setProp(propName, value);
+    ignoreAttributeChange = false;
+  }
+
+  return completeAssign(api, createMethods(), internalMethods);
 }

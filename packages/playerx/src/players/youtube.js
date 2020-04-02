@@ -1,7 +1,21 @@
 import { observedAttributes } from '../defaults.js';
-import { playerx, allMethodNames } from '../playerx.js';
-import { createEmbedIframe, createResponsiveStyle, getName, setName } from '../helpers/index.js';
-import { assign, define, loadScript, pick, bindAll, publicPromise, serialize } from '../utils/index.js';
+import { playerx, methodNames } from '../playerx.js';
+import {
+  createEmbedIframe,
+  createResponsiveStyle,
+  getName,
+  setName
+} from '../helpers/index.js';
+import {
+  assign,
+  define,
+  loadScript,
+  pick,
+  bindAll,
+  publicPromise,
+  serialize,
+  replaceKeys
+} from '../utils/index.js';
 
 const EMBED_BASE = 'https://www.youtube.com/embed';
 const API_URL = 'https://www.youtube.com/iframe_api';
@@ -38,14 +52,24 @@ export function youtube(element, props) {
         onReady: ready._resolve
       }
     });
+    await ready;
 
-    const playerBound = bindAll(allMethodNames, player);
-    const playerMethods = pick(allMethodNames, playerBound);
+    const playerMethodNames = replaceKeys(aliases, methodNames);
+    const playerBound = bindAll(playerMethodNames, player);
+    const playerMethods = pick(playerMethodNames, playerBound);
+    Object.keys(aliases).forEach(
+      name => (methods[name] = playerMethods[aliases[name]])
+    );
     assign(instance, playerMethods, methods);
   }
 
-  const methods = {
+  const aliases = {
+    play: 'playVideo',
+    pause: 'pauseVideo',
+    stop: 'stopVideo'
+  };
 
+  const methods = {
     get _element() {
       return iframe;
     },
@@ -62,11 +86,14 @@ export function youtube(element, props) {
       return instance[getName(name)]();
     },
 
-    async setSrc() {
+    setSrc(src) {
+      assign(createResponsiveStyle({ ...props, src }));
+
+
     },
 
-    stop() {
-      return player.stopVideo();
+    async setPlaying(playing) {
+      return playing ? instance.play() : instance.pause();
     },
 
   };
@@ -76,4 +103,5 @@ export function youtube(element, props) {
   return assign(instance, styleMethods, methods);
 }
 
-export default define('player-youtube', (...args) => playerx(youtube, ...args), observedAttributes);
+export const YouTube = define('player-youtube', (...args) =>
+  playerx(youtube, ...args), observedAttributes);

@@ -32,7 +32,7 @@
     "watch:html": "onchange 'packages/*/src/*.html' -- npm run copy:html",
     "copy": "run-p copy:*",
     "copy:css": "cp -r packages/playerx-demo/dist/*.css public/dist",
-    "copy:js": "cp -r packages/playerx*/dist/*.js public/dist",
+    "copy:js": "cp -r packages/playerx*/dist/*.js* public/dist",
     "copy:html": "cp -r packages/playerx-demo/src/index.html public",
     "livereload": "livereload public"
   },

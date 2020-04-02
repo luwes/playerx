@@ -1,7 +1,7 @@
 import tape from 'tape';
 import spy from 'ispy';
 import { beforeEach, delay } from './_utils.js';
-import Playerx from '../src/index.js';
+import { Playerx } from '../src/index.js';
 
 let container;
 
