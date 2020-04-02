@@ -4,6 +4,8 @@ export const defaultProps = {
   aspectRatio: 0.5625,
   autoplay: false,
   controls: false,
+  currentTime: 0,
+  height: undefined,
   loop: false,
   muted: false,
   pip: false,
