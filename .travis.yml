@@ -33,7 +33,7 @@ jobs:
   include:
     - stage: tests
       name: "Unit tests"
-      script: COVERAGE=true yarn test --single-run --log-level debug
+      script: COVERAGE=true yarn test --single-run
 
 after_success:
   - yarn run coverage

@@ -128,6 +128,8 @@ module.exports = function(config) {
     frameworks: ['tap'],
 
     files: [
+      'https://polyfill.io/v3/polyfill.min.js?features=Element.prototype.append%2CElement.prototype.remove%2CCustomEvent',
+      'https://unpkg.com/@webcomponents/custom-elements',
       {
         pattern: config.grep || 'packages/playerx*/**/test.js',
         watched: false
