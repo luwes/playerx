@@ -1,3 +1,4 @@
 import './_polyfills.js';
-import './player.js';
-import './methods.js';
+// import './methods.js';
+
+import './players/vimeo.js';

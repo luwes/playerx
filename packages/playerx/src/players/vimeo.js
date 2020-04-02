@@ -1,5 +1,5 @@
 import { observedAttributes } from '../defaults.js';
-import { playerx, coreMethodNames } from '../playerx.js';
+import { playerx, allMethodNames } from '../playerx.js';
 import { createEmbedIframe, createResponsiveStyle, getName, setName } from '../helpers/index.js';
 import { assign, define, loadScript, pick, bindAll, publicPromise, serialize } from '../utils/index.js';
 
@@ -31,10 +31,11 @@ export function vimeo(element, props) {
 
     const Vimeo = await loadScript(API_URL, API_GLOBAL);
     player = new Vimeo.Player(iframe);
-    ready._resolve(player.ready());
+    await player.ready();
+    ready._resolve();
 
-    const playerBound = bindAll(coreMethodNames, player);
-    const playerMethods = pick(coreMethodNames, playerBound);
+    const playerBound = bindAll(allMethodNames, player);
+    const playerMethods = pick(allMethodNames, playerBound);
     assign(instance, playerMethods, methods);
   }
 

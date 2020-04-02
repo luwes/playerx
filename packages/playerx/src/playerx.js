@@ -1,6 +1,18 @@
 import { defaultProps, defaultPropNames } from './defaults.js';
-import { getName, setName } from './helpers/index.js';
-import { assign, publicPromise, getAttrsAsProps } from './utils/index.js';
+import {
+  getName,
+  setName,
+  isBooleanProp,
+  toPropDefaultTo,
+  attrToProp
+} from './helpers/index.js';
+import {
+  assign,
+  publicPromise,
+  getAttrsAsProps,
+  camelCase,
+  kebabCase
+} from './utils/index.js';
 
 // defaultProps are also transformed to core methods.
 export const coreMethodNames = [
@@ -20,44 +32,70 @@ export const coreMethodNames = [
   'setCurrentTime',
   'getVolume',
   'setVolume',
-  'getPlaybackRate',
-  'setPlaybackRate',
   'getVideoWidth',
-  'getVideoHeight',
+  'getVideoHeight'
+];
+
+export const allMethodNames = [
+  ...coreMethodNames,
+  ...defaultPropNames.map(getName),
+  ...defaultPropNames.map(setName)
 ];
 
 export function playerx(createPlayer, element, options = {}) {
   const api = {};
   const promises = {};
-  let player;
+  const tick = publicPromise();
   let ready = publicPromise();
+  let player;
+
+  // Attributes can not be set in the constructor, wait one tick.
+  tick
+    ._resolve()
+    .then(() =>
+      Object.keys(options).forEach(propName =>
+        api[setName(propName)](options[propName])
+      )
+    );
 
   const internalMethods = {
+    async _connected() {},
+    async _disconnected() {},
 
-    async _connected() {
-    },
-
-    async _disconnected() {
-    },
-
-    async _attributeChanged(name, oldValue, newValue) {
+    async _attributeChanged(attrName, oldValue, newValue) {
       if (oldValue != newValue) {
-        if (name === 'src' && (!player || !player.f.canPlay(newValue))) {
+        if (attrName === 'src' && (!player || !player.f.canPlay(newValue))) {
           loadPlayer();
         } else {
           await ready;
-          setProp(name, newValue);
+          setProp(attrName, newValue);
         }
       }
     },
 
     async getSrc() {
-      return element.getAttribute('src');
+      await tick;
+      return toPropDefaultTo(element, defaultProps, 'src');
+    },
+
+    async getWidth() {
+      await tick;
+      return toPropDefaultTo(element, defaultProps, 'width');
+    },
+
+    async getHeight() {
+      await tick;
+      return toPropDefaultTo(element, defaultProps, 'height');
+    },
+
+    async getAspectRatio() {
+      await tick;
+      return toPropDefaultTo(element, defaultProps, 'aspect-ratio');
     },
 
   };
 
-  function loadPlayer() {
+  async function loadPlayer() {
     let oldPlayer = player;
     if (oldPlayer) {
       ready = publicPromise();
@@ -72,34 +110,42 @@ export function playerx(createPlayer, element, options = {}) {
       element.append(player._element);
     }
 
-    ready._resolve(player.ready());
+    await player.ready();
+    ready._resolve();
   }
 
-  async function setProp(name, value) {
-    const promise = promises[name];
+  async function setProp(attrName, value) {
+    value = attrToProp(defaultProps, attrName, value);
+
+    const propName = camelCase(attrName);
+    const promise = promises[propName];
     if (promise) {
-      delete promises[name];
-      const result = await player.set(name, value);
+      delete promises[propName];
+      const result = await player.set(propName, value);
       promise._resolve(result);
     } else {
-      player.set(name, value);
+      player.set(propName, value);
     }
   }
 
   function createMethods() {
     const methods = {};
 
-    defaultPropNames.forEach(name => {
-      methods[getName(name)] = async function() {
+    defaultPropNames.forEach(propName => {
+      methods[getName(propName)] = async function() {
         await ready;
-        return player.get(name);
+        return player.get(propName);
       };
 
-      methods[setName(name)] = async function(value) {
-        promises[name] = publicPromise();
-        if (value == null) element.removeAttribute(name);
-        else element.setAttribute(name, '' + value);
-        return promises[name];
+      methods[setName(propName)] = async function(value) {
+        promises[propName] = publicPromise();
+        if (value == null || value === false) {
+          element.removeAttribute(kebabCase(propName));
+        } else {
+          if (isBooleanProp(defaultProps, propName)) value = '';
+          element.setAttribute(kebabCase(propName), '' + value);
+        }
+        return promises[propName];
       };
     });
 

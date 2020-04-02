@@ -1,6 +1,6 @@
 import { addCssRule, boxUnit } from '../utils/css.js';
 
-export function createResponsiveStyle({ src, width, height, aspectratio }) {
+export function createResponsiveStyle({ src, width, height, aspectRatio }) {
   const selector = `player-x[src="${src}"]`;
 
   const element = addCssRule(selector, {
@@ -12,7 +12,7 @@ export function createResponsiveStyle({ src, width, height, aspectratio }) {
 
   const before = addCssRule(`${selector}::before`, {
     content: '""',
-    'padding-top': `${aspectratio * 100}%`,
+    'padding-top': `${aspectRatio * 100}%`,
     'margin-left': boxUnit(-1),
     width: boxUnit(1),
     height: 0,
@@ -37,13 +37,13 @@ export function createResponsiveStyle({ src, width, height, aspectratio }) {
     element.style.height = height == null ? '' : boxUnit(height);
   }
 
-  function setAspectratio(ratio) {
+  function setAspectRatio(ratio) {
     before.style.setProperty('padding-top', `${ratio * 100}%`);
   }
 
   return {
     setWidth,
     setHeight,
-    setAspectratio
+    setAspectRatio
   };
 }

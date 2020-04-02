@@ -12,8 +12,8 @@ export function publicPromise() {
     rejectPromise = reject;
   });
 
-  promise._resolve = resolvePromise;
-  promise._reject = rejectPromise;
+  promise._resolve = () => (resolvePromise(), promise);
+  promise._reject = () => (rejectPromise(), promise);
 
   return promise;
 }

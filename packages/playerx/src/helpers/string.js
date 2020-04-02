@@ -1,7 +1,7 @@
-import { startCase } from '../utils/index.js';
+import { startCase, camelCase } from '../utils/index.js';
 
 export function prefixName(prefix, name) {
-  return `${prefix}${startCase(name)}`;
+  return `${prefix}${startCase(camelCase(name))}`;
 }
 
 export function getName(name) {

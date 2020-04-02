@@ -56,7 +56,9 @@ var localLaunchers = {
       // Without a remote debugging port, Google Chrome exits immediately.
       '--remote-debugging-port=9333',
       // Removes that crazy long prefix HeadlessChrome 79.0.3945 (Mac OS X 10.15.2)
-      '--user-agent='
+      '--user-agent=',
+      '--disable-web-security',
+      '--autoplay-policy=no-user-gesture-required',
     ]
   }
 };

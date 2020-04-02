@@ -1,5 +1,5 @@
 import { observedAttributes } from '../defaults.js';
-import { playerx, coreMethodNames } from '../playerx.js';
+import { playerx, allMethodNames } from '../playerx.js';
 import { createEmbedIframe, createResponsiveStyle, getName, setName } from '../helpers/index.js';
 import { assign, define, loadScript, pick, bindAll, publicPromise, serialize } from '../utils/index.js';
 
@@ -39,8 +39,8 @@ export function youtube(element, props) {
       }
     });
 
-    const playerBound = bindAll(coreMethodNames, player);
-    const playerMethods = pick(coreMethodNames, playerBound);
+    const playerBound = bindAll(allMethodNames, player);
+    const playerMethods = pick(allMethodNames, playerBound);
     assign(instance, playerMethods, methods);
   }
 
