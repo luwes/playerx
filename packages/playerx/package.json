@@ -1,0 +1,25 @@
+{
+  "name": "playerx",
+  "version": "0.0.1",
+  "description": "Playerx core",
+  "module": "module/playerx.js",
+  "main": "dist/playerx.js",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "keywords": [],
+  "scripts": {
+    "lint": "eslint src",
+    "prepublishOnly": "rm README.md && cp ../../README.md . && yarn lint && (cd ../.. && yarn test --single-run && yarn build)"
+  },
+  "repository": "luwes/playerx",
+  "author": "Wesley Luyten <me@wesleyluyten.com> (https://wesleyluyten.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/luwes/playerx/issues"
+  },
+  "homepage": "https://github.com/luwes/playerx#readme",
+  "dependencies": {
+  }
+}
