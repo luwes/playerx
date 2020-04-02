@@ -17,7 +17,7 @@ before_install:
 install:
   - yarn
 script:
-  - yarn test --single-run
+  - yarn test --single-run --log-level debug
 after_success:
   - yarn run coverage
 git:
