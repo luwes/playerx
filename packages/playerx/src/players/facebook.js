@@ -20,7 +20,7 @@ facebook.canPlay = src => MATCH_URL.test(src);
 export function facebook(element) {
   let api;
   let div;
-  let ready = publicPromise();
+  let ready;
   let style = createResponsiveStyle(element);
 
   function getOptions() {
@@ -33,6 +33,8 @@ export function facebook(element) {
   }
 
   async function init() {
+    ready = publicPromise();
+
     const options = getOptions();
     const id = uniqueId('fb');
 
@@ -55,17 +57,10 @@ export function facebook(element) {
 
     FB.Event.subscribe('xfbml.ready', msg => {
       if (msg.type === 'video' && msg.id === id) {
-        initApi(msg.instance, options);
+        api = msg.instance;
+        ready.resolve();
       }
     });
-  }
-
-  function initApi(instance) {
-    api = instance;
-
-    // div.querySelector('iframe').setAttribute('allow', 'autoplay; encrypted-media;');
-
-    ready.resolve();
   }
 
   const eventAliases = {
@@ -118,16 +113,16 @@ export function facebook(element) {
       element.load();
     },
 
+    set controls(value) {
+      element.load();
+    },
+
     get currentTime() {
       return api.getCurrentPosition();
     },
 
     set currentTime(seconds) {
       api.seek(seconds);
-    },
-
-    set controls(value) {
-      element.load();
     },
 
     set volume(volume) {

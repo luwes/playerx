@@ -20,7 +20,7 @@ streamable.canPlay = src => MATCH_URL.test(src);
 export function streamable(element) {
   let api;
   let iframe;
-  let ready = publicPromise();
+  let ready;
   let style = createResponsiveStyle(element);
 
   function getOptions() {
@@ -38,6 +38,8 @@ export function streamable(element) {
   }
 
   async function init() {
+    ready = publicPromise();
+
     const options = getOptions();
     const videoId = getVideoId(element.src);
     const src = `${EMBED_BASE}/${videoId}`;

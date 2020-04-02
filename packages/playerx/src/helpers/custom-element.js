@@ -137,14 +137,18 @@ export function customElement(defaults, element) {
     return value;
   }
 
-  function _getPropDefaulted(name) {
-    let value = props[name];
-    return value == null ? defaultProps[name] : value;
-  }
-
   const methods = {
+
+    get _propsDefaulted() {
+      const obj = {};
+      for (let name in defaultProps) {
+        let value = props[name];
+        obj[name] = value == null ? defaultProps[name] : value;
+      }
+      return obj;
+    },
+
     _attributeChanged,
-    _getPropDefaulted,
     createProp,
     props,
     refresh,

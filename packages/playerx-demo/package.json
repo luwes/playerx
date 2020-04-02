@@ -23,7 +23,7 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "sinuous": "^0.24.2",
+    "sinuous": "^0.24.3",
     "tailwindcss": "^1.2.0"
   },
   "devDependencies": {

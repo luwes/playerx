@@ -9,11 +9,8 @@ import { define as def } from './utils/define.js';
 export function define(name, create) {
   return def(name, (element, ...args) => {
 
-    extend(element,
-      customElement(defaults, element, ...args),
-      playerx(create, element, ...args)
-    );
-
+    extend(element, customElement(defaults, element, ...args));
+    extend(element, playerx(create, element, ...args));
     options.plugins.forEach(plugin => {
       extend(element, plugin(element, ...args));
     });

@@ -6075,10 +6075,10 @@ simple-swizzle@^0.2.2:
   dependencies:
     is-arrayish "^0.3.1"
 
-sinuous@^0.24.2:
-  version "0.24.2"
-  resolved "https://registry.yarnpkg.com/sinuous/-/sinuous-0.24.2.tgz#675ba451fa728abc43f95760da1e85df6352f4eb"
-  integrity sha512-APjBGb9/1qnvpOWaFoN8DktEU1fA3lEHNU1KmSqtbJ/bPTdjTYIy/OEhNdXx/nGfaO9sWCjFbglPJOifdlJHjA==
+sinuous@^0.24.3:
+  version "0.24.3"
+  resolved "https://registry.yarnpkg.com/sinuous/-/sinuous-0.24.3.tgz#14744c11a3f254f43c85136e91b33b9ceb9d22a3"
+  integrity sha512-nA5L0nlG2I1TCb+sDCpcl5Zvd5/JX12rhEJ3YseJiGi+2//BKXk8wPLmQDK2Nf16QUwh9atKolNqufbtL/rq/Q==
 
 size-plugin-core@^0.0.7:
   version "0.0.7"

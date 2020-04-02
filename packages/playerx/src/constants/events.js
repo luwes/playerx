@@ -1,4 +1,5 @@
 export const READY = 'ready';
+export const LOADSRC = 'loadsrc';
 export const LOADSTART = 'loadstart';
 export const LOADEDMETADATA = 'loadedmetadata';
 export const BUFFERSTART = 'bufferstart';

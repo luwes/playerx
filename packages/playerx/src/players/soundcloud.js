@@ -99,16 +99,14 @@ export function soundcloud(element) {
       api.unbind(eventAliases[eventName] || eventName, callback);
     },
 
-    set src(src) {
-      ready = publicPromise();
+    async setSrc(src) {
+      const loaded = publicPromise();
       style.update(element);
       api.load(src, omit(['url'], {
         ...getOptions(),
-        callback: () => {
-          ready.resolve();
-          methods.muted = element.props.muted;
-        }
+        callback: loaded.resolve
       }));
+      return loaded;
     },
 
     set currentTime(seconds) {

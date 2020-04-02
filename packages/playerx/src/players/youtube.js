@@ -142,6 +142,10 @@ export function youtube(element) {
       // api.cueVideoById(getVideoId(src));
     },
 
+    set controls(value) {
+      element.load();
+    },
+
     set volume(volume) {
       api.setVolume(volume * 100);
     },
@@ -156,10 +160,6 @@ export function youtube(element) {
 
     get muted() {
       return api.isMuted();
-    },
-
-    set controls(value) {
-      element.load();
     },
 
     set currentTime(seconds) {

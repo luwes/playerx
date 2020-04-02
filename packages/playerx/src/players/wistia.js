@@ -18,7 +18,7 @@ wistia.canPlay = src => MATCH_URL.test(src);
 export function wistia(element) {
   let api;
   let div;
-  let ready = publicPromise();
+  let ready;
   let style = createResponsiveStyle(element, 'div');
 
   function getOptions() {
@@ -40,6 +40,8 @@ export function wistia(element) {
   }
 
   async function init() {
+    ready = publicPromise();
+
     const options = getOptions();
     const id = getVideoId(element.src);
 

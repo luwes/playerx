@@ -105,13 +105,13 @@ export function vimeo(element) {
       api.off(eventAliases[eventName] || eventName, callback);
     },
 
-    set src(value) {
+    setSrc() {
       style.update(element);
-      api.loadVideo(getOptions());
+      return api.loadVideo(getOptions());
     },
 
-    set controls(value) {
-      api.loadVideo(getOptions());
+    setControls() {
+      return api.loadVideo(getOptions());
     },
 
     async getBuffered() {
