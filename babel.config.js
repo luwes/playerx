@@ -13,6 +13,8 @@ module.exports = {
     ]
   ],
   plugins: [
-    ['babel-plugin-transform-async-to-promises'],
+    ['babel-plugin-transform-async-to-promises', {
+      inlineHelpers: true
+    }],
   ],
 };
