@@ -1,14 +1,12 @@
 import path from 'path';
-import * as R from 'ramda';
-import babel from 'rollup-plugin-babel';
 import nodeResolve from '@rollup/plugin-node-resolve';
+import replace from '@rollup/plugin-replace';
+import babel from 'rollup-plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 import bundleSize from 'rollup-plugin-size';
 import gzip from 'rollup-plugin-gzip';
-import replace from '@rollup/plugin-replace';
 import livereload from 'rollup-plugin-livereload';
 import copy from 'rollup-plugin-copy';
-import postcss from 'rollup-plugin-postcss';
 import minimist from 'minimist';
 
 import { CJS, ESM, IIFE, UMD, bundles, fixtures } from './bundles.js';
@@ -34,7 +32,9 @@ bs = argv.all ? bundles.concat(fixtures) : bs;
 // For every type in bundle.types creates a new bundle obj.
 const unbundle = ({ formats, ...rest }) =>
   formats.map(format => ({ ...rest, format }));
-const allBundles = R.chain(unbundle, bs).filter(
+const concatMap = f => xs => [].concat(...xs.map(f));
+const unbundleAll = concatMap(unbundle);
+const allBundles = unbundleAll(bs).filter(
   ({ name, format }) => !shouldSkipBundle(name, format)
 );
 
@@ -97,9 +97,6 @@ function getConfig(options, index, bundles) {
         columnWidth: 25
       }),
       nodeResolve(),
-      postcss({
-        minimize: true
-      }),
 
       [UMD, IIFE].includes(format) && babel(options.babel),
 
@@ -119,9 +116,9 @@ function getConfig(options, index, bundles) {
             props: {
               cname: 6,
               props: {
-                $_tag: '__t',
-                $_props: '__p',
-                $_children: '__c'
+                // $_tag: '__t',
+                // $_props: '__p',
+                // $_children: '__c'
               }
             }
           }

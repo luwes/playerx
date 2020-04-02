@@ -1,8 +1,8 @@
 const path = require('path');
-const nodeResolve = require('rollup-plugin-node-resolve');
-const commonjs = require('rollup-plugin-commonjs');
+const alias = require('@rollup/plugin-alias');
+const nodeResolve = require('@rollup/plugin-node-resolve');
+const commonjs = require('@rollup/plugin-commonjs');
 const istanbul = require('rollup-plugin-istanbul');
-const alias = require('rollup-plugin-alias');
 const babel = require('rollup-plugin-babel');
 const minimist = require('minimist');
 const c = require('ansi-colors');
@@ -147,7 +147,9 @@ module.exports = function(config) {
       preserveSymlinks: true,
       plugins: [
         alias({
-          'tape': __dirname + '/scripts/tape/dist.js'
+          entries: {
+            tape: 'tape-browser'
+          }
         }),
         nodeResolve(),
         commonjs(),
