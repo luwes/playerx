@@ -46,6 +46,14 @@ export function testPlayer(options, videoInfo) {
     t.equal((await player.getSrc()), options.src, 'returns the src');
     t.assert((await player.getPaused()), 'is paused');
 
+    t.equal((await player.getVolume()), 1, 'is all turned up');
+
+    await player.setVolume(0.5);
+    t.equal((await player.getVolume()), 0.5, 'is half volume');
+
+    await player.setMuted(true);
+    t.assert((await player.getMuted()), 'is muted');
+
     await player.play();
     t.assert(!(await player.getPaused()), 'is playing');
 
@@ -57,14 +65,6 @@ export function testPlayer(options, videoInfo) {
     t.equal(Math.round(await player.getCurrentTime()), 3, 'is about 3s in');
 
     t.equal(Math.round(await player.getDuration()), videoInfo.duration, `is ${videoInfo.duration} long`);
-
-    t.equal((await player.getVolume()), 1, 'is all turned up');
-
-    await player.setVolume(0.5);
-    t.equal((await player.getVolume()), 0.5, 'is half volume');
-
-    await player.setMuted(true);
-    t.assert((await player.getMuted()), 'is muted');
 
     t.equal((await player.getWidth()), '100%', 'default 100% width');
     t.equal((await player.getHeight()), undefined, 'default undefined height');
