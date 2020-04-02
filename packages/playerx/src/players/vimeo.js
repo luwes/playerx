@@ -7,7 +7,6 @@ import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise } from '../utils/promise.js';
 import { serialize, boolToBinary } from '../utils/url.js';
-import { once } from '../utils/utils.js';
 import { createTimeRanges } from '../utils/time-ranges.js';
 import { options } from '../options.js';
 export { options };
@@ -22,7 +21,6 @@ vimeo.canPlay = src => MATCH_URL.test(src);
 export function vimeo(element) {
   let api;
   let iframe;
-  let firePlaying;
   let ready = publicPromise();
   let style = createResponsiveStyle(element);
 
@@ -51,12 +49,6 @@ export function vimeo(element) {
     const Vimeo = await loadScript(API_URL, API_GLOBAL);
     api = new Vimeo.Player(iframe);
 
-    api.on('play', () => {
-      firePlaying = once(() => element.fire('playing'));
-    });
-
-    api.on('timeupdate', () => firePlaying());
-
     api.on('playbackratechange', ({ playbackRate }) => {
       element.refresh('playbackRate', playbackRate);
     });
@@ -69,9 +61,7 @@ export function vimeo(element) {
     ratechange: 'playbackratechange',
   };
 
-  const customEvents = {
-    playing: undefined,
-  };
+  const customEvents = {};
 
   const methods = {
 

@@ -2,8 +2,8 @@ import { observable } from 'sinuous';
 import { dhtml, hydrate as hy } from 'sinuous/hydrate';
 import { toHHMMSS, round, computedValue } from './utils.js';
 
-// let src = observable('https://vimeo.com/357274789');
-let src = observable('https://www.dailymotion.com/video/x7sgamf');
+let src = observable('https://vimeo.com/357274789');
+// let src = observable('https://www.dailymotion.com/video/x7sgamf');
 // let src = observable('https://soundcloud.com/areckoner/winter-fingers');
 // let src = observable('https://wesleyluyten.wistia.com/medias/dgzftn5ctz');
 // let src = observable('https://www.youtube.com/watch?v=BK1JIjLPwaA');
