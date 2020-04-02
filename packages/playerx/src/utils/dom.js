@@ -1,7 +1,7 @@
 
-export function createElement(tag, props = {}, ...children) {
+export function createElement(tag, attrs = {}, ...children) {
   const el = document.createElement(tag);
-  Object.keys(props).forEach(prop => (el[prop] = props[prop]));
+  Object.keys(attrs).forEach(name => el.setAttribute(name, attrs[name]));
   children.forEach(child => el.append(child));
   return el;
 }

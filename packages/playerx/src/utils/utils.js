@@ -23,3 +23,22 @@ export function clamp(min, max, value) {
 export function isMethod(instance, name) {
   return instance && typeof instance[name] === 'function';
 }
+
+/**
+ * Generates a unique ID. If `prefix` is given, the ID is appended to it.
+ *
+ * @param {string} prefix The value to prefix the ID with.
+ * @return {string} Returns the unique ID.
+ * @example
+ *
+ *    uniqueId('contact_');
+ *    // => 'contact_104'
+ *
+ *    uniqueId();
+ *    // => '105'
+ */
+let idCounter = 0;
+export function uniqueId(prefix) {
+  let id = ++idCounter;
+  return `${prefix}${id}`;
+}
