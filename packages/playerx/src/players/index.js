@@ -6,3 +6,4 @@ export { vidyard } from './vidyard.js';
 export { vimeo } from './vimeo.js';
 export { wistia } from './wistia.js';
 export { youtube } from './youtube.js';
+export { twitch } from './twitch.js';

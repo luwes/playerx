@@ -71,9 +71,6 @@ export function facebook(element) {
     bufferend: 'finishedBuffering',
   };
 
-  const customEvents = {
-  };
-
   const methods = {
 
     get element() {
@@ -98,13 +95,11 @@ export function facebook(element) {
     },
 
     on(eventName, callback) {
-      if (eventName in customEvents) return;
       (callback._listeners || (callback._listeners = {}))[eventName] =
         api.subscribe(eventAliases[eventName] || eventName, callback);
     },
 
     off(eventName, callback) {
-      if (eventName in customEvents) return;
       callback._listeners[eventName].release();
     },
 

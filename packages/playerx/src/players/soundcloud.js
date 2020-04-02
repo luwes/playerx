@@ -89,6 +89,10 @@ export function soundcloud(element) {
       iframe.remove();
     },
 
+    stop() {
+      api.seekTo(0);
+    },
+
     on(eventName, callback) {
       if (eventName in customEvents) return;
       api.bind(eventAliases[eventName] || eventName, callback);

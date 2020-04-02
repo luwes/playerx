@@ -61,7 +61,7 @@ export const defaultProps = {
     },
     dailymotion: {
       'queue-enable': false,
-      'ui-logo': false,
+      // 'ui-logo': false,
     }
   }
 };

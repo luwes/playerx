@@ -12,13 +12,14 @@ export function loadScript(src, globalName, readyFnName) {
       async: true,
     });
 
+    const ready = () => resolve(self[globalName]);
+    if (readyFnName) {
+      self[readyFnName] = ready;
+    }
+
     script.onload = () => {
       script.remove();
-
-      const ready = () => resolve(self[globalName]);
-      if (readyFnName) {
-        self[readyFnName] = ready;
-      } else {
+      if (!readyFnName) {
         ready();
       }
     };

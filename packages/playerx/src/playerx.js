@@ -64,7 +64,13 @@ export function playerx(createPlayer, element) {
       element.load();
     } else {
       await ready;
+
+      // Here to use `element.load()` in players. Preventing an endless loop.
+      // When a player calls this it is meant to re-init the player.
+      const prevLoad = element.load;
+      element.load = init;
       Object.keys(changedProps).forEach(playerSet);
+      element.load = prevLoad;
     }
   }
 

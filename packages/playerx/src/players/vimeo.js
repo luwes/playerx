@@ -61,8 +61,6 @@ export function vimeo(element) {
     ratechange: 'playbackratechange',
   };
 
-  const customEvents = {};
-
   const methods = {
 
     get element() {
@@ -86,12 +84,10 @@ export function vimeo(element) {
     },
 
     on(eventName, callback) {
-      if (eventName in customEvents) return;
       api.on(eventAliases[eventName] || eventName, callback);
     },
 
     off(eventName, callback) {
-      if (eventName in customEvents) return;
       api.off(eventAliases[eventName] || eventName, callback);
     },
 

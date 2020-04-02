@@ -61,9 +61,6 @@ export function dailymotion(element) {
     ended: 'end',
   };
 
-  const customEvents = {
-  };
-
   const methods = {
 
     get element() {
@@ -79,7 +76,8 @@ export function dailymotion(element) {
     },
 
     remove() {
-      return api.destroy(api.id);
+      api.destroy(api.id);
+      div.remove();
     },
 
     stop() {
@@ -88,12 +86,10 @@ export function dailymotion(element) {
     },
 
     on(eventName, callback) {
-      if (eventName in customEvents) return;
       api.addEventListener(eventAliases[eventName] || eventName, callback);
     },
 
     off(eventName, callback) {
-      if (eventName in customEvents) return;
       api.removeEventListener(eventAliases[eventName] || eventName, callback);
     },
 

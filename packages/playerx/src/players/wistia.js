@@ -102,6 +102,11 @@ export function wistia(element) {
       api.rebuild();
     },
 
+    remove() {
+      api.remove();
+      div.remove();
+    },
+
     on(eventName, callback) {
       if (eventName in customEvents) return;
       api.bind(eventAliases[eventName] || eventName, callback);

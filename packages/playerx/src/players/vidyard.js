@@ -80,8 +80,6 @@ export function vidyard(element) {
     ended: 'playerComplete'
   };
 
-  const customEvents = {};
-
   const methods = {
     get element() {
       return img;
@@ -96,7 +94,7 @@ export function vidyard(element) {
     },
 
     remove() {
-      VidyardV4.api.destroyPlayer(api);
+      return VidyardV4.api.destroyPlayer(api);
     },
 
     stop() {
@@ -104,12 +102,10 @@ export function vidyard(element) {
     },
 
     on(eventName, callback) {
-      if (eventName in customEvents) return;
       api.on(eventAliases[eventName] || eventName, callback);
     },
 
     off(eventName, callback) {
-      if (eventName in customEvents) return;
       api.off(eventAliases[eventName] || eventName, callback);
     },
 
@@ -117,8 +113,6 @@ export function vidyard(element) {
       style.update(element);
       element.load();
     },
-
-    setControls() {},
 
     get duration() {
       return api.metadata.chapters_attributes[0].video_attributes
