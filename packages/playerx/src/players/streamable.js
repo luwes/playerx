@@ -1,7 +1,6 @@
-// https://github.com/vimeo/player.js
+// https://github.com/embedly/player.js
 
 import { define } from '../define.js';
-import { READY } from '../constants/events.js';
 import { createEmbedIframe } from '../helpers/dom.js';
 import { createResponsiveStyle } from '../helpers/css.js';
 import { extend } from '../utils/object.js';
@@ -21,9 +20,6 @@ export function streamable(element, reload) {
   let iframe;
   let ready = publicPromise();
   let style = createResponsiveStyle(element);
-  let updateInterval;
-  let getVolume;
-  let getMuted;
 
   function getOptions() {
     return {
@@ -47,35 +43,11 @@ export function streamable(element, reload) {
 
     const playerjs = await loadScript(API_URL, API_GLOBAL);
     api = new playerjs.Player(iframe);
-    getVolume = promisify(api.getVolume.bind(api));
-    getMuted = promisify(api.getMuted.bind(api));
 
-    api.setLoop(options.loop);
-    options.muted && api.mute();
     options.autoplay && api.play();
 
-    api.on('buffered', async ({ percent }) => {
-      const end = element.duration > 0 ? element.duration * percent : 0;
-      element.refresh('buffered', createTimeRanges(0, end));
-      element.fire('progress');
-    });
-
-    api.on('timeupdate', ({ seconds, duration }) => {
-      element.refresh('currentTime', seconds);
-
-      if (element.duration !== duration) {
-        element.refresh('duration', duration);
-        element.fire('durationchange');
-      }
-    });
-
-    await promisify(api.on.bind(api))(READY);
-    await update();
-
+    await promisify(api.on, api)('ready');
     ready.resolve();
-
-    clearInterval(updateInterval);
-    updateInterval = setInterval(update, 250);
   }
 
   const eventAliases = {
@@ -87,8 +59,6 @@ export function streamable(element, reload) {
   };
 
   const methods = {
-    // disable getters because they return promises.
-    get: null,
 
     get element() {
       return iframe;
@@ -103,7 +73,7 @@ export function streamable(element, reload) {
     },
 
     remove() {
-      clearInterval(updateInterval);
+      iframe.remove();
     },
 
     stop() {
@@ -126,43 +96,36 @@ export function streamable(element, reload) {
       reload();
     },
 
+    async getCurrentTime() {
+      return promisify(api.getCurrentTime, api)();
+    },
+
+    async getDuration() {
+      return promisify(api.getDuration, api)();
+    },
+
     set volume(volume) {
       api.setVolume(volume * 100);
+    },
+
+    async getVolume() {
+      const volume = await promisify(api.getVolume, api)();
+      return volume / 100;
     },
 
     set muted(muted) {
       muted ? api.mute() : api.unmute();
     },
 
-    set controls(value) {
-
+    async getMuted() {
+      return promisify(api.getMuted, api)();
     },
 
+    async getBuffered() {
+      // bug in player.js - https://github.com/embedly/player.js/issues/79
+      return createTimeRanges();
+    },
   };
-
-  function update() {
-    return Promise.all([
-      updateVolume(),
-      updateMuted(),
-    ]);
-  }
-
-  async function updateVolume() {
-    let volume = await getVolume();
-    volume = volume / 100;
-    if (element.volume !== volume) {
-      element.refresh('volume', volume);
-      element.fire('volumechange');
-    }
-  }
-
-  async function updateMuted() {
-    let muted = await getMuted();
-    if (element.muted !== muted) {
-      element.refresh('muted', muted);
-      element.fire('volumechange');
-    }
-  }
 
   init();
 

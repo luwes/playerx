@@ -24,8 +24,6 @@ export function facebook(element, reload) {
   function getOptions() {
     return {
       autoplay: element.playing || element.autoplay,
-      muted: element.muted,
-      loop: element.loop,
       controls: element.controls,
       url: element.src,
       ...element.config.facebook,
@@ -94,7 +92,7 @@ export function facebook(element, reload) {
     },
 
     remove() {
-
+      div.remove();
     },
 
     stop() {
@@ -141,7 +139,6 @@ export function facebook(element, reload) {
     get muted() {
       return api.isMuted();
     },
-
   };
 
   init();

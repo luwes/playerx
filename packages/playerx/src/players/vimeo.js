@@ -27,7 +27,6 @@ export function vimeo(element) {
   function getOptions() {
     return {
       autoplay: element.playing || element.autoplay,
-      muted: element.muted,
       loop: element.loop,
       playsinline: element.playsinline,
       controls: element.controls,
@@ -50,44 +49,17 @@ export function vimeo(element) {
     const Vimeo = await loadScript(API_URL, API_GLOBAL);
     api = new Vimeo.Player(iframe);
 
-    api.on('durationchange', ({ duration }) => {
-      element.refresh('duration', duration);
-    });
-
-    api.on('progress', async () => {
-      element.refresh('buffered', createTimeRanges(await api.getBuffered()));
-      element.fire('progress');
-    });
-
     api.on('play', () => {
       firePlaying = once(() => element.fire('playing'));
     });
 
-    api.on('timeupdate', ({ seconds }) => {
-      firePlaying();
-      element.refresh('currentTime', seconds);
-    });
+    api.on('timeupdate', () => firePlaying());
 
     api.on('playbackratechange', ({ playbackRate }) => {
       element.refresh('playbackRate', playbackRate);
     });
 
-    api.on('volumechange', async ({ volume }) => {
-      element.refresh('volume', volume);
-      element.refresh('muted', await api.get('muted'));
-    });
-
-    const [duration, volume] = await Promise.all([
-      api.get('duration'),
-      api.get('volume'),
-      api.ready(),
-    ]);
-
-    element.refresh('duration', duration);
-    element.fire('durationchange');
-
-    element.refresh('volume', volume);
-
+    await api.ready();
     ready.resolve();
   }
 
@@ -97,12 +69,9 @@ export function vimeo(element) {
 
   const customEvents = {
     playing: undefined,
-    progress: undefined,
   };
 
   const methods = {
-    // disable getters because they return promises.
-    get: null,
 
     get element() {
       return iframe;
@@ -117,7 +86,7 @@ export function vimeo(element) {
     },
 
     remove() {
-      api.destroy();
+      return api.destroy();
     },
 
     stop() {
@@ -143,6 +112,9 @@ export function vimeo(element) {
       api.loadVideo(getOptions());
     },
 
+    async getBuffered() {
+      return createTimeRanges(await api.getBuffered());
+    },
   };
 
   init();

@@ -24,11 +24,7 @@ export function soundcloud(element) {
   let ready = publicPromise();
   let style = createResponsiveStyle(element);
   let eventAliases;
-  let updateInterval;
-  let progress;
-  let buffered = createTimeRanges([]);
-  let getCurrentSound;
-  let getVolume;
+  let loadedProgress;
 
   function getOptions() {
     return {
@@ -46,9 +42,7 @@ export function soundcloud(element) {
     const SC = await loadScript(API_URL, API_GLOBAL);
     const Events = SC.Widget.Events;
     api = SC.Widget(iframe);
-    progress = 0;
-    getVolume = promisify(api.getVolume.bind(api));
-    getCurrentSound = promisify(api.getCurrentSound.bind(api));
+    loadedProgress = 0;
 
     api.bind(Events.PLAY, () => {
       firePlaying = once(() => element.fire('playing'));
@@ -56,18 +50,7 @@ export function soundcloud(element) {
 
     api.bind(Events.PLAY_PROGRESS, e => {
       firePlaying();
-      element.refresh('currentTime', e.currentPosition / 1000);
-
-      const loaded = e.loadedProgress;
-      if (progress !== loaded) {
-        if (!buffered[0]) buffered[0] = [0];
-
-        buffered[0][1] = loaded * element.duration;
-        element.refresh('buffered', buffered);
-
-        progress = loaded;
-        element.fire('progress');
-      }
+      loadedProgress = e.loadedProgress;
     });
 
     eventAliases = {
@@ -78,14 +61,8 @@ export function soundcloud(element) {
       error: Events.ERROR
     };
 
-    await promisify(api.bind.bind(api))(Events.READY);
-    await update();
-    methods.muted = element.props.muted;
-
+    await promisify(api.bind, api)(Events.READY);
     ready.resolve();
-
-    clearInterval(updateInterval);
-    updateInterval = setInterval(update, 250);
   }
 
   const customEvents = {
@@ -93,8 +70,6 @@ export function soundcloud(element) {
   };
 
   const methods = {
-    // disable getters because they need callbacks.
-    get: null,
 
     get element() {
       return iframe;
@@ -109,7 +84,7 @@ export function soundcloud(element) {
     },
 
     remove() {
-      clearInterval(updateInterval);
+      iframe.remove();
     },
 
     on(eventName, callback) {
@@ -123,11 +98,12 @@ export function soundcloud(element) {
     },
 
     set src(src) {
+      ready = publicPromise();
       style.update(element);
       api.load(src, omit(['url'], {
         ...getOptions(),
-        callback: async () => {
-          await update();
+        callback: () => {
+          ready.resolve();
           methods.muted = element.props.muted;
         }
       }));
@@ -137,9 +113,17 @@ export function soundcloud(element) {
       api.seekTo(seconds * 1000);
     },
 
+    async getCurrentTime() {
+      let position = await promisify(api.getPosition, api)();
+      return position / 1000;
+    },
+
     set muted(muted) {
       muted ? api.setVolume(0) : api.setVolume(element.props.volume * 100);
-      element.fire('volumechange');
+    },
+
+    async getMuted() {
+      return await promisify(api.getVolume, api)() === 0;
     },
 
     set volume(volume) {
@@ -147,32 +131,25 @@ export function soundcloud(element) {
         api.setVolume(clamp(0.001, 100, volume * 100));
       }
     },
+
+    async getVolume() {
+      let volume = await promisify(api.getVolume, api)();
+      return volume > 0.001 ? volume / 100 : +element.props.volume;
+    },
+
+    async getDuration() {
+      let { duration } = await promisify(api.getCurrentSound, api)();
+      return duration / 1000;
+    },
+
+    async getBuffered() {
+      const progress = loadedProgress * (await methods.getDuration());
+      if (progress > 0) {
+        return createTimeRanges(0, progress);
+      }
+      return createTimeRanges();
+    },
   };
-
-  function update() {
-    return Promise.all([
-      updateVolume(),
-      updateDuration()
-    ]);
-  }
-
-  async function updateVolume() {
-    let volume = await getVolume();
-    volume = volume / 100;
-    if (element.volume !== volume && volume >= 0.001) {
-      element.refresh('volume', volume > 0.001 ? volume : 0);
-      element.fire('volumechange');
-    }
-  }
-
-  async function updateDuration() {
-    let { duration } = await getCurrentSound();
-    duration = duration / 1000;
-    if (element.duration !== duration) {
-      element.refresh('duration', duration);
-      element.fire('durationchange');
-    }
-  }
 
   init();
 

@@ -133,8 +133,14 @@ export function customElement(defaults, element) {
     return value;
   }
 
+  function _getPropDefaulted(name) {
+    let value = props[name];
+    return value == null ? defaultProps[name] : value;
+  }
+
   const methods = {
     _attributeChanged,
+    _getPropDefaulted,
     props,
     refresh,
   };

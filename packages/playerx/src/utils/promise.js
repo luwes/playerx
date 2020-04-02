@@ -18,9 +18,10 @@ export function publicPromise() {
   return promise;
 }
 
-export function promisify(fn) {
+export function promisify(fn, ctx) {
   return (...args) => new Promise((resolve) => {
-    fn(...args, (...res) => {
+    // fn.call() didn't work for some reason.
+    fn.bind(ctx)(...args, (...res) => {
       resolve(...res);
     });
   });

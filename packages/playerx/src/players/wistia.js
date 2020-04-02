@@ -42,7 +42,7 @@ export function wistia(element, reload) {
     const id = getVideoId(element.src);
 
     div = createElement('div', {
-      className: `wistia_embed wistia_async_${id}`,
+      class: `wistia_embed wistia_async_${id}`,
     });
 
     const onReadyPromise = publicPromise();
@@ -56,14 +56,6 @@ export function wistia(element, reload) {
     });
 
     api = await onReadyPromise;
-
-    api.bind('end', () => {
-      if (element.loop) {
-        element.play();
-        return;
-      }
-      element.fire('ended');
-    });
 
     api.elem().addEventListener('play', () => {
       element.fire('play');
@@ -80,11 +72,11 @@ export function wistia(element, reload) {
     playing: 'play',
     ratechange: 'playbackratechange',
     timeupdate: 'timechange',
+    ended: 'end',
   };
 
   const customEvents = {
     play: undefined,
-    ended: undefined,
     durationchange: undefined,
   };
 
@@ -118,11 +110,7 @@ export function wistia(element, reload) {
 
     set src(src) {
       style.update(element);
-
-      (async () => {
-        await reload();
-        element.fire('durationchange');
-      })();
+      reload();
 
       // `api.replaceWith` works but does strange things with resizing ;(
       // api.replaceWith(getVideoId(src), getOptions());
@@ -152,7 +140,6 @@ export function wistia(element, reload) {
     get muted() {
       return api.isMuted();
     },
-
   };
 
   init();

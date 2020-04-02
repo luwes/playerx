@@ -1,7 +1,7 @@
 import { getName, setName } from './helpers/string.js';
 import { isMethod } from './utils/utils.js';
 
-export function base(player) {
+export function base(element, player) {
   return {
 
     set(name, value) {
@@ -36,9 +36,12 @@ export function base(player) {
       return player.api.pause();
     },
 
-    setPlaying(playing) {
+    set playing(playing) {
       return playing ? player.play() : player.pause();
     },
 
+    get ended() {
+      return element.currentTime == element.duration;
+    },
   };
 }

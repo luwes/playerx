@@ -20,19 +20,14 @@ youtube.canPlay = src => MATCH_URL.test(src);
 export function youtube(element, reload) {
   let api;
   let iframe;
-  let ready = publicPromise();
+  let ready;
   let style = createResponsiveStyle(element);
   let filterEventByData;
   let YT;
-  let progress;
-  let progressInterval;
-  let buffered = createTimeRanges([]);
 
   function getOptions() {
     return {
       autoplay: element.playing || element.autoplay,
-      mute: element.muted,
-      loop: element.loop,
       playsinline: element.playsinline,
       controls: element.controls,
       origin: location.origin,
@@ -47,6 +42,8 @@ export function youtube(element, reload) {
   }
 
   async function init() {
+    ready = publicPromise();
+
     const options = getOptions();
     const videoId = getVideoId(element.src);
     const src = `${EMBED_BASE}/${videoId}?${serialize(boolToBinary(options))}`;
@@ -70,16 +67,6 @@ export function youtube(element, reload) {
     };
 
     await ready;
-
-    element.fire('durationchange');
-
-    // https://html.spec.whatwg.org/multipage/media.html#mediaevents
-    // While the load is not suspended (see below), every 350ms (±200ms) or for
-    // every byte received, whichever is least frequent, queue a task to fire
-    // an event named progress at the element.
-    progress = 0;
-    clearInterval(progressInterval);
-    progressInterval = setInterval(dispatchProgress, 350);
   }
 
   const eventAliases = {
@@ -112,7 +99,6 @@ export function youtube(element, reload) {
     },
 
     remove() {
-      clearInterval(progressInterval);
       api.destroy();
     },
 
@@ -132,17 +118,17 @@ export function youtube(element, reload) {
       const listener = ({ data }) => {
         let eventId = filterEventByData[eventName];
         if (eventId == null || data === eventId) {
-          handleEvent(eventName, data, callback);
+          callback();
         }
       };
-      callback._listener = listener;
+      (callback._listeners || (callback._listeners = {}))[eventName] = listener;
       api.addEventListener(eventAliases[eventName] || eventName, listener);
     },
 
     off(eventName, callback) {
       api.removeEventListener(
         eventAliases[eventName] || eventName,
-        callback._listener
+        callback._listeners[eventName]
       );
     },
 
@@ -182,33 +168,13 @@ export function youtube(element, reload) {
     },
 
     get buffered() {
-      return buffered;
-    },
-
-  };
-
-  function dispatchProgress() {
-    const loaded = api.getVideoLoadedFraction();
-    if (progress !== loaded) {
-      if (!buffered[0]) buffered[0] = [0];
-      buffered[0][1] = loaded * api.getDuration();
-
-      progress = loaded;
-      element.fire('progress');
-    }
-    if (progress === 1) clearInterval(progressInterval);
-  }
-
-  function handleEvent(eventName, data, callback) {
-    const { ENDED } = YT.PlayerState;
-    if (data === ENDED) {
-      if (element.loop && !api.getPlaylist()) {
-        element.play();
-        return;
+      const progress = api.getVideoLoadedFraction() * api.getDuration();
+      if (progress > 0) {
+        return createTimeRanges(0, progress);
       }
-    }
-    callback();
-  }
+      return createTimeRanges();
+    },
+  };
 
   init();
 

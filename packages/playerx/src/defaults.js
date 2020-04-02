@@ -4,7 +4,6 @@ export const readonly = {
   duration: NaN,
   ended: false,
   paused: true,
-  played: undefined,
   videoHeight: 0,
   videoWidth: 0,
 };
@@ -32,9 +31,10 @@ export const defaultProps = {
   config: {
     vimeo: {
       autopause: false,
-      byline: false,
-      portrait: false,
-      title: false,
+      // byline: false,
+      // portrait: false,
+      // title: false,
+      // dnt: true,
     },
     youtube: {
       showinfo: 0,
@@ -44,16 +44,20 @@ export const defaultProps = {
     },
     soundcloud: {
       visual: true, // Undocumented, player fills iframe and looks better.
-      buying: false,
-      liking: false,
-      download: false,
-      sharing: false,
-      show_comments: false,
-      show_playcount: false,
+      // buying: false,
+      // liking: false,
+      // download: false,
+      // sharing: false,
+      // show_comments: false,
+      // show_playcount: false,
     },
     wistia: {
-      videoFoam: false,
-      silentAutoPlay: 'allow',
+      // videoFoam: false,
+      // silentAutoPlay: 'allow',
+    },
+    facebook: {
+      appId: '197575574668798',
+      version: 'v3.2',
     },
   }
 };

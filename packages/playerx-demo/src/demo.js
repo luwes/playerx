@@ -2,11 +2,12 @@ import { observable, html } from 'sinuous';
 import { dhtml, hydrate } from 'sinuous/hydrate';
 import { toHHMMSS, round } from './utils.js';
 
-// let src = observable('https://vimeo.com/357274789');
+let src = observable('https://vimeo.com/357274789');
 // let src = observable('https://soundcloud.com/areckoner/winter-fingers');
 // let src = observable('https://wesleyluyten.wistia.com/medias/dgzftn5ctz');
 // let src = observable('https://www.youtube.com/watch?v=BK1JIjLPwaA');
-let src = observable('https://streamable.com/aizxh');
+// let src = observable('https://streamable.com/aizxh');
+// let src = observable('https://www.facebook.com/wesleyluyten/videos/10220940465559072');
 let playing = observable(false);
 let volume = observable(1);
 let volumeValue = observable(1);
@@ -14,8 +15,9 @@ let buffered = observable(0);
 let duration = observable(0);
 let currentTime = observable(0);
 let currentTimeValue = observable(0);
+let ended = observable(false);
 let muted = observable(true);
-let loop = observable(false);
+let loop = observable(true);
 let controls = observable(true);
 
 const props = {
@@ -28,10 +30,14 @@ const props = {
   volume,
   onpause: () => playing(false),
   onplay: () => playing(true),
+  onplaying: () => playing(true),
   ondurationchange: () => player.duration && duration(player.duration),
   onseeking: () => currentTimeValue(player.currentTime),
   onseeked: () => currentTimeValue(player.currentTime),
-  ontimeupdate: () => currentTimeValue(player.currentTime),
+  ontimeupdate: () => {
+    currentTimeValue(player.currentTime);
+    ended(player.ended);
+  },
   onvolumechange: () => {
     volumeValue(player.volume);
     muted(player.muted);
@@ -119,6 +125,7 @@ hydrate(dhtml`
     <b /><i>${() => round(buffered(), 2)}</i>
     <b /><i>${() => toHHMMSS(duration())}</i>
     <b /><i>${() => toHHMMSS(currentTimeValue())}</i>
+    <b /><i>${() => String(ended())}</i>
   </div>
 `);
 
