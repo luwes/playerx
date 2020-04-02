@@ -4,7 +4,7 @@ import { createResponsiveStyle } from '../helpers/css.js';
 import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise } from '../utils/promise.js';
-import { serialize } from '../utils/url.js';
+import { serialize, boolToBinary } from '../utils/url.js';
 import { once } from '../utils/utils.js';
 import { createTimeRanges } from '../utils/time-ranges.js';
 
@@ -24,6 +24,7 @@ export function vimeo(element) {
 
   function getOptions() {
     return {
+      ...element.config.vimeo,
       autoplay: element.playing || element.autoplay,
       muted: element.muted,
       loop: element.loop,
@@ -33,10 +34,15 @@ export function vimeo(element) {
     };
   }
 
+  function getVideoId(src) {
+    let match;
+    return (match = src.match(MATCH_URL)) && match[1];
+  }
+
   async function init() {
     const options = getOptions();
-    const videoId = options.url.match(MATCH_URL)[1];
-    const src = `${EMBED_BASE}/${videoId}?${serialize(options)}`;
+    const videoId = getVideoId(element.src);
+    const src = `${EMBED_BASE}/${videoId}?${serialize(boolToBinary(options))}`;
     iframe = createEmbedIframe({ src });
 
     const Vimeo = await loadScript(API_URL, API_GLOBAL);
@@ -76,9 +82,11 @@ export function vimeo(element) {
     ]);
 
     element.refresh('duration', duration);
+    element.fire('durationchange');
+
     element.refresh('volume', volume);
 
-    ready._resolve();
+    ready.resolve();
   }
 
   const eventAliases = {
@@ -104,6 +112,10 @@ export function vimeo(element) {
 
     ready() {
       return ready;
+    },
+
+    remove() {
+      api.destroy();
     },
 
     stop() {

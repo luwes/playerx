@@ -1,8 +1,10 @@
-import { observable } from 'sinuous';
+import { observable, html } from 'sinuous';
 import { dhtml, hydrate } from 'sinuous/hydrate';
 import { toHHMMSS, round } from './utils.js';
 
-let src = observable('https://vimeo.com/357274789');
+// let src = observable('https://vimeo.com/357274789');
+// let src = observable('https://soundcloud.com/areckoner/winter-fingers');
+let src = observable('https://wesleyluyten.wistia.com/medias/dgzftn5ctz');
 // let src = observable('https://www.youtube.com/watch?v=BK1JIjLPwaA');
 let playing = observable(false);
 let volume = observable(1);
@@ -23,6 +25,8 @@ const props = {
   controls,
   currentTime,
   volume,
+  onpause: () => playing(false),
+  onplay: () => playing(true),
   ondurationchange: () => player.duration && duration(player.duration),
   onseeking: () => currentTimeValue(player.currentTime),
   onseeked: () => currentTimeValue(player.currentTime),
@@ -51,12 +55,23 @@ hydrate(dhtml`
       ${() => (playing() ? 'Pause' : 'Play')}
     </button>
     <button onclick=${stop} />
+    <button onclick=${remove} />
   </div>
 `);
 
 function stop() {
   playing(false);
   player.stop();
+}
+
+function remove() {
+  playing(false);
+  src('');
+
+  player.remove();
+  document.querySelector('#player').append(html`
+    <player-x ...${props} />
+  `);
 }
 
 hydrate(dhtml`

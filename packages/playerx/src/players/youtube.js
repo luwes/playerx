@@ -4,7 +4,7 @@ import { createResponsiveStyle } from '../helpers/css.js';
 import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise } from '../utils/promise.js';
-import { serialize } from '../utils/url.js';
+import { serialize, boolToBinary } from '../utils/url.js';
 import { createTimeRanges } from '../utils/time-ranges.js';
 
 const EMBED_BASE = 'https://www.youtube.com/embed';
@@ -12,24 +12,23 @@ const API_URL = 'https://www.youtube.com/iframe_api';
 const API_GLOBAL = 'YT';
 const API_GLOBAL_READY = 'onYouTubeIframeAPIReady';
 const MATCH_URL = /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})/;
-// const MATCH_PLAYLIST = /list=([\w-]+)/;
 
 youtube.canPlay = src => MATCH_URL.test(src);
 
-export function youtube(element, reloadPlayer) {
+export function youtube(element, reload) {
   let api;
   let iframe;
   let ready = publicPromise();
   let style = createResponsiveStyle(element);
   let filterEventByData;
   let YT;
-  let match;
   let progress;
   let progressInterval;
   let buffered = createTimeRanges([]);
 
   function getOptions() {
     return {
+      ...element.config.youtube,
       autoplay: element.playing || element.autoplay,
       mute: element.muted,
       loop: element.loop,
@@ -37,30 +36,30 @@ export function youtube(element, reloadPlayer) {
       controls: element.controls,
       origin: location.origin,
       enablejsapi: 1,
-      modestbranding: 1,
     };
   }
 
-  function getVideoId() {
-    return (match = element.src.match(MATCH_URL)) && match[1];
+  function getVideoId(src) {
+    let match;
+    return (match = src.match(MATCH_URL)) && match[1];
   }
 
   async function init() {
     const options = getOptions();
-    // const playlistId = (match = element.src.match(MATCH_PLAYLIST)) && match[1];
     const videoId = getVideoId(element.src);
-    const src = `${EMBED_BASE}/${videoId}?${serialize(options)}`;
+    const src = `${EMBED_BASE}/${videoId}?${serialize(boolToBinary(options))}`;
     iframe = createEmbedIframe({ src });
 
     YT = await loadScript(API_URL, API_GLOBAL, API_GLOBAL_READY);
     api = new YT.Player(iframe, {
       events: {
-        onReady: ready._resolve
+        onReady: ready.resolve
       }
     });
 
     filterEventByData = {
-      loadstart: YT.PlayerState.CUED,
+      loadstart: YT.PlayerState.UNSTARTED,
+      loadedmetadata: YT.PlayerState.CUED,
       playing: YT.PlayerState.PLAYING,
       pause: YT.PlayerState.PAUSED,
       ended: YT.PlayerState.ENDED,
@@ -69,6 +68,8 @@ export function youtube(element, reloadPlayer) {
     };
 
     await ready;
+
+    element.fire('durationchange');
 
     // https://html.spec.whatwg.org/multipage/media.html#mediaevents
     // While the load is not suspended (see below), every 350ms (±200ms) or for
@@ -83,6 +84,7 @@ export function youtube(element, reloadPlayer) {
     ready: 'onReady',
     ratechange: 'onPlaybackRateChange',
     error: 'onError',
+    loadedmetadata: 'onStateChange',
     loadstart: 'onStateChange',
     playing: 'onStateChange',
     pause: 'onStateChange',
@@ -105,6 +107,11 @@ export function youtube(element, reloadPlayer) {
 
     ready() {
       return ready;
+    },
+
+    remove() {
+      clearInterval(progressInterval);
+      api.destroy();
     },
 
     play() {
@@ -139,7 +146,10 @@ export function youtube(element, reloadPlayer) {
 
     set src(src) {
       style.update(element);
-      api.cueVideoById(getVideoId(src));
+      reload();
+
+      // `api.cueVideoById` works but `api.getDuration()` is never updated ;(
+      // api.cueVideoById(getVideoId(src));
     },
 
     set volume(volume) {
@@ -159,7 +169,7 @@ export function youtube(element, reloadPlayer) {
     },
 
     set controls(value) {
-      reloadPlayer();
+      reload();
     },
 
     set currentTime(seconds) {

@@ -1,11 +1,12 @@
 export const READY = 'ready';
+export const LOADSTART = 'loadstart';
+export const LOADEDMETADATA = 'loadedmetadata';
 export const BUFFERSTART = 'bufferstart';
 export const BUFFEREND = 'bufferend';
 export const PLAY = 'play';
 export const PLAYING = 'playing';
 export const PAUSE = 'pause';
 export const ENDED = 'ended';
-export const LOADSTART = 'loadstart';
 export const PROGRESS = 'progress';
 export const TIMEUPDATE = 'timeupdate';
 export const SEEKING = 'seeking';

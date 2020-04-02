@@ -12,7 +12,6 @@ export const coreMethodNames = [
   'play',
   'pause',
   'stop',
-  'destroy',
 ];
 
 const events = Object.values(Events);
@@ -33,12 +32,20 @@ export function playerx(createPlayer, element) {
   const methods = {
     fire,
 
+    _connected() {
+      // body...
+    },
+
+    _disconnected() {
+      player.remove();
+    },
+
     _getProp(name) {
       if (player && player.get) {
         const value = player.get(name);
         if (value !== undefined) return value;
       }
-      return element._props[name];
+      return element.props[name];
     },
 
     async _update(changedProps) {
@@ -54,8 +61,8 @@ export function playerx(createPlayer, element) {
     },
   };
 
-  async function callPlayer(name) {
-    const value = element._props[name];
+  function callPlayer(name) {
+    const value = element.props[name];
     player.set(name, value);
   }
 
@@ -71,13 +78,14 @@ export function playerx(createPlayer, element) {
 
     if (oldPlayer) {
       element.replaceChild(player.element, oldPlayer.element);
+      oldPlayer.remove();
     } else {
       element.append(player.element);
     }
 
     await player.ready();
     attachEvents();
-    ready._resolve();
+    ready.resolve();
   }
 
   function attachEvents() {
@@ -93,7 +101,9 @@ export function playerx(createPlayer, element) {
     const event = new CustomEvent(name, { detail });
     element.dispatchEvent(event);
 
-    console.warn(event);
+    if (!['timeupdate'].includes(name)) {
+      console.warn(event);
+    }
   }
 
   init();

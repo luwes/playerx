@@ -1,4 +1,5 @@
 import { getName, setName } from './helpers/string.js';
+import { isMethod } from './utils/utils.js';
 
 export function base(player) {
   return {
@@ -8,8 +9,9 @@ export function base(player) {
       if (descriptor && descriptor.set) return (player[name] = value);
 
       const method = setName(name);
-      if (player[method]) return player[method](value);
-      if (player.api[method]) return player.api[method](value);
+      if (isMethod(player, method)) return player[method](value);
+      if (isMethod(player.api, name)) return player.api[name](value);
+      if (isMethod(player.api, method)) return player.api[method](value);
     },
 
     get(name) {
@@ -17,8 +19,13 @@ export function base(player) {
       if (descriptor && descriptor.get) return player[name];
 
       const method = getName(name);
-      if (player[method]) return player[method]();
-      if (player.api[method]) return player.api[method]();
+      if (isMethod(player, method)) return player[method]();
+      if (isMethod(player.api, name)) return player.api[name]();
+      if (isMethod(player.api, method)) return player.api[method]();
+    },
+
+    remove() {
+      return player.api.remove();
     },
 
     play() {

@@ -15,3 +15,11 @@ export const once = fn => () => {
   fn();
   fn = null;
 };
+
+export function clamp(min, max, value) {
+  return value < min ? min : value > max ? max : value;
+}
+
+export function isMethod(instance, name) {
+  return instance && typeof instance[name] === 'function';
+}

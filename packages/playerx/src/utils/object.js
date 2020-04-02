@@ -7,6 +7,11 @@ export function pick(names, obj) {
   return result;
 }
 
+export function omit(names, obj) {
+  return names.reduce((newObj, val) => // eslint-disable-next-line
+    (({ [val]: dropped, ...rest }) => rest)(newObj), obj);
+}
+
 export function getEntry(obj) {
   for (let name in obj) return [name, obj[name]];
 }

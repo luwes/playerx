@@ -4,7 +4,7 @@ import { camelCase, kebabCase } from '../utils/string.js';
 export function customElement(defaults, element) {
   const { defaultProps, reflect, readonly } = defaults;
   const instance = {};
-  const _props = {};
+  const props = {};
   let changedProps = {};
   let reflectingProps;
   let updatePromise = Promise.resolve();
@@ -22,8 +22,8 @@ export function customElement(defaults, element) {
         set: value => {
           if (name in readonly) return;
 
-          const oldValue = _props[name];
-          _props[name] = value;
+          const oldValue = props[name];
+          props[name] = value;
           requestUpdate(name, oldValue);
         },
         configurable: true,
@@ -35,7 +35,7 @@ export function customElement(defaults, element) {
   function requestUpdate(name, oldValue) {
     let shouldRequestUpdate = true;
     if (name) {
-      if (_props[name] == oldValue) {
+      if (props[name] == oldValue) {
         shouldRequestUpdate = false;
       } else {
         changedProps[name] = oldValue;
@@ -81,7 +81,7 @@ export function customElement(defaults, element) {
   }
 
   function propToAttr(propName) {
-    let value = _props[propName];
+    let value = props[propName];
     if (value === undefined || !(propName in reflect)) return;
 
     if (value == null || value === false) {
@@ -103,18 +103,10 @@ export function customElement(defaults, element) {
   function refresh(name, value) {
     ignoreAttributeChange = true;
 
-    _props[name] = value;
+    props[name] = value;
     propToAttr(name);
 
     ignoreAttributeChange = false;
-  }
-
-  function _connected() {
-    // body...
-  }
-
-  function _disconnected() {
-    // body...
   }
 
   function _attributeChanged(name, oldValue, value) {
@@ -142,10 +134,8 @@ export function customElement(defaults, element) {
   }
 
   const methods = {
-    _connected,
-    _disconnected,
     _attributeChanged,
-    _props,
+    props,
     refresh,
   };
 

@@ -1,6 +1,6 @@
 import { addCssRule, boxUnit } from '../utils/css.js';
 
-export function createResponsiveStyle(props) {
+export function createResponsiveStyle(props, tag = 'iframe') {
   let element;
   let before;
   update(props);
@@ -30,29 +30,36 @@ export function createResponsiveStyle(props) {
       clear: 'both',
     });
 
-    addCssRule(`${selector} iframe`, {
-      position: 'absolute'
+    addCssRule(`${selector} > ${tag}`, {
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
     });
-  }
-
-  function setWidth(width) {
-    element.style.width = width == null ? '' : boxUnit(width);
-  }
-
-  function setHeight(height) {
-    element.style.height = height == null ? '' : boxUnit(height);
-  }
-
-  function setAspectRatio(ratio) {
-    before.style.setProperty('padding-top', `${ratio * 100}%`);
   }
 
   return {
     update,
     methods: {
-      setWidth,
-      setHeight,
-      setAspectRatio
+
+      set width(width) {
+        element.style.width = width == null ? '' : boxUnit(width);
+      },
+
+      get width() {
+        return element.style.width;
+      },
+
+      set height(height) {
+        element.style.height = height == null ? '' : boxUnit(height);
+      },
+
+      get height() {
+        return element.style.height;
+      },
+
+      set aspectRatio(ratio) {
+        before.style.setProperty('padding-top', `${ratio * 100}%`);
+      },
     }
   };
 }

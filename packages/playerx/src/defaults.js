@@ -29,4 +29,31 @@ export const defaultProps = {
   currentTime: 0,
   playbackRate: 1,
   volume: 1,
+  config: {
+    vimeo: {
+      autopause: false,
+      byline: false,
+      portrait: false,
+      title: false,
+    },
+    youtube: {
+      showinfo: 0,
+      rel: 0,
+      iv_load_policy: 3,
+      modestbranding: 1,
+    },
+    soundcloud: {
+      visual: true, // Undocumented, player fills iframe and looks better.
+      buying: false,
+      liking: false,
+      download: false,
+      sharing: false,
+      show_comments: false,
+      show_playcount: false,
+    },
+    wistia: {
+      videoFoam: false,
+      silentAutoPlay: 'allow',
+    },
+  }
 };

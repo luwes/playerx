@@ -12,8 +12,23 @@ export function publicPromise() {
     rejectPromise = reject;
   });
 
-  promise._resolve = () => (resolvePromise(), promise);
-  promise._reject = () => (rejectPromise(), promise);
+  promise.resolve = (...args) => (resolvePromise(...args), promise);
+  promise.reject = (...args) => (rejectPromise(...args), promise);
 
   return promise;
 }
+
+export function promisify(fn) {
+  return (...args) => new Promise((resolve) => {
+    fn(...args, (...res) => {
+      resolve(...res);
+    });
+  });
+}
+
+/**
+ * Returns a promise that will resolve after passed ms.
+ * @param  {number} ms
+ * @return {Promise}
+ */
+export const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
