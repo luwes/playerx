@@ -12,35 +12,51 @@ var coverage = String(process.env.COVERAGE) === 'true',
   ci = String(process.env.CI).match(/^(1|true)$/gi),
   pullRequest = !String(process.env.TRAVIS_PULL_REQUEST).match(/^(0|false|undefined)$/gi),
   masterBranch = String(process.env.TRAVIS_BRANCH).match(/^master$/gi),
-  sauceLabs = ci && !pullRequest && masterBranch;
+  automate = ci && !pullRequest && masterBranch;
 
-var sauceLabsLaunchers = {
-  sl_chrome: {
-    base: 'SauceLabs',
-    browserName: 'chrome',
-    platform: 'Windows 10'
+// var sauceLabsLaunchers = {
+//   sl_chrome: {
+//     base: 'SauceLabs',
+//     browserName: 'chrome',
+//     platform: 'Windows 10'
+//   },
+//   sl_firefox: {
+//     base: 'SauceLabs',
+//     browserName: 'firefox',
+//     platform: 'Windows 10'
+//   },
+//   sl_safari: {
+//     base: 'SauceLabs',
+//     browserName: 'safari',
+//     platform: 'OS X 10.11'
+//   },
+//   sl_edge: {
+//     base: 'SauceLabs',
+//     browserName: 'MicrosoftEdge',
+//     platform: 'Windows 10'
+//   },
+//   sl_ie_11: {
+//     base: 'SauceLabs',
+//     browserName: 'internet explorer',
+//     version: '11.0',
+//     platform: 'Windows 7'
+//   }
+// };
+
+var browserstackLaunchers = {
+  bs_chrome_win: {
+    base: 'BrowserStack',
+    browser: 'Chrome',
+    browser_version: '80.0',
+    os: 'Windows',
+    os_version: '10',
+    chromeOptions: {
+      args: [
+        '--disable-web-security',
+        '--autoplay-policy=no-user-gesture-required'
+      ]
+    }
   },
-  // sl_firefox: {
-  //   base: 'SauceLabs',
-  //   browserName: 'firefox',
-  //   platform: 'Windows 10'
-  // },
-  // sl_safari: {
-  //   base: 'SauceLabs',
-  //   browserName: 'safari',
-  //   platform: 'OS X 10.11'
-  // },
-  // sl_edge: {
-  //   base: 'SauceLabs',
-  //   browserName: 'MicrosoftEdge',
-  //   platform: 'Windows 10'
-  // },
-  // sl_ie_11: {
-  //   base: 'SauceLabs',
-  //   browserName: 'internet explorer',
-  //   version: '11.0',
-  //   platform: 'Windows 7'
-  // }
 };
 
 var localLaunchers = {
@@ -65,11 +81,16 @@ var localLaunchers = {
 
 module.exports = function(config) {
   config.set({
-    browsers: sauceLabs
-      ? Object.keys(sauceLabsLaunchers)
+    browsers: automate
+      ? Object.keys(browserstackLaunchers)
       : Object.keys(localLaunchers),
 
-    customLaunchers: sauceLabs ? sauceLabsLaunchers : localLaunchers,
+    customLaunchers: automate ? browserstackLaunchers : localLaunchers,
+
+    browserStack: {
+      username: process.env.BROWSERSTACK_USERNAME,
+      accessKey: process.env.BROWSERSTACK_ACCESS_KEY
+    },
 
     sauceLabs: {
       build: 'CI #' + process.env.TRAVIS_BUILD_NUMBER + ' (' + process.env.TRAVIS_BUILD_ID + ')',
@@ -105,7 +126,7 @@ module.exports = function(config) {
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: ['tap-pretty'].concat(
       coverage ? 'coverage' : [],
-      sauceLabs ? 'saucelabs' : []
+      automate ? 'saucelabs' : []
     ),
 
     tapReporter: {
@@ -162,7 +183,7 @@ module.exports = function(config) {
             config.grep.replace('/test/', '/src/') :
             'packages/*/!(htm)/**/src/**/*.js'
         }),
-        sauceLabs && babel({
+        automate && babel({
           include: [
             'packages/playerx/**'
           ]

@@ -47,6 +47,7 @@
     "http-server": "^0.12.1",
     "ispy": "^0.1.2",
     "karma": "^4.4.1",
+    "karma-browserstack-launcher": "^1.5.1",
     "karma-chrome-launcher": "^3.0.0",
     "karma-coverage": "^2.0.1",
     "karma-rollup-preprocessor": "^7.0.3",
