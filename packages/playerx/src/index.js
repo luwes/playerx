@@ -1,7 +1,8 @@
 import { define } from './define.js';
 import * as players from './players/index.js';
 import * as Events from './constants/events.js';
-export { Events };
+import { options } from './options.js';
+export { Events, options };
 
 function x(element, ...args) {
   for (let key in players) {

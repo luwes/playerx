@@ -13,22 +13,26 @@ export function customElement(defaults, element) {
   let ignorePropChange;
 
   function init() {
-    Object.keys(defaultProps).forEach(name => {
-      Object.defineProperty(instance, name, {
-        get: () => {
-          const value = element._getProp(name);
-          return value == null ? defaultProps[name] : value;
-        },
-        set: value => {
-          if (name in readonly) return;
+    Object.keys(defaultProps).forEach((name) => createProp(name));
+  }
 
-          const oldValue = props[name];
-          props[name] = value;
-          requestUpdate(name, oldValue);
-        },
-        configurable: true,
-        enumerable: true
-      });
+  function createProp(name, defaultValue) {
+    if (defaultValue !== undefined) defaultProps[name] = defaultValue;
+
+    Object.defineProperty(element, name, {
+      get: () => {
+        const value = element._getProp(name);
+        return value == null ? defaultProps[name] : value;
+      },
+      set: value => {
+        if (name in readonly) return;
+
+        const oldValue = props[name];
+        props[name] = value;
+        requestUpdate(name, oldValue);
+      },
+      configurable: true,
+      enumerable: true
     });
   }
 
@@ -141,6 +145,7 @@ export function customElement(defaults, element) {
   const methods = {
     _attributeChanged,
     _getPropDefaulted,
+    createProp,
     props,
     refresh,
   };

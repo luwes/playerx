@@ -9,6 +9,8 @@ import { publicPromise, promisify } from '../utils/promise.js';
 import { serialize } from '../utils/url.js';
 import { once, clamp } from '../utils/utils.js';
 import { createTimeRanges } from '../utils/time-ranges.js';
+import { options } from '../options.js';
+export { options };
 
 const EMBED_BASE = 'https://w.soundcloud.com/player';
 const API_URL = 'https://w.soundcloud.com/player/api.js';
@@ -142,8 +144,8 @@ export function soundcloud(element) {
       return duration / 1000;
     },
 
-    async getBuffered() {
-      const progress = loadedProgress * (await methods.getDuration());
+    get buffered() {
+      const progress = loadedProgress * element.duration;
       if (progress > 0) {
         return createTimeRanges(0, progress);
       }

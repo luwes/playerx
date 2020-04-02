@@ -9,6 +9,8 @@ import { publicPromise } from '../utils/promise.js';
 import { serialize, boolToBinary } from '../utils/url.js';
 import { once } from '../utils/utils.js';
 import { createTimeRanges } from '../utils/time-ranges.js';
+import { options } from '../options.js';
+export { options };
 
 const EMBED_BASE = 'https://player.vimeo.com/video';
 const API_URL = 'https://player.vimeo.com/api/player.js';

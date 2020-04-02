@@ -7,6 +7,8 @@ import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise } from '../utils/promise.js';
 import { uniqueId } from '../utils/utils.js';
+import { options } from '../options.js';
+export { options };
 
 const API_URL = 'https://connect.facebook.net/en_US/sdk.js';
 const API_GLOBAL = 'FB';
@@ -15,7 +17,7 @@ const MATCH_URL = /facebook\.com\/.+/;
 
 facebook.canPlay = src => MATCH_URL.test(src);
 
-export function facebook(element, reload) {
+export function facebook(element) {
   let api;
   let div;
   let ready = publicPromise();
@@ -113,7 +115,7 @@ export function facebook(element, reload) {
 
     set src(value) {
       style.update(element);
-      reload();
+      element.load();
     },
 
     get currentTime() {
@@ -125,7 +127,7 @@ export function facebook(element, reload) {
     },
 
     set controls(value) {
-      reload();
+      element.load();
     },
 
     set volume(volume) {

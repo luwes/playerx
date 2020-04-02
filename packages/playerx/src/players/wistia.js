@@ -6,6 +6,8 @@ import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise } from '../utils/promise.js';
 import { createElement } from '../utils/dom.js';
+import { options } from '../options.js';
+export { options };
 
 const API_URL = 'https://fast.wistia.com/assets/external/E-v1.js';
 const API_GLOBAL = 'Wistia';
@@ -13,7 +15,7 @@ const MATCH_URL = /(?:wistia\.com|wi\.st)\/(?:medias|embed)\/(.*)$/;
 
 wistia.canPlay = src => MATCH_URL.test(src);
 
-export function wistia(element, reload) {
+export function wistia(element) {
   let api;
   let div;
   let ready = publicPromise();
@@ -110,7 +112,7 @@ export function wistia(element, reload) {
 
     set src(src) {
       style.update(element);
-      reload();
+      element.load();
 
       // `api.replaceWith` works but does strange things with resizing ;(
       // api.replaceWith(getVideoId(src), getOptions());

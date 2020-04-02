@@ -9,8 +9,7 @@ const terserPlugin = terser({
   sourcemap: true,
   warnings: true,
   compress: {
-    passes: 2,
-    sequences: false, // caused an issue with Babel where sequence order was wrong
+    passes: 2
   },
   // mangle: {
   //   properties: {
@@ -20,15 +19,15 @@ const terserPlugin = terser({
 });
 
 const config = {
-  input: 'src/index.js',
+  input: 'src/lite.js',
   watch: {
     clearScreen: false
   },
   output: {
     format: 'iife',
     sourcemap: true,
-    file: 'dist/playerx.js',
-    name: 'playerx'
+    file: 'dist/playerx-lite.js',
+    name: 'plxLite'
   },
   plugins: [
     bundleSize(),
@@ -45,7 +44,7 @@ export default [
     ...config,
     output: {
       ...config.output,
-      file: 'module/playerx.js',
+      file: 'module/playerx-lite.js',
       format: 'es'
     }
   },
@@ -53,23 +52,12 @@ export default [
     ...config,
     output: {
       ...config.output,
-      file: 'dist/playerx.js',
+      file: 'dist/playerx-lite.js',
       format: 'umd'
     },
     plugins: [
       ...config.plugins,
-      babel({
-        compact: false,
-      })
+      babel()
     ]
-  },
-  {
-    ...config,
-    input: 'src/players/vimeo.js',
-    output: {
-      ...config.output,
-      file: 'module/player-vimeo.js',
-      format: 'es'
-    }
   },
 ];

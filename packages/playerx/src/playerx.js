@@ -1,9 +1,9 @@
-import { base } from './base.js';
+import { base } from './player-base.js';
 import * as Events from './constants/events.js';
 import { extend } from './utils/object.js';
 import { publicPromise } from './utils/promise.js';
 
-export const coreMethodNames = [
+const coreMethodNames = [
   'set',
   'get',
   'on',
@@ -42,6 +42,7 @@ export function playerx(createPlayer, element) {
 
   const methods = {
     fire,
+    load,
 
     _disconnected() {
       destroy(player);
@@ -62,7 +63,7 @@ export function playerx(createPlayer, element) {
 
       const src = 'src' in changedProps && element.src;
       if (src && (!player || !player.f.canPlay(src))) {
-        if (src) loadPlayer();
+        element.load();
       } else {
         await ready;
         Object.keys(changedProps).forEach(callPlayer);
@@ -84,21 +85,22 @@ export function playerx(createPlayer, element) {
     player.set(name, value);
   }
 
-  async function loadPlayer() {
-    let nextElement;
+  async function load() {
+    let nextSibling;
     let oldPlayer = player;
     if (oldPlayer) {
-      nextElement = oldPlayer.element.nextSibling;
-      destroy(oldPlayer);
       ready = publicPromise();
+
+      nextSibling = oldPlayer.element.nextSibling;
+      destroy(oldPlayer);
     }
 
     player = {};
-    player = extend(player, base(element, player), createPlayer(element, loadPlayer));
+    player = extend(player, base(element, player), createPlayer(element));
     player.f = player.f || createPlayer;
 
     if (oldPlayer) {
-      element.insertBefore(player.element, nextElement);
+      element.insertBefore(player.element, nextSibling);
     } else {
       element.append(player.element);
     }
@@ -110,12 +112,15 @@ export function playerx(createPlayer, element) {
     player.set('loop', element._getPropDefaulted('loop'));
 
     attachEvents();
-    updateCurrentTime();
-    updateDuration();
-    updateVolume();
-    updateProgress();
+    await Promise.all([
+      updateCurrentTime(),
+      updateDuration(),
+      updateVolume(),
+      updateProgress(),
+    ]);
 
     ready.resolve();
+    element.fire('ready');
   }
 
   function attachEvents() {
@@ -143,6 +148,7 @@ export function playerx(createPlayer, element) {
 
     events
       .filter(event => ![
+        Events.READY,
         Events.ENDED,
         Events.TIMEUPDATE,
         Events.DURATIONCHANGE,

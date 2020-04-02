@@ -7,6 +7,8 @@ import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise, promisify } from '../utils/promise.js';
 import { createTimeRanges } from '../utils/time-ranges.js';
+import { options } from '../options.js';
+export { options };
 
 const EMBED_BASE = 'https://streamable.com/o';
 const API_URL = 'https://cdn.embed.ly/player-0.1.0.min.js';
@@ -15,7 +17,7 @@ const MATCH_URL = /streamable\.com\/([a-z0-9]+)$/;
 
 streamable.canPlay = src => MATCH_URL.test(src);
 
-export function streamable(element, reload) {
+export function streamable(element) {
   let api;
   let iframe;
   let ready = publicPromise();
@@ -93,7 +95,7 @@ export function streamable(element, reload) {
 
     set src(value) {
       style.update(element);
-      reload();
+      element.load();
     },
 
     async getCurrentTime() {

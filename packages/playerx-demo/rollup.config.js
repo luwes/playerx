@@ -10,12 +10,8 @@ const terserPlugin = terser({
   sourcemap: true,
   warnings: true,
   compress: {
-    passes: 2
-  },
-  mangle: {
-    properties: {
-      regex: /^_/
-    }
+    passes: 2,
+    sequences: false, // caused an issue with Babel where sequence order was wrong
   }
 });
 
@@ -40,6 +36,7 @@ const config = {
     nodeResolve(),
     babel({
       inputSourceMap: false,
+      compact: false,
     }),
 
     // If we're building for production (npm run build
@@ -48,4 +45,15 @@ const config = {
   ]
 };
 
-export default [config];
+export default [
+  config,
+  {
+    ...config,
+    input: 'src/playerx-plugged.js',
+    output: {
+      ...config.output,
+      file: 'dist/playerx-plugged.js',
+      name: 'playerxPlugged',
+    },
+  },
+];

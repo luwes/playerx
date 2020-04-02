@@ -55,7 +55,9 @@ const player = hydrate(dhtml`
 `);
 
 hydrate(dhtml`
-  <div class="sources" onclick=${e => src(e.target.dataset.src)} />
+  <div class="sources" onclick=${e => {
+    if (e.target.dataset.src) src(e.target.dataset.src);
+  }} />
 `);
 
 hydrate(dhtml`

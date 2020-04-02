@@ -8,6 +8,8 @@ import { loadScript } from '../utils/load-script.js';
 import { publicPromise } from '../utils/promise.js';
 import { serialize, boolToBinary } from '../utils/url.js';
 import { createTimeRanges } from '../utils/time-ranges.js';
+import { options } from '../options.js';
+export { options };
 
 const EMBED_BASE = 'https://www.youtube.com/embed';
 const API_URL = 'https://www.youtube.com/iframe_api';
@@ -17,7 +19,7 @@ const MATCH_URL = /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?
 
 youtube.canPlay = src => MATCH_URL.test(src);
 
-export function youtube(element, reload) {
+export function youtube(element) {
   let api;
   let iframe;
   let ready;
@@ -134,7 +136,7 @@ export function youtube(element, reload) {
 
     set src(src) {
       style.update(element);
-      reload();
+      element.load();
 
       // `api.cueVideoById` works but `api.getDuration()` is never updated ;(
       // api.cueVideoById(getVideoId(src));
@@ -157,7 +159,7 @@ export function youtube(element, reload) {
     },
 
     set controls(value) {
-      reload();
+      element.load();
     },
 
     set currentTime(seconds) {

@@ -23,6 +23,7 @@
     "dev": "run-p dev:* start livereload watch",
     "dev:demo": "yarn workspace playerx-demo dev",
     "dev:playerx": "yarn workspace playerx dev",
+    "dev:lite": "yarn workspace playerx-lite dev",
     "lint": "eslint packages/*/src",
     "start": "http-server -c-1 -p 8000",
     "test": "cross-env COVERAGE=true karma start",
