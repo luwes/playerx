@@ -13,7 +13,7 @@ export { options };
 const EMBED_BASE = 'https://streamable.com/o';
 const API_URL = 'https://cdn.embed.ly/player-0.1.0.min.js';
 const API_GLOBAL = 'playerjs';
-const MATCH_URL = /streamable\.com\/([a-z0-9]+)$/;
+const MATCH_URL = /streamable\.com\/(\w+)$/;
 
 streamable.canPlay = src => MATCH_URL.test(src);
 

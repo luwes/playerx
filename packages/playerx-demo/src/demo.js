@@ -1,13 +1,16 @@
-import { observable, html } from 'sinuous';
-import { dhtml, hydrate } from 'sinuous/hydrate';
-import { toHHMMSS, round } from './utils.js';
+import { observable } from 'sinuous';
+import { dhtml, hydrate as hy } from 'sinuous/hydrate';
+import { toHHMMSS, round, computedValue } from './utils.js';
 
 let src = observable('https://vimeo.com/357274789');
+// let src = observable('https://www.dailymotion.com/video/x7sgamf');
 // let src = observable('https://soundcloud.com/areckoner/winter-fingers');
 // let src = observable('https://wesleyluyten.wistia.com/medias/dgzftn5ctz');
 // let src = observable('https://www.youtube.com/watch?v=BK1JIjLPwaA');
 // let src = observable('https://streamable.com/aizxh');
 // let src = observable('https://www.facebook.com/wesleyluyten/videos/10220940465559072');
+
+let showing = computedValue(() => !!src());
 let playing = observable(false);
 let volume = observable(1);
 let volumeValue = observable(1);
@@ -28,39 +31,46 @@ const props = {
   controls,
   currentTime,
   volume,
-  onpause: () => playing(false),
-  onplay: () => playing(true),
-  onplaying: () => playing(true),
-  ondurationchange: () => player.duration && duration(player.duration),
-  onseeking: () => currentTimeValue(player.currentTime),
-  onseeked: () => currentTimeValue(player.currentTime),
-  ontimeupdate: () => {
+  onpause: observable(() => playing(false)),
+  onplay: observable(() => playing(true)),
+  onplaying: observable(() => playing(true)),
+  onended: observable(() => playing(false)),
+  ondurationchange: observable(() =>
+    player.duration && duration(player.duration)),
+  onseeking: observable(() => currentTimeValue(player.currentTime)),
+  onseeked: observable(() => currentTimeValue(player.currentTime)),
+  ontimeupdate: observable(() => {
     currentTimeValue(player.currentTime);
     ended(player.ended);
-  },
-  onvolumechange: () => {
+  }),
+  onvolumechange: observable(() => {
     volumeValue(player.volume);
     muted(player.muted);
-  },
-  onprogress: () => {
+  }),
+  onprogress: observable(() => {
     const len = player.buffered.length;
     if (len && duration()) {
       buffered(player.buffered.end(len - 1) / duration());
     }
-  },
+  }),
 };
 
-const player = hydrate(dhtml`
-  <player-x ...${props} />
+let player = hy(dhtml`
+  ${() => showing() ? (player = dhtml`<player-x ...${props} />`) : ''}
 `);
 
-hydrate(dhtml`
+function remove() {
+  playing(false);
+  src('');
+}
+
+hy(dhtml`
   <div class="sources" onclick=${e => {
     if (e.target.dataset.src) src(e.target.dataset.src);
   }} />
 `);
 
-hydrate(dhtml`
+hy(dhtml`
   <div id="controls-1">
     <button onclick=${() => playing(!playing())}>
       ${() => (playing() ? 'Pause' : 'Play')}
@@ -75,17 +85,7 @@ function stop() {
   player.stop();
 }
 
-function remove() {
-  playing(false);
-  src('');
-
-  player.remove();
-  document.querySelector('#player').append(html`
-    <player-x ...${props} />
-  `);
-}
-
-hydrate(dhtml`
+hy(dhtml`
   <div id="controls-2">
     <span />
     <button onclick=${() => player.set('playbackRate', 0.5)} />
@@ -94,32 +94,32 @@ hydrate(dhtml`
   </div>
 `);
 
-hydrate(dhtml`
+hy(dhtml`
   <input id="current-time-range"
     value=${() => (currentTimeValue() / duration()) || 0}
     oninput=${e => currentTime(e.target.value * duration())} />
 `);
 
-hydrate(dhtml`
+hy(dhtml`
   <input id="volume-range"
     value=${() => volumeValue() || 0}
     oninput=${e => volume(e.target.value)} />
 `);
 
-hydrate(dhtml`
+hy(dhtml`
   <input id="muted" oninput=${e => muted(e.target.checked)} checked=${muted} />
 `);
 
-hydrate(dhtml`
+hy(dhtml`
   <input id="loop" oninput=${e => loop(e.target.checked)} checked=${loop} />
 `);
 
-hydrate(dhtml`
+hy(dhtml`
   <input id="controls" oninput=${e =>
     controls(e.target.checked)} checked=${controls} />
 `);
 
-hydrate(dhtml`
+hy(dhtml`
   <div class="state-values">
     <b /><i>${src}</i>
     <b /><i>${() => String(!playing())}</i>
@@ -130,12 +130,3 @@ hydrate(dhtml`
     <b /><i>${() => String(ended())}</i>
   </div>
 `);
-
-async function initState() {
-  await player.ready();
-
-  if (player.volume != null) volumeValue(player.volume);
-  if (player.duration) duration(player.duration);
-}
-
-initState();

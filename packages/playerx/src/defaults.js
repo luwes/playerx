@@ -59,5 +59,9 @@ export const defaultProps = {
       appId: '197575574668798',
       version: 'v3.2',
     },
+    dailymotion: {
+      'queue-enable': false,
+      'ui-logo': false,
+    }
   }
 };

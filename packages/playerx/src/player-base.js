@@ -18,6 +18,10 @@ export function base(element, player) {
       let descriptor = Object.getOwnPropertyDescriptor(player, name);
       if (descriptor && descriptor.get) return player[name];
 
+      if (player.api && name in player.api && !isMethod(player.api, name)) {
+        return player.api[name];
+      }
+
       const method = getName(name);
       if (isMethod(player, method)) return player[method]();
       if (isMethod(player.api, name)) return player.api[name]();

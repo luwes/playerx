@@ -45,6 +45,7 @@ export function playerx(createPlayer, element) {
     load,
 
     _disconnected() {
+      console.log('DISCONNECTED');
       destroy(player);
     },
 

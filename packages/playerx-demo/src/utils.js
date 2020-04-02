@@ -1,3 +1,15 @@
+import { observable, subscribe, sample } from 'sinuous/observable';
+
+export function computedValue(fn) {
+  let value = observable(fn());
+  subscribe(() => {
+    if (sample(value) !== fn()) {
+      value(fn());
+    }
+  });
+  return value;
+}
+
 export function ready(fn) {
   if (document.readyState != 'loading') {
     fn();
@@ -26,3 +38,4 @@ export function round(num, precision) {
   const f = 10 ** precision;
   return Math.round((num + Number.EPSILON) * f) / f;
 }
+
