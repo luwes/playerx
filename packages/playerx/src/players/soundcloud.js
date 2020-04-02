@@ -1,3 +1,5 @@
+// https://developers.soundcloud.com/docs/api/html5-widget
+
 import { define } from '../define.js';
 import { createEmbedIframe } from '../helpers/dom.js';
 import { createResponsiveStyle } from '../helpers/css.js';
@@ -30,9 +32,9 @@ export function soundcloud(element) {
 
   function getOptions() {
     return {
-      ...element.config.soundcloud,
       auto_play: element.playing || element.autoplay,
       url: element.src,
+      ...element.config.soundcloud,
     };
   }
 

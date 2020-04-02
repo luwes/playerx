@@ -4,8 +4,9 @@ import { toHHMMSS, round } from './utils.js';
 
 // let src = observable('https://vimeo.com/357274789');
 // let src = observable('https://soundcloud.com/areckoner/winter-fingers');
-let src = observable('https://wesleyluyten.wistia.com/medias/dgzftn5ctz');
+// let src = observable('https://wesleyluyten.wistia.com/medias/dgzftn5ctz');
 // let src = observable('https://www.youtube.com/watch?v=BK1JIjLPwaA');
+let src = observable('https://streamable.com/aizxh');
 let playing = observable(false);
 let volume = observable(1);
 let volumeValue = observable(1);
@@ -37,7 +38,9 @@ const props = {
   },
   onprogress: () => {
     const len = player.buffered.length;
-    buffered(len ? player.buffered.end(len - 1) / duration() : 0);
+    if (len && duration()) {
+      buffered(player.buffered.end(len - 1) / duration());
+    }
   },
 };
 

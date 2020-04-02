@@ -1,3 +1,5 @@
+// https://wistia.com/support/developers/player-api
+
 import { define } from '../define.js';
 import { createResponsiveStyle } from '../helpers/css.js';
 import { extend } from '../utils/object.js';
@@ -19,13 +21,14 @@ export function wistia(element, reload) {
 
   function getOptions() {
     return {
-      ...element.config.wistia,
       autoPlay: element.playing || element.autoplay,
       muted: element.muted,
+      preload: element.preload,
       playsinline: element.playsinline,
       endVideoBehavior: element.loop && 'loop',
       chromeless: !element.controls,
-      controlsVisibleOnLoad: element.controls,
+      playButton: element.controls,
+      ...element.config.wistia,
     };
   }
 
@@ -138,6 +141,7 @@ export function wistia(element, reload) {
     },
 
     set controls(controls) {
+      api.bigPlayButtonEnabled(controls);
       controls ? api.releaseChromeless() : api.requestChromeless();
     },
 

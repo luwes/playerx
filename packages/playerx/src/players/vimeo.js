@@ -1,3 +1,5 @@
+// https://github.com/vimeo/player.js
+
 import { define } from '../define.js';
 import { createEmbedIframe } from '../helpers/dom.js';
 import { createResponsiveStyle } from '../helpers/css.js';
@@ -24,13 +26,13 @@ export function vimeo(element) {
 
   function getOptions() {
     return {
-      ...element.config.vimeo,
       autoplay: element.playing || element.autoplay,
       muted: element.muted,
       loop: element.loop,
       playsinline: element.playsinline,
       controls: element.controls,
       url: element.src,
+      ...element.config.vimeo,
     };
   }
 

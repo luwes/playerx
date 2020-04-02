@@ -1,3 +1,5 @@
+// https://developers.google.com/youtube/iframe_api_reference
+
 import { define } from '../define.js';
 import { createEmbedIframe } from '../helpers/dom.js';
 import { createResponsiveStyle } from '../helpers/css.js';
@@ -28,7 +30,6 @@ export function youtube(element, reload) {
 
   function getOptions() {
     return {
-      ...element.config.youtube,
       autoplay: element.playing || element.autoplay,
       mute: element.muted,
       loop: element.loop,
@@ -36,6 +37,7 @@ export function youtube(element, reload) {
       controls: element.controls,
       origin: location.origin,
       enablejsapi: 1,
+      ...element.config.youtube,
     };
   }
 
