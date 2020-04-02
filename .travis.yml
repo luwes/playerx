@@ -1,24 +1,39 @@
+sudo: true
+
 language: node_js
+
 node_js:
   - "10"
-dist: trusty # needs Ubuntu Trusty
-# Note: if you switch to sudo: false, you'll need to launch Chrome with --no-sandbox.
-# See https://github.com/travis-ci/travis-ci/issues/8836
-sudo: required
-addons:
-  chrome: stable # have Travis install Chrome stable.
+
 cache:
   yarn: true
   directories:
     - node_modules
+
+# As --depth implies --single-branch, removing this flag means that all branches will be checked out
+git:
+  depth: false
+
+# Make chrome browser available for testing
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH="$HOME/.yarn/bin:$PATH"
+
+services:
+  - xvfb
+
 install:
   - yarn
-script:
-  - yarn test --single-run --log-level debug
+
+addons:
+  chrome: stable
+  sauce_connect: true
+
+jobs:
+  include:
+    - stage: tests
+      name: "Unit tests"
+      script: COVERAGE=true yarn test --single-run --log-level debug
+
 after_success:
   - yarn run coverage
-git:
-  submodules: false
