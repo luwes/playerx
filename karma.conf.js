@@ -14,35 +14,6 @@ var coverage = String(process.env.COVERAGE) === 'true',
   masterBranch = String(process.env.TRAVIS_BRANCH).match(/^master$/gi),
   automate = ci && !pullRequest && masterBranch;
 
-// var sauceLabsLaunchers = {
-//   sl_chrome: {
-//     base: 'SauceLabs',
-//     browserName: 'chrome',
-//     platform: 'Windows 10'
-//   },
-//   sl_firefox: {
-//     base: 'SauceLabs',
-//     browserName: 'firefox',
-//     platform: 'Windows 10'
-//   },
-//   sl_safari: {
-//     base: 'SauceLabs',
-//     browserName: 'safari',
-//     platform: 'OS X 10.11'
-//   },
-//   sl_edge: {
-//     base: 'SauceLabs',
-//     browserName: 'MicrosoftEdge',
-//     platform: 'Windows 10'
-//   },
-//   sl_ie_11: {
-//     base: 'SauceLabs',
-//     browserName: 'internet explorer',
-//     version: '11.0',
-//     platform: 'Windows 7'
-//   }
-// };
-
 var browserstackLaunchers = {
   bs_chrome_win: {
     base: 'BrowserStack',
@@ -154,7 +125,7 @@ module.exports = function(config) {
       'https://polyfill.io/v3/polyfill.min.js?features=Element.prototype.append%2CElement.prototype.remove%2CCustomEvent',
       'https://unpkg.com/@webcomponents/custom-elements',
       {
-        pattern: config.grep || 'packages/playerx*/**/test.js',
+        pattern: config.grep || 'packages/playerx/test/test.js',
         watched: false
       },
     ],
