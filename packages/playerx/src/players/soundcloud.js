@@ -37,11 +37,11 @@ export function soundcloud(element) {
   }
 
   async function init() {
-    const options = getOptions();
-    const src = `${EMBED_BASE}/?${serialize(options)}`;
+    const opts = getOptions();
+    const src = `${EMBED_BASE}/?${serialize(opts)}`;
     iframe = createEmbedIframe({ src });
 
-    const SC = await loadScript(API_URL, API_GLOBAL);
+    const SC = await loadScript(opts.apiUrl || API_URL, API_GLOBAL);
     const Events = SC.Widget.Events;
     api = SC.Widget(iframe);
     loadedProgress = 0;
@@ -72,6 +72,8 @@ export function soundcloud(element) {
   };
 
   const methods = {
+    name: 'SoundCloud',
+    version: '1.x.x',
 
     get element() {
       return iframe;
@@ -123,7 +125,7 @@ export function soundcloud(element) {
     },
 
     set muted(muted) {
-      muted ? api.setVolume(0) : api.setVolume(element.props.volume * 100);
+      muted ? api.setVolume(0) : api.setVolume(element.cache('volume') * 100);
     },
 
     async getMuted() {
@@ -138,7 +140,7 @@ export function soundcloud(element) {
 
     async getVolume() {
       let volume = await promisify(api.getVolume, api)();
-      return volume > 0.001 ? volume / 100 : +element.props.volume;
+      return volume > 0.001 ? volume / 100 : +element.cache('volume');
     },
 
     async getDuration() {

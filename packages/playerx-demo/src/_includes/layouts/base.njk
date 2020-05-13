@@ -1,0 +1,19 @@
+{% extends "layouts/root.njk" %}
+
+{% block head %}
+  <link rel="stylesheet" href="/css/playerx-demo.css">
+{% endblock %}
+
+{% block main %}
+  {% include "header.njk" %}
+
+  {% block content %}
+  {% endblock %}
+
+  {% include "footer.njk" %}
+{% endblock %}
+
+{% block foot %}
+  <script src="/js/playerx-plugged.js"></script>
+  <script src="/js/playerx-demo.js"></script>
+{% endblock %}

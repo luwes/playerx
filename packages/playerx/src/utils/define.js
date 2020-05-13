@@ -20,12 +20,12 @@ export function define(name, fn, observedAttributes) {
       this._attributeChanged && this._attributeChanged(name, oldValue, newValue);
     }
 
-    adoptedCallback() {
-      this._adopted && this._adopted();
-    }
+    // adoptedCallback() {
+    //   this._adopted && this._adopted();
+    // }
   };
 
   CE.observedAttributes = observedAttributes;
-  customElements.define(name, CE);
+  Promise.resolve().then(() => customElements.define(name, CE));
   return CE;
 }

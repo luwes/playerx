@@ -1,0 +1,44 @@
+{
+  "name": "playerx-mux",
+  "version": "0.0.1",
+  "description": "Playerx MUX",
+  "keywords": [],
+  "homepage": "https://github.com/luwes/playerx#readme",
+  "bugs": {
+    "url": "https://github.com/luwes/playerx/issues"
+  },
+  "repository": "luwes/playerx",
+  "license": "MIT",
+  "author": "Wesley Luyten <me@wesleyluyten.com> (https://wesleyluyten.com)",
+  "main": "dist/playerx-mux.js",
+  "module": "module/playerx-mux.js",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "rollup -c --silent",
+    "dev": "rollup -wc --silent",
+    "lint": "eslint src"
+  },
+  "dependencies": {
+    "mux-embed": "^3.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@rollup/plugin-alias": "^3.0.1",
+    "@rollup/plugin-babel": "^5.0.0",
+    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-node-resolve": "^7.1.1",
+    "@rollup/plugin-replace": "^2.3.1",
+    "@webcomponents/custom-elements": "^1.4.1",
+    "babel-plugin-transform-async-to-promises": "^0.8.15",
+    "eslint": "^7.0.0",
+    "eslint-plugin-fp": "^2.3.0",
+    "eslint-plugin-import": "^2.20.1",
+    "rollup": "^2.1.0",
+    "rollup-plugin-size": "^0.2.2",
+    "rollup-plugin-terser": "^5.3.0"
+  }
+}

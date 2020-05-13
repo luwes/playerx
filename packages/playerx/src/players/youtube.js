@@ -3,6 +3,8 @@
 import { define } from '../define.js';
 import { createEmbedIframe } from '../helpers/dom.js';
 import { createResponsiveStyle } from '../helpers/css.js';
+import { PlayerError } from '../helpers/error.js';
+import { getVideoId } from '../helpers/url.js';
 import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise } from '../utils/promise.js';
@@ -38,23 +40,19 @@ export function youtube(element) {
     };
   }
 
-  function getVideoId(src) {
-    let match;
-    return (match = src.match(MATCH_URL)) && match[1];
-  }
-
   async function init() {
     ready = publicPromise();
 
-    const options = getOptions();
-    const videoId = getVideoId(element.src);
-    const src = `${EMBED_BASE}/${videoId}?${serialize(boolToBinary(options))}`;
+    const opts = getOptions();
+    const videoId = getVideoId(MATCH_URL, element.src);
+    const src = `${EMBED_BASE}/${videoId}?${serialize(boolToBinary(opts))}`;
     iframe = createEmbedIframe({ src });
 
-    YT = await loadScript(API_URL, API_GLOBAL, API_GLOBAL_READY);
+    YT = await loadScript(opts.apiUrl || API_URL, API_GLOBAL, API_GLOBAL_READY);
     api = new YT.Player(iframe, {
       events: {
-        onReady: ready.resolve
+        onReady: ready.resolve,
+        onError
       }
     });
 
@@ -69,6 +67,10 @@ export function youtube(element) {
     };
 
     await ready;
+  }
+
+  function onError(event) {
+    element.setProp('error', new PlayerError(event.data));
   }
 
   const eventAliases = {
@@ -86,7 +88,21 @@ export function youtube(element) {
     volumechange: 'onVolumeChange',
   };
 
+  const heightMap = {
+    tiny: 144,
+    small: 240,
+    medium: 360,
+    large: 480,
+    hd720: 720,
+    hd1080: 1080,
+    hd1440: 1440,
+    hd2160: 2160,
+    highres: 2160,
+  };
+
   const methods = {
+    name: 'YouTube',
+    version: '1.x.x',
 
     get element() {
       return iframe;
@@ -94,6 +110,32 @@ export function youtube(element) {
 
     get api() {
       return api;
+    },
+
+    get videoId() {
+      return getVideoId(MATCH_URL, element.src);
+    },
+
+    get videoTitle() {
+      return api.getVideoData().title;
+    },
+
+    get videoWidth() {
+      let value = heightMap[api.getPlaybackQuality()];
+      const ratio = element.clientHeight / element.clientWidth;
+      if (ratio < 1) {
+        value /= ratio;
+      }
+      return value;
+    },
+
+    get videoHeight() {
+      let value = heightMap[api.getPlaybackQuality()];
+      const ratio = element.clientHeight / element.clientWidth;
+      if (ratio > 1) {
+        value *= ratio;
+      }
+      return value;
     },
 
     ready() {
@@ -139,7 +181,7 @@ export function youtube(element) {
       element.load();
 
       // `api.cueVideoById` works but `api.getDuration()` is never updated ;(
-      // api.cueVideoById(getVideoId(src));
+      // api.cueVideoById(getVideoId(MATCH_URL, element.src));
     },
 
     set controls(value) {

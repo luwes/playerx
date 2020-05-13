@@ -2,6 +2,7 @@
 
 import { define } from '../define.js';
 import { createResponsiveStyle } from '../helpers/css.js';
+import { getVideoId } from '../helpers/url.js';
 import { createElement } from '../utils/dom.js';
 import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
@@ -13,7 +14,7 @@ export { options };
 const API_URL = 'https://connect.facebook.net/en_US/sdk.js';
 const API_GLOBAL = 'FB';
 const API_GLOBAL_READY = 'fbAsyncInit';
-const MATCH_URL = /facebook\.com\/.+/;
+const MATCH_URL = /facebook\.com\/.*videos\/(\d+)/;
 
 facebook.canPlay = src => MATCH_URL.test(src);
 
@@ -35,23 +36,23 @@ export function facebook(element) {
   async function init() {
     ready = publicPromise();
 
-    const options = getOptions();
+    const opts = getOptions();
     const id = uniqueId('fb');
 
     div = createElement('div', {
       id,
       class: 'fb-video',
       style: 'width:100%;height:100%',
-      'data-href': options.url,
-      'data-autoplay': '' + options.autoplay,
+      'data-href': opts.url,
+      'data-autoplay': '' + opts.autoplay,
       'data-allowfullscreen': 'true',
-      'data-controls': '' + options.controls,
+      'data-controls': '' + opts.controls,
     });
 
-    const FB = await loadScript(API_URL, API_GLOBAL, API_GLOBAL_READY);
+    const FB = await loadScript(opts.apiUrl || API_URL, API_GLOBAL, API_GLOBAL_READY);
     FB.init({
-      appId: options.appId,
-      version: options.version,
+      appId: opts.appId,
+      version: opts.version,
       xfbml: true,
     });
 
@@ -72,6 +73,8 @@ export function facebook(element) {
   };
 
   const methods = {
+    name: 'Facebook',
+    version: '1.x.x',
 
     get element() {
       return div;
@@ -79,6 +82,10 @@ export function facebook(element) {
 
     get api() {
       return api;
+    },
+
+    get videoId() {
+      return getVideoId(MATCH_URL, element.src);
     },
 
     ready() {

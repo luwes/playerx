@@ -2,6 +2,7 @@
 
 import { define } from '../define.js';
 import { createResponsiveStyle } from '../helpers/css.js';
+import { getVideoId } from '../helpers/url.js';
 import { addCssRule } from '../utils/css.js';
 import { createElement } from '../utils/dom.js';
 import { extend } from '../utils/object.js';
@@ -22,7 +23,7 @@ export function vidyard(element) {
   let api;
   let img;
   let ready;
-  let style = createResponsiveStyle(element);
+  let style = createResponsiveStyle(element, 'div');
   let VidyardV4;
 
   function getOptions() {
@@ -32,16 +33,11 @@ export function vidyard(element) {
     };
   }
 
-  function getVideoId(src) {
-    let match;
-    return (match = src.match(MATCH_URL)) && match[1];
-  }
-
   async function init() {
     ready = publicPromise();
 
-    const options = getOptions();
-    const videoId = getVideoId(element.src);
+    const opts = getOptions();
+    const videoId = getVideoId(MATCH_URL, element.src);
 
     img = createElement('img', {
       class: 'vidyard-player-embed',
@@ -52,27 +48,22 @@ export function vidyard(element) {
       style: 'display:none'
     });
 
-    VidyardV4 = await loadScript(API_URL, API_GLOBAL, API_GLOBAL_READY);
-    const renderPromise = VidyardV4.api.renderPlayer(img);
-
-    let selector = `player-x[src="${element.src}"] > div`;
-    addCssRule(selector, {
-      position: 'absolute !important',
-      height: '100% !important'
-    });
-    addCssRule(`${selector} > div`, {
+    addCssRule(`player-x[src="${element.src}"] > div > div`, {
       position: 'absolute !important',
       height: '100% !important',
       width: '100% !important',
       padding: '0 !important'
     });
 
+    VidyardV4 = await loadScript(opts.apiUrl || API_URL, API_GLOBAL, API_GLOBAL_READY);
+    const renderPromise = VidyardV4.api.renderPlayer(img);
+
     api = await renderPromise;
     await promisify(api.on, api)('ready');
 
     ready.resolve();
 
-    options.autoplay && api.play();
+    opts.autoplay && api.play();
   }
 
   const eventAliases = {
@@ -81,12 +72,24 @@ export function vidyard(element) {
   };
 
   const methods = {
+    name: 'Vidyard',
+    version: '1.x.x',
+
     get element() {
       return img;
     },
 
     get api() {
       return api;
+    },
+
+    get videoId() {
+      return getVideoId(MATCH_URL, element.src);
+    },
+
+    get videoTitle() {
+      return api.metadata.chapters_attributes[0].video_attributes
+        .name;
     },
 
     ready() {
@@ -124,11 +127,11 @@ export function vidyard(element) {
     },
 
     set muted(muted) {
-      muted ? api.setVolume(0) : api.setVolume(element.props.volume);
+      muted ? api.setVolume(0) : api.setVolume(+element.cache('volume'));
     },
 
     async getMuted() {
-      return +element.props.volume === 0;
+      return +element.cache('volume') === 0;
     },
 
     set volume(volume) {
@@ -138,7 +141,7 @@ export function vidyard(element) {
     },
 
     async getVolume() {
-      return +element.props.volume;
+      return +element.cache('volume');
     },
 
     set playbackRate(value) {

@@ -20,6 +20,23 @@ export function clamp(min, max, value) {
   return value < min ? min : value > max ? max : value;
 }
 
+export function getProperty(instance, name) {
+  let result;
+  if (instance
+    && name in instance
+    && (result = instance[name]) !== undefined
+    && typeof result !== 'function'
+  ) {
+    return result;
+  }
+}
+
+export function getMethod(instance, name) {
+  if (isMethod(instance, name)) {
+    return instance[name]();
+  }
+}
+
 export function isMethod(instance, name) {
   return instance && typeof instance[name] === 'function';
 }
@@ -40,5 +57,6 @@ export function isMethod(instance, name) {
 let idCounter = 0;
 export function uniqueId(prefix) {
   let id = ++idCounter;
+  console.warn(prefix, id);
   return `${prefix}${id}`;
 }

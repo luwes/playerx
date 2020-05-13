@@ -1,25 +1,26 @@
 import { observable, subscribe, sample } from 'sinuous/observable';
 
+export const qs = (selector) => document.querySelector(selector);
+
 export function computedValue(fn) {
-  let value = observable(fn());
+  let val = observable(fn());
   subscribe(() => {
-    if (sample(value) !== fn()) {
-      value(fn());
+    if (sample(val) !== fn()) {
+      val(fn());
     }
   });
-  return value;
+  return val;
 }
 
-export function ready(fn) {
-  if (document.readyState != 'loading') {
-    fn();
-  } else {
-    document.addEventListener('DOMContentLoaded', fn);
-  }
-}
-
-export function invert(accessor) {
-  return () => accessor(!accessor());
+export function value(current) {
+  const v = observable(current);
+  return function(update) {
+    if (!arguments.length) return v();
+    if (update !== current) {
+      current = v(update);
+    }
+    return update;
+  };
 }
 
 export function toHHMMSS(secs) {
@@ -29,7 +30,7 @@ export function toHHMMSS(secs) {
     seconds = sec_num % 60;
 
   return [hours, minutes, seconds]
-    .map(v => (v < 10 ? '0' + v : v))
+    .map((v) => (v < 10 ? '0' + v : v))
     .filter((v, i) => v !== '00' || i > 0)
     .join(':');
 }
@@ -38,4 +39,3 @@ export function round(num, precision) {
   const f = 10 ** precision;
   return Math.round((num + Number.EPSILON) * f) / f;
 }
-

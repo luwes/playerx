@@ -8,3 +8,16 @@ coverage
 
 dist/
 module/
+/packages/playerx-demo/public/
+/packages/playerx-demo/public/index.html
+/packages/playerx-demo/public/brightcove/
+/packages/playerx-demo/public/dailymotion/
+/packages/playerx-demo/public/facebook/
+/packages/playerx-demo/public/jw-player/
+/packages/playerx-demo/public/soundcloud/
+/packages/playerx-demo/public/streamable/
+/packages/playerx-demo/public/twitch/
+/packages/playerx-demo/public/vidyard/
+/packages/playerx-demo/public/vimeo/
+/packages/playerx-demo/public/wistia/
+/packages/playerx-demo/public/youtube/

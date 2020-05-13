@@ -1,0 +1,15 @@
+export const LOADSTART = 'loadstart';
+export const LOADEDMETADATA = 'loadedmetadata';
+export const PLAY = 'play';
+export const PLAYING = 'playing';
+export const PAUSE = 'pause';
+export const ENDED = 'ended';
+export const PROGRESS = 'progress';
+export const TIMEUPDATE = 'timeupdate';
+export const SEEKING = 'seeking';
+export const SEEKED = 'seeked';
+export const CUECHANGE = 'cuechange';
+export const VOLUMECHANGE = 'volumechange';
+export const RATECHANGE = 'ratechange';
+export const DURATIONCHANGE = 'durationchange';
+export const ERROR = 'error';

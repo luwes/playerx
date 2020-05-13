@@ -2,6 +2,7 @@
 
 import { define } from '../define.js';
 import { createResponsiveStyle } from '../helpers/css.js';
+import { getVideoId } from '../helpers/url.js';
 import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise } from '../utils/promise.js';
@@ -34,16 +35,11 @@ export function wistia(element) {
     };
   }
 
-  function getVideoId(src) {
-    let match;
-    return (match = src.match(MATCH_URL)) && match[1];
-  }
-
   async function init() {
     ready = publicPromise();
 
-    const options = getOptions();
-    const id = getVideoId(element.src);
+    const opts = getOptions();
+    const id = getVideoId(MATCH_URL, element.src);
 
     div = createElement('div', {
       class: `wistia_embed wistia_async_${id}`,
@@ -52,11 +48,11 @@ export function wistia(element) {
     const onReadyPromise = publicPromise();
     const onReady = onReadyPromise.resolve;
 
-    await loadScript(API_URL, API_GLOBAL);
+    await loadScript(opts.apiUrl || API_URL, API_GLOBAL);
     window._wq.push({
       id,
-      options,
-      onReady
+      onReady,
+      options: opts,
     });
 
     api = await onReadyPromise;
@@ -85,6 +81,8 @@ export function wistia(element) {
   };
 
   const methods = {
+    name: 'Wistia',
+    version: '1.x.x',
 
     get element() {
       return div;
@@ -92,6 +90,26 @@ export function wistia(element) {
 
     get api() {
       return api;
+    },
+
+    get videoId() {
+      return api.hashedId();
+    },
+
+    get videoTitle() {
+      return api.name();
+    },
+
+    get videoWidth() {
+      return api.elem().videoWidth;
+    },
+
+    get videoHeight() {
+      return api.elem().videoHeight;
+    },
+
+    get error() {
+      return api.elem().error;
     },
 
     ready() {
@@ -122,7 +140,7 @@ export function wistia(element) {
       element.load();
 
       // `api.replaceWith` works but does strange things with resizing ;(
-      // api.replaceWith(getVideoId(src), getOptions());
+      // api.replaceWith(getVideoId(MATCH_URL, src), getOptions());
     },
 
     set currentTime(seconds) {

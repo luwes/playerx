@@ -3,6 +3,7 @@
 import { define } from '../define.js';
 import { createResponsiveStyle } from '../helpers/css.js';
 import { allow } from '../helpers/dom.js';
+import { getVideoId } from '../helpers/url.js';
 import { createElement } from '../utils/dom.js';
 import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
@@ -26,7 +27,7 @@ export function dailymotion(element) {
 
   function getOptions() {
     return {
-      video: getVideoId(element.src),
+      video: getVideoId(MATCH_URL, element.src),
       autoplay: element.playing || element.autoplay,
       loop: element.loop,
       muted: element.muted,
@@ -36,17 +37,12 @@ export function dailymotion(element) {
     };
   }
 
-  function getVideoId(src) {
-    let match;
-    return (match = src.match(MATCH_URL)) && match[1];
-  }
-
   async function init() {
     const params = getOptions();
-    const video = getVideoId(element.src);
+    const video = getVideoId(MATCH_URL, element.src);
     div = createElement('div');
 
-    const DM = await loadScript(API_URL, API_GLOBAL, API_GLOBAL_READY);
+    const DM = await loadScript(params.apiUrl || API_URL, API_GLOBAL, API_GLOBAL_READY);
     api = DM.player(div, {
       video,
       params,
@@ -62,6 +58,8 @@ export function dailymotion(element) {
   };
 
   const methods = {
+    name: 'Dailymotion',
+    version: '1.x.x',
 
     get element() {
       return div;
@@ -69,6 +67,32 @@ export function dailymotion(element) {
 
     get api() {
       return api;
+    },
+
+    get videoId() {
+      return api.video.videoId;
+    },
+
+    get videoTitle() {
+      return api.video.title;
+    },
+
+    get videoWidth() {
+      let value = +api.quality;
+      const ratio = element.clientHeight / element.clientWidth;
+      if (ratio < 1) {
+        value /= ratio;
+      }
+      return value;
+    },
+
+    get videoHeight() {
+      let value = +api.quality;
+      const ratio = element.clientHeight / element.clientWidth;
+      if (ratio > 1) {
+        value *= ratio;
+      }
+      return value;
     },
 
     ready() {
@@ -93,13 +117,9 @@ export function dailymotion(element) {
       api.removeEventListener(eventAliases[eventName] || eventName, callback);
     },
 
-    set src(value) {
+    setSrc() {
       style.update(element);
       api.load(getOptions());
-    },
-
-    get src() {
-      return element.props.src;
     },
 
     set currentTime(seconds) {

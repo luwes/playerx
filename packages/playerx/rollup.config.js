@@ -1,7 +1,8 @@
 import nodeResolve from '@rollup/plugin-node-resolve';
-import babel from 'rollup-plugin-babel';
+import babel from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 import bundleSize from 'rollup-plugin-size';
+import sourcemaps from 'rollup-plugin-sourcemaps';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -10,6 +11,7 @@ const terserPlugin = terser({
   warnings: true,
   compress: {
     passes: 2,
+    drop_console: production,
     sequences: false, // caused an issue with Babel where sequence order was wrong
   },
   // mangle: {
@@ -32,6 +34,7 @@ const config = {
   },
   plugins: [
     bundleSize(),
+    sourcemaps(),
     nodeResolve(),
 
     // If we're building for production (npm run build

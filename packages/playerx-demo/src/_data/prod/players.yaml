@@ -1,0 +1,78 @@
+file:
+  name: File
+  clips:
+    - https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM.m3u8
+    - https://dash.akamaized.net/envivio/EnvivioDash3/manifest.mpd
+    -
+      - https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM/low.mp4
+      - https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM/medium.mp4
+      - https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM/high.mp4
+
+vimeo:
+  name: Vimeo
+  clips:
+    - https://vimeo.com/357274789
+    - https://vimeo.com/327204597
+    - https://vimeo.com/154225711
+
+youtube:
+  name: YouTube
+  clips:
+    - https://www.youtube.com/watch?v=BK1JIjLPwaA
+    - https://www.youtube.com/watch?v=ssdng3QeFnA
+    - https://www.youtube.com/watch?v=R6MlUcmOul8
+
+wistia:
+  name: Wistia
+  clips:
+    - https://wesleyluyten.wistia.com/medias/dgzftn5ctz
+    - https://wesleyluyten.wistia.com/medias/oj8d7cwhbn
+
+jwplayer:
+  name: JW Player
+  clips:
+    - https://cdn.jwplayer.com/players/Fpw44kH6-IxzuqJ4M.js
+    - https://cdn.jwplayer.com/players/si1Oby4N-IxzuqJ4M.js
+
+# brightcove:
+#   name: Brightcove
+#   clips:
+#     - https://studio.brightcove.com/products/videocloud/media/videos/6141621349001
+#     - https://studio.brightcove.com/products/videocloud/media/videos/6141690919001
+
+dailymotion:
+  name: Dailymotion
+  clips:
+    - https://www.dailymotion.com/video/x7sgamf
+    - https://www.dailymotion.com/video/x7sgasm
+    - https://www.dailymotion.com/video/x3a9qe6
+
+streamable:
+  name: Streamable
+  clips:
+    - https://streamable.com/aizxh
+    - https://streamable.com/q83oy
+
+facebook:
+  name: Facebook
+  clips:
+    - https://www.facebook.com/wesleyluyten/videos/10220940465559072
+    - https://www.facebook.com/facebook/videos/10153231379946729/
+
+vidyard:
+  name: Vidyard
+  clips:
+    - https://share.vidyard.com/watch/TYY9iSji3mJuFqp2oj4FoL?
+    - https://share.vidyard.com/watch/B4uvxTbjqshXVHf5fXX3po?
+
+twitch:
+  name: Twitch
+  clips:
+    - https://www.twitch.tv/videos/566280744
+    - https://www.twitch.tv/videos/49499968
+
+soundcloud:
+  name: SoundCloud
+  clips:
+    - https://soundcloud.com/areckoner/winter-fingers
+    - https://soundcloud.com/husky-rescue/11-the-good-man

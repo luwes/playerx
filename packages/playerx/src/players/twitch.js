@@ -2,6 +2,7 @@
 
 import { define } from '../define.js';
 import { createResponsiveStyle } from '../helpers/css.js';
+import { getVideoId } from '../helpers/url.js';
 import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise, promisify } from '../utils/promise.js';
@@ -25,7 +26,7 @@ export function twitch(element) {
 
   function getOptions() {
     return {
-      video: getVideoId(element.src),
+      video: getVideoId(MATCH_URL, element.src),
       height: '100%',
       width: '100%',
       autoplay: element.playing || element.autoplay,
@@ -36,27 +37,24 @@ export function twitch(element) {
     };
   }
 
-  function getVideoId(src) {
-    let match;
-    return (match = src.match(MATCH_URL)) && match[1];
-  }
-
   async function init() {
     ready = publicPromise();
 
-    const options = getOptions();
+    const opts = getOptions();
     const id = uniqueId('tc');
 
     div = createElement('div', { id });
 
-    const Twitch = await loadScript(API_URL, API_GLOBAL);
-    api = new Twitch.Player(id, options);
+    const Twitch = await loadScript(opts.apiUrl || API_URL, API_GLOBAL);
+    api = new Twitch.Player(id, opts);
 
     await promisify(api.addEventListener, api)('ready');
     ready.resolve();
   }
 
   const methods = {
+    name: 'Twitch',
+    version: '1.x.x',
 
     get element() {
       return div;
@@ -64,6 +62,10 @@ export function twitch(element) {
 
     get api() {
       return api;
+    },
+
+    get videoId() {
+      return getVideoId(MATCH_URL, element.src);
     },
 
     ready() {
@@ -87,13 +89,9 @@ export function twitch(element) {
       api.removeEventListener(eventName, callback);
     },
 
-    get paused() {
-      return api.isPaused();
-    },
-
     set src(value) {
       style.update(element);
-      api.setVideo('v' + getVideoId(element.src));
+      api.setVideo('v' + getVideoId(MATCH_URL, element.src));
     },
 
     set controls(value) {

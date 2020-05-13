@@ -1,19 +1,18 @@
+import { Element } from 'swiss';
 import { playerx } from './playerx.js';
 import { options } from './options.js';
-import { customElement } from './helpers/custom-element.js';
-import * as defaults from './defaults.js';
-import { kebabCase } from './utils/string.js';
-import { extend } from './utils/object.js';
-import { define as def } from './utils/define.js';
+import { props } from './defaults.js';
 
 export function define(name, create) {
-  return def(name, (element, ...args) => {
+  const CE = Element({
+    props,
+    create
+  });
 
-    extend(element, customElement(defaults, element, ...args));
-    extend(element, playerx(create, element, ...args));
-    options.plugins.forEach(plugin => {
-      extend(element, plugin(element, ...args));
-    });
+  Promise.resolve().then(() => {
+    CE.mixins.push(playerx, ...options.plugins);
+    customElements.define(name, CE);
+  });
 
-  }, Object.keys(defaults.defaultProps).map(kebabCase));
+  return CE;
 }

@@ -3,6 +3,7 @@
 import { define } from '../define.js';
 import { createEmbedIframe } from '../helpers/dom.js';
 import { createResponsiveStyle } from '../helpers/css.js';
+import { getVideoId } from '../helpers/url.js';
 import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise, promisify } from '../utils/promise.js';
@@ -32,23 +33,18 @@ export function streamable(element) {
     };
   }
 
-  function getVideoId(src) {
-    let match;
-    return (match = src.match(MATCH_URL)) && match[1];
-  }
-
   async function init() {
     ready = publicPromise();
 
-    const options = getOptions();
-    const videoId = getVideoId(element.src);
+    const opts = getOptions();
+    const videoId = getVideoId(MATCH_URL, element.src);
     const src = `${EMBED_BASE}/${videoId}`;
     iframe = createEmbedIframe({ src });
 
-    const playerjs = await loadScript(API_URL, API_GLOBAL);
+    const playerjs = await loadScript(opts.apiUrl || API_URL, API_GLOBAL);
     api = new playerjs.Player(iframe);
 
-    options.autoplay && api.play();
+    opts.autoplay && api.play();
 
     await promisify(api.on, api)('ready');
     ready.resolve();
@@ -63,6 +59,8 @@ export function streamable(element) {
   };
 
   const methods = {
+    name: 'Streamable',
+    version: '1.x.x',
 
     get element() {
       return iframe;
@@ -70,6 +68,10 @@ export function streamable(element) {
 
     get api() {
       return api;
+    },
+
+    get videoId() {
+      return getVideoId(MATCH_URL, element.src);
     },
 
     ready() {
@@ -100,12 +102,20 @@ export function streamable(element) {
       element.load();
     },
 
+    async getPaused() {
+      return promisify(api.getPaused, api)();
+    },
+
     async getCurrentTime() {
       return promisify(api.getCurrentTime, api)();
     },
 
     async getDuration() {
       return promisify(api.getDuration, api)();
+    },
+
+    async getLoop() {
+      return promisify(api.getLoop, api)();
     },
 
     set volume(volume) {

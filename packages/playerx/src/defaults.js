@@ -1,15 +1,21 @@
+import { property, readonly, reflect } from 'swiss';
 
-export const readonly = {
+const readonlyProps = readonly({
   buffered: undefined,
+  currentSrc: '',
   duration: NaN,
   ended: false,
+  error: null,
   paused: true,
+  readyState: 0,
   videoHeight: 0,
   videoWidth: 0,
-};
+  name: undefined,            // custom property
+  version: undefined,         // custom property
+});
 
-export const reflect = {
-  aspectRatio: 0.5625,
+const reflectProps = reflect({
+  aspectRatio: 0.5625,        // custom property
   autoplay: false,
   controls: false,
   height: undefined,
@@ -20,15 +26,20 @@ export const reflect = {
   preload: undefined,
   src: undefined,
   width: '100%',
-};
+});
 
-export const defaultProps = {
-  ...readonly,
-  ...reflect,
+export const props = {
+  ...readonlyProps,
+  ...reflectProps,
+
   currentTime: 0,
   playbackRate: 1,
   volume: 1,
-  config: {
+
+  videoId: undefined,         // custom property
+  videoTitle: undefined,      // custom property
+
+  config: property({          // custom property
     vimeo: {
       autopause: false,
       // byline: false,
@@ -62,6 +73,13 @@ export const defaultProps = {
     dailymotion: {
       'queue-enable': false,
       // 'ui-logo': false,
+    },
+    jwplayer: {
+      player: 'IxzuqJ4M', // Via https://content.jwplatform.com/libraries/{player_id}.js
+      // key: '',         // or https://ssl.p.jwpcdn.com/player/v/8.12.5/jwplayer.js
+    },
+    brightcove: {
+      account: '6141518118001',
     }
-  }
+  })
 };

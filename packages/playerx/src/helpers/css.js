@@ -31,9 +31,9 @@ export function createResponsiveStyle(props, tag = 'iframe') {
     });
 
     addCssRule(`${selector} > ${tag}`, {
-      position: 'absolute',
-      width: '100%',
-      height: '100%',
+      position: 'absolute !important',
+      width: '100% !important',
+      height: '100% !important',
     });
   }
 

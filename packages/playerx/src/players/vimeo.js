@@ -3,6 +3,8 @@
 import { define } from '../define.js';
 import { createEmbedIframe } from '../helpers/dom.js';
 import { createResponsiveStyle } from '../helpers/css.js';
+import { PlayerError } from '../helpers/error.js';
+import { getVideoId } from '../helpers/url.js';
 import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise } from '../utils/promise.js';
@@ -27,6 +29,7 @@ export function vimeo(element) {
   function getOptions() {
     return {
       autoplay: element.playing || element.autoplay,
+      muted: element.muted,
       loop: element.loop,
       playsinline: element.playsinline,
       controls: element.controls,
@@ -35,22 +38,21 @@ export function vimeo(element) {
     };
   }
 
-  function getVideoId(src) {
-    let match;
-    return (match = src.match(MATCH_URL)) && match[1];
-  }
-
   async function init() {
-    const options = getOptions();
-    const videoId = getVideoId(element.src);
-    const src = `${EMBED_BASE}/${videoId}?${serialize(boolToBinary(options))}`;
+    const opts = getOptions();
+    const videoId = getVideoId(MATCH_URL, element.src);
+    const src = `${EMBED_BASE}/${videoId}?${serialize(boolToBinary(opts))}`;
     iframe = createEmbedIframe({ src });
 
-    const Vimeo = await loadScript(API_URL, API_GLOBAL);
+    const Vimeo = await loadScript(opts.apiUrl || API_URL, API_GLOBAL);
     api = new Vimeo.Player(iframe);
 
     api.on('playbackratechange', ({ playbackRate }) => {
-      element.refresh('playbackRate', playbackRate);
+      element.setProp('playbackRate', playbackRate);
+    });
+
+    api.on('error', ({ name, message }) => {
+      element.setProp('error', new PlayerError(name, message));
     });
 
     await api.ready();
@@ -62,6 +64,8 @@ export function vimeo(element) {
   };
 
   const methods = {
+    name: 'Vimeo',
+    version: '3.x.x',
 
     get element() {
       return iframe;

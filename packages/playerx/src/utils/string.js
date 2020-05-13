@@ -4,7 +4,7 @@ export function startCase(s) {
 }
 
 export function camelCase(name) {
-  return name.replace(/-([a-z])/g, ($0, $1) => $1.toUpperCase());
+  return name.replace(/[-_]([a-z])/g, ($0, $1) => $1.toUpperCase());
 }
 
 export function kebabCase(name) {

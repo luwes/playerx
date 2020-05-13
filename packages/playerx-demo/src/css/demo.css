@@ -1,0 +1,85 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+html,
+body {
+  height: 100%;
+}
+
+html {
+  font-size: 14px
+}
+
+@media (min-width: 420px) {
+  html {
+    font-size:16px
+  }
+}
+
+body:not(.showfocus) button,
+input[type="range"] {
+  outline: none;
+}
+
+.focus\:outline-0:focus {
+    outline: 0!important
+}
+
+::selection {
+  background: #AEFCE2;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 13px;
+  width: 13px;
+  border-radius: 50%;
+  background: #67758A;
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  height: 13px;
+  width: 13px;
+  border-radius: 50%;
+  background: #67758A;
+  cursor: pointer;
+}
+
+input[type="range"]::-ms-thumb {
+  height: 13px;
+  width: 13px;
+  border-radius: 50%;
+  background: #67758A;
+  cursor: pointer;
+}
+
+.player {
+  padding-bottom: 56.25%;
+  height: 0;
+}
+
+.btn {
+  @apply bg-gray-500 text-white text-sm py-1 px-2 rounded mr-1;
+}
+
+.btn-active {
+  @apply bg-gray-600 shadow-inner;
+}
+
+.btn:hover {
+  @apply bg-gray-700;
+}
+
+.src-btn {
+  @apply leading-tight;
+}
+
+.logger p:first-child {
+  border-top: 0;
+}
+
+.logger p {
+  @apply px-2 border-t border-gray-200;
+}

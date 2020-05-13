@@ -4,19 +4,21 @@ import { extend } from './utils/object.js';
 import { publicPromise } from './utils/promise.js';
 
 const coreMethodNames = [
-  'set',
-  'get',
   'on',
   'off',
   'ready',
   'play',
   'pause',
   'stop',
+  'get',
 ];
 
 const events = Object.values(Events);
+let listeners = {};
 
-export function playerx(createPlayer, element) {
+export const playerx = (CE, { create }) => (element) => {
+  console.dir(element);
+
   let player;
   let ready;
 
@@ -25,17 +27,35 @@ export function playerx(createPlayer, element) {
   let progressTimeout;
   let volumeTimeout;
 
-  let { volume, muted, currentTime, duration } = element._propsDefaulted;
+  let { volume, muted, currentTime, duration } = element;
   let progress;
+  let hasDurationEvent;
 
+  // Store original getProp because it's overridden.
+  // This method is used to get data directly from the property cache.
+  element.cache = element.getProp;
 
-  function _disconnected() {
-    console.log('DISCONNECTED');
+  function getProp(name) {
+    if (player && player.get) {
+      const value = player.get(name);
+      if (value !== undefined && !(value instanceof Promise)) {
+        return value;
+      }
+    }
+    return element.cache(name);
+  }
+
+  function connected() {
+    // empty
+  }
+
+  function disconnected() {
     destroy(player);
   }
 
   function destroy(oldPlayer) {
     clearAllTimeouts();
+    detachEvents();
     oldPlayer.remove();
   }
 
@@ -46,17 +66,7 @@ export function playerx(createPlayer, element) {
     clearTimeout(progressTimeout);
   }
 
-  function _getProp(name) {
-    if (player && player.get) {
-      const value = player.get(name);
-      if (value !== undefined && !(value instanceof Promise)) {
-        return value;
-      }
-    }
-    return element.props[name];
-  }
-
-  async function _update(changedProps) {
+  async function update(changedProps) {
     if (!element.src) return;
 
     const src = 'src' in changedProps && element.src;
@@ -64,43 +74,42 @@ export function playerx(createPlayer, element) {
       element.load();
     } else {
       await ready;
-
-      // Here to use `element.load()` in players. Preventing an endless loop.
-      // When a player calls this it is meant to re-init the player.
-      const prevLoad = element.load;
-      element.load = init;
       Object.keys(changedProps).forEach(playerSet);
-      element.load = prevLoad;
     }
   }
 
   function playerSet(name) {
-    const value = element.props[name];
+    const value = element.cache(name);
     return player.set(name, value);
   }
 
   async function load() {
+    clearAllTimeouts();
     ready = publicPromise();
-    const props = element._propsDefaulted;
+
+    element.fire(Events.LOADSRC);
 
     if (player && player.f.canPlay(element.src)) {
-      clearAllTimeouts();
+      const prevLoad = element.load;
+
+      // If `element.load` is called in the player, re-attach events.
+      let initEvents = false;
+      element.load = () => (initEvents = true) && init();
 
       // Here to use `element.load()` in players. Preventing an endless loop.
       // When a player calls this it is meant to re-init the player.
-      const prevLoad = element.load;
-      element.load = init;
       await playerSet('src');
       element.load = prevLoad;
 
-      await afterLoad(props);
-      element.fire(Events.LOADSRC);
+      await afterLoad(initEvents);
+      element.fire(Events.LOADEDSRC);
+
       return;
     }
 
     init();
-    await afterLoad(props, true);
-    element.fire(Events.LOADSRC);
+    await afterLoad(true);
+    element.fire(Events.LOADEDSRC);
     element.fire(Events.READY);
   }
 
@@ -113,8 +122,8 @@ export function playerx(createPlayer, element) {
     }
 
     player = {};
-    player = extend(player, base(element, player), createPlayer(element));
-    player.f = player.f || createPlayer;
+    player = extend(player, base(element, player), create(element));
+    player.f = player.f || create;
 
     if (oldPlayer) {
       element.insertBefore(player.element, nextSibling);
@@ -123,14 +132,17 @@ export function playerx(createPlayer, element) {
     }
   }
 
-  async function afterLoad({ volume, muted, loop }, init) {
+  async function afterLoad(initEvents) {
     await player.ready();
 
-    player.set('volume', volume);
-    player.set('muted', muted);
-    player.set('loop', loop);
+    player.set('volume', element.cache('volume'));
+    player.set('muted', element.cache('muted'));
+    player.set('loop', element.cache('loop'));
 
-    if (init) attachEvents();
+    if (initEvents) attachEvents();
+
+    // autoplay = autoplay || playing;
+    // if (autoplay) player.play();
 
     ready.resolve();
     await Promise.all([
@@ -142,39 +154,56 @@ export function playerx(createPlayer, element) {
   }
 
   function attachEvents() {
-    player.on(Events.PAUSE, () => element.refresh('playing', false));
-    player.on(Events.PLAY, () => element.refresh('playing', true));
-    player.on(Events.PLAYING, () => {
-      element.refresh('playing', true);
-      updateDuration();
-    });
+    listeners = [
+      [Events.PAUSE, () => {
+        element.setProp('playing', false);
+        element.setProp('paused', true);
+      }],
+      [Events.PLAY, () => {
+        element.setProp('paused', false);
+        element.setProp('playing', true);
+      }],
+      [Events.PLAYING, () => {
+        element.setProp('paused', false);
+        element.setProp('playing', true);
+        updateDuration();
+      }],
+      [Events.ENDED, () => {
+        if (element.loop) {
+          player.play();
+          return;
+        }
+        element.setProp('playing', false);
+        element.setProp('paused', true);
+        element.fire(Events.ENDED);
+      }],
+      // When the API supports these events the timeouts are disabled.
+      [Events.TIMEUPDATE, () => updateCurrentTime(true)],
+      [Events.VOLUMECHANGE, () => updateVolume(true)],
+      [Events.PROGRESS, () => updateProgress(true)],
+      [Events.DURATIONCHANGE, () => {
+        hasDurationEvent = true;
+        updateDuration(true);
+      }]
+    ];
 
-    player.on(Events.ENDED, () => {
-      if (element.loop) {
-        player.play();
-        return;
-      }
-      element.refresh('playing', false);
-      element.fire(Events.ENDED);
-    });
+    events.filter(event => ![
+      Events.READY,
+      Events.LOADSRC,
+      Events.LOADEDSRC,
+      Events.ENDED,
+      Events.TIMEUPDATE,
+      Events.DURATIONCHANGE,
+      Events.VOLUMECHANGE,
+      Events.PROGRESS,
+    ].includes(event))
+    .forEach(event => listeners.push([event, fire.bind(null, event)]));
 
-    // When the API supports these events the timeouts are disabled.
-    player.on(Events.TIMEUPDATE, () => updateCurrentTime(true));
-    player.on(Events.DURATIONCHANGE, () => updateDuration(true));
-    player.on(Events.VOLUMECHANGE, () => updateVolume(true));
-    player.on(Events.PROGRESS, () => updateProgress(true));
+    listeners.forEach(([event, listener]) => player.on(event, listener));
+  }
 
-    events
-      .filter(event => ![
-        Events.READY,
-        Events.LOADSRC,
-        Events.ENDED,
-        Events.TIMEUPDATE,
-        Events.DURATIONCHANGE,
-        Events.VOLUMECHANGE,
-        Events.PROGRESS,
-      ].includes(event))
-      .forEach(event => player.on(event, fire.bind(null, event)));
+  function detachEvents() {
+    listeners.forEach(([event, listener]) => player.off(event, listener));
   }
 
   async function updateCurrentTime(disableTimeout) {
@@ -194,16 +223,16 @@ export function playerx(createPlayer, element) {
     await ready;
 
     let old = currentTime;
-    currentTime = await player.get('currentTime');
+    currentTime = await element.get('currentTime');
     if (currentTime !== old) {
-      element.refresh('currentTime', currentTime);
+      element.setProp('currentTime', currentTime);
       element.fire('timeupdate');
     }
   }
 
   async function updateDuration(disableTimeout) {
     clearTimeout(durationTimeout);
-    if (!disableTimeout) {
+    if (!disableTimeout && !hasDurationEvent) {
       durationTimeout = setTimeout(updateDuration, 250);
     }
 
@@ -211,10 +240,18 @@ export function playerx(createPlayer, element) {
     await ready;
 
     let old = duration;
-    duration = await player.get('duration');
+    duration = await element.get('duration');
     if (duration !== old && duration > 0) {
-      element.refresh('duration', duration);
+      element.setProp('duration', duration);
       element.fire('durationchange');
+    }
+
+    if (!element.videoWidth) {
+      element.setProp('videoWidth', await element.get('videoWidth'));
+    }
+
+    if (!element.videoHeight) {
+      element.setProp('videoHeight', await element.get('videoHeight'));
     }
   }
 
@@ -230,13 +267,13 @@ export function playerx(createPlayer, element) {
     let oldVolume = volume;
     let oldMuted = muted;
     [volume, muted] = await Promise.all([
-      player.get('volume'),
-      player.get('muted'),
+      element.get('volume'),
+      element.get('muted'),
     ]);
 
     if (volume !== oldVolume || muted !== oldMuted) {
-      element.refresh('volume', volume);
-      element.refresh('muted', muted);
+      element.setProp('volume', volume);
+      element.setProp('muted', muted);
       element.fire('volumechange');
     }
   }
@@ -255,11 +292,11 @@ export function playerx(createPlayer, element) {
     await ready;
 
     let old = progress;
-    let buffered = await player.get('buffered');
+    let buffered = await element.get('buffered');
     if (buffered && buffered.length) {
       progress = buffered.end(buffered.length - 1);
       if (progress !== old) {
-        element.refresh('buffered', buffered);
+        element.setProp('buffered', buffered);
         element.fire('progress');
       }
     }
@@ -268,18 +305,15 @@ export function playerx(createPlayer, element) {
   function fire(name, detail = {}) {
     const event = new CustomEvent(name, { detail });
     element.dispatchEvent(event);
-
-    // if (!['timeupdate'].includes(name)) {
-      console.warn(event);
-    // }
   }
 
   const methods = {
     fire,
     load,
-    _disconnected,
-    _getProp,
-    _update,
+    connected,
+    disconnected,
+    update,
+    getProp,
   };
 
   coreMethodNames.forEach(name => {
@@ -290,4 +324,4 @@ export function playerx(createPlayer, element) {
   });
 
   return methods;
-}
+};

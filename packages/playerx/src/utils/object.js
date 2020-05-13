@@ -1,3 +1,4 @@
+export const assign = Object.assign;
 
 export function pick(names, obj) {
   let result = {};
@@ -14,6 +15,11 @@ export function omit(names, obj) {
 
 export function getEntry(obj) {
   for (let name in obj) return [name, obj[name]];
+}
+
+export function getPropertyDescriptor(obj, key) {
+  return obj && (Object.getOwnPropertyDescriptor(obj, key)
+    || getPropertyDescriptor(Object.getPrototypeOf(obj), key));
 }
 
 /**
@@ -40,7 +46,7 @@ export const extend = createCompleteAssign({
 export function createCompleteAssign(options) {
   return (target, ...sources) => {
     sources.forEach(source => {
-      Object.keys(source).forEach(prop => {
+      Object.keys(source || {}).forEach(prop => {
         const descriptor = Object.getOwnPropertyDescriptor(source, prop);
         Object.defineProperty(target, prop, assign(descriptor, options));
       });
@@ -48,5 +54,3 @@ export function createCompleteAssign(options) {
     return target;
   };
 }
-
-export const assign = Object.assign;

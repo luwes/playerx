@@ -1,5 +1,5 @@
 import nodeResolve from '@rollup/plugin-node-resolve';
-import babel from 'rollup-plugin-babel';
+import babel from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 import bundleSize from 'rollup-plugin-size';
 
@@ -27,15 +27,14 @@ const config = {
     format: 'iife',
     sourcemap: true,
     file: 'dist/playerx-lite.js',
-    name: 'plxLite'
+    name: 'plxLite',
+    globals: { playerx: 'playerx' },
   },
+  external: ['playerx'],
   plugins: [
     bundleSize(),
     nodeResolve(),
-
-    // If we're building for production (npm run build
-    // instead of npm run dev), minify
-    terserPlugin
+    production && terserPlugin
   ]
 };
 
@@ -57,7 +56,9 @@ export default [
     },
     plugins: [
       ...config.plugins,
-      babel()
+      production && babel({
+        babelHelpers: 'bundled'
+      })
     ]
   },
 ];

@@ -1,13 +1,11 @@
-
-export function lite({ load, createProp }) {
-  createProp('lite', false);
+export const lite = CE => ({ load }) => {
+  CE.defineProp('lite', false);
 
   function liteLoad() {
-    console.log(99);
     return load();
   }
 
   return {
-    load: liteLoad
+    load: liteLoad,
   };
-}
+};
