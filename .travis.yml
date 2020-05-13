@@ -23,7 +23,7 @@ services:
   - xvfb
 
 install:
-  - yarn
+  - yarn --frozen-lockfile
 
 addons:
   chrome: stable
