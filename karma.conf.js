@@ -43,7 +43,7 @@ var localLaunchers = {
       // Without a remote debugging port, Google Chrome exits immediately.
       '--remote-debugging-port=9333',
       // Removes that crazy long prefix HeadlessChrome 79.0.3945 (Mac OS X 10.15.2)
-      '--user-agent=',
+      // '--user-agent=',
       '--disable-web-security',
       '--autoplay-policy=no-user-gesture-required',
     ]
@@ -61,14 +61,6 @@ module.exports = function(config) {
     browserStack: {
       username: process.env.BROWSERSTACK_USERNAME,
       accessKey: process.env.BROWSERSTACK_ACCESS_KEY
-    },
-
-    sauceLabs: {
-      build: 'CI #' + process.env.TRAVIS_BUILD_NUMBER + ' (' + process.env.TRAVIS_BUILD_ID + ')',
-      tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER || ('local'+require('./package.json').version),
-      connectLocationForSERelay: 'localhost',
-      connectPortForSERelay: 4445,
-      startConnect: false
     },
 
     // browserLogOptions: { terminal: true },
@@ -97,7 +89,7 @@ module.exports = function(config) {
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: ['tap-pretty'].concat(
       coverage ? 'coverage' : [],
-      automate ? 'saucelabs' : []
+      // automate ? 'saucelabs' : []
     ),
 
     tapReporter: {
@@ -152,7 +144,7 @@ module.exports = function(config) {
         istanbul({
           include: config.grep ?
             config.grep.replace('/test/', '/src/') :
-            'packages/*/!(htm)/**/src/**/*.js'
+            'packages/**/src/**/*.js'
         }),
         automate && babel({
           babelHelpers: 'bundled',

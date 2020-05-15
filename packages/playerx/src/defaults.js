@@ -79,7 +79,7 @@ export const props = {
       // key: '',         // or https://ssl.p.jwpcdn.com/player/v/8.12.5/jwplayer.js
     },
     brightcove: {
-      account: '6141518118001',
+      account: '1752604059001',
     }
   })
 };

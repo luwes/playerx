@@ -10,6 +10,7 @@ import { loadScript } from '../utils/load-script.js';
 import { publicPromise } from '../utils/promise.js';
 import { serialize, boolToBinary } from '../utils/url.js';
 import { createTimeRanges } from '../utils/time-ranges.js';
+import { createPlayPromise } from '../helpers/video.js';
 import { options } from '../options.js';
 export { options };
 
@@ -70,7 +71,7 @@ export function youtube(element) {
   }
 
   function onError(event) {
-    element.setProp('error', new PlayerError(event.data));
+    element.setCache('error', new PlayerError(event.data));
   }
 
   const eventAliases = {
@@ -147,7 +148,9 @@ export function youtube(element) {
     },
 
     play() {
-      return api.playVideo();
+      // yt.playVideo doesn't return a play promise.
+      api.playVideo();
+      return createPlayPromise(element);
     },
 
     pause() {

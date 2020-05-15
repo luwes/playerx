@@ -9,6 +9,7 @@ import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise, promisify } from '../utils/promise.js';
 import { createTimeRanges } from '../utils/time-ranges.js';
+import { createPlayPromise } from '../helpers/video.js';
 import { options } from '../options.js';
 export { options };
 
@@ -61,11 +62,13 @@ export function jwplayer(element) {
   }
 
   function onError({ code, message }) {
-    element.setProp('error', new PlayerError(code, message));
+    element.setCache('error', new PlayerError(code, message));
   }
 
   const eventAliases = {
     ended: 'complete',
+    playing: 'play',
+    play: 'beforePlay',
   };
 
   const methods = {
@@ -101,6 +104,12 @@ export function jwplayer(element) {
     remove() {
       api.remove();
       div.remove();
+    },
+
+    play() {
+      // jwplayer.play doesn't return a play promise.
+      api.play();
+      return createPlayPromise(element);
     },
 
     on(eventName, callback) {

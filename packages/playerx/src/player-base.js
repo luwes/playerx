@@ -65,11 +65,16 @@ export function base(element, player) {
       player.api.off(eventName, callback);
     },
 
-    set playing(playing) {
-      return playing ? player.play() : player.pause();
+    setPlaying(playing) {
+      if (!element.paused && !playing) {
+        return player.pause();
+      }
+      if (element.paused && playing) {
+        return player.play();
+      }
     },
 
-    get ended() {
+    getEnded() {
       return element.currentTime == element.duration;
     },
   };

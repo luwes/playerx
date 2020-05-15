@@ -57,6 +57,5 @@ export function isMethod(instance, name) {
 let idCounter = 0;
 export function uniqueId(prefix) {
   let id = ++idCounter;
-  console.warn(prefix, id);
   return `${prefix}${id}`;
 }

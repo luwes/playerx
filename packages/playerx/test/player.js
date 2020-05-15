@@ -19,70 +19,62 @@ test('creates an element', (t) => {
   t.end();
 });
 
-// test('custom element lifecycle callbacks work', (t) => {
-//   const player = new Playerx({ src });
-
-//   player._connected = spy();
-//   container.append(player);
-//   t.assert(player._connected.callCount > 0, 'connected called');
-
-//   player._attributeChanged = spy();
-//   player.setAttribute('width', 640);
-
-//   player._disconnected = spy();
-//   player.remove();
-//   t.assert(player._disconnected.callCount > 0, 'disconnected called');
-
-//   t.equal(player._attributeChanged.callCount, 1, 'attribute changed called');
-//   t.end();
-// });
-
 export function testPlayer(options, videoInfo) {
 
-  // test(`basic player tests for ${options.src}`, async (t) => {
-  //   const player = new Playerx();
-  //   player.src = options.src;
-  //   container.append(player);
+  test(`basic player tests for ${options.src}`, async (t) => {
+    const player = new Playerx();
+    player.src = options.src;
+    container.append(player);
 
-  //   await player.ready();
+    await player.ready();
+    console.warn('player.ready');
 
-  //   t.equal(player.src, options.src, 'returns the src');
-  //   t.assert(player.paused, 'is paused');
+    t.equal(player.src, options.src, 'returns the src');
+    t.assert(player.paused, 'is paused');
 
-  //   t.equal(player.volume, 1, 'is all turned up');
+    t.equal(player.volume, 1, 'is all turned up');
 
-  //   // await player.setVolume(0.5);
-  //   // t.equal((await player.getVolume()), 0.5, 'is half volume');
+    player.volume = 0.5;
+    if (['youtube', 'facebook'].includes(player.name.toLowerCase())) {
+      await delay(100); // youtube is async
+    }
+    t.equal(player.volume, 0.5, 'is half volume');
 
-  //   // await player.setMuted(true);
-  //   // t.assert((await player.getMuted()), 'is muted');
+    player.muted = true;
+    if (['youtube', 'facebook'].includes(player.name.toLowerCase())) {
+      await delay(100); // youtube is async
+    }
+    t.assert(player.muted, 'is muted');
 
-  //   // await player.play();
-  //   // t.assert(!(await player.getPaused()), 'is playing');
+    t.equal(player.width, '100%', 'default 100% width');
+    t.equal(player.height, '', 'default empty height');
+    t.equal(player.aspectRatio, 0.5625, 'default aspectratio of 0.5625');
 
-  //   // await delay(1000);
-  //   // t.equal(Math.round(await player.getCurrentTime()), 1, 'is about 1s in');
+    await player.set('width', 640);
+    t.equal(player.clientWidth, 640, 'width is 640');
 
-  //   // await player.setPlaybackRate(2);
-  //   // await delay(1000);
-  //   // t.equal(Math.round(await player.getCurrentTime()), 3, 'is about 3s in');
+    await player.set('aspectRatio', 0.5);
+    t.equal(player.clientHeight, 320, 'aspect ratio of 0.5 halfs the height');
 
-  //   // t.equal(Math.round(await player.getDuration()), videoInfo.duration, `is ${videoInfo.duration} long`);
+    await player.set('height', 640);
+    t.equal(player.clientHeight, 640, 'setting height overrides aspect ratio');
 
-  //   // t.equal((await player.getWidth()), '100%', 'default 100% width');
-  //   // t.equal((await player.getHeight()), undefined, 'default undefined height');
-  //   // t.equal((await player.getAspectRatio()), 0.5625, 'default aspectratio of 0.5625');
+    await player.play();
+    t.assert(!player.paused, 'is playing');
 
-  //   // await player.setWidth(640);
-  //   // t.equal(player.clientWidth, 640, 'width is 640');
+    t.equal(Math.round(player.duration), videoInfo.duration, `is ${videoInfo.duration} long`);
 
-  //   // await player.setAspectRatio(0.5);
-  //   // t.equal(player.clientHeight, 320, 'aspect ratio of 0.5 halfs the height');
+    await delay(1100);
+    t.equal(Math.round(player.currentTime), 1, 'is about 1s in');
 
-  //   // await player.setHeight(640);
-  //   // t.equal(player.clientHeight, 640, 'setting height overrides aspect ratio');
+    if (!['facebook'].includes(player.name.toLowerCase())) {
+      // FB doesn't support playbackRate
+      player.playbackRate = 2;
+      await delay(1200);
+      t.equal(Math.round(player.currentTime), 3, 'is about 3s in');
+    }
 
-  //   t.end();
-  // });
+    t.end();
+  });
 
 }

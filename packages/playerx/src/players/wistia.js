@@ -7,6 +7,7 @@ import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise } from '../utils/promise.js';
 import { createElement } from '../utils/dom.js';
+import { createPlayPromise } from '../helpers/video.js';
 import { options } from '../options.js';
 export { options };
 
@@ -114,6 +115,12 @@ export function wistia(element) {
 
     ready() {
       return ready;
+    },
+
+    play() {
+      // wistia.play doesn't return a play promise.
+      api.play();
+      return createPlayPromise(element);
     },
 
     stop() {

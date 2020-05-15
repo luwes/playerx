@@ -34,6 +34,7 @@ export function vimeo(element) {
       playsinline: element.playsinline,
       controls: element.controls,
       url: element.src,
+      transparent: false,
       ...element.config.vimeo,
     };
   }
@@ -48,11 +49,11 @@ export function vimeo(element) {
     api = new Vimeo.Player(iframe);
 
     api.on('playbackratechange', ({ playbackRate }) => {
-      element.setProp('playbackRate', playbackRate);
+      element.setCache('playbackRate', playbackRate);
     });
 
     api.on('error', ({ name, message }) => {
-      element.setProp('error', new PlayerError(name, message));
+      element.setCache('error', new PlayerError(name, message));
     });
 
     await api.ready();

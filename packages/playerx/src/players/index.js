@@ -1,4 +1,4 @@
-// export { brightcove } from './brightcove.js';
+export { brightcove } from './brightcove.js';
 export { dailymotion } from './dailymotion.js';
 export { facebook } from './facebook.js';
 export { file } from './file.js';

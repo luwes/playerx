@@ -1,9 +1,7 @@
 import tape from 'tape';
 import { beforeEach } from './_utils.js';
-import Playerx from '../src/index.js';
+import { Playerx } from '../src/index.js';
 import { coreMethodNames } from '../src/playerx.js';
-import { defaultPropNames } from '../src/defaults.js';
-import { getName, setName } from '../src/helpers/index.js';
 
 const src = 'https://vimeo.com/357274789';
 let container;
@@ -23,8 +21,6 @@ test('methods are functions and return promises', (t) => {
   };
 
   coreMethodNames.forEach(testMethod);
-  defaultPropNames.forEach(name => testMethod(getName(name)));
-  defaultPropNames.forEach(name => testMethod(setName(name)));
 
   t.end();
 });

@@ -22,7 +22,6 @@ soundcloud.canPlay = src => MATCH_URL.test(src);
 export function soundcloud(element) {
   let api;
   let iframe;
-  let firePlaying;
   let ready = publicPromise();
   let style = createResponsiveStyle(element);
   let eventAliases;
@@ -44,14 +43,9 @@ export function soundcloud(element) {
     const SC = await loadScript(opts.apiUrl || API_URL, API_GLOBAL);
     const Events = SC.Widget.Events;
     api = SC.Widget(iframe);
+
     loadedProgress = 0;
-
-    api.bind(Events.PLAY, () => {
-      firePlaying = once(() => element.fire('playing'));
-    });
-
     api.bind(Events.PLAY_PROGRESS, e => {
-      firePlaying();
       loadedProgress = e.loadedProgress;
     });
 
@@ -66,10 +60,6 @@ export function soundcloud(element) {
     await promisify(api.bind, api)(Events.READY);
     ready.resolve();
   }
-
-  const customEvents = {
-    playing: undefined,
-  };
 
   const methods = {
     name: 'SoundCloud',
@@ -96,12 +86,10 @@ export function soundcloud(element) {
     },
 
     on(eventName, callback) {
-      if (eventName in customEvents) return;
       api.bind(eventAliases[eventName] || eventName, callback);
     },
 
     off(eventName, callback) {
-      if (eventName in customEvents) return;
       api.unbind(eventAliases[eventName] || eventName, callback);
     },
 

@@ -3,10 +3,7 @@ import * as Events from './constants/events.js';
 import { extend } from './utils/object.js';
 import { publicPromise } from './utils/promise.js';
 
-const coreMethodNames = [
-  'on',
-  'off',
-  'ready',
+export const coreMethodNames = [
   'play',
   'pause',
   'stop',
@@ -20,7 +17,8 @@ export const playerx = (CE, { create }) => (element) => {
   console.dir(element);
 
   let player;
-  let ready;
+  let elementReady = publicPromise();
+  let apiReady;
 
   let currentTimeTimeout;
   let durationTimeout;
@@ -30,10 +28,37 @@ export const playerx = (CE, { create }) => (element) => {
   let { volume, muted, currentTime, duration } = element;
   let progress;
   let hasDurationEvent;
+  let playFired;
+
+  // Shortcuts to native DOM event listener methods.
+  element.on = element.addEventListener;
+  element.off = element.removeEventListener;
 
   // Store original getProp because it's overridden.
   // This method is used to get data directly from the property cache.
   element.cache = element.getProp;
+  element.setCache = element.setProp;
+
+  async function setProp(name, value) {
+    element.setCache(name, value);
+
+    if (!element.src) return;
+
+    if (name === 'src') {
+      // Give a chance to add more properties on load.
+      await Promise.resolve();
+      element.load();
+    } else {
+      playerSet(name);
+    }
+  }
+
+  function playerSet(name) {
+    const value = element.cache(name);
+    if (player && player.set) {
+      return player.set(name, value);
+    }
+  }
 
   function getProp(name) {
     if (player && player.get) {
@@ -66,26 +91,14 @@ export const playerx = (CE, { create }) => (element) => {
     clearTimeout(progressTimeout);
   }
 
-  async function update(changedProps) {
-    if (!element.src) return;
-
-    const src = 'src' in changedProps && element.src;
-    if (src) {
-      element.load();
-    } else {
-      await ready;
-      Object.keys(changedProps).forEach(playerSet);
-    }
-  }
-
-  function playerSet(name) {
-    const value = element.cache(name);
-    return player.set(name, value);
-  }
-
   async function load() {
     clearAllTimeouts();
-    ready = publicPromise();
+
+    apiReady = publicPromise();
+    // The first time if player is null we use the promise defined at the top.
+    if (player) {
+      elementReady = publicPromise();
+    }
 
     element.fire(Events.LOADSRC);
 
@@ -144,37 +157,42 @@ export const playerx = (CE, { create }) => (element) => {
     // autoplay = autoplay || playing;
     // if (autoplay) player.play();
 
-    ready.resolve();
+    apiReady.resolve();
+
     await Promise.all([
       updateCurrentTime(),
       updateDuration(),
       updateVolume(),
       updateProgress(),
     ]);
+
+    elementReady.resolve();
   }
 
   function attachEvents() {
     listeners = [
       [Events.PAUSE, () => {
-        element.setProp('playing', false);
-        element.setProp('paused', true);
+        element.setCache('playing', false);
+        element.setCache('paused', true);
       }],
       [Events.PLAY, () => {
-        element.setProp('paused', false);
-        element.setProp('playing', true);
+        element.setCache('paused', false);
+        element.setCache('playing', true);
+        playFired = true;
       }],
       [Events.PLAYING, () => {
-        element.setProp('paused', false);
-        element.setProp('playing', true);
+        element.setCache('paused', false);
+        element.setCache('playing', true);
         updateDuration();
+        playFired = false;
       }],
       [Events.ENDED, () => {
         if (element.loop) {
           player.play();
           return;
         }
-        element.setProp('playing', false);
-        element.setProp('paused', true);
+        element.setCache('playing', false);
+        element.setCache('paused', true);
         element.fire(Events.ENDED);
       }],
       // When the API supports these events the timeouts are disabled.
@@ -220,12 +238,17 @@ export const playerx = (CE, { create }) => (element) => {
     }
 
     // Sometimes loading a new src the 3rd-party api is not ready yet, wait here.
-    await ready;
+    await apiReady;
+
+    if (playFired) {
+      playFired = false;
+      element.fire('playing');
+    }
 
     let old = currentTime;
     currentTime = await element.get('currentTime');
     if (currentTime !== old) {
-      element.setProp('currentTime', currentTime);
+      element.setCache('currentTime', currentTime);
       element.fire('timeupdate');
     }
   }
@@ -237,21 +260,21 @@ export const playerx = (CE, { create }) => (element) => {
     }
 
     // Sometimes loading a new src the 3rd-party api is not ready yet, wait here.
-    await ready;
+    await apiReady;
 
     let old = duration;
     duration = await element.get('duration');
     if (duration !== old && duration > 0) {
-      element.setProp('duration', duration);
+      element.setCache('duration', duration);
       element.fire('durationchange');
     }
 
     if (!element.videoWidth) {
-      element.setProp('videoWidth', await element.get('videoWidth'));
+      element.setCache('videoWidth', await element.get('videoWidth'));
     }
 
     if (!element.videoHeight) {
-      element.setProp('videoHeight', await element.get('videoHeight'));
+      element.setCache('videoHeight', await element.get('videoHeight'));
     }
   }
 
@@ -262,7 +285,7 @@ export const playerx = (CE, { create }) => (element) => {
     }
 
     // Sometimes loading a new src the 3rd-party api is not ready yet, wait here.
-    await ready;
+    await apiReady;
 
     let oldVolume = volume;
     let oldMuted = muted;
@@ -272,8 +295,8 @@ export const playerx = (CE, { create }) => (element) => {
     ]);
 
     if (volume !== oldVolume || muted !== oldMuted) {
-      element.setProp('volume', volume);
-      element.setProp('muted', muted);
+      element.setCache('volume', volume);
+      element.setCache('muted', muted);
       element.fire('volumechange');
     }
   }
@@ -289,14 +312,14 @@ export const playerx = (CE, { create }) => (element) => {
     }
 
     // Sometimes loading a new src the 3rd-party api is not ready yet, wait here.
-    await ready;
+    await apiReady;
 
     let old = progress;
     let buffered = await element.get('buffered');
     if (buffered && buffered.length) {
       progress = buffered.end(buffered.length - 1);
       if (progress !== old) {
-        element.setProp('buffered', buffered);
+        element.setCache('buffered', buffered);
         element.fire('progress');
       }
     }
@@ -307,19 +330,26 @@ export const playerx = (CE, { create }) => (element) => {
     element.dispatchEvent(event);
   }
 
+  function ready() {
+    return elementReady;
+  }
+
   const methods = {
     fire,
     load,
     connected,
     disconnected,
-    update,
     getProp,
+    setProp,
+    ready,
   };
 
   coreMethodNames.forEach(name => {
     methods[name] = async function(...args) {
-      await ready;
-      return player[name](...args);
+      await apiReady;
+      if (player && player[name]) {
+        return player[name](...args);
+      }
     };
   });
 
