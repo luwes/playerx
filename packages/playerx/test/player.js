@@ -67,7 +67,7 @@ export function testPlayer(options, videoInfo) {
     await delay(1100);
     t.equal(Math.round(player.currentTime), 1, 'is about 1s in');
 
-    if (!['facebook'].includes(player.name.toLowerCase())) {
+    if (!['facebook', 'dailymotion'].includes(player.name.toLowerCase())) {
       // FB doesn't support playbackRate
       player.playbackRate = 2;
       await delay(1200);

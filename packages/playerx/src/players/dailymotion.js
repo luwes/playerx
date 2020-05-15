@@ -9,6 +9,7 @@ import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise } from '../utils/promise.js';
 import { createTimeRanges } from '../utils/time-ranges.js';
+import { createPlayPromise } from '../helpers/video.js';
 import { options } from '../options.js';
 export { options };
 
@@ -104,6 +105,12 @@ export function dailymotion(element) {
       div.remove();
     },
 
+    play() {
+      // play doesn't return a play promise.
+      api.play();
+      return createPlayPromise(element);
+    },
+
     stop() {
       api.seek(0);
       setTimeout(() => api.pause());
@@ -120,6 +127,18 @@ export function dailymotion(element) {
     setSrc() {
       style.update(element);
       api.load(getOptions());
+    },
+
+    getSrc() {
+      return element.cache('src');
+    },
+
+    get muted() {
+      return element.cache('muted');
+    },
+
+    get volume() {
+      return element.cache('volume');
     },
 
     set currentTime(seconds) {

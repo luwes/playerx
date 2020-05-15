@@ -7,3 +7,4 @@ import './players/youtube.js';
 import './players/jwplayer.js';
 import './players/wistia.js';
 import './players/facebook.js';
+import './players/dailymotion.js';
