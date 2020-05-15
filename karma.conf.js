@@ -116,6 +116,7 @@ module.exports = function(config) {
     files: [
       'https://polyfill.io/v3/polyfill.min.js?features=Element.prototype.append%2CElement.prototype.remove%2CCustomEvent',
       'https://unpkg.com/@webcomponents/custom-elements',
+      'https://unpkg.com/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js',
       {
         pattern: config.grep || 'packages/playerx/test/test.js',
         watched: false
