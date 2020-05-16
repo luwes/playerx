@@ -65,13 +65,13 @@ export function testPlayer(options, videoInfo) {
     t.assert(!player.paused, 'is playing');
 
     await delay(1100);
-    t.assert(Math.round(player.currentTime) <= 1, 'is about 1s in');
+    t.assert(String(Math.round(player.currentTime)), /[01]/, 'is about 1s in');
 
     if (!['facebook', 'dailymotion', 'soundcloud', 'streamable', 'twitch'].includes(player.name.toLowerCase())) {
       // doesn't support playbackRate
       player.playbackRate = 2;
       await delay(1200);
-      t.assert(Math.round(player.currentTime) >= 3, 'is about 3s in');
+      t.match(String(Math.round(player.currentTime)), /[34]/, 'is about 3s in');
     }
 
     t.equal(Math.round(player.duration), videoInfo.duration, `is ${videoInfo.duration} long`);
