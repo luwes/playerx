@@ -18,9 +18,9 @@ on([autoplay, muted, loop, controls, src], () => {
   let search = toQuery(options, defaults);
   let url;
   if (btn) {
-    url = `/${btn.dataset.player}/${search}`;
+    url = `/demo/${btn.dataset.player}/${search}`;
   } else {
-    url = `/${search}`;
+    url = `/demo/${search}`;
   }
 
   history.pushState({}, '', url);

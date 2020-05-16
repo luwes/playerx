@@ -1,10 +1,13 @@
 ---
 title: "Playerx - API Demo"
 layout: layouts/player.njk
+tags:
+  - main
+  - demo
 pagination:
   data: players
   size: 1
   resolve: values
   alias: player
-permalink: "/{{ player.name | slug }}/"
+permalink: "/demo/{{ player.name | slug }}/"
 ---

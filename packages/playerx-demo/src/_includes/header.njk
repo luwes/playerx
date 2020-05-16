@@ -1,36 +1,48 @@
 <div class="flex-shrink-0 container mx-auto overflow-hidden">
   <nav class="flex-shrink-0 px-6 xl:px-12 py-6 pb-0 sm:h-20 flex relative z-20 mb-6" role="navigation" aria-label="main navigation">
     <div class="container mx-auto flex items-center justify-between flex-wrap">
-      <div class="w-full flex flex-wrap items-center text-black">
-
-        <h1 class="w-7/12 sm:w-5/12 md:w-4/12 mb-4 sm:mb-0">
-          <a href="/">
-            <img class="logo h-6 sm:h-8 inline" src="/images/playerx-logo.svg" alt="Playerx">
-            <span class="inline-block align-middle sm:ml-2 md:text-lg">
-              API Demo
-            </span>
-          </a>
-        </h1>
-
-        <div class="sm:order-last flex-grow mb-4 sm:mb-0 text-right">
-          <a class="inline-block align-middle" href="https://github.com/luwes/playerx" target="_blank">
-            <svg class="icon icon-github w-6 h-6 fill-current">
-              <use xlink:href="/images/symbol-defs.svg#icon-github"></use>
-            </svg>
-          </a>
+      <div class="flex items-center flex-shrink-0 text-white mr-10">
+        <a href="/">
+          <img class="logo h-8" src="/images/playerx-logo.svg" alt="Playerx">
+        </a>
+      </div>
+      <div class="block lg:hidden">
+        <button id="burger" class="flex items-center justify-center w-10 h-8">
+          <svg class="fill-current h-3" viewBox="0 0 22 11"><path d="M0 0h22v1H0zm0 10h22v1H0z"></path></svg>
+          <svg class="fill-current h-4 hidden" viewBox="0 0 18 17"><g><path d="M1 16.218L16.627.59l.778.778L1.778 16.995z"></path><path d="M1.778.59l15.627 15.628-.778.777L1 1.368z"></path></g></svg>
+        </button>
+      </div>
+      <div id="main-menu" class="w-full flex-grow hidden lg:flex lg:items-center lg:w-auto">
+        <div class="w-1/2 lg:w-auto lg:flex-grow mt-2 py-1 lg:mt-0">
+          {%- for post in collections.main -%}
+            <a href="{{ post.url }}" class="block py-1 lg:inline-block lg:mt-0 mr-8">
+              {{ post.data.menu }}
+            </a>
+          {%- endfor -%}
         </div>
-
-        <div class="w-full sm:w-6/12 md:w-5/12 lg:w-4/12">
-          <div class="relative">
-            <input id="inputsrc" class="transition-colors duration-100 ease-in-out focus:outline-0 border border-transparent focus:bg-white focus:border-gray-300 placeholder-gray-600 rounded-lg bg-gray-200 py-1 pr-4 pl-10 block w-full appearance-none leading-normal" type="text" placeholder="Enter new source url">
-            <div class="pointer-events-none absolute inset-y-0 left-0 pl-4 flex items-center">
-              <svg class="icon icon-file fill-current pointer-events-none text-gray-600 w-4 h-4">
-                <use xlink:href="/images/symbol-defs.svg#icon-file"></use>
-              </svg>
+        <div id="navbar-end">
+          <div class="hidden">
+            <a class="login-btn bg-gray-800 text-white inline-block px-4 py-3 leading-none rounded mt-4 lg:mt-0 flex" href="{{ site.apiUrl }}/connect/vimeo">
+              <svg class="icon icon-vimeo w-4 h-4 fill-current"><use xlink:href="/images/symbol-defs.svg#icon-vimeo"></use></svg>
+              <div class="ml-2">Log in</div>
+            </a>
+          </div>
+          <div class="hidden relative">
+            <button class="account-btn block w-8 h-8 bg-gray-500 rounded-full overflow-hidden relative">
+              ...
+              <img class="hidden absolute top-0 left-0" alt="profile image" />
+            </button>
+            <div class="navbar-dropdown bg-white mt-2 py-2 w-48 rounded-lg lg:absolute lg:shadow-zeit lg:text-sm">
+              {%- for post in collections.dropdown -%}
+                <a href="{{ post.url }}" class="block lg:px-4 py-2 text-gray-700 lg:hover:bg-gray-100{% if page.url == post.url %} lg:bg-gray-100{% endif %}">
+                  {{ post.data.menu }}
+                </a>
+              {%- endfor -%}
+              <div class="border-b border-gray-300 my-2"></div>
+              <a class="logout-link block lg:px-4 py-2 text-gray-700 lg:hover:bg-gray-100" href="/logout">Log out</a>
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </nav>
