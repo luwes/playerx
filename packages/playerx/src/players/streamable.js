@@ -8,6 +8,7 @@ import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise, promisify } from '../utils/promise.js';
 import { createTimeRanges } from '../utils/time-ranges.js';
+import { createPlayPromise } from '../helpers/video.js';
 import { options } from '../options.js';
 export { options };
 
@@ -80,6 +81,12 @@ export function streamable(element) {
 
     remove() {
       iframe.remove();
+    },
+
+    play() {
+      // play doesn't return a play promise.
+      api.play();
+      return createPlayPromise(element);
     },
 
     stop() {

@@ -7,6 +7,7 @@ import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise, promisify } from '../utils/promise.js';
 import { createTimeRanges } from '../utils/time-ranges.js';
+import { createPlayPromise } from '../helpers/video.js';
 import { createElement } from '../utils/dom.js';
 import { uniqueId } from '../utils/utils.js';
 import { options } from '../options.js';
@@ -33,6 +34,7 @@ export function twitch(element) {
       loop: element.loop,
       playsinline: element.playsinline,
       controls: element.controls,
+      muted: element.muted,
       ...element.config.twitch,
     };
   }
@@ -75,6 +77,12 @@ export function twitch(element) {
     remove() {
       api.destroy();
       div.remove();
+    },
+
+    play() {
+      // play doesn't return a play promise.
+      api.play();
+      return createPlayPromise(element);
     },
 
     stop() {

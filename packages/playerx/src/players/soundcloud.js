@@ -7,8 +7,9 @@ import { extend, omit } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise, promisify } from '../utils/promise.js';
 import { serialize } from '../utils/url.js';
-import { once, clamp } from '../utils/utils.js';
+import { clamp } from '../utils/utils.js';
 import { createTimeRanges } from '../utils/time-ranges.js';
+import { createPlayPromise } from '../helpers/video.js';
 import { options } from '../options.js';
 export { options };
 
@@ -91,6 +92,12 @@ export function soundcloud(element) {
 
     off(eventName, callback) {
       api.unbind(eventAliases[eventName] || eventName, callback);
+    },
+
+    play() {
+      // play doesn't return a play promise.
+      api.play();
+      return createPlayPromise(element);
     },
 
     async setSrc(src) {

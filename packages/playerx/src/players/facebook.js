@@ -51,8 +51,7 @@ export function facebook(element) {
       'data-controls': '' + opts.controls,
     });
 
-    const selector = `player-x[src="${opts.url}"] > div > span`;
-    addCssRule(selector, {
+    addCssRule(`player-x[src="${opts.url}"] > div > span`, {
       width: '100% !important',
       height: '100% !important',
     });
@@ -105,7 +104,7 @@ export function facebook(element) {
     },
 
     play() {
-      // fb.play doesn't return a play promise.
+      // play doesn't return a play promise.
       api.play();
       return createPlayPromise(element);
     },

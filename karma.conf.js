@@ -21,7 +21,7 @@ var browserstackLaunchers = {
     browser_version: '81.0',
     os: 'Windows',
     os_version: '10',
-    timeout: '60',
+    // timeout: '60',
     chromeOptions: {
       args: [
         '--disable-web-security',

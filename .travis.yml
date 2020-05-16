@@ -12,10 +12,9 @@ services:
 
 addons:
   chrome: stable
-  # sauce_connect: true
 
 script:
-  - COVERAGE=true yarn test --single-run --console --stack --log-level debug
+  - COVERAGE=true yarn test --single-run --console --stack
 
 after_success:
   - yarn run coverage

@@ -35,6 +35,7 @@ export function youtube(element) {
       autoplay: element.playing || element.autoplay,
       playsinline: element.playsinline,
       controls: element.controls,
+      mute: element.muted,
       origin: location.origin,
       enablejsapi: 1,
       ...element.config.youtube,

@@ -9,6 +9,7 @@ import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise, promisify } from '../utils/promise.js';
 import { clamp } from '../utils/utils.js';
+import { createPlayPromise } from '../helpers/video.js';
 import { options } from '../options.js';
 export { options };
 
@@ -25,6 +26,7 @@ export function vidyard(element) {
   let ready;
   let style = createResponsiveStyle(element, 'div');
   let VidyardV4;
+  let apiVolume;
 
   function getOptions() {
     return {
@@ -60,6 +62,8 @@ export function vidyard(element) {
 
     api = await renderPromise;
     await promisify(api.on, api)('ready');
+
+    api.on('volumeChange', (vol) => (apiVolume = vol));
 
     ready.resolve();
 
@@ -100,6 +104,12 @@ export function vidyard(element) {
       return VidyardV4.api.destroyPlayer(api);
     },
 
+    play() {
+      // play doesn't return a play promise.
+      api.play();
+      return createPlayPromise(element);
+    },
+
     stop() {
       return api.resetPlayer();
     },
@@ -130,8 +140,8 @@ export function vidyard(element) {
       muted ? api.setVolume(0) : api.setVolume(+element.cache('volume'));
     },
 
-    async getMuted() {
-      return +element.cache('volume') === 0;
+    get muted() {
+      return apiVolume === 0;
     },
 
     set volume(volume) {

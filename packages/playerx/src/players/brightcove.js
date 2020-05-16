@@ -67,6 +67,10 @@ export function brightcove(element) {
       return getVideoId(MATCH_URL, element.src);
     },
 
+    get src() {
+      return element.cache('src');
+    },
+
     ready() {
       return ready;
     },
