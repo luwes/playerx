@@ -8,7 +8,6 @@ import sourcemaps from 'rollup-plugin-sourcemaps';
 const production = !process.env.ROLLUP_WATCH;
 
 const terserPlugin = terser({
-
   sourcemap: true,
   warnings: true,
   compress: {

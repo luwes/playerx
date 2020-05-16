@@ -16,9 +16,11 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "run-p build:*",
-    "build:demo": "yarn workspace playerx-demo build",
+    "build": "run-s build:*",
     "build:playerx": "yarn workspace playerx build",
+    "build:lite": "yarn workspace playerx-lite build",
+    "build:mux": "yarn workspace playerx-mux build",
+    "build:demo": "yarn workspace playerx-demo build",
     "coverage": "codecov",
     "dev": "cross-env NODE_ENV=dev run-p dev:*",
     "dev:demo": "yarn workspace playerx-demo dev",
