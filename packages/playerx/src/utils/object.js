@@ -1,20 +1,8 @@
 export const assign = Object.assign;
 
-export function pick(names, obj) {
-  let result = {};
-  names.forEach(name => {
-    if (name in obj) result[name] = obj[name];
-  });
-  return result;
-}
-
 export function omit(names, obj) {
   return names.reduce((newObj, val) => // eslint-disable-next-line
     (({ [val]: dropped, ...rest }) => rest)(newObj), obj);
-}
-
-export function getEntry(obj) {
-  for (let name in obj) return [name, obj[name]];
 }
 
 export function getPropertyDescriptor(obj, key) {

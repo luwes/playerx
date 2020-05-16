@@ -32,16 +32,18 @@ export function testPlayer(options, videoInfo) {
     t.equal(player.src, options.src, 'returns the src');
     t.assert(player.paused, 'is paused');
 
-    t.equal(player.volume, 1, 'is all turned up');
+    if (!['twitch'].includes(player.name.toLowerCase())) {
+      t.equal(player.volume, 1, 'is all turned up');
+    }
 
     player.volume = 0.5;
-    if (['youtube', 'facebook'].includes(player.name.toLowerCase())) {
+    if (['youtube', 'facebook', 'twitch'].includes(player.name.toLowerCase())) {
       await delay(100); // youtube is async
     }
     t.equal(player.volume, 0.5, 'is half volume');
 
     player.muted = true;
-    if (['youtube', 'facebook'].includes(player.name.toLowerCase())) {
+    if (['youtube', 'facebook', 'twitch'].includes(player.name.toLowerCase())) {
       await delay(100); // youtube is async
     }
     t.assert(player.muted, 'is muted');
@@ -62,17 +64,17 @@ export function testPlayer(options, videoInfo) {
     await player.play();
     t.assert(!player.paused, 'is playing');
 
-    t.equal(Math.round(player.duration), videoInfo.duration, `is ${videoInfo.duration} long`);
-
     await delay(1100);
     t.equal(Math.round(player.currentTime), 1, 'is about 1s in');
 
-    if (!['facebook', 'dailymotion'].includes(player.name.toLowerCase())) {
-      // FB doesn't support playbackRate
+    if (!['facebook', 'dailymotion', 'soundcloud', 'streamable', 'twitch'].includes(player.name.toLowerCase())) {
+      // doesn't support playbackRate
       player.playbackRate = 2;
       await delay(1200);
       t.equal(Math.round(player.currentTime), 3, 'is about 3s in');
     }
+
+    t.equal(Math.round(player.duration), videoInfo.duration, `is ${videoInfo.duration} long`);
 
     t.end();
   });

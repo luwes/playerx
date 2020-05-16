@@ -8,8 +8,8 @@ export function loadScript(src, globalName, readyFnName) {
   return new Promise(function(resolve, reject) {
     const script = createElement('script', {
       src,
-      defer: true,
-      async: true,
+      defer: '',
+      async: '',
     });
 
     const ready = () => resolve(self[globalName]);

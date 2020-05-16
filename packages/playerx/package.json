@@ -22,7 +22,7 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "swiss": "^2.0.0-beta.2"
+    "swiss": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

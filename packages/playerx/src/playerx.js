@@ -42,7 +42,7 @@ export const playerx = (CE, { create }) => (element) => {
   async function setProp(name, value) {
     element.setCache(name, value);
 
-    if (!element.src) return;
+    // if (!element.src) return;
 
     if (name === 'src') {
       // Give a chance to add more properties on load.
@@ -148,9 +148,9 @@ export const playerx = (CE, { create }) => (element) => {
   async function afterLoad(initEvents) {
     await player.ready();
 
-    player.set('volume', element.cache('volume'));
-    player.set('muted', element.cache('muted'));
-    player.set('loop', element.cache('loop'));
+    await player.set('volume', element.cache('volume'));
+    await player.set('muted', element.cache('muted'));
+    await player.set('loop', element.cache('loop'));
 
     if (initEvents) attachEvents();
 

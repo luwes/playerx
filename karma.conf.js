@@ -18,9 +18,10 @@ var browserstackLaunchers = {
   bs_chrome_win: {
     base: 'BrowserStack',
     browser: 'Chrome',
-    browser_version: '80.0',
+    browser_version: '81.0',
     os: 'Windows',
     os_version: '10',
+    timeout: '60',
     chromeOptions: {
       args: [
         '--disable-web-security',
@@ -66,17 +67,18 @@ module.exports = function(config) {
     // browserLogOptions: { terminal: true },
     // browserConsoleLogOptions: { terminal: true },
     browserConsoleLogOptions: {
-      level: 'warn', // Filter on warn messages.
+      level: automate ? 'log' : 'warn', // Filter on warn messages.
       format: '%b %T: %m',
       terminal: true
     },
 
     browserNoActivityTimeout: 60 * 60 * 1000,
 
-    // Use only one browser, works better with open source Sauce Labs remote testing
-    concurrency: 2,
+    // Especially on services like SauceLabs and Browserstack, it makes sense only to launch a limited amount of browsers at once, and only start more when those have finished. Using this configuration, you can specify how many browsers should be running at once at any given point in time.
+    concurrency: Infinity,
 
-    captureTimeout: 0,
+    // The captureTimeout value represents the maximum boot-up time allowed for a browser to start and connect to Karma. If any browser does not get captured within the timeout, Karma will kill it and try to launch it again and, after three attempts to capture it, Karma will give up.
+    captureTimeout: 60000,
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
@@ -151,7 +153,7 @@ module.exports = function(config) {
           babelHelpers: 'bundled',
           include: [
             'packages/playerx/**'
-          ]
+          ],
         })
       ].filter(Boolean),
       onwarn: (msg) => /eval/.test(msg) && void 0

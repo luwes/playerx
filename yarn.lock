@@ -7574,10 +7574,10 @@ svgo@^1.0.0:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
-swiss@^2.0.0-beta.2:
-  version "2.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/swiss/-/swiss-2.0.0-beta.2.tgz#108794e8cbc7fd128ec39628946c4a7ea2ccb338"
-  integrity sha512-V9JxgdSZSxE3i3CGcfDfrV2gLRjo4KHQMcl7bFwWCMzN6VzUEg3vifqY2mQ1let31GtmezIj9EGlHUoGjXhQUQ==
+swiss@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/swiss/-/swiss-2.0.0.tgz#ef33d2f20d2c051d74a553981f4775e2a114553c"
+  integrity sha512-lNvUOT0LYB02jsRRKiAhkhYXQvNz76cBnyj6lkCpskHbd7q7sXpJjRDQw6/Fzb4GyKoAseAmubOjikSGO0sYqw==
 
 symbol-observable@1.0.1:
   version "1.0.1"
