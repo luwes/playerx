@@ -8,7 +8,7 @@
     "url": "https://github.com/luwes/playerx/issues"
   },
   "repository": "luwes/playerx",
-  "license": "MIT",
+  "license": "SEE LICENSE IN LICENSE",
   "author": "Wesley Luyten <me@wesleyluyten.com> (https://wesleyluyten.com)",
   "main": "dist/playerx.min.js",
   "module": "module/playerx.js",
