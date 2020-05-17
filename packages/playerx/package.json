@@ -10,9 +10,10 @@
   "repository": "luwes/playerx",
   "license": "MIT",
   "author": "Wesley Luyten <me@wesleyluyten.com> (https://wesleyluyten.com)",
-  "main": "dist/playerx.js",
+  "main": "dist/playerx.min.js",
   "module": "module/playerx.js",
   "files": [
+    "module",
     "dist",
     "src"
   ],
