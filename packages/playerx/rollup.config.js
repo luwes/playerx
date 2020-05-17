@@ -14,11 +14,11 @@ const terserPlugin = terser({
     drop_console: production,
     sequences: false, // caused an issue with Babel where sequence order was wrong
   },
-  // mangle: {
-  //   properties: {
-  //     regex: /^_\w/
-  //   }
-  // }
+  mangle: {
+    properties: {
+      regex: /^_\w/
+    }
+  }
 });
 
 const config = {
@@ -27,45 +27,50 @@ const config = {
     clearScreen: false
   },
   output: {
-    format: 'iife',
+    format: 'es',
     sourcemap: true,
-    file: 'dist/playerx.js',
-    name: 'playerx'
+    file: 'module/playerx.js',
   },
   plugins: [
     bundleSize(),
     sourcemaps(),
     nodeResolve(),
-
-    // If we're building for production (npm run build
-    // instead of npm run dev), minify
-    terserPlugin
   ]
 };
 
 export default [
-  {
+  config,
+  production && {
     ...config,
     output: {
       ...config.output,
-      file: 'module/playerx.js',
-      format: 'es'
-    }
+      file: 'module/playerx.min.js',
+      format: 'es',
+    },
+    plugins: [
+      ...config.plugins,
+      terserPlugin,
+    ]
   },
-  // {
-  //   ...config,
-  //   output: {
-  //     ...config.output,
-  //     file: 'dist/playerx.js',
-  //     format: 'umd'
-  //   },
-  //   plugins: [
-  //     ...config.plugins,
-  //     babel({
-  //       compact: false,
-  //     })
-  //   ]
-  // },
+  production && {
+    ...config,
+    output: {
+      ...config.output,
+      file: 'dist/playerx.min.js',
+      format: 'umd',
+      name: 'playerx',
+    },
+    plugins: [
+      ...config.plugins,
+      babel({
+        babelHelpers: 'bundled',
+        include: '**/*',
+        inputSourceMap: false,
+        compact: false,
+      }),
+      terserPlugin,
+    ]
+  },
   // {
   //   ...config,
   //   input: 'src/players/vimeo.js',
@@ -75,4 +80,4 @@ export default [
   //     format: 'es'
   //   }
   // },
-];
+].filter(Boolean);
