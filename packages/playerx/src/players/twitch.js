@@ -1,9 +1,7 @@
 // https://dev.twitch.tv/docs/embed/video-and-clips
 
 import { define } from '../define.js';
-import { createResponsiveStyle } from '../helpers/css.js';
 import { getVideoId } from '../helpers/url.js';
-import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise, promisify } from '../utils/promise.js';
 import { createTimeRanges } from '../utils/time-ranges.js';
@@ -19,11 +17,12 @@ const MATCH_URL = /twitch\.tv\/videos\/(\d+)($|\?)/;
 
 twitch.canPlay = src => MATCH_URL.test(src);
 
+// 'div'
+
 export function twitch(element) {
   let api;
   let div;
   let ready;
-  let style = createResponsiveStyle(element, 'div');
 
   function getOptions() {
     return {
@@ -98,7 +97,6 @@ export function twitch(element) {
     },
 
     set src(value) {
-      style.update(element);
       api.setVideo('v' + getVideoId(MATCH_URL, element.src));
     },
 
@@ -118,7 +116,7 @@ export function twitch(element) {
 
   init();
 
-  return extend(style.methods, methods);
+  return methods;
 }
 
 export const Twitch = define('player-twitch', twitch);

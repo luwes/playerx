@@ -38,7 +38,7 @@ const logger = hy(dhtml`
 
 function getEventData({ type, target }) {
   if (eventData[type]) {
-    return html` <span class="bg-orange-200">${eventData[type](target)}</span>`;
+    return html` <span class="bg-orange-100">${eventData[type](target)}</span>`;
   }
 }
 

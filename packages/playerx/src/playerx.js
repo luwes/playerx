@@ -1,14 +1,10 @@
+import { createResponsiveStyle } from './helpers/css.js';
 import { base } from './player-base.js';
 import * as Events from './constants/events.js';
 import { extend } from './utils/object.js';
 import { publicPromise } from './utils/promise.js';
 
-export const coreMethodNames = [
-  'play',
-  'pause',
-  'stop',
-  'get',
-];
+export const coreMethodNames = ['play', 'pause', 'stop', 'get'];
 
 const events = Object.values(Events);
 let listeners = {};
@@ -16,16 +12,19 @@ let listeners = {};
 export const playerx = (CE, { create }) => (element) => {
   console.dir(element);
 
-  let player;
-  let elementReady = publicPromise();
-  let apiReady;
+  let player = {};
+  let responsiveStyle = createResponsiveStyle(element);
+  extend(player, base(element, player), responsiveStyle);
 
+  let { volume, muted, currentTime, duration } = element;
+  let elementReady = publicPromise();
+
+  let playerInitiated;
+  let apiReady;
   let currentTimeTimeout;
   let durationTimeout;
   let progressTimeout;
   let volumeTimeout;
-
-  let { volume, muted, currentTime, duration } = element;
   let progress;
   let hasDurationEvent;
   let playFired;
@@ -102,7 +101,7 @@ export const playerx = (CE, { create }) => (element) => {
 
     element.fire(Events.LOADSRC);
 
-    if (player && player.f.canPlay(element.src)) {
+    if (playerInitiated && player.f.canPlay(element.src)) {
       const prevLoad = element.load;
 
       // If `element.load` is called in the player, re-attach events.
@@ -127,22 +126,23 @@ export const playerx = (CE, { create }) => (element) => {
   }
 
   function init() {
-    let nextSibling;
     let oldPlayer = player;
-    if (oldPlayer) {
-      nextSibling = oldPlayer.element.nextSibling;
+    if (playerInitiated && oldPlayer) {
       destroy(oldPlayer);
     }
 
+    playerInitiated = true;
     player = {};
-    player = extend(player, base(element, player), create(element));
+    player = extend(player, base(element, player), create(element), responsiveStyle);
     player.f = player.f || create;
 
-    if (oldPlayer) {
-      element.insertBefore(player.element, nextSibling);
-    } else {
-      element.append(player.element);
+    let media = element.querySelector('plx-media');
+    if (!media) {
+      media = document.createElement('plx-media');
+      element.insertBefore(media, element.firstChild);
     }
+    media.textContent = '';
+    media.appendChild(player.element);
   }
 
   async function afterLoad(initEvents) {
@@ -171,51 +171,70 @@ export const playerx = (CE, { create }) => (element) => {
 
   function attachEvents() {
     listeners = [
-      [Events.PAUSE, () => {
-        element.setCache('playing', false);
-        element.setCache('paused', true);
-      }],
-      [Events.PLAY, () => {
-        element.setCache('paused', false);
-        element.setCache('playing', true);
-        playFired = true;
-      }],
-      [Events.PLAYING, () => {
-        element.setCache('paused', false);
-        element.setCache('playing', true);
-        updateDuration();
-        playFired = false;
-      }],
-      [Events.ENDED, () => {
-        if (element.loop) {
-          player.play();
-          return;
-        }
-        element.setCache('playing', false);
-        element.setCache('paused', true);
-        element.fire(Events.ENDED);
-      }],
+      [
+        Events.PAUSE,
+        () => {
+          element.setCache('playing', false);
+          element.setCache('paused', true);
+        },
+      ],
+      [
+        Events.PLAY,
+        () => {
+          element.setCache('paused', false);
+          element.setCache('playing', true);
+          playFired = true;
+        },
+      ],
+      [
+        Events.PLAYING,
+        () => {
+          element.setCache('paused', false);
+          element.setCache('playing', true);
+          updateDuration();
+          playFired = false;
+        },
+      ],
+      [
+        Events.ENDED,
+        () => {
+          if (element.loop) {
+            player.play();
+            return;
+          }
+          element.setCache('playing', false);
+          element.setCache('paused', true);
+          element.fire(Events.ENDED);
+        },
+      ],
       // When the API supports these events the timeouts are disabled.
       [Events.TIMEUPDATE, () => updateCurrentTime(true)],
       [Events.VOLUMECHANGE, () => updateVolume(true)],
       [Events.PROGRESS, () => updateProgress(true)],
-      [Events.DURATIONCHANGE, () => {
-        hasDurationEvent = true;
-        updateDuration(true);
-      }]
+      [
+        Events.DURATIONCHANGE,
+        () => {
+          hasDurationEvent = true;
+          updateDuration(true);
+        },
+      ],
     ];
 
-    events.filter(event => ![
-      Events.READY,
-      Events.LOADSRC,
-      Events.LOADEDSRC,
-      Events.ENDED,
-      Events.TIMEUPDATE,
-      Events.DURATIONCHANGE,
-      Events.VOLUMECHANGE,
-      Events.PROGRESS,
-    ].includes(event))
-    .forEach(event => listeners.push([event, fire.bind(null, event)]));
+    events
+      .filter(
+        (event) =>
+          ![
+            Events.READY,
+            Events.LOADSRC,
+            Events.LOADEDSRC,
+            Events.ENDED,
+            Events.TIMEUPDATE,
+            Events.DURATIONCHANGE,
+            Events.VOLUMECHANGE,
+            Events.PROGRESS,
+          ].includes(event)
+      )
+      .forEach((event) => listeners.push([event, fire.bind(null, event)]));
 
     listeners.forEach(([event, listener]) => player.on(event, listener));
   }
@@ -344,8 +363,8 @@ export const playerx = (CE, { create }) => (element) => {
     ready,
   };
 
-  coreMethodNames.forEach(name => {
-    methods[name] = async function(...args) {
+  coreMethodNames.forEach((name) => {
+    methods[name] = async function (...args) {
       await apiReady;
       if (player && player[name]) {
         return player[name](...args);

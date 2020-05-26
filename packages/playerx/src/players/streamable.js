@@ -2,9 +2,7 @@
 
 import { define } from '../define.js';
 import { createEmbedIframe } from '../helpers/dom.js';
-import { createResponsiveStyle } from '../helpers/css.js';
 import { getVideoId } from '../helpers/url.js';
-import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise, promisify } from '../utils/promise.js';
 import { createTimeRanges } from '../utils/time-ranges.js';
@@ -23,7 +21,6 @@ export function streamable(element) {
   let api;
   let iframe;
   let ready;
-  let style = createResponsiveStyle(element);
 
   function getOptions() {
     return {
@@ -105,7 +102,6 @@ export function streamable(element) {
     },
 
     set src(value) {
-      style.update(element);
       element.load();
     },
 
@@ -150,7 +146,7 @@ export function streamable(element) {
 
   init();
 
-  return extend(style.methods, methods);
+  return methods;
 }
 
 export const Streamable = define('player-streamable', streamable);

@@ -2,10 +2,8 @@
 
 import { define } from '../define.js';
 import { createEmbedIframe } from '../helpers/dom.js';
-import { createResponsiveStyle } from '../helpers/css.js';
 import { PlayerError } from '../helpers/error.js';
 import { getVideoId } from '../helpers/url.js';
-import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise } from '../utils/promise.js';
 import { serialize, boolToBinary } from '../utils/url.js';
@@ -24,7 +22,6 @@ export function vimeo(element) {
   let api;
   let iframe;
   let ready = publicPromise();
-  let style = createResponsiveStyle(element);
 
   function getOptions() {
     return {
@@ -97,7 +94,6 @@ export function vimeo(element) {
     },
 
     setSrc() {
-      style.update(element);
       return api.loadVideo(getOptions());
     },
 
@@ -112,7 +108,7 @@ export function vimeo(element) {
 
   init();
 
-  return extend(style.methods, methods);
+  return methods;
 }
 
 export const Vimeo = define('player-vimeo', vimeo);

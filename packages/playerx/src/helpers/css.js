@@ -1,65 +1,76 @@
-import { addCssRule, boxUnit } from '../utils/css.js';
+import { getStyle, addCssRule, cssNumber } from '../utils/css.js';
 
-export function createResponsiveStyle(props, tag = 'iframe') {
-  let element;
-  let before;
-  update(props);
+const sheet = getStyle();
+sheet.firstChild.data += `
+  player-x {
+    display: block;
+    position: relative
+  }
+  player-x::before {
+    content: "";
+    margin-left: -1px;
+    width: 1px;
+    height: 0;
+    float: left
+  }
+  player-x::after {
+    content: "";
+    display: table;
+    clear: both
+  }
+  plx-media,plx-media>* {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%
+  }
+`;
 
-  function update({ src, width, height, aspectRatio }) {
-    const selector = `player-x[src="${src}"]`;
+export function createResponsiveStyle(element) {
+  const { width, height, aspectRatio } = element;
+  const selector = '__';
+  const elementRule = addCssRule(selector, {
+    width,
+    height,
+  });
+  const beforeRule = addCssRule(selector, {
+    'padding-top': `${aspectRatio * 100}%`,
+  });
+  updateSelector(element);
 
-    element = addCssRule(selector, {
-      width,
-      height,
-      display: 'block',
-      position: 'relative',
-    });
-
-    before = addCssRule(`${selector}::before`, {
-      content: '""',
-      'padding-top': `${aspectRatio * 100}%`,
-      'margin-left': boxUnit(-1),
-      width: boxUnit(1),
-      height: 0,
-      float: 'left',
-    });
-
-    addCssRule(`${selector}::after`, {
-      content: '""',
-      display: 'table',
-      clear: 'both',
-    });
-
-    addCssRule(`${selector} > ${tag}`, {
-      position: 'absolute !important',
-      width: '100% !important',
-      height: '100% !important',
-    });
+  function updateSelector(el) {
+    let selectorText = `player-x[width="${el.width}"]`;
+    if (element.height > 0) {
+      selectorText += `[height="${el.height}"]`;
+    } else {
+      selectorText += `[aspect-ratio="${el.aspectRatio}"]`;
+    }
+    elementRule.selectorText = selectorText;
+    beforeRule.selectorText = selectorText + '::before';
   }
 
   return {
-    update,
-    methods: {
+    set width(value) {
+      elementRule.style.width = value == null ? '' : cssNumber(value);
+      updateSelector(element);
+    },
 
-      set width(width) {
-        element.style.width = width == null ? '' : boxUnit(width);
-      },
+    get width() {
+      return elementRule.style.width;
+    },
 
-      get width() {
-        return element.style.width;
-      },
+    set height(value) {
+      elementRule.style.height = value == null ? '' : cssNumber(value);
+      updateSelector(element);
+    },
 
-      set height(height) {
-        element.style.height = height == null ? '' : boxUnit(height);
-      },
+    get height() {
+      return elementRule.style.height;
+    },
 
-      get height() {
-        return element.style.height;
-      },
-
-      set aspectRatio(ratio) {
-        before.style.setProperty('padding-top', `${ratio * 100}%`);
-      },
-    }
+    set aspectRatio(value) {
+      beforeRule.style.setProperty('padding-top', `${value * 100}%`);
+      updateSelector(element);
+    },
   };
 }

@@ -1,2 +1,2 @@
-# Playerx lite
+# Playerx MUX
 

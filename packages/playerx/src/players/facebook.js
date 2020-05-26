@@ -1,14 +1,11 @@
 // https://developers.facebook.com/docs/plugins/embedded-video-player/api/
 
 import { define } from '../define.js';
-import { createResponsiveStyle } from '../helpers/css.js';
 import { getVideoId } from '../helpers/url.js';
 import { createElement } from '../utils/dom.js';
-import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise } from '../utils/promise.js';
 import { uniqueId } from '../utils/utils.js';
-import { addCssRule } from '../utils/css.js';
 import { createPlayPromise } from '../helpers/video.js';
 import { options } from '../options.js';
 export { options };
@@ -24,7 +21,6 @@ export function facebook(element) {
   let api;
   let div;
   let ready;
-  let style = createResponsiveStyle(element, 'div > span > iframe');
 
   function getOptions() {
     return {
@@ -44,16 +40,10 @@ export function facebook(element) {
     div = createElement('div', {
       id,
       class: 'fb-video',
-      style: 'position:absolute;width:100%;height:100%',
       'data-href': opts.url,
       'data-autoplay': '' + opts.autoplay,
       'data-allowfullscreen': 'true',
       'data-controls': '' + opts.controls,
-    });
-
-    addCssRule(`player-x[src="${opts.url}"] > div > span`, {
-      width: '100% !important',
-      height: '100% !important',
     });
 
     const FB = await loadScript(opts.apiUrl || API_URL, API_GLOBAL, API_GLOBAL_READY);
@@ -124,7 +114,6 @@ export function facebook(element) {
     },
 
     set src(value) {
-      style.update(element);
       element.load();
     },
 
@@ -155,7 +144,7 @@ export function facebook(element) {
 
   init();
 
-  return extend(style.methods, methods);
+  return methods;
 }
 
 export const Facebook = define('player-facebook', facebook);

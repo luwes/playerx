@@ -11,10 +11,8 @@ const test = beforeEach(tape, (assert) => {
   assert.end();
 });
 
-const src = 'https://vimeo.com/357274789';
-
 test('creates an element', (t) => {
-  const player = new Playerx({ src });
+  const player = new Playerx();
   t.assert(player instanceof HTMLElement);
   t.end();
 });

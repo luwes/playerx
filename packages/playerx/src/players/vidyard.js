@@ -1,11 +1,9 @@
 // https://knowledge.vidyard.com/hc/en-us/articles/360019034753
 
 import { define } from '../define.js';
-import { createResponsiveStyle } from '../helpers/css.js';
 import { getVideoId } from '../helpers/url.js';
 import { addCssRule } from '../utils/css.js';
 import { createElement } from '../utils/dom.js';
-import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise, promisify } from '../utils/promise.js';
 import { clamp } from '../utils/utils.js';
@@ -20,11 +18,12 @@ const MATCH_URL = /vidyard\..*?\/(?:share|watch)\/(\w+)/;
 
 vidyard.canPlay = src => MATCH_URL.test(src);
 
+// 'div'
+
 export function vidyard(element) {
   let api;
   let img;
   let ready;
-  let style = createResponsiveStyle(element, 'div');
   let VidyardV4;
   let apiVolume;
 
@@ -75,6 +74,21 @@ export function vidyard(element) {
     ended: 'playerComplete'
   };
 
+  const unsupportedEvents = {
+    playing: undefined,
+    progress: undefined,
+    durationchange: undefined,
+    loadstart: undefined,
+    loadedmetadata: undefined,
+    seeking: undefined,
+    seeked: undefined,
+    cuechange: undefined,
+    ratechange: undefined,
+    error: undefined,
+    bufferstart: undefined,
+    bufferend: undefined,
+  };
+
   const methods = {
     name: 'Vidyard',
     version: '1.x.x',
@@ -115,6 +129,7 @@ export function vidyard(element) {
     },
 
     on(eventName, callback) {
+      if (eventName in unsupportedEvents) return;
       api.on(eventAliases[eventName] || eventName, callback);
     },
 
@@ -123,7 +138,6 @@ export function vidyard(element) {
     },
 
     setSrc() {
-      style.update(element);
       element.load();
     },
 
@@ -161,7 +175,7 @@ export function vidyard(element) {
 
   init();
 
-  return extend(style.methods, methods);
+  return methods;
 }
 
 export const Vidyard = define('player-vidyard', vidyard);

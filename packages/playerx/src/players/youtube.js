@@ -2,10 +2,8 @@
 
 import { define } from '../define.js';
 import { createEmbedIframe } from '../helpers/dom.js';
-import { createResponsiveStyle } from '../helpers/css.js';
 import { PlayerError } from '../helpers/error.js';
 import { getVideoId } from '../helpers/url.js';
-import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise } from '../utils/promise.js';
 import { serialize, boolToBinary } from '../utils/url.js';
@@ -26,7 +24,6 @@ export function youtube(element) {
   let api;
   let iframe;
   let ready;
-  let style = createResponsiveStyle(element);
   let filterEventByData;
   let YT;
 
@@ -181,7 +178,6 @@ export function youtube(element) {
     },
 
     set src(src) {
-      style.update(element);
       element.load();
 
       // `api.cueVideoById` works but `api.getDuration()` is never updated ;(
@@ -226,7 +222,7 @@ export function youtube(element) {
 
   init();
 
-  return extend(style.methods, methods);
+  return methods;
 }
 
 export const YouTube = define('player-youtube', youtube);

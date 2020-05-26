@@ -1,6 +1,6 @@
 const path = require('path');
 const alias = require('@rollup/plugin-alias');
-const nodeResolve = require('@rollup/plugin-node-resolve');
+const { default: nodeResolve } = require('@rollup/plugin-node-resolve');
 const commonjs = require('@rollup/plugin-commonjs');
 const istanbul = require('rollup-plugin-istanbul');
 const { default: babel } = require('@rollup/plugin-babel');
@@ -120,8 +120,12 @@ module.exports = function(config) {
       'https://polyfill.io/v3/polyfill.min.js?features=Element.prototype.append%2CElement.prototype.remove%2CCustomEvent',
       'https://unpkg.com/@webcomponents/custom-elements',
       'https://unpkg.com/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js',
+      // {
+      //   pattern: config.grep || 'packages/playerx/test/test.js',
+      //   watched: false
+      // },
       {
-        pattern: config.grep || 'packages/playerx/test/test.js',
+        pattern: 'packages/playerx-preview/test/test.js',
         watched: false
       },
     ],

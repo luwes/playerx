@@ -1,7 +1,7 @@
 {
-  "name": "playerx-lite",
+  "name": "playerx-preview",
   "version": "0.0.1",
-  "description": "Playerx lite",
+  "description": "Playerx Preview",
   "keywords": [],
   "homepage": "https://github.com/luwes/playerx#readme",
   "bugs": {
@@ -10,8 +10,8 @@
   "repository": "luwes/playerx",
   "license": "SEE LICENSE IN LICENSE",
   "author": "Wesley Luyten <me@wesleyluyten.com> (https://wesleyluyten.com)",
-  "main": "dist/playerx-lite.js",
-  "module": "module/playerx-lite.js",
+  "main": "dist/playerx-preview.js",
+  "module": "module/playerx-preview.js",
   "files": [
     "dist",
     "src"
@@ -21,22 +21,26 @@
     "dev": "rollup -wc --silent",
     "lint": "eslint src"
   },
+  "peerDependencies": {
+    "playerx": ">=0.0.1"
+  },
   "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.0",
     "@rollup/plugin-alias": "^3.0.1",
-    "@rollup/plugin-babel": "^5.0.0",
-    "@rollup/plugin-commonjs": "^11.0.2",
-    "@rollup/plugin-node-resolve": "^7.1.1",
+    "@rollup/plugin-babel": "^5.0.2",
+    "@rollup/plugin-commonjs": "^12.0.0",
+    "@rollup/plugin-node-resolve": "^8.0.0",
     "@rollup/plugin-replace": "^2.3.1",
     "@webcomponents/custom-elements": "^1.4.1",
     "babel-plugin-transform-async-to-promises": "^0.8.15",
     "eslint": "^7.0.0",
     "eslint-plugin-fp": "^2.3.0",
     "eslint-plugin-import": "^2.20.1",
-    "rollup": "^2.1.0",
+    "rollup": "^2.10.7",
     "rollup-plugin-size": "^0.2.2",
+    "rollup-plugin-sourcemaps": "^0.6.1",
     "rollup-plugin-terser": "^5.3.0"
   }
 }

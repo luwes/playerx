@@ -1,11 +1,9 @@
 // https://developer.dailymotion.com/player/
 
 import { define } from '../define.js';
-import { createResponsiveStyle } from '../helpers/css.js';
 import { allow } from '../helpers/dom.js';
 import { getVideoId } from '../helpers/url.js';
 import { createElement } from '../utils/dom.js';
-import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise } from '../utils/promise.js';
 import { createTimeRanges } from '../utils/time-ranges.js';
@@ -24,7 +22,6 @@ export function dailymotion(element) {
   let api;
   let div;
   let ready = publicPromise();
-  let style = createResponsiveStyle(element);
 
   function getOptions() {
     return {
@@ -125,7 +122,6 @@ export function dailymotion(element) {
     },
 
     setSrc() {
-      style.update(element);
       api.load(getOptions());
     },
 
@@ -152,7 +148,7 @@ export function dailymotion(element) {
 
   init();
 
-  return extend(style.methods, methods);
+  return methods;
 }
 
 export const Dailymotion = define('player-dailymotion', dailymotion);

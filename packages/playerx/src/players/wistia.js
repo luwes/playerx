@@ -1,9 +1,7 @@
 // https://wistia.com/support/developers/player-api
 
 import { define } from '../define.js';
-import { createResponsiveStyle } from '../helpers/css.js';
 import { getVideoId } from '../helpers/url.js';
-import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise } from '../utils/promise.js';
 import { createElement } from '../utils/dom.js';
@@ -17,11 +15,12 @@ const MATCH_URL = /(?:wistia\.com|wi\.st)\/(?:medias|embed)\/(.*)$/;
 
 wistia.canPlay = src => MATCH_URL.test(src);
 
+// 'div'
+
 export function wistia(element) {
   let api;
   let div;
   let ready;
-  let style = createResponsiveStyle(element, 'div');
 
   function getOptions() {
     return {
@@ -143,7 +142,6 @@ export function wistia(element) {
     },
 
     set src(src) {
-      style.update(element);
       element.load();
 
       // `api.replaceWith` works but does strange things with resizing ;(
@@ -178,7 +176,7 @@ export function wistia(element) {
 
   init();
 
-  return extend(style.methods, methods);
+  return methods;
 }
 
 export const Vimeo = define('player-wistia', wistia);

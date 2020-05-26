@@ -2,9 +2,7 @@
 // https://github.com/Dash-Industry-Forum/dash.js
 
 import { define } from '../define.js';
-import { createResponsiveStyle } from '../helpers/css.js';
 import { createElement } from '../utils/dom.js';
-import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise } from '../utils/promise.js';
 import { options } from '../options.js';
@@ -53,7 +51,6 @@ export function file(element) {
   let hls;
   let dash;
   let ready;
-  let style = createResponsiveStyle(element, 'video');
 
   function getOptions() {
     return {
@@ -181,7 +178,6 @@ export function file(element) {
 
     async setSrc() {
       ready = publicPromise();
-      style.update(element);
 
       await load(getOptions());
       ready.resolve();
@@ -190,7 +186,7 @@ export function file(element) {
 
   init();
 
-  return extend(style.methods, methods);
+  return methods;
 }
 
 export const File = define('player-file', file);

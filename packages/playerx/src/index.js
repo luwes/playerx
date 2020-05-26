@@ -10,6 +10,16 @@ import { version } from './constants/version.js';
 import * as VideoEvents from './constants/video-events.js';
 import { options } from './options.js';
 
+export * from 'swiss';
+export { addCssRule, getStyle } from './utils/css.js';
+export { loadScript } from './utils/load-script.js';
+export {
+  Events,
+  VideoEvents,
+  options,
+  version
+};
+
 function x(element, ...args) {
   for (let key in players) {
     const f = players[key];
@@ -26,10 +36,3 @@ function x(element, ...args) {
 }
 
 export const Playerx = define('player-x', x);
-
-export {
-  Events,
-  VideoEvents,
-  options,
-  version
-};

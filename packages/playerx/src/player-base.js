@@ -12,13 +12,13 @@ export function base(element, player) {
      * @return {*}
      */
     set(name, value) {
-      if (!player.api) return;
-
       let descriptor = getPropertyDescriptor(player, name);
       if (descriptor && descriptor.set) return (player[name] = value);
 
       const method = setName(name);
       if (isMethod(player, method)) return player[method](value);
+
+      if (!player.api) return;
 
       descriptor = getPropertyDescriptor(player.api, name);
       if (descriptor && descriptor.set) return (player.api[name] = value);
@@ -33,12 +33,12 @@ export function base(element, player) {
      * @return {*}
      */
     get(name) {
-      if (!player.api) return;
-
       let result;
       const method = getName(name);
       if ((result = getProperty(player, name)) !== undefined) return result;
       if ((result = getMethod(player, method)) !== undefined) return result;
+
+      if (!player.api) return;
 
       if ((result = getProperty(player.api, name)) !== undefined) return result;
       if ((result = getMethod(player.api, name)) !== undefined) return result;

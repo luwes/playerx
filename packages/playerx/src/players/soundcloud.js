@@ -2,7 +2,6 @@
 
 import { define } from '../define.js';
 import { createEmbedIframe } from '../helpers/dom.js';
-import { createResponsiveStyle } from '../helpers/css.js';
 import { extend, omit } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise, promisify } from '../utils/promise.js';
@@ -24,7 +23,6 @@ export function soundcloud(element) {
   let api;
   let iframe;
   let ready = publicPromise();
-  let style = createResponsiveStyle(element);
   let eventAliases;
   let loadedProgress;
 
@@ -102,7 +100,6 @@ export function soundcloud(element) {
 
     async setSrc(src) {
       const loaded = publicPromise();
-      style.update(element);
       api.load(src, omit(['url'], {
         ...getOptions(),
         callback: loaded.resolve
@@ -154,7 +151,7 @@ export function soundcloud(element) {
 
   init();
 
-  return extend(style.methods, methods);
+  return methods;
 }
 
 export const SoundCloud = define('player-soundcloud', soundcloud);

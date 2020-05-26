@@ -6,8 +6,110 @@ subtitle: ""
 
 {% extends "layouts/base.njk" %}
 
+{% set hero %}
+<div class="min-h-screen flex flex-col">
+  {% include "header.njk" %}
+
+  <div class="flex-grow container mx-auto flex px-6 xl:px-12 items-center">
+    <div class="lg:w-1/2">
+      <div class="px-4 sm:px-6 lg:px-6 mb-24">
+        <div class="sm:text-center lg:text-left">
+          <h2 class="text-4xl tracking-tight leading-10 font-semibold text-gray-900 sm:text-3xl sm:leading-none md:text-5xl">
+            The slickest
+            <br class="" />
+            <span class="text-aquamarine-500">
+              player framework
+            </span>
+          </h2>
+          <p class="mt-3 text-base text-gray-600 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+            Playerx's JavaScript web component lets you embed media on the web, control playback with one API accross platforms and enrich the player with powerful add-ons.
+          </p>
+          <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
+            <div class="rounded-md shadow">
+              <a href="#" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-aquamarine-500 hover:bg-aquamarine-300 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10">
+                Get early access
+              </a>
+            </div>
+            <div class="mt-3 sm:mt-0 sm:ml-3">
+              <a href="/demo" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-aquamarine-700 bg-aquamarine-100 hover:text-aquamarine-600 hover:bg-aquamarine-50 focus:outline-none focus:shadow-outline focus:border-aquamarine-300 transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10">
+                Live demo
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lg:w-1/2">
+      <div class="px-4 sm:px-6 lg:px-6 mb-24">
+<!--           <player-x src="https://vimeo.com/357274789" controls config='{"vimeo":{"title":false,"byline":false,"portrait":false}}'></player-x> -->
+      </div>
+    </div>
+  </div>
+</div>
+{% endset %}
+
 {% block content %}
-<main class="flex-grow">
+<main class="relative overflow-hidden flex-grow">
+
+  <div class="container mx-auto px-6 xl:px-12">
+    <div class="grid grid-rows-3 grid-cols-9">
+      <div class="col-start-1 col-span-3 px-5 pt-1">
+        <h3 class="text-2xl">Choose a license</h3>
+      </div>
+      <div class="col-span-2 px-5 pt-1 border-l">
+        <h2 class="text-xl font-semibold">Free</h2>
+
+        <div class="mt-4 flex items-center font-display">
+          <span class="flex items-start leading-none tracking-tight font-light text-gray-900 text-2xl">
+            $0
+          </span>
+        </div>
+
+        <button type="button" class="mt-4 w-full text-center px-4 py-2 border border-transparent text-sm text-aquamarine-800 leading-5 font-medium rounded bg-aquamarine-300 hover:bg-aquamarine-500 focus:outline-none focus:shadow-outline-aquamarine focus:border-aquamarine-700 active:bg-aquamarine-700 transition duration-150 ease-in-out">
+          Tweet for support
+        </button>
+      </div>
+      <div class="col-span-2 px-5 pt-1 border-l">
+        <h2 class="text-xl font-semibold">Backer</h2>
+
+        <div class="mt-4 flex items-center font-display">
+          <span class="flex items-start text-2xl leading-none tracking-tight font-light text-gray-900">
+            $29
+          </span>
+        </div>
+
+        <button type="button" class="mt-4 w-full text-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded text-white bg-aquamarine-500 hover:bg-aquamarine-400 focus:outline-none focus:shadow-outline-aquamarine focus:border-aquamarine-700 active:bg-aquamarine-700 transition duration-150 ease-in-out">
+          Buy License
+        </button>
+      </div>
+      <div class="col-span-2 px-5 pt-1 border-l">
+        <h2 class="text-xl font-semibold">Unlimited</h2>
+
+        <div class="mt-4 flex items-center font-display">
+          <span class="text-right text-xl leading-none font-light text-gray-400 tracking-wide line-through">
+            $99
+          </span>
+          <span class="px-2 flex items-start leading-none tracking-tight font-light text-gray-900 text-2xl">
+            $49
+          </span>
+        </div>
+
+        <button type="button" class="mt-4 w-full text-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded text-white bg-aquamarine-700 hover:bg-aquamarine-600 focus:outline-none focus:shadow-outline-aquamarine focus:border-aquamarine-700 active:bg-aquamarine-700 transition duration-150 ease-in-out">
+          Buy License
+        </button>
+      </div>
+
+      <div class="col-start-1 col-span-3 px-5 pt-1">
+        1
+      </div>
+
+      <div class="col-span-2 px-5 pt-1">
+        2
+      </div>
+
+    </div>
+  </div>
 
 </main>
 {% endblock %}

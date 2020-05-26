@@ -72,7 +72,12 @@ const props = {
 
 let player;
 player = hy(dhtml`
-  ${() => showing() && (player = dhtml`<player-x ...${props} />`)}
+  ${() => showing() && (player = dhtml`
+    <player-x ...${props}>
+      <plx-media></plx-media>
+      <plx-preview src=${src} />
+    <//>
+  `)}
 `);
 
 onconnected({ target: player });

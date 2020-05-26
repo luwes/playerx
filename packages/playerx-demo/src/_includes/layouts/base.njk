@@ -1,11 +1,17 @@
 {% extends "layouts/root.njk" %}
 
 {% block head %}
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
   <link rel="stylesheet" href="/css/playerx-demo.css">
 {% endblock %}
 
 {% block main %}
-  {% include "header.njk" %}
+
+  {% if hero %}
+    {{ hero | safe }}
+  {% else %}
+    {% include "header.njk" %}
+  {% endif %}
 
   {% block content %}
   {% endblock %}
@@ -15,4 +21,5 @@
 
 {% block foot %}
   <script src="/js/playerx-plugged.js"></script>
+  <script src="/js/site.js"></script>
 {% endblock %}

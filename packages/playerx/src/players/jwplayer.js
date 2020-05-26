@@ -1,11 +1,9 @@
 // https://developer.jwplayer.com/jwplayer/docs/jw8-javascript-api-reference
 
 import { define } from '../define.js';
-import { createResponsiveStyle } from '../helpers/css.js';
 import { PlayerError } from '../helpers/error.js';
 import { getVideoId } from '../helpers/url.js';
 import { createElement } from '../utils/dom.js';
-import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise, promisify } from '../utils/promise.js';
 import { createTimeRanges } from '../utils/time-ranges.js';
@@ -23,7 +21,6 @@ export function jwplayer(element) {
   let api;
   let div;
   let ready;
-  let style = createResponsiveStyle(element, 'div');
 
   function getOptions() {
     return {
@@ -51,6 +48,8 @@ export function jwplayer(element) {
     const JW = await loadScript(scriptUrl, API_GLOBAL);
     const media = await getMedia(id);
     api = JW(div).setup({
+      width: '100%',
+      height: '100%',
       ...media,
       ...opts
     });
@@ -121,7 +120,6 @@ export function jwplayer(element) {
     },
 
     setSrc() {
-      style.update(element);
       element.load();
     },
 
@@ -164,7 +162,7 @@ export function jwplayer(element) {
 
   init();
 
-  return extend(style.methods, methods);
+  return methods;
 }
 
 export const Jwplayer = define('player-jwplayer', jwplayer);

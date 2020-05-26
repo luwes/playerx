@@ -1,10 +1,8 @@
 // https://support.brightcove.com/overview-player-api
 
 import { define } from '../define.js';
-import { createResponsiveStyle } from '../helpers/css.js';
 import { getVideoId } from '../helpers/url.js';
 import { createElement } from '../utils/dom.js';
-import { extend } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise, promisify } from '../utils/promise.js';
 import { uniqueId } from '../utils/utils.js';
@@ -20,7 +18,6 @@ export function brightcove(element) {
   let api;
   let div;
   let ready;
-  let style = createResponsiveStyle(element, 'video-js');
 
   function getOptions() {
     return {
@@ -40,6 +37,7 @@ export function brightcove(element) {
       id,
       controls: element.controls,
       'data-video-id': videoId,
+      style: 'width:100%;height:100%',
     });
 
     const API_URL = `https://players.brightcove.net/${opts.account}/default_default/index.min.js`;
@@ -85,14 +83,13 @@ export function brightcove(element) {
     },
 
     setSrc() {
-      style.update(element);
       element.load();
     },
   };
 
   init();
 
-  return extend(style.methods, methods);
+  return methods;
 }
 
 export const Brightcove = define('player-brightcove', brightcove);

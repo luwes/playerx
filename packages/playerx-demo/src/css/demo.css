@@ -2,11 +2,6 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-html,
-body {
-  height: 100%;
-}
-
 html {
   font-size: 14px
 }
@@ -61,15 +56,15 @@ input[type="range"]::-ms-thumb {
 }
 
 .btn {
-  @apply bg-gray-500 text-white text-sm py-1 px-2 rounded mr-1;
+  @apply bg-cool-gray-400 text-white text-sm py-1 px-2 rounded mr-1;
 }
 
 .btn-active {
-  @apply bg-gray-600 shadow-inner;
+  @apply bg-cool-gray-500 shadow-inner;
 }
 
 .btn:hover {
-  @apply bg-gray-700;
+  @apply bg-cool-gray-600;
 }
 
 .src-btn {
@@ -81,5 +76,17 @@ input[type="range"]::-ms-thumb {
 }
 
 .logger p {
-  @apply px-2 border-t border-gray-200;
+  @apply px-2 border-t border-cool-gray-200;
+}
+
+#main-menu.active {
+  @apply flex;
+}
+
+#burger.active svg:first-child {
+  display: none;
+}
+
+#burger.active svg:last-child {
+  display: block;
 }
