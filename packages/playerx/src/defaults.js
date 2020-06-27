@@ -15,7 +15,7 @@ const readonlyProps = readonly({
 });
 
 const reflectProps = reflect({
-  aspectRatio: 0.5625,        // custom property
+  aspectRatio: undefined,     // custom property
   autoplay: false,
   controls: false,
   height: undefined,
@@ -25,7 +25,7 @@ const reflectProps = reflect({
   playsinline: false,
   preload: undefined,
   src: undefined,
-  width: '100%',
+  width: undefined,
 });
 
 export const props = {

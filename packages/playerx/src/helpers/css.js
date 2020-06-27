@@ -4,14 +4,16 @@ const sheet = getStyle();
 sheet.firstChild.data += `
   player-x {
     display: block;
-    position: relative
+    position: relative;
+    width: 100%
   }
   player-x::before {
     content: "";
     margin-left: -1px;
     width: 1px;
     height: 0;
-    float: left
+    float: left;
+    padding-top: 56.25%
   }
   player-x::after {
     content: "";
@@ -39,14 +41,19 @@ export function createResponsiveStyle(element) {
   updateSelector(element);
 
   function updateSelector(el) {
-    let selectorText = `player-x[width="${el.width}"]`;
-    if (element.height > 0) {
+    let selectorText = '';
+    if (el.width) {
+      selectorText += `player-x[width="${el.width}"]`;
+    }
+    if (el.height) {
       selectorText += `[height="${el.height}"]`;
-    } else {
+    } else if (el.aspectRatio) {
       selectorText += `[aspect-ratio="${el.aspectRatio}"]`;
     }
-    elementRule.selectorText = selectorText;
-    beforeRule.selectorText = selectorText + '::before';
+    if (selectorText) {
+      elementRule.selectorText = selectorText;
+      beforeRule.selectorText = selectorText + '::before';
+    }
   }
 
   return {
