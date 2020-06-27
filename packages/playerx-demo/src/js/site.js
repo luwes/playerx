@@ -1,7 +1,6 @@
 import { observable } from 'sinuous';
 import { hydrate, dhtml } from 'sinuous/hydrate';
 
-
 const burgerIsActive = observable(false);
 const openBurgerMenu = invert(burgerIsActive);
 
@@ -17,7 +16,7 @@ hydrate(
 );
 
 function cx(classes) {
-  return function() {
+  return function () {
     const { el } = this;
     Object.keys(classes).forEach((key) => {
       const value = classes[key];
@@ -29,4 +28,15 @@ function cx(classes) {
 
 function invert(accessor) {
   return () => accessor(!accessor());
+}
+
+hydrate(dhtml`<div id=tweet-button onclick=${openTweetWindow} />`);
+
+function openTweetWindow(e) {
+  e.preventDefault();
+  window.open(
+    e.target.href,
+    'Twitter',
+    `top=${screen.height/2-285},left=${screen.width/2-550/2},width=550,height=285,toolbar=no,location=0,status=no,menubar=no,scrollbars=yes,resizable=1`
+  );
 }

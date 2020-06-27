@@ -1,5 +1,7 @@
 const yaml = require('js-yaml');
 var compress = require('compression');
+const eleventyNavigationPlugin = require('@11ty/eleventy-navigation');
+const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 
 module.exports = function(eleventyConfig) {
   // A useful way to reference the context we are runing eleventy in
@@ -19,6 +21,20 @@ module.exports = function(eleventyConfig) {
       'public/css',
       'public/js'
     ]
+  });
+
+  eleventyConfig.addPlugin(eleventyNavigationPlugin);
+  eleventyConfig.addPlugin(syntaxHighlight, {
+    // Change which syntax highlighters are installed
+    templateFormats: ["*"], // default
+
+    // Or, just njk and md syntax highlighters (do not install liquid)
+    templateFormats: ["njk", "md"],
+
+    // init callback lets you customize Prism
+    init: function() {
+      // prismTemplates(Prism);
+    }
   });
 
   eleventyConfig.addDataExtension('yaml', contents => yaml.safeLoad(contents));
@@ -49,6 +65,7 @@ module.exports = function(eleventyConfig) {
 
   // pass some assets right through
   eleventyConfig.addPassthroughCopy('./src/images');
+  eleventyConfig.addPassthroughCopy('./src/fonts');
   eleventyConfig.addPassthroughCopy('src/favicon.ico');
 
   return {
@@ -57,7 +74,7 @@ module.exports = function(eleventyConfig) {
       output: 'public',
       data: `_data/${env}`
     },
-    templateFormats: ['njk', 'md', '11ty.js'],
+    templateFormats: ['html', 'njk', 'md', '11ty.js'],
     htmlTemplateEngine: 'njk',
     markdownTemplateEngine: 'njk',
     passthroughFileCopy: true

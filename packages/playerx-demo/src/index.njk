@@ -1,7 +1,8 @@
 ---
-title: "Playerx API"
-herotitle: ""
-subtitle: ""
+title: "Playerx for Developers"
+menu: License
+tags:
+  - main
 ---
 
 {% extends "layouts/base.njk" %}
@@ -26,7 +27,7 @@ subtitle: ""
           </p>
           <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
             <div class="rounded-md shadow">
-              <a href="#" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-aquamarine-500 hover:bg-aquamarine-300 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10">
+              <a href="#choose-license" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-aquamarine-500 hover:bg-aquamarine-300 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10">
                 Get early access
               </a>
             </div>
@@ -52,14 +53,12 @@ subtitle: ""
 {% block content %}
 <main class="relative overflow-hidden flex-grow">
 
-
-
   <div class="container mx-auto px-6 xl:px-12">
 
     <div class="md:flex flex-wrap">
 
       <div class="cell lg:w-3/9 order-0">
-        <h3 class="text-2xl">Choose a license</h3>
+        <h3 id="choose-license" class="text-2xl">Choose a license</h3>
       </div>
       <div class="cell lg:w-3/9 order-0 lg:order-1 lg:mb-4">
       </div>
@@ -73,9 +72,9 @@ subtitle: ""
           </span>
         </div>
 
-        <button type="button" class="buy-button bg-aquamarine-300 hover:bg-aquamarine-500 text-aquamarine-800">
+        <a id="tweet-button" href="https://twitter.com/intent/tweet?text={{ "Playerx - The slickest player framework." | urlencode }}&amp;url={{ site.url | urlencode }}&amp;via=luwes&amp;hashtags=playerx" class="buy-button bg-aquamarine-300 hover:bg-aquamarine-500 text-aquamarine-800">
           Tweet for support
-        </button>
+        </a>
       </div>
       <div class="cell md:w-3/9 lg:w-2/9 order-1 mb-4 lg:border-l">
         <ul class="feature-list">
@@ -141,5 +140,5 @@ subtitle: ""
 
 </main>
 
-<script src="https://gumroad.com/js/gumroad.js"></script>
+<!-- <script src="https://gumroad.com/js/gumroad.js"></script> -->
 {% endblock %}
