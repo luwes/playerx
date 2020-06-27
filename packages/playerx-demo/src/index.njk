@@ -52,12 +52,19 @@ subtitle: ""
 {% block content %}
 <main class="relative overflow-hidden flex-grow">
 
+
+
   <div class="container mx-auto px-6 xl:px-12">
-    <div class="grid grid-rows-3 grid-cols-9">
-      <div class="col-start-1 col-span-3 px-5 pt-1">
+
+    <div class="md:flex flex-wrap">
+
+      <div class="cell lg:w-3/9 order-0">
         <h3 class="text-2xl">Choose a license</h3>
       </div>
-      <div class="col-span-2 px-5 pt-1 border-l">
+      <div class="cell lg:w-3/9 order-0 lg:order-1 lg:mb-4">
+      </div>
+
+      <div class="cell md:w-3/9 lg:w-2/9 order-0 lg:border-l">
         <h2 class="text-xl font-semibold">Free</h2>
 
         <div class="mt-4 flex items-center font-display">
@@ -66,11 +73,21 @@ subtitle: ""
           </span>
         </div>
 
-        <button type="button" class="mt-4 w-full text-center px-4 py-2 border border-transparent text-sm text-aquamarine-800 leading-5 font-medium rounded bg-aquamarine-300 hover:bg-aquamarine-500 focus:outline-none focus:shadow-outline-aquamarine focus:border-aquamarine-700 active:bg-aquamarine-700 transition duration-150 ease-in-out">
+        <button type="button" class="buy-button bg-aquamarine-300 hover:bg-aquamarine-500 text-aquamarine-800">
           Tweet for support
         </button>
       </div>
-      <div class="col-span-2 px-5 pt-1 border-l">
+      <div class="cell md:w-3/9 lg:w-2/9 order-1 mb-4 lg:border-l">
+        <ul class="feature-list">
+          <li>Uniform cross platform API</li>
+          <li>Responsive by default</li>
+          <li>Engaging and rich previews</li>
+          <li>Faster loads by lazy loading</li>
+          <li>Video analytics integrations</li>
+        </ul>
+      </div>
+
+      <div class="cell md:w-3/9 lg:w-2/9  order-0 md:border-l">
         <h2 class="text-xl font-semibold">Backer</h2>
 
         <div class="mt-4 flex items-center font-display">
@@ -79,37 +96,50 @@ subtitle: ""
           </span>
         </div>
 
-        <button type="button" class="mt-4 w-full text-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded text-white bg-aquamarine-500 hover:bg-aquamarine-400 focus:outline-none focus:shadow-outline-aquamarine focus:border-aquamarine-700 active:bg-aquamarine-700 transition duration-150 ease-in-out">
+        <a href="https://gum.co/RrzVq" class="buy-button bg-aquamarine-500 hover:bg-aquamarine-400 text-white">
           Buy License
-        </button>
+        </a>
       </div>
-      <div class="col-span-2 px-5 pt-1 border-l">
+      <div class="cell md:w-3/9 lg:w-2/9  order-1 mb-4 md:border-l">
+        <div class="text-gray-500 text-sm leading-loose">
+          Everything in Free +
+        </div>
+        <ul class="feature-list">
+          <li>Support further development</li>
+          <li>License for future premium add-ons</li>
+        </ul>
+      </div>
+
+      <div class="cell md:w-3/9 lg:w-2/9 order-0 md:border-l">
         <h2 class="text-xl font-semibold">Unlimited</h2>
 
         <div class="mt-4 flex items-center font-display">
           <span class="text-right text-xl leading-none font-light text-gray-400 tracking-wide line-through">
-            $99
+            $98
           </span>
           <span class="px-2 flex items-start leading-none tracking-tight font-light text-gray-900 text-2xl">
             $49
           </span>
         </div>
 
-        <button type="button" class="mt-4 w-full text-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded text-white bg-aquamarine-700 hover:bg-aquamarine-600 focus:outline-none focus:shadow-outline-aquamarine focus:border-aquamarine-700 active:bg-aquamarine-700 transition duration-150 ease-in-out">
+        <a href="https://gum.co/CMMrr/earlybird" class="buy-button text-white bg-aquamarine-700 hover:bg-aquamarine-600">
           Buy License
-        </button>
+        </a>
       </div>
-
-      <div class="col-start-1 col-span-3 px-5 pt-1">
-        1
-      </div>
-
-      <div class="col-span-2 px-5 pt-1">
-        2
+      <div class="cell md:w-3/9 lg:w-2/9 order-1 mb-4 md:border-l">
+        <div class="text-gray-500 text-sm leading-loose">
+          Everything in Backer +
+        </div>
+        <ul class="feature-list">
+          <li>License for selling software with a Playerx integration</li>
+        </ul>
       </div>
 
     </div>
+
   </div>
 
 </main>
+
+<script src="https://gumroad.com/js/gumroad.js"></script>
 {% endblock %}

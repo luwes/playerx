@@ -90,3 +90,32 @@ input[type="range"]::-ms-thumb {
 #burger.active svg:last-child {
   display: block;
 }
+
+.buy-button {
+  @apply block mt-4 w-full text-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded transition duration-150 ease-in-out;
+}
+
+.buy-button:active {
+  @apply bg-aquamarine-700;
+}
+
+.buy-button:focus {
+  @apply outline-none shadow-outline-aquamarine border-aquamarine-700;
+}
+
+.cell {
+  @apply flex-grow overflow-hidden w-full border-b p-5;
+}
+
+.feature-list {
+  @apply text-sm;
+}
+
+.feature-list li {
+  @apply relative pl-4 py-1;
+}
+
+.feature-list li:before {
+  content: '•';
+  @apply absolute text-cool-gray-300 left-0;
+}

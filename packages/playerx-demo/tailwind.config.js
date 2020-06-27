@@ -1,47 +1,53 @@
 const ui = require('@tailwindcss/ui');
-const colors = require('@tailwindcss/ui/colors');
 const { fontFamily } = require('tailwindcss/defaultTheme');
+const hexRgb = require('hex-rgb');
+
+function rgba(hex, alpha) {
+  const { red, green, blue } = hexRgb(hex);
+  return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+}
+
+const aquamarine = {
+  50: '#E9FCF7',
+  100: '#CBF8EC',
+  200: '#9DF3DB',
+  300: '#8EF1D5',
+  400: '#70EDCA',
+  500: '#4ADEC0',
+  600: '#18BD9F',
+  700: '#129083',
+  800: '#0B544E',
+  900: '#073628',
+};
 
 module.exports = {
   plugins: [
     ui,
   ],
   theme: {
-    fontFamily: {
-      ...fontFamily,
-      sans: [
-        'Inter',
-        ...fontFamily.sans
-      ],
-    },
-    colors: {
-      ...colors,
-
-      aquamarine: {
-        50: '#E9FCF7',
-        100: '#CBF8EC',
-        200: '#9DF3DB',
-        300: '#8EF1D5',
-        400: '#70EDCA',
-        500: '#4ADEC0',
-        600: '#18BD9F',
-        700: '#129083',
-        800: '#0B544E',
-        900: '#073628',
+    extend: {
+      fontFamily: {
+        sans: [
+          'Inter',
+          ...fontFamily.sans
+        ],
       },
-
-      // aquamarine: {
-      //   50: '#edfff8',
-      //   100: '#d9fff2',
-      //   200: '#c5feeb',
-      //   300: '#b0fee5',
-      //   400: '#99fdde',
-      //   500: '#7ffcd8',
-      //   600: '#6acdb0',
-      //   700: '#55a08a',
-      //   800: '#417666',
-      //   900: '#1b2924',
-      // },
-    },
+      colors: {
+        aquamarine
+      },
+      boxShadow: {
+        'outline-aquamarine': `0 0 0 3px ${rgba(aquamarine[400], 0.45)}`,
+      },
+      width: {
+        '1/9': '11.111111111%',
+        '2/9': '22.222222222%',
+        '3/9': '33.333333333%',
+        '4/9': '44.444444444%',
+        '5/9': '55.555555556%',
+        '6/9': '66.666666667%',
+        '7/9': '77.777777778%',
+        '8/9': '88.888888889%',
+      }
+    }
   }
 };

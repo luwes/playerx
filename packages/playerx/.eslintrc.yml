@@ -1,5 +1,6 @@
 plugins:
   - fp
+  - jsdoc
 
 rules:
   no-var: error

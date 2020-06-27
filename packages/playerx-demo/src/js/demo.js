@@ -70,6 +70,9 @@ const props = {
   },
 };
 
+/** @typedef { import('playerx').Playerx } Playerx */
+
+/** @type Playerx */
 let player;
 player = hy(dhtml`
   ${() => showing() && (player = dhtml`

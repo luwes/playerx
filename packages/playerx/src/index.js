@@ -35,4 +35,10 @@ function x(element, ...args) {
   return player;
 }
 
+/** @typedef { import('./index').Playerx } Playerx */
+
+/**
+ * Playerx, plays almost everything.
+ * @type {Playerx}
+ */
 export const Playerx = define('player-x', x);
