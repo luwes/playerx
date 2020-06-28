@@ -12,3 +12,12 @@
 
 Playerx is a lightweight player web component with a uniform player API. It supports raw media files, HLS, Dash, Vimeo, YouTube, JW Player, Wistia, SoundCloud, Twitch, Dailymotion, Facebook, Vidyard, Brightcove, Streamable.
 
+
+### License
+
+Be sure to read the [license](/LICENSE.md) terms. In most cases Playerx is free to use but if your project profits from this software you should buy a commercial license at [dev.playerx.io](https://dev.playerx.io/).
+
+
+## Similar Projects
+
+- [React Player](https://github.com/CookPete/react-player)
