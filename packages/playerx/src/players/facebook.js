@@ -15,6 +15,11 @@ const API_GLOBAL = 'FB';
 const API_GLOBAL_READY = 'fbAsyncInit';
 const MATCH_URL = /facebook\.com\/.*videos\/(\d+)/;
 
+/**
+ * Returns true if the source can be played by this player.
+ * @param  {string} src
+ * @return {boolean}
+ */
 facebook.canPlay = src => MATCH_URL.test(src);
 
 export function facebook(element) {

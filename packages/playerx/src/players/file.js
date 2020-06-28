@@ -17,6 +17,11 @@ const VIDEO_EXTENSIONS = /\.(mp4|og[gv]|webm|mov|m4v)($|\?)/i;
 const HLS_EXTENSIONS = /\.m3u8($|\?)/i;
 const DASH_EXTENSIONS = /\.mpd($|\?)/i;
 
+/**
+ * Returns true if the source can be played by this player.
+ * @param  {string} src
+ * @return {boolean}
+ */
 const canPlay = file.canPlay = src => {
   if (Array.isArray(src)) {
     for (const item of src) {

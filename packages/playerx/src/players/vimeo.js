@@ -16,6 +16,11 @@ const API_URL = 'https://player.vimeo.com/api/player.js';
 const API_GLOBAL = 'Vimeo';
 const MATCH_URL = /vimeo\.com\/(?:video\/)?(\d+)/;
 
+/**
+ * Returns true if the source can be played by this player.
+ * @param  {string} src
+ * @return {boolean}
+ */
 vimeo.canPlay = src => MATCH_URL.test(src);
 
 export function vimeo(element) {

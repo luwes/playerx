@@ -16,6 +16,11 @@ const API_GLOBAL = 'DM';
 const API_GLOBAL_READY = 'dmAsyncInit';
 const MATCH_URL = /(?:(?:dailymotion\.com(?:\/embed)?\/video)|dai\.ly)\/(\w+)$/;
 
+/**
+ * Returns true if the source can be played by this player.
+ * @param  {string} src
+ * @return {boolean}
+ */
 dailymotion.canPlay = src => MATCH_URL.test(src);
 
 export function dailymotion(element) {

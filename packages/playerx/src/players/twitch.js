@@ -15,6 +15,11 @@ const API_URL = 'https://player.twitch.tv/js/embed/v1.js';
 const API_GLOBAL = 'Twitch';
 const MATCH_URL = /twitch\.tv\/videos\/(\d+)($|\?)/;
 
+/**
+ * Returns true if the source can be played by this player.
+ * @param  {string} src
+ * @return {boolean}
+ */
 twitch.canPlay = src => MATCH_URL.test(src);
 
 // 'div'

@@ -16,6 +16,11 @@ const API_GLOBAL = 'VidyardV4';
 const API_GLOBAL_READY = 'onVidyardAPI';
 const MATCH_URL = /vidyard\..*?\/(?:share|watch)\/(\w+)/;
 
+/**
+ * Returns true if the source can be played by this player.
+ * @param  {string} src
+ * @return {boolean}
+ */
 vidyard.canPlay = src => MATCH_URL.test(src);
 
 // 'div'

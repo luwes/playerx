@@ -2,7 +2,7 @@
 
 import { define } from '../define.js';
 import { createEmbedIframe } from '../helpers/dom.js';
-import { extend, omit } from '../utils/object.js';
+import { omit } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise, promisify } from '../utils/promise.js';
 import { serialize } from '../utils/url.js';
@@ -17,6 +17,11 @@ const API_URL = 'https://w.soundcloud.com/player/api.js';
 const API_GLOBAL = 'SC';
 const MATCH_URL = /(soundcloud\.com|snd\.sc)\/.+$/;
 
+/**
+ * Returns true if the source can be played by this player.
+ * @param  {string} src
+ * @return {boolean}
+ */
 soundcloud.canPlay = src => MATCH_URL.test(src);
 
 export function soundcloud(element) {

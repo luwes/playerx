@@ -15,6 +15,11 @@ const API_URL = 'https://cdn.embed.ly/player-0.1.0.min.js';
 const API_GLOBAL = 'playerjs';
 const MATCH_URL = /streamable\.com\/(\w+)$/;
 
+/**
+ * Returns true if the source can be played by this player.
+ * @param  {string} src
+ * @return {boolean}
+ */
 streamable.canPlay = src => MATCH_URL.test(src);
 
 export function streamable(element) {

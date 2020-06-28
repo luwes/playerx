@@ -12,6 +12,11 @@ export { options };
 const API_GLOBAL = 'bc';
 const MATCH_URL = /brightcove\.com\/.*?videos\/(\d+)/;
 
+/**
+ * Returns true if the source can be played by this player.
+ * @param  {string} src
+ * @return {boolean}
+ */
 brightcove.canPlay = src => MATCH_URL.test(src);
 
 export function brightcove(element) {

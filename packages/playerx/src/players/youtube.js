@@ -18,6 +18,11 @@ const API_GLOBAL = 'YT';
 const API_GLOBAL_READY = 'onYouTubeIframeAPIReady';
 const MATCH_URL = /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})/;
 
+/**
+ * Returns true if the source can be played by this player.
+ * @param  {string} src
+ * @return {boolean}
+ */
 youtube.canPlay = src => MATCH_URL.test(src);
 
 export function youtube(element) {

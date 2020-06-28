@@ -15,6 +15,11 @@ const API_URL = 'https://ssl.p.jwpcdn.com/player/v/8.12.5/jwplayer.js';
 const API_GLOBAL = 'jwplayer';
 const MATCH_URL = /jwplayer\.com\/players\/(\w+)(?:-(\w+))?/;
 
+/**
+ * Returns true if the source can be played by this player.
+ * @param  {string} src
+ * @return {boolean}
+ */
 jwplayer.canPlay = src => MATCH_URL.test(src);
 
 export function jwplayer(element) {

@@ -13,6 +13,11 @@ const API_URL = 'https://fast.wistia.com/assets/external/E-v1.js';
 const API_GLOBAL = 'Wistia';
 const MATCH_URL = /(?:wistia\.com|wi\.st)\/(?:medias|embed)\/(.*)$/;
 
+/**
+ * Returns true if the source can be played by this player.
+ * @param  {string} src
+ * @return {boolean}
+ */
 wistia.canPlay = src => MATCH_URL.test(src);
 
 // 'div'
