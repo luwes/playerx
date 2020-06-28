@@ -144,7 +144,8 @@ module.exports = function(config) {
       plugins: [
         alias({
           entries: {
-            tape: 'tape-browser'
+            tape: 'tape-browser',
+            playerx: __dirname + '/packages/playerx/src/index.js',
           }
         }),
         nodeResolve(),

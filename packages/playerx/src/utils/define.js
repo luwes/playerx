@@ -16,8 +16,8 @@ export function define(name, fn, observedAttributes) {
       this._disconnected && this._disconnected();
     }
 
-    attributeChangedCallback(name, oldValue, newValue) {
-      this._attributeChanged && this._attributeChanged(name, oldValue, newValue);
+    attributeChangedCallback(attrName, oldValue, newValue) {
+      this._attributeChanged && this._attributeChanged(attrName, oldValue, newValue);
     }
 
     // adoptedCallback() {
