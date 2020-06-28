@@ -6,7 +6,6 @@ eleventyNavigation:
   parent: Introduction
   order: 1
 tags: 
-  - main
   - docs
 layout: layouts/docs.njk
 ---

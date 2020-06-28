@@ -9,6 +9,11 @@ export const coreMethodNames = ['play', 'pause', 'stop', 'get'];
 const events = Object.values(Events);
 let listeners = {};
 
+/** @typedef { import('./index').Playerx } Playerx */
+
+/**
+ * @type {(CE: Class, options: Object) => (element: Playerx) => Object}
+ */
 export const playerx = (CE, { create }) => (element) => {
   console.dir(element);
 
@@ -101,7 +106,7 @@ export const playerx = (CE, { create }) => (element) => {
 
     element.fire(Events.LOADSRC);
 
-    if (playerInitiated && player.f.canPlay(element.src)) {
+    if (playerInitiated && player.constructor.canPlay(element.src)) {
       const prevLoad = element.load;
 
       // If `element.load` is called in the player, re-attach events.
@@ -134,7 +139,7 @@ export const playerx = (CE, { create }) => (element) => {
     playerInitiated = true;
     player = {};
     player = extend(player, base(element, player), create(element), responsiveStyle);
-    player.f = player.f || create;
+    player.constructor = player.constructor || create;
 
     let media = element.querySelector('plx-media');
     if (!media) {

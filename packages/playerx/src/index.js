@@ -22,16 +22,18 @@ export {
 
 function x(element, ...args) {
   for (let key in players) {
-    const f = players[key];
-    if (f.canPlay(element.src)) {
-      const player = f(element, ...args);
-      player.f = f;
+
+    const createPlayer = players[key];
+    if (createPlayer.canPlay(element.src)) {
+
+      const player = createPlayer(element, ...args);
+      player.constructor = createPlayer;
       return player;
     }
   }
 
   const player = file(element, ...args);
-  player.f = file;
+  player.constructor = file;
   return player;
 }
 
