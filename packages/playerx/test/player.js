@@ -22,6 +22,18 @@ export function testPlayer(options, videoInfo) {
   test(`basic player tests for ${options.src}`, async (t) => {
     const player = new Playerx();
     player.src = options.src;
+    Object.assign(player.config, {
+      facebook: {
+        appId: '197575574668798',
+        version: 'v3.2',
+      },
+      jwplayer: {
+        player: 'IxzuqJ4M',
+      },
+      brightcove: {
+        account: '1752604059001',
+      }
+    });
     container.append(player);
 
     await player.ready();

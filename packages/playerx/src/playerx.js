@@ -23,9 +23,8 @@ export const playerx = (CE, { create }) => element => {
 
   let { volume, muted, currentTime, duration } = element;
   let elementReady = publicPromise();
-
-  let playerInitiated;
   let apiReady;
+  let playerInitiated;
   let currentTimeTimeout;
   let durationTimeout;
   let progressTimeout;
@@ -102,7 +101,7 @@ export const playerx = (CE, { create }) => element => {
 
     apiReady = publicPromise();
     // The first time if player is null we use the promise defined at the top.
-    if (player) {
+    if (playerInitiated) {
       elementReady = publicPromise();
     }
 

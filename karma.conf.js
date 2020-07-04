@@ -125,7 +125,7 @@ module.exports = function(config) {
       //   watched: false
       // },
       {
-        pattern: 'packages/playerx-preview/test/test.js',
+        pattern: 'packages/playerx/test/test.js',
         watched: false
       },
     ],
