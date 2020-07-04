@@ -14,7 +14,7 @@ let listeners = {};
 /**
  * @type {(CE: Class, options: Object) => (element: Playerx) => Object}
  */
-export const playerx = (CE, { create }) => (element) => {
+export const playerx = (CE, { create }) => element => {
   console.dir(element);
 
   let player = {};
