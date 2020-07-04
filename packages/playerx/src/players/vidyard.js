@@ -16,6 +16,13 @@ const API_GLOBAL = 'VidyardV4';
 const API_GLOBAL_READY = 'onVidyardAPI';
 const MATCH_URL = /vidyard\..*?\/(?:share|watch)\/(\w+)/;
 
+addCssRule(`.vidyard-player-container,.vidyard-player-container>div`, {
+  position: 'absolute !important',
+  height: '100% !important',
+  width: '100% !important',
+  padding: '0 !important'
+});
+
 /**
  * Returns true if the source can be played by this player.
  * @param  {string} src
@@ -52,13 +59,6 @@ export function vidyard(element) {
       'data-v': '4',
       'data-type': 'inline',
       style: 'display:none'
-    });
-
-    addCssRule(`player-x[src="${element.src}"] > div > div`, {
-      position: 'absolute !important',
-      height: '100% !important',
-      width: '100% !important',
-      padding: '0 !important'
     });
 
     VidyardV4 = await loadScript(opts.apiUrl || API_URL, API_GLOBAL, API_GLOBAL_READY);
