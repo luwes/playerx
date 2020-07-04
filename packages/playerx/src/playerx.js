@@ -43,15 +43,17 @@ export const playerx = (CE, { create }) => (element) => {
   element.cache = element.getProp;
   element.setCache = element.setProp;
 
-  async function setProp(name, value) {
+  async function setProp(name, value, oldValue) {
     element.setCache(name, value);
 
     // if (!element.src) return;
 
     if (name === 'src') {
-      // Give a chance to add more properties on load.
-      await Promise.resolve();
-      element.load();
+      if (value !== oldValue) {
+        // Give a chance to add more properties on load.
+        await Promise.resolve();
+        element.load();
+      }
     } else {
       playerSet(name);
     }
