@@ -14,6 +14,9 @@
       </div>
       <div id="main-menu" class="w-full flex-grow hidden lg:flex lg:items-center lg:w-auto">
         <div class="w-1/2 lg:w-auto lg:flex-grow mt-2 py-1 lg:mt-0">
+          <a href="/#choose-license" class="block py-1 lg:inline-block lg:mt-0 mr-8">
+            License
+          </a>
           {%- for post in collections.main -%}
             <a href="{{ post.url }}" class="block py-1 lg:inline-block lg:mt-0 mr-8">
               {{ post.data.menu }}
