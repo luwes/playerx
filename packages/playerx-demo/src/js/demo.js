@@ -29,6 +29,7 @@ const currentTime = observable(0);
 const currentTimeValue = observable(0);
 const ended = observable(false);
 const muted = observable(getParam('muted', defaults.muted));
+const mutedValue = observable(true);
 const loop = observable(getParam('loop'));
 const controls = observable(getParam('controls', defaults.controls));
 const preload = observable(getParam('preload', defaults.preload));
@@ -60,7 +61,7 @@ const props = {
   },
   onvolumechange: () => {
     volumeValue(player.volume);
-    muted(player.muted);
+    mutedValue(player.muted);
   },
   onprogress: () => {
     const len = player.buffered.length;
@@ -173,7 +174,7 @@ hy(dhtml`
 `);
 
 hy(dhtml`
-  <input id="muted" oninput=${e => muted(e.target.checked)} checked=${muted} />
+  <input id="muted" oninput=${e => muted(e.target.checked)} checked=${mutedValue} />
 `);
 
 hy(dhtml`
