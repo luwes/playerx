@@ -8,12 +8,15 @@
 **cdn**: https://unpkg.com/playerx  
 **module**: https://unpkg.com/playerx?module
 
----
+> Playerx is a lightweight player web component with a uniform player API. It supports raw media files, HLS, Dash, Vimeo, YouTube, JW Player, Wistia, SoundCloud, Twitch, Dailymotion, Facebook, Vidyard, Brightcove, Streamable.
 
-Playerx is a lightweight player web component with a uniform player API. It supports raw media files, HLS, Dash, Vimeo, YouTube, JW Player, Wistia, SoundCloud, Twitch, Dailymotion, Facebook, Vidyard, Brightcove, Streamable.
+## Features
+
+- **Uniform player API** across player platforms, this sounds easier than it is. Many players have big differences in their API's. Some work synchronous, others async. Lots of work was put in normalizing these inconsistencies. The end result is an API that comes close the `HTMLMediaElement` API.
+- **UI framework independent**, intentionally uses no specific framework to have great interop across the board and keep the bundle size in check.
 
 
-### Usage ([Codesandbox](https://codesandbox.io/s/hello-playerx-22ku4))
+## Usage ([Codesandbox](https://codesandbox.io/s/hello-playerx-22ku4))
 
 ```js
 import 'playerx';
@@ -24,12 +27,12 @@ document.body.innerHTML = `
 ```
 
 
-### Status
+## Status
 
-Playerx is in early preview and needs more test coverage to be fully production ready. We aim to have the Playerx core in a great state by August 2020. Documentation is also high on the todo list.
+Playerx is in early preview and needs more test coverage to be fully production ready. We aim to have the Playerx core in a ready state by August 2020. Documentation is also high on the todo list.
 
 
-### License
+## License
 
 Be sure to read the [license](/LICENSE.md) terms. In most cases Playerx is free to use but if your project profits from this software you should buy a commercial license at [dev.playerx.io](https://dev.playerx.io/).
 
