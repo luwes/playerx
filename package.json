@@ -33,7 +33,8 @@
     "lint": "eslint packages/*/src",
     "test": "cross-env COVERAGE=true karma start",
     "docs": "run-p docs:*",
-    "docs:playerx": "yarn workspace playerx docs"
+    "docs:playerx": "yarn workspace playerx docs",
+    "bench": "yarn workspace bench start"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",

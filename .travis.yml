@@ -13,8 +13,13 @@ services:
 addons:
   chrome: stable
 
-script:
-  - COVERAGE=true yarn test --single-run --console --stack
+jobs:
+  include:
+    - stage: tests
+      name: "Unit tests"
+      script: COVERAGE=true yarn test --single-run --console --stack
+    - script: yarn bench
+      name: "Benchmark"
 
 after_success:
   - yarn run coverage
