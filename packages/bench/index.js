@@ -37,7 +37,9 @@ const randomKey = function (obj) {
     const context = await browser.newContext();
     const page = await context.newPage();
 
-    await page.goto(`https://dev.playerx.io/demo/${randomKey(players)}/`, {
+    const url = `https://dev.playerx.io/demo/${randomKey(players)}/`;
+    console.warn(`Running ${url}`);
+    await page.goto(url, {
       waitUntil: 'networkidle'
     });
 
