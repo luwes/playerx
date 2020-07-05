@@ -34,11 +34,11 @@ jwplayer:
     - https://cdn.jwplayer.com/players/Fpw44kH6-IxzuqJ4M.js
     - https://cdn.jwplayer.com/players/si1Oby4N-IxzuqJ4M.js
 
-# brightcove:
-#   name: Brightcove
-#   clips:
-#     - https://studio.brightcove.com/products/videocloud/media/videos/6141621349001
-#     - https://studio.brightcove.com/products/videocloud/media/videos/6141690919001
+brightcove:
+  name: Brightcove
+  clips:
+    - https://studio.brightcove.com/products/videocloud/media/videos/5755775186001
+    - https://studio.brightcove.com/products/videocloud/media/videos/4093643993001
 
 dailymotion:
   name: Dailymotion
