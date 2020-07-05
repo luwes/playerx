@@ -18,7 +18,9 @@ jobs:
     - stage: tests
       name: "Unit tests"
       script: COVERAGE=true yarn test --single-run --console --stack
-    - script: yarn bench
+    - script:
+      - whereis google-chrome
+      - yarn bench
       name: "Benchmark"
 
 after_success:
