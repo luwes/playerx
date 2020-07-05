@@ -26,7 +26,7 @@ const randomKey = function (obj) {
   for (const browserType of ['chromium']) {
     const browser = await playwright[browserType].launch({
       executablePath: ci
-        ? '/usr/bin/google-chrome-stable'
+        ? '/usr/bin/google-chrome'
         : '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
       headless: false,
       args: [
