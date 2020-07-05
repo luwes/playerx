@@ -50,7 +50,7 @@ export function vimeo(element) {
     const Vimeo = await loadScript(opts.apiUrl || API_URL, API_GLOBAL);
     api = new Vimeo.Player(iframe);
 
-    api.on('playbackratechange', ({ playbackRate }) => {
+    api.on('ratechange', ({ playbackRate }) => {
       element.setCache('playbackRate', playbackRate);
     });
 
@@ -61,10 +61,6 @@ export function vimeo(element) {
     await api.ready();
     ready.resolve();
   }
-
-  const eventAliases = {
-    ratechange: 'playbackratechange',
-  };
 
   const methods = {
     name: 'Vimeo',
@@ -91,11 +87,11 @@ export function vimeo(element) {
     },
 
     on(eventName, callback) {
-      api.on(eventAliases[eventName] || eventName, callback);
+      api.on(eventName, callback);
     },
 
     off(eventName, callback) {
-      api.off(eventAliases[eventName] || eventName, callback);
+      api.off(eventName, callback);
     },
 
     setSrc() {
