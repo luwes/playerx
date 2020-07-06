@@ -51,8 +51,10 @@ const player = argv.player || randomKey(players);
       waitUntil: 'networkidle'
     });
 
-    console.warn(`Starting playback for ${player}`);
     const plxElementHandle = await page.$('player-x');
+    await page.evaluate((plx) => plx.ready(), plxElementHandle);
+
+    console.warn(`Starting playback for ${player}`);
     await page.evaluate((plx) => plx.play(), plxElementHandle);
 
     await delay(10000);
