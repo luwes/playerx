@@ -36,7 +36,7 @@ const player = argv.player || randomKey(players);
       executablePath: ci
         ? '/usr/bin/google-chrome'
         : '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-      headless: false,
+      // headless: false,
       args: [
         '--disable-web-security',
         '--no-user-gesture-required',
