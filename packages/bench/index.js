@@ -46,15 +46,13 @@ const player = argv.player || randomKey(players);
     const page = await context.newPage();
 
     const url = `https://dev.playerx.io/demo/${player}/`;
+
     console.warn(`Loading ${url}`);
     await page.goto(url, {
-      waitUntil: 'load'
+      waitUntil: 'networkidle'
     });
 
-    await delay(2000);
-
     const plxElementHandle = await page.$('player-x');
-    await page.evaluate((plx) => plx.ready(), plxElementHandle);
 
     console.warn(`Starting playback for ${player}`);
     await page.evaluate((plx) => plx.play(), plxElementHandle);
