@@ -34,7 +34,7 @@ const player = argv.player || randomKey(players);
   for (const browserType of ['chromium']) {
     const browser = await playwright[browserType].launch({
       executablePath: ci
-        ? '/usr/bin/google-chrome'
+        ? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
         : '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
       // headless: false,
       args: [

@@ -8,9 +8,6 @@ cache:
   directories:
     - node_modules
 
-services:
-  - xvfb
-
 addons:
   chrome: stable
 
@@ -19,7 +16,8 @@ jobs:
     - stage: Tests
       name: "Unit tests"
       script: COVERAGE=true yarn test --single-run --console --stack
-    - script: yarn bench
+    - script:
+      - yarn bench
       name: "Benchmark"
 
 after_success:
