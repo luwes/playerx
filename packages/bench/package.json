@@ -4,9 +4,19 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js"
+    "start": "run-p bench:*",
+    "bench:file": "node index.js --player file",
+    "bench:vimeo": "node index.js --player vimeo",
+    "bench:youtube": "node index.js --player youtube",
+    "bench:wistia": "node index.js --player wistia",
+    "bench:vidyard": "node index.js --player vidyard",
+    "bench:jw-player": "node index.js --player jw-player",
+    "bench:brightcove": "node index.js --player brightcove"
   },
   "dependencies": {
     "playwright": "^1.1.1"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
   }
 }

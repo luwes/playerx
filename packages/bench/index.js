@@ -46,13 +46,20 @@ const player = argv.player || randomKey(players);
     const page = await context.newPage();
 
     const url = `https://dev.playerx.io/demo/${player}/`;
-    console.warn(`Running ${url}`);
+    console.warn(`Loading ${url}`);
     await page.goto(url, {
       waitUntil: 'networkidle'
     });
 
+    console.warn(`Starting playback for ${player}`);
     const plxElementHandle = await page.$('player-x');
     await page.evaluate((plx) => plx.play(), plxElementHandle);
+
+    await delay(10000);
+    console.warn(`Seeking 10s from the end for ${player}`);
+    await page.evaluate((plx) => {
+      plx.currentTime = plx.duration - 10;
+    }, plxElementHandle);
 
     await page.evaluate(
       (plx) =>
@@ -65,3 +72,12 @@ const player = argv.player || randomKey(players);
     await browser.close();
   }
 })();
+
+/**
+ * Returns a promise that will resolve after passed ms.
+ * @param  {number} ms
+ * @return {Promise}
+ */
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
