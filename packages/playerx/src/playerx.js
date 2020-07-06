@@ -86,7 +86,9 @@ export const playerx = (CE, { create }) => element => {
   function destroy(oldPlayer) {
     clearAllTimeouts();
     detachEvents();
-    oldPlayer.remove();
+    if (oldPlayer) {
+      oldPlayer.remove();
+    }
   }
 
   function clearAllTimeouts() {
