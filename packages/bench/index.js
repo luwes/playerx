@@ -67,8 +67,10 @@ async function runBenchmark(geolocation = newyork) {
 
   console.warn(`Loading ${url}`);
   await page.goto(url, {
-    waitUntil: 'networkidle',
+    waitUntil: 'load',
   });
+
+  await delay(2000);
 
   const plxElementHandle = await page.$('player-x');
 
