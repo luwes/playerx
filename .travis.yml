@@ -15,13 +15,34 @@ addons:
 
 jobs:
   include:
-    - stage: tests
+    - stage: Tests
       name: "Unit tests"
       script: COVERAGE=true yarn test --single-run --console --stack
+    - stage: Benchmark
     - script:
-      - whereis google-chrome
-      - yarn bench
-      name: "Benchmark"
+      - yarn bench --player file
+      name: "File - Online"
+    - script:
+      - yarn bench --player vimeo
+      name: "Vimeo - Online"
+    - script:
+      - yarn bench --player youtube
+      name: "YouTube - Online"
+    - script:
+      - yarn bench --player wistia
+      name: "Wistia - Online"
+    - script:
+      - yarn bench --player jw-player
+      name: "JW Player - Online"
+    - script:
+      - yarn bench --player vidyard
+      name: "Vidyard - Online"
+    - script:
+      - yarn bench --player brightcove
+      name: "Brightcove - Online"
+    - script:
+      - yarn bench --player facebook
+      name: "Facebook - Online"
 
 after_success:
   - yarn run coverage

@@ -1,6 +1,12 @@
 const playwright = require('playwright');
+const minimist = require('minimist');
 
 const ci = String(process.env.CI).match(/^(1|true)$/gi);
+const argv = minimist(process.argv.slice(2), {
+  default: {
+    player: null,
+  }
+});
 
 const players = {
   brightcove: {},
@@ -22,6 +28,8 @@ const randomKey = function (obj) {
   return keys[(keys.length * Math.random()) << 0];
 };
 
+const player = argv.player || randomKey(players);
+
 (async () => {
   for (const browserType of ['chromium']) {
     const browser = await playwright[browserType].launch({
@@ -37,7 +45,7 @@ const randomKey = function (obj) {
     const context = await browser.newContext();
     const page = await context.newPage();
 
-    const url = `https://dev.playerx.io/demo/${randomKey(players)}/`;
+    const url = `https://dev.playerx.io/demo/${player}/`;
     console.warn(`Running ${url}`);
     await page.goto(url, {
       waitUntil: 'networkidle'
