@@ -25,7 +25,7 @@
     "docs": "jsdoc2md src/index.js"
   },
   "dependencies": {
-    "swiss": "^2.0.0"
+    "swiss": "^2.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

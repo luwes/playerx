@@ -8254,10 +8254,10 @@ svgo@^1.0.0:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
-swiss@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/swiss/-/swiss-2.0.0.tgz#ef33d2f20d2c051d74a553981f4775e2a114553c"
-  integrity sha512-lNvUOT0LYB02jsRRKiAhkhYXQvNz76cBnyj6lkCpskHbd7q7sXpJjRDQw6/Fzb4GyKoAseAmubOjikSGO0sYqw==
+swiss@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/swiss/-/swiss-2.0.1.tgz#f2d147461db251d774ed8fb8f03fea7be47212f2"
+  integrity sha512-qSca2o9RWDqxtizL1XYDFPJcvawkYByx2wIZ+3OgTc9sd+1Z8yuhdlPTbSpM9aog5zs+oytqXs0NAUqYRv+Bbw==
 
 symbol-observable@1.0.1:
   version "1.0.1"
