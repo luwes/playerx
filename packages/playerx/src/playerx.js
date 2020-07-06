@@ -7,7 +7,7 @@ import { publicPromise } from './utils/promise.js';
 export const coreMethodNames = ['play', 'pause', 'stop', 'get'];
 
 const events = Object.values(Events);
-let listeners = {};
+let listeners = [];
 
 /** @typedef { import('./index').Playerx } Playerx */
 
