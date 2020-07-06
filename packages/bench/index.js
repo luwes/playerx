@@ -1,22 +1,23 @@
 const playwright = require('playwright');
 const minimist = require('minimist');
+const NETWORK_PRESETS = require('./network.js');
 
 const ci = String(process.env.CI).match(/^(1|true)$/gi);
 const argv = minimist(process.argv.slice(2), {
   default: {
     player: null,
-  }
+  },
 });
 
 const players = {
-  brightcove: {},
   // dailymotion: {},   // not starting playback
+  // streamable: {},    // has ads so difficult to automate
+  // twitch: {},        // not starting playback
+  brightcove: {},
   facebook: {},
   file: {},
   'jw-player': {},
   soundcloud: {},
-  // streamable: {},    // has ads so difficult to automate
-  // twitch: {},        // not starting playback
   vidyard: {},
   vimeo: {},
   wistia: {},
@@ -30,54 +31,73 @@ const randomKey = function (obj) {
 
 const player = argv.player || randomKey(players);
 
-(async () => {
-  for (const browserType of ['chromium']) {
-    const browser = await playwright[browserType].launch({
-      executablePath: ci
-        ? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
-        : '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-      // headless: false,
-      args: [
-        '--disable-web-security',
-        '--no-user-gesture-required',
-      ],
-    });
-    const context = await browser.newContext();
-    const page = await context.newPage();
+const newyork = {
+  latitude: 40.730610,
+  longitude: -73.935242
+};
 
-    const url = `https://dev.playerx.io/demo/${player}/`;
+const saopaulo = {
+  latitude: -23.5475,
+  longitude: -46.6361,
+  network: NETWORK_PRESETS['Good3G']
+};
 
-    console.warn(`Loading ${url}`);
-    await page.goto(url, {
-      waitUntil: 'networkidle'
-    });
+async function runBenchmark(geolocation = newyork) {
+  const browser = await playwright.chromium.launch({
+    executablePath: ci
+      ? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+      : '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    // headless: false,
+    args: ['--disable-web-security', '--no-user-gesture-required'],
+  });
+  const context = await browser.newContext({
+    geolocation,
+    permissions: ['geolocation']
+  });
+  const page = await context.newPage();
 
-    const plxElementHandle = await page.$('player-x');
-
-    console.warn(`Starting playback for ${player}`);
-    await page.evaluate((plx) => plx.play(), plxElementHandle);
-
-    await delay(10000);
-    console.warn(`Seeking 10s from the end for ${player}`);
-    await page.evaluate((plx) => {
-      plx.currentTime = plx.duration - 10;
-    }, plxElementHandle);
-
-    console.warn(`Waiting until ended for ${player}`);
-    await Promise.race([
-      delay(20000),
-      page.evaluate(
-        (plx) =>
-          new Promise((resolve) => {
-            plx.on('ended', resolve);
-          }),
-        plxElementHandle
-      )]
-    );
-
-    await browser.close();
+  if (geolocation.network) {
+    // Connect to Chrome DevTools
+    const client = await page.context().newCDPSession(page);
+    // Set throttling property
+    await client.send('Network.emulateNetworkConditions', geolocation.network);
   }
-})();
+
+  const url = `https://dev.playerx.io/demo/${player}/`;
+
+  console.warn(`Loading ${url}`);
+  await page.goto(url, {
+    waitUntil: 'networkidle',
+  });
+
+  const plxElementHandle = await page.$('player-x');
+
+  console.warn(`Starting playback for ${player}`);
+  await page.evaluate((plx) => plx.play(), plxElementHandle);
+
+  await delay(10000);
+  console.warn(`Seeking 10s from the end for ${player}`);
+  await page.evaluate((plx) => {
+    plx.currentTime = plx.duration - 10;
+  }, plxElementHandle);
+
+  console.warn(`Waiting until ended for ${player}`);
+  await Promise.race([
+    delay(20000),
+    page.evaluate(
+      (plx) =>
+        new Promise((resolve) => {
+          plx.on('ended', resolve);
+        }),
+      plxElementHandle
+    ),
+  ]);
+
+  await browser.close();
+}
+
+runBenchmark();
+runBenchmark(saopaulo);
 
 /**
  * Returns a promise that will resolve after passed ms.
@@ -85,5 +105,5 @@ const player = argv.player || randomKey(players);
  * @return {Promise}
  */
 function delay(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
