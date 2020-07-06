@@ -61,12 +61,16 @@ const player = argv.player || randomKey(players);
       plx.currentTime = plx.duration - 10;
     }, plxElementHandle);
 
-    await page.evaluate(
-      (plx) =>
-        new Promise((resolve) => {
-          plx.on('ended', resolve);
-        }),
-      plxElementHandle
+    console.warn(`Waiting until ended for ${player}`);
+    await Promise.race([
+      delay(20000),
+      page.evaluate(
+        (plx) =>
+          new Promise((resolve) => {
+            plx.on('ended', resolve);
+          }),
+        plxElementHandle
+      )]
     );
 
     await browser.close();
