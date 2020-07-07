@@ -1,52 +1,15 @@
-let NETWORK_PRESETS = {
-  'GPRS': {
-    'offline': false,
-    'downloadThroughput': 50 * 1024 / 8,
-    'uploadThroughput': 20 * 1024 / 8,
-    'latency': 500
+// @see https://github.com/ChromeDevTools/devtools-frontend/blob/80c102878fd97a7a696572054007d40560dcdd21/front_end/sdk/NetworkManager.js#L252-L274
+module.exports = {
+  slow3g: {
+    offline: false,
+    downloadThroughput: 500 * 1024 / 8 * .8,
+    uploadThroughput: 500 * 1024 / 8 * .8,
+    latency: 400 * 5,
   },
-  'Regular2G': {
-    'offline': false,
-    'downloadThroughput': 250 * 1024 / 8,
-    'uploadThroughput': 50 * 1024 / 8,
-    'latency': 300
-  },
-  'Good2G': {
-    'offline': false,
-    'downloadThroughput': 450 * 1024 / 8,
-    'uploadThroughput': 150 * 1024 / 8,
-    'latency': 150
-  },
-  'Regular3G': {
-    'offline': false,
-    'downloadThroughput': 750 * 1024 / 8,
-    'uploadThroughput': 250 * 1024 / 8,
-    'latency': 100
-  },
-  'Good3G': {
-    'offline': false,
-    'downloadThroughput': 1.5 * 1024 * 1024 / 8,
-    'uploadThroughput': 750 * 1024 / 8,
-    'latency': 40
-  },
-  'Regular4G': {
-    'offline': false,
-    'downloadThroughput': 4 * 1024 * 1024 / 8,
-    'uploadThroughput': 3 * 1024 * 1024 / 8,
-    'latency': 20
-  },
-  'DSL': {
-    'offline': false,
-    'downloadThroughput': 2 * 1024 * 1024 / 8,
-    'uploadThroughput': 1 * 1024 * 1024 / 8,
-    'latency': 5
-  },
-  'WiFi': {
-    'offline': false,
-    'downloadThroughput': 30 * 1024 * 1024 / 8,
-    'uploadThroughput': 15 * 1024 * 1024 / 8,
-    'latency': 2
+  fast3g: {
+    offline: false,
+    downloadThroughput: 1.6 * 1024 * 1024 / 8 * .9,
+    uploadThroughput: 750 * 1024 / 8 * .9,
+    latency: 150 * 3.75,
   }
 };
-
-module.exports = NETWORK_PRESETS;

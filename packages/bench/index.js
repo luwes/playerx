@@ -39,7 +39,7 @@ const newyork = {
 const saopaulo = {
   latitude: -23.5475,
   longitude: -46.6361,
-  network: NETWORK_PRESETS['Good3G']
+  network: NETWORK_PRESETS.fast3g
 };
 
 async function runBenchmark(geolocation = newyork) {
@@ -48,6 +48,8 @@ async function runBenchmark(geolocation = newyork) {
       ? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
       : '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
     // headless: false,
+    // Network throttling only works if devtools is open
+    devtools: !!geolocation.network,
     args: ['--disable-web-security', '--no-user-gesture-required'],
   });
   const context = await browser.newContext({
