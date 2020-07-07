@@ -47,7 +47,7 @@ async function runBenchmark(geolocation = newyork) {
     executablePath: ci
       ? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
       : '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-    // headless: false,
+    headless: false,
     // Network throttling only works if devtools is open
     devtools: !!geolocation.network,
     args: ['--disable-web-security', '--no-user-gesture-required'],
