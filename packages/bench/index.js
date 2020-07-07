@@ -10,9 +10,9 @@ const argv = minimist(process.argv.slice(2), {
 });
 
 const players = {
-  // dailymotion: {},   // not starting playback
-  // streamable: {},    // has ads so difficult to automate
-  // twitch: {},        // not starting playback
+  dailymotion: {},
+  streamable: {},
+  twitch: {},
   brightcove: {},
   facebook: {},
   file: {},
@@ -65,19 +65,27 @@ async function runBenchmark(geolocation = newyork) {
     await client.send('Network.emulateNetworkConditions', geolocation.network);
   }
 
-  const url = `https://dev.playerx.io/demo/${player}/`;
+  // Dailymotion won't start via the player.play() method.
+  // Enable autoplay for it.
+  const autoplay = ['dailymotion'].includes(player);
+
+  let url = `https://dev.playerx.io/demo/${player}/`;
+  if (autoplay) {
+    url += '?autoplay=1';
+  }
 
   console.warn(`Loading ${url}`);
   await page.goto(url, {
-    waitUntil: 'networkidle',
+    waitUntil: 'load',
   });
 
   const plxElementHandle = await page.$('player-x');
 
-  await page.evaluate((plx) => plx.ready(), plxElementHandle);
-
   console.warn(`Starting playback for ${player}`);
-  await page.evaluate((plx) => plx.play(), plxElementHandle);
+  if (!autoplay) {
+    await page.evaluate((plx) => plx.ready(), plxElementHandle);
+    await page.evaluate((plx) => plx.play(), plxElementHandle);
+  }
 
   await delay(10000);
   console.warn(`Seeking 10s from the end for ${player}`);

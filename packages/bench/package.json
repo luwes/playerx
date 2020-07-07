@@ -11,7 +11,10 @@
     "bench:wistia": "node index.js --player wistia",
     "bench:vidyard": "node index.js --player vidyard",
     "bench:jw-player": "node index.js --player jw-player",
-    "bench:brightcove": "node index.js --player brightcove"
+    "bench:brightcove": "node index.js --player brightcove",
+    "bench:dailymotion": "node index.js --player dailymotion",
+    "bench:twitch": "node index.js --player twitch",
+    "bench:streamable": "node index.js --player streamable"
   },
   "dependencies": {
     "playwright": "^1.1.1"
