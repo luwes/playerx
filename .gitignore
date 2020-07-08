@@ -21,3 +21,4 @@ module/
 /packages/playerx-demo/public/vimeo/
 /packages/playerx-demo/public/wistia/
 /packages/playerx-demo/public/youtube/
+/packages/bench/.env
