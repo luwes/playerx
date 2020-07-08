@@ -37,8 +37,8 @@ jwplayer:
 brightcove:
   name: Brightcove
   clips:
-    - https://studio.brightcove.com/products/videocloud/media/videos/5755775186001
     - https://studio.brightcove.com/products/videocloud/media/videos/4093643993001
+    - https://studio.brightcove.com/products/videocloud/media/videos/5755775186001
 
 dailymotion:
   name: Dailymotion
