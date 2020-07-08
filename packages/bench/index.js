@@ -8,11 +8,11 @@ const argv = minimist(process.argv.slice(2), {
 });
 
 const players = {
-  'jw-player': {},
   brightcove: {},
   dailymotion: {},
   // facebook: {},    // facebook doesn't start playback
   file: {},
+  'jw-player': {},
   // soundcloud: {},  // less useful to test compared to video players
   streamable: {},
   twitch: {},
@@ -36,6 +36,7 @@ describe('Basic playback', function() {
       console.warn(`Starting playback for ${player}`);
       assert(browser.executeAsync(async function(done) {
         const plx = document.querySelector('player-x');
+        await plx.ready();
         await plx.play();
         done(true);
       }));
