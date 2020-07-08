@@ -45,7 +45,7 @@ exports.config = {
   exclude: [],
 
   beforeSession: function(config, capabilities, specs) {
-     capabilities.sessionName = specs && specs[0].split('/').pop() || undefined;
+     capabilities.name = specs && specs[0].split('/').pop() || undefined;
   },
 
   maxInstances: 4,
