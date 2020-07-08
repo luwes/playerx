@@ -8,14 +8,14 @@ const argv = minimist(process.argv.slice(2), {
 });
 
 const players = {
+  'jw-player': {},
+  brightcove: {},
   dailymotion: {},
+  // facebook: {},    // facebook doesn't start playback
+  file: {},
+  // soundcloud: {},  // less useful to test compared to video players
   streamable: {},
   twitch: {},
-  brightcove: {},
-  facebook: {},
-  file: {},
-  'jw-player': {},
-  soundcloud: {},
   vidyard: {},
   vimeo: {},
   wistia: {},
