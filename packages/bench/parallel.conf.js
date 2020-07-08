@@ -41,6 +41,17 @@ exports.config = {
       ...commonCapabilities,
       'bstack:options': {
         ...options,
+        osVersion: '13',
+        deviceName: 'iPad 7th',
+        realMobile: 'true',
+        geoLocation: 'JP',
+        networkProfile: '4g-lte-lossy',
+      },
+    },
+    {
+      ...commonCapabilities,
+      'bstack:options': {
+        ...options,
         osVersion: '8.0',
         deviceName: 'Samsung Galaxy S9',
         realMobile: 'true',
