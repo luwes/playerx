@@ -44,6 +44,10 @@ exports.config = {
   ],
   exclude: [],
 
+  beforeSession: function(config, capabilities, specs) {
+     capabilities.sessionName = specs && specs[0].split('/').pop() || undefined;
+  },
+
   maxInstances: 4,
 
   capabilities: [
@@ -83,7 +87,6 @@ exports.config = {
   connectionRetryCount: 3,
   host: 'hub.browserstack.com',
 
-  before: function () {},
   framework: 'mocha',
   mochaOpts: {
     ui: 'bdd',
