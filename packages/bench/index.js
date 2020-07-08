@@ -22,43 +22,40 @@ const players = {
   youtube: {},
 };
 
-const randomKey = function(obj) {
-  var keys = Object.keys(obj);
-  return keys[(keys.length * Math.random()) << 0];
-};
-
-const player = argv.player || randomKey(players);
-
 describe('Basic playback', function() {
-  it('plays back the test video', function () {
-    let url = `https://dev.playerx.io/demo/${player}/`;
+  Object.keys(players).forEach(player => {
 
-    browser.url(url);
-    expect(browser).toHaveTitle('Playerx - API Demo');
+    it(`${player } plays back the test video`, function() {
+      let url = `https://dev.playerx.io/demo/${player}/`;
 
-    browser.setTimeout({ script: 30000 });
+      browser.url(url);
+      expect(browser).toHaveTitle('Playerx - API Demo');
 
-    console.warn(`Starting playback for ${player}`);
-    assert(browser.executeAsync(async function(done) {
-      const plx = document.querySelector('player-x');
-      await plx.play();
-      done(true);
-    }));
+      browser.setTimeout({ script: 30000 });
 
-    console.warn(`Seeking 10s from the end for ${player}`);
-    assert(browser.executeAsync(async function(done) {
-      setTimeout(() => {
+      console.warn(`Starting playback for ${player}`);
+      assert(browser.executeAsync(async function(done) {
         const plx = document.querySelector('player-x');
-        plx.currentTime = plx.duration - 10;
+        await plx.play();
         done(true);
-      }, 10000);
-    }));
+      }));
 
-    console.warn(`Waiting until ended for ${player}`);
-    assert(browser.executeAsync(async function(done) {
-      const plx = document.querySelector('player-x');
-      plx.on('ended', () => done(true));
-    }));
+      console.warn(`Seeking 10s from the end for ${player}`);
+      assert(browser.executeAsync(async function(done) {
+        setTimeout(() => {
+          const plx = document.querySelector('player-x');
+          plx.currentTime = plx.duration - 10;
+          done(true);
+        }, 10000);
+      }));
+
+      console.warn(`Waiting until ended for ${player}`);
+      assert(browser.executeAsync(async function(done) {
+        const plx = document.querySelector('player-x');
+        plx.on('ended', () => done(true));
+      }));
+
+    });
 
   });
 });

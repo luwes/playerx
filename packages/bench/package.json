@@ -4,15 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "run-p bench:*",
-    "bench:brightcove": "wdio parallel.conf.js --player brightcove",
-    "bench:dailymotion": "wdio parallel.conf.js --player dailymotion",
-    "bench:file": "wdio parallel.conf.js --player file",
-    "bench:jw-player": "wdio parallel.conf.js --player jw-player",
-    "bench:vidyard": "wdio parallel.conf.js --player vidyard",
-    "bench:vimeo": "wdio parallel.conf.js --player vimeo",
-    "bench:wistia": "wdio parallel.conf.js --player wistia",
-    "bench:youtube": "wdio parallel.conf.js --player youtube"
+    "start": "wdio parallel.conf.js"
   },
   "dependencies": {
     "@wdio/cli": "^6.1.25",

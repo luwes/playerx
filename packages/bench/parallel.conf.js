@@ -8,7 +8,7 @@ const argv = minimist(process.argv.slice(2), {
 });
 
 const options = {
-  sessionName: 'Player: ' + argv.player,
+  sessionName: 'Playback',
   buildName: 'Playback ' + (process.env.TRAVIS_BUILD_NUMBER || 0),
   projectName: 'Playerx Benchmark',
   debug: true,
