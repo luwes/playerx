@@ -28,10 +28,23 @@ exports.config = {
   key: process.env.BROWSERSTACK_ACCESS_KEY || 'BROWSERSTACK_ACC_KEY',
 
   updateJob: false,
-  specs: ['./index.js'],
+  specs: [
+    'players/brightcove.js',
+    'players/dailymotion.js',
+    // 'players/facebook.js',    // facebook doesn't start playback
+    'players/file.js',
+    'players/jw-player.js',
+    // 'players/soundcloud.js',  // less useful to test compared to video players
+    'players/streamable.js',
+    'players/twitch.js',
+    'players/vidyard.js',
+    'players/vimeo.js',
+    'players/wistia.js',
+    'players/youtube.js',
+  ],
   exclude: [],
 
-  maxInstances: 10,
+  maxInstances: 4,
 
   capabilities: [
     {

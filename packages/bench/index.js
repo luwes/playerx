@@ -22,8 +22,10 @@ const players = {
   youtube: {},
 };
 
-describe('Basic playback', function() {
-  Object.keys(players).forEach(player => {
+
+module.exports = function(player) {
+
+  describe('Basic playback', function() {
 
     it(`${player } plays back the test video`, function() {
       let url = `https://dev.playerx.io/demo/${player}/`;
@@ -59,4 +61,5 @@ describe('Basic playback', function() {
     });
 
   });
-});
+
+};
