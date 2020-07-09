@@ -9,7 +9,9 @@ const argv = minimist(process.argv.slice(2), {
 
 const options = {
   sessionName: 'Playback',
-  buildName: 'Playback ' + (process.env.TRAVIS_BUILD_NUMBER || 0),
+  buildName:
+    'Playback ' +
+    (process.env.GITHUB_RUN_ID || process.env.TRAVIS_BUILD_NUMBER || 0),
   projectName: 'Playerx Benchmark',
   debug: true,
   consoleLogs: 'verbose',
@@ -44,8 +46,8 @@ exports.config = {
   ],
   exclude: [],
 
-  beforeSession: function(config, capabilities, specs) {
-     capabilities.name = specs && specs[0].split('/').pop() || undefined;
+  beforeSession: function (config, capabilities, specs) {
+    capabilities.name = (specs && specs[0].split('/').pop()) || undefined;
   },
 
   maxInstances: 4,
