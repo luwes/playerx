@@ -5,7 +5,7 @@ import { VideoEvents, version } from 'playerx';
 import { findSrcFile } from './helpers.js';
 import { uniqueId, camelCase, publicPromise, getMimeType } from './utils.js';
 
-export const mux = () => (player) => {
+export const mux = (options) => () => (player) => {
   let currentPlayer = player.name;
   let playerId;
   let initTime;
@@ -45,7 +45,7 @@ export const mux = () => (player) => {
         debug: true,
         minimumRebufferDuration: 350,
         data: {
-          env_key: 'ilc02s65tkrc2mk69b7q2qdkf',
+          ...options,
           player_init_time: initTime,
           player_name: 'playerx',
           player_version: version,

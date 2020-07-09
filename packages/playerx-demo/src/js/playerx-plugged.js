@@ -18,7 +18,7 @@ const defaultConfig = () => (player) => {
   });
 };
 
-const lazyLoader = (url, globalName) => () => (player) => {
+const lazyLoader = (url, globalName, options) => () => (player) => {
   const { load } = player;
   let initiated;
 
@@ -31,7 +31,7 @@ const lazyLoader = (url, globalName) => () => (player) => {
         if (plugin && typeof plugin !== 'function') {
           plugin = plugin[Object.keys(plugin)[0]];
         }
-        plugin(player.constructor)(player);
+        plugin(options)(player.constructor)(player);
       }
       return load();
     },
@@ -40,7 +40,9 @@ const lazyLoader = (url, globalName) => () => (player) => {
 
 playerx.options.plugins.push(
   defaultConfig,
-  lazyLoader('/js/mux.js', 'muxLazy'),
+  lazyLoader('/js/mux.js', 'muxLazy', {
+    env_key: 'ilc02s65tkrc2mk69b7q2qdkf',
+  }),
   loading
 );
 
