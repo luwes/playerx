@@ -3,6 +3,7 @@ file:
   clips:
     - https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM.m3u8
     - https://dash.akamaized.net/envivio/EnvivioDash3/manifest.mpd
+    - https://stream.mux.com/KHdaCPpki1o4PUCMWfAXFbrHy2gBosxdxZISdvFJGLQ.m3u8
     -
       - https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM/low.mp4
       - https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM/medium.mp4
@@ -13,57 +14,63 @@ vimeo:
   clips:
     - https://vimeo.com/357274789
     - https://vimeo.com/327204597
-    - https://vimeo.com/154225711
+    - https://vimeo.com/436880965
 
 youtube:
   name: YouTube
   clips:
     - https://www.youtube.com/watch?v=BK1JIjLPwaA
     - https://www.youtube.com/watch?v=ssdng3QeFnA
-    - https://www.youtube.com/watch?v=R6MlUcmOul8
+    - https://www.youtube.com/watch?v=zD6nk5byNGE
 
 wistia:
   name: Wistia
   clips:
     - https://wesleyluyten.wistia.com/medias/dgzftn5ctz
     - https://wesleyluyten.wistia.com/medias/oj8d7cwhbn
+    - https://wesleyluyten.wistia.com/medias/1ekn652fs5
 
 jwplayer:
   name: JW Player
   clips:
     - https://cdn.jwplayer.com/players/Fpw44kH6-IxzuqJ4M.js
     - https://cdn.jwplayer.com/players/si1Oby4N-IxzuqJ4M.js
+    - https://cdn.jwplayer.com/players/Cc7f9uNQ-IxzuqJ4M.js
 
 brightcove:
   name: Brightcove
   clips:
-    - https://studio.brightcove.com/products/videocloud/media/videos/4093643993001
-    - https://studio.brightcove.com/products/videocloud/media/videos/5755775186001
+    - https://studio.brightcove.com/products/videocloud/media/videos/4883184247001
+    - https://studio.brightcove.com/products/videocloud/media/videos/5854975812001
+    - https://studio.brightcove.com/products/videocloud/media/videos/5686632036001
 
 dailymotion:
   name: Dailymotion
   clips:
     - https://www.dailymotion.com/video/x7sgamf
     - https://www.dailymotion.com/video/x7sgasm
-    - https://www.dailymotion.com/video/x3a9qe6
+    - https://www.dailymotion.com/video/x7ux420
 
 streamable:
   name: Streamable
   clips:
     - https://streamable.com/aizxh
     - https://streamable.com/q83oy
+    - https://streamable.com/vj6y6z
 
 facebook:
   name: Facebook
   clips:
     - https://www.facebook.com/wesleyluyten/videos/10220940465559072
     - https://www.facebook.com/facebook/videos/10153231379946729/
+    - https://www.facebook.com/wesleyluyten/videos/10222360036487458
 
 vidyard:
   name: Vidyard
   clips:
     - https://share.vidyard.com/watch/TYY9iSji3mJuFqp2oj4FoL?
     - https://share.vidyard.com/watch/B4uvxTbjqshXVHf5fXX3po?
+    - https://share.vidyard.com/watch/Xm2qXrsFL1vFHHHFMdf1UN?
 
 twitch:
   name: Twitch
