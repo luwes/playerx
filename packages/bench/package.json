@@ -4,12 +4,15 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "wdio parallel.conf.js"
+    "start": "run-p bench:*",
+    "bench:browserstack": "wdio browserstack.conf.js --seek",
+    "bench:saucelabs": "wdio saucelabs.conf.js --clip 3 --saucenetwork 'Good 3G'"
   },
   "dependencies": {
     "@wdio/cli": "^6.1.25",
     "@wdio/local-runner": "^6.1.25",
     "@wdio/mocha-framework": "^6.1.19",
+    "@wdio/sauce-service": "^6.1.16",
     "@wdio/sync": "^6.1.14",
     "browserstack-local": "^1.4.5",
     "dotenv": "^8.2.0",

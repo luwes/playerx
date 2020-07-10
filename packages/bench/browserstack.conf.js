@@ -33,7 +33,7 @@ exports.config = {
   specs: [
     'players/brightcove.js',
     'players/dailymotion.js',
-    // 'players/facebook.js',    // facebook doesn't start playback
+    'players/facebook.js',
     'players/file.js',
     'players/jw-player.js',
     // 'players/soundcloud.js',  // less useful to test compared to video players
