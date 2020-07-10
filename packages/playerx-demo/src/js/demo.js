@@ -1,12 +1,12 @@
-/* global selectPlayer */
+/* global selectPlayer, selectClip */
 import { observable } from 'sinuous/observable';
 import { dhtml, hydrate as hy } from 'sinuous/hydrate';
 import { onconnected, ondisconnected } from './logger.js';
 import { toHHMMSS, round, computedValue, qs } from './utils/utils.js';
 import { getParam } from './utils/url.js';
 
-const clip = 1;
-const query = `[data-player="${selectPlayer}"][data-clip="${clip}"]`;
+console.warn(selectClip);
+const query = `[data-player="${selectPlayer}"][data-clip="${selectClip}"]`;
 const defaults = {
   src: qs(query).dataset.src,
   autoplay: false,
@@ -22,14 +22,14 @@ const showing = computedValue(() => !!src());
 const autoplay = observable(getParam('autoplay'));
 const playing = observable(false);
 const volume = observable(getParam('volume', defaults.volume));
-const volumeValue = observable(1);
+const volumeValue = observable(volume());
 const buffered = observable(0);
 const duration = observable(0);
 const currentTime = observable(0);
 const currentTimeValue = observable(0);
 const ended = observable(false);
 const muted = observable(getParam('muted', defaults.muted));
-const mutedValue = observable(true);
+const mutedValue = observable(muted());
 const loop = observable(getParam('loop'));
 const controls = observable(getParam('controls', defaults.controls));
 const preload = observable(getParam('preload', defaults.preload));
@@ -93,6 +93,8 @@ hy(dhtml`
         <b />
         <button class="btn src-btn${darkOnSelect}" />
         <button class="btn src-btn${darkOnSelect}" />
+        <button class="btn src-btn${darkOnSelect}" />
+        <button class="btn src-btn${darkOnSelect}" />
       </div>
     `)}
   </div>
@@ -115,7 +117,7 @@ function setSrc(dataSrc) {
 }
 
 function darkOnSelect() {
-  return src() === this.el.dataset.src ? ' btn-active' : '';
+  return [].concat(src()).join(',') === this.el.dataset.src ? ' btn-active' : '';
 }
 
 hy(dhtml`

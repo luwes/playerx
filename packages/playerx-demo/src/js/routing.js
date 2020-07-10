@@ -18,7 +18,11 @@ on([autoplay, muted, loop, controls, src], () => {
   let search = toQuery(options, defaults);
   let url;
   if (btn) {
-    url = `/demo/${btn.dataset.player}/${search}`;
+    if (btn.dataset.clip === '1') {
+      url = `/demo/${btn.dataset.player}/${search}`;
+    } else {
+      url = `/demo/${btn.dataset.player}/${btn.dataset.clip}/${search}`;
+    }
   } else {
     url = `/demo/${search}`;
   }

@@ -1,12 +1,27 @@
----
-title: "Playerx - API Demo"
-layout: layouts/player.njk
-tags:
-  - demo
-pagination:
-  data: players
-  size: 1
-  resolve: values
-  alias: player
-permalink: "/demo/{{ player.name | slug }}/"
+---js
+{
+  title: "Playerx - API Demo",
+  layout: "layouts/player.njk",
+  tags: ["demo"],
+  pagination: {
+    data: "players",
+    size: 1,
+    resolve: "values",
+    alias: "player",
+    before: function(data) {
+      const pages = [];
+      data.forEach(entry => {
+        pages.push(entry);
+        entry.clips.slice(1).forEach((_, i) => {
+          pages.push({
+            ...entry,
+            clipIndex: i + 1
+          })
+        })
+      });
+      return pages;
+    }
+  },
+  permalink: "/demo/{{ player.name | slug }}/{% if player.clipIndex > 0 %}{{ player.clipIndex + 1 }}/{% endif %}"
+}
 ---

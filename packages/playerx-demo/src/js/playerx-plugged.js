@@ -9,8 +9,7 @@ const defaultConfig = () => (player) => {
       version: 'v3.2',
     },
     jwplayer: {
-      player: 'IxzuqJ4M', // Via https://content.jwplatform.com/libraries/{player_id}.js
-      // key: '',         // or https://ssl.p.jwpcdn.com/player/v/8.12.5/jwplayer.js
+      player: 'IxzuqJ4M',
     },
     brightcove: {
       account: '1752604059001',

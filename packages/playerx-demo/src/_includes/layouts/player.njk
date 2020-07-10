@@ -99,5 +99,6 @@
 
 <script>
   var selectPlayer = '{{ player.name | slug }}';
+  var selectClip = String({{ player.clipIndex }} + 1 || 1);
 </script>
 {% endblock %}
