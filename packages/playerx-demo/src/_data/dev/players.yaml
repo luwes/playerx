@@ -41,7 +41,7 @@ brightcove:
   name: Brightcove
   clips:
     - https://studio.brightcove.com/products/videocloud/media/videos/4883184247001
-    - https://studio.brightcove.com/products/videocloud/media/videos/5854975812001
+    - https://studio.brightcove.com/products/videocloud/media/videos/6057428475001
     - https://studio.brightcove.com/products/videocloud/media/videos/5686632036001
 
 dailymotion:
