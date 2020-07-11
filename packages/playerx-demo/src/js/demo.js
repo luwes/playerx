@@ -1,11 +1,10 @@
 /* global selectPlayer, selectClip */
-import { observable } from 'sinuous/observable';
+import { observable, computed } from 'sinuous/observable';
 import { dhtml, hydrate as hy } from 'sinuous/hydrate';
 import { onconnected, ondisconnected } from './logger.js';
-import { toHHMMSS, round, computedValue, qs } from './utils/utils.js';
+import { toHHMMSS, round, computedValue, qs, prettyQuality } from './utils/utils.js';
 import { getParam } from './utils/url.js';
 
-console.warn(selectClip);
 const query = `[data-player="${selectPlayer}"][data-clip="${selectClip}"]`;
 const defaults = {
   src: qs(query).dataset.src,
@@ -33,6 +32,8 @@ const mutedValue = observable(muted());
 const loop = observable(getParam('loop'));
 const controls = observable(getParam('controls', defaults.controls));
 const preload = observable(getParam('preload', defaults.preload));
+const videoHeight = observable();
+const quality = computed(() => prettyQuality(videoHeight()));
 
 setSrc(getParam('src', defaults.src));
 
@@ -58,6 +59,9 @@ const props = {
   ontimeupdate: () => {
     currentTimeValue(player.currentTime);
     ended(player.ended);
+  },
+  onresize: () => {
+    videoHeight(player.videoHeight);
   },
   onvolumechange: () => {
     volumeValue(player.volume);
@@ -111,6 +115,7 @@ hy(dhtml`
 
 function setSrc(dataSrc) {
   buffered(0);
+  videoHeight(0);
   if (dataSrc) {
     src(dataSrc.includes(',') ? dataSrc.split(',') : dataSrc);
   }
@@ -168,6 +173,7 @@ hy(dhtml`
     <b /><i>${() => toHHMMSS(duration())}</i>
     <b /><i>${() => toHHMMSS(currentTimeValue())}</i>
     <b /><i>${() => String(ended())}</i>
+    <b /><i>${() => String(quality())}</i>
   </div>
 `);
 

@@ -29,7 +29,10 @@ export const playerx = (CE, { create }) => element => {
   let durationTimeout;
   let progressTimeout;
   let volumeTimeout;
+  let resizeTimeout;
   let progress;
+  let videoWidth;
+  let videoHeight;
   let hasDurationEvent;
   let playFired;
 
@@ -96,6 +99,7 @@ export const playerx = (CE, { create }) => element => {
     clearTimeout(durationTimeout);
     clearTimeout(volumeTimeout);
     clearTimeout(progressTimeout);
+    clearTimeout(resizeTimeout);
   }
 
   async function load() {
@@ -172,6 +176,7 @@ export const playerx = (CE, { create }) => element => {
       updateDuration(),
       updateVolume(),
       updateProgress(),
+      updateResize(),
     ]);
 
     elementReady.resolve();
@@ -219,6 +224,7 @@ export const playerx = (CE, { create }) => element => {
       [Events.TIMEUPDATE, () => updateCurrentTime(true)],
       [Events.VOLUMECHANGE, () => updateVolume(true)],
       [Events.PROGRESS, () => updateProgress(true)],
+      [Events.RESIZE, () => updateResize(true)],
       [
         Events.DURATIONCHANGE,
         () => {
@@ -240,6 +246,7 @@ export const playerx = (CE, { create }) => element => {
             Events.DURATIONCHANGE,
             Events.VOLUMECHANGE,
             Events.PROGRESS,
+            Events.RESIZE,
           ].includes(event)
       )
       .forEach((event) => listeners.push([event, fire.bind(null, event)]));
@@ -295,14 +302,6 @@ export const playerx = (CE, { create }) => element => {
       element.setCache('duration', duration);
       element.fire('durationchange');
     }
-
-    if (!element.videoWidth) {
-      element.setCache('videoWidth', await element.get('videoWidth'));
-    }
-
-    if (!element.videoHeight) {
-      element.setCache('videoHeight', await element.get('videoHeight'));
-    }
   }
 
   async function updateVolume(disableTimeout) {
@@ -349,6 +348,36 @@ export const playerx = (CE, { create }) => element => {
         element.setCache('buffered', buffered);
         element.fire('progress');
       }
+    }
+  }
+
+  async function updateResize(disableTimeout) {
+    clearTimeout(resizeTimeout);
+    if (!disableTimeout) {
+      resizeTimeout = setTimeout(updateResize, 250);
+    }
+
+    // Sometimes loading a new src the 3rd-party api is not ready yet, wait here.
+    await apiReady;
+
+    let resized;
+
+    let oldWidth = videoWidth;
+    videoWidth = await element.get('videoWidth');
+    if (videoWidth !== oldWidth && videoWidth > 0) {
+      resized = true;
+      element.setCache('videoWidth', videoWidth);
+    }
+
+    let oldHeight = videoHeight;
+    videoHeight = await element.get('videoHeight');
+    if (videoHeight !== oldHeight && videoHeight > 0) {
+      resized = true;
+      element.setCache('videoHeight', videoHeight);
+    }
+
+    if (resized) {
+      element.fire('resize');
     }
   }
 

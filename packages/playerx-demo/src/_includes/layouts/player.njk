@@ -34,17 +34,8 @@
       </div>
       <div class="w-full lg:w-6/12 px-4 pt-6 lg:pt-0">
 
-        <div class="relative">
-          <input id="inputsrc" class="transition-colors duration-100 ease-in-out focus:outline-0 border border-transparent focus:bg-white focus:border-cool-gray-300 placeholder-cool-gray-600 rounded-lg bg-cool-gray-200 py-1 pr-4 pl-10 block w-full appearance-none" type="text" placeholder="Enter new source url">
-          <div class="pointer-events-none absolute top-2 left-0 pl-4">
-            <svg class="icon icon-file fill-current pointer-events-none text-cool-gray-600 w-4 h-4">
-              <use xlink:href="/images/symbol-defs.svg#icon-file"></use>
-            </svg>
-          </div>
-        </div>
-
         <div class="flex flex-wrap">
-          <div class="w-full md:w-4/12 px-4 pt-6">
+          <div class="w-full md:w-4/12 px-4">
             <div class="state">
               <div class="state-values">
                 <b class="inline-block w-7/12 text-right pr-3">paused</b><i class="inline-block w-5/12"></i>
@@ -53,6 +44,7 @@
                 <b class="inline-block w-7/12 text-right pr-3">duration</b><i class="inline-block w-5/12"></i>
                 <b class="inline-block w-7/12 text-right pr-3">time</b><i class="inline-block w-5/12"></i>
                 <b class="inline-block w-7/12 text-right pr-3">ended</b><i class="inline-block w-5/12"></i>
+                <b class="inline-block w-7/12 text-right pr-3">quality</b><i class="inline-block w-5/12"></i>
               </div>
               <label class="block">
                 <span class="inline-block w-7/12 text-right pr-3 font-bold">autoplay</span>
@@ -72,7 +64,17 @@
               </label>
             </div>
           </div>
-          <div class="w-full md:w-8/12 px-4 pt-6">
+          <div class="w-full md:w-8/12 px-4">
+
+            <div class="relative mb-6 ml-6">
+              <input id="inputsrc" class="transition-colors duration-100 ease-in-out focus:outline-0 border border-transparent focus:bg-white focus:border-cool-gray-300 placeholder-cool-gray-600 rounded-lg bg-cool-gray-200 py-1 pr-4 pl-10 block w-full appearance-none" type="text" placeholder="Enter new source url">
+              <div class="pointer-events-none absolute top-2 left-0 pl-4">
+                <svg class="icon icon-file fill-current pointer-events-none text-cool-gray-600 w-4 h-4">
+                  <use xlink:href="/images/symbol-defs.svg#icon-file"></use>
+                </svg>
+              </div>
+            </div>
+
             <div class="sources">
               {%- for key, player in players -%}
                 <div class="mb-3">

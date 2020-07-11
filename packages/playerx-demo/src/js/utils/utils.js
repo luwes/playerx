@@ -39,3 +39,10 @@ export function round(num, precision) {
   const f = 10 ** precision;
   return Math.round((num + Number.EPSILON) * f) / f;
 }
+
+export function prettyQuality(height) {
+  if (!height) return 'n/a';
+  if (height >= 2160) return '4K';
+  if (height >= 1440) return '2K';
+  return `${height}p`;
+}
