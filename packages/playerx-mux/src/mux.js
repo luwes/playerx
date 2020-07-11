@@ -104,7 +104,9 @@ export const mux = (options) => () => (player) => {
   }
 
   function getPlayheadTime() {
-    return player.currentTime;
+    if (player.api) {
+      return player.currentTime;
+    }
   }
 
   function getStateData() {

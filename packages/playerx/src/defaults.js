@@ -10,6 +10,7 @@ const readonlyProps = readonly({
   readyState: 0,
   videoHeight: 0,
   videoWidth: 0,
+  api: undefined,             // custom property
   name: undefined,            // custom property
   version: undefined,         // custom property
 });

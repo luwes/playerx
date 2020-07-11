@@ -22,8 +22,6 @@ const MATCH_URL = /twitch\.tv\/videos\/(\d+)($|\?)/;
  */
 twitch.canPlay = src => MATCH_URL.test(src);
 
-// 'div'
-
 export function twitch(element) {
   let api;
   let div;

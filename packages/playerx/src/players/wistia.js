@@ -20,8 +20,6 @@ const MATCH_URL = /(?:wistia\.com|wi\.st)\/(?:medias|embed)\/(.*)$/;
  */
 wistia.canPlay = src => MATCH_URL.test(src);
 
-// 'div'
-
 export function wistia(element) {
   let api;
   let div;
