@@ -2,7 +2,7 @@
 import { observe } from 'disco';
 import { html } from 'sinuous';
 import { observable } from 'sinuous/observable';
-import { map } from 'sinuous/map/mini';
+import { map } from 'sinuous/map';
 import { dhtml, hydrate as hy } from 'sinuous/hydrate';
 import { round } from './utils/utils.js';
 

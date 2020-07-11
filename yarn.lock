@@ -7,10 +7,10 @@
   resolved "https://registry.yarnpkg.com/@11ty/dependency-tree/-/dependency-tree-1.0.0.tgz#b1fa53da49aafe0ab3fe38bc6b6058b704aa59a1"
   integrity sha512-2FWYlkphQ/83MG7b9qqBJfJJ0K9zupNz/6n4EdDuNLw6hQHGp4Sp4UMDRyBvA/xCTYDBaPSuSjHuu45tSujegg==
 
-"@11ty/eleventy-cache-assets@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@11ty/eleventy-cache-assets/-/eleventy-cache-assets-2.0.2.tgz#9a7300f1116bbb72f02c68ae4afce33a0fa85d2e"
-  integrity sha512-25ZVZtORPj2e5/cFITpFo/zVp5wiQF5apFPzpP7zMLdEno75MlUDVszXKzxKEengIhxGKi5x8MfYrDKU3SSymg==
+"@11ty/eleventy-cache-assets@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@11ty/eleventy-cache-assets/-/eleventy-cache-assets-2.0.3.tgz#c0ba11315ba746573f31c80299b1f81678897f9b"
+  integrity sha512-o4Zr4lAdS2rDndvkXpM2vXV9XU5GRDiMoDemEuuFCa4Cjb5vJ+fcL84KUoHVgVS5e+FF+OdY3F3mhV7qJgzaIA==
   dependencies:
     debug "^4.1.1"
     flat-cache "^2.0.1"
@@ -18,10 +18,10 @@
     p-queue "^6.3.0"
     short-hash "^1.0.0"
 
-"@11ty/eleventy-navigation@^0.1.5":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@11ty/eleventy-navigation/-/eleventy-navigation-0.1.5.tgz#ba6600d6a47df1dd2a6bd1ef41dae77a20c94980"
-  integrity sha512-bZFJx/6seJ7HYfqbirbDNzc+UExNZk9areu5qEVHDuDByt0G7CR5W6J6YJG8WX2j5v8fXacJvWziOU5nW9Iitw==
+"@11ty/eleventy-navigation@^0.1.6":
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/@11ty/eleventy-navigation/-/eleventy-navigation-0.1.6.tgz#26c1880494b99dd961efa51bdf866485a0adddde"
+  integrity sha512-ZGZebFEEDiJoS7BvxxiWrKdsCodNkqCsQ7S75IIvaPynHvojqcCVtS4uZk54K+LC+YqL5+T716TlsMG6Mc2p0g==
   dependencies:
     dependency-graph "^0.8.1"
 
@@ -9329,10 +9329,10 @@ simple-swizzle@^0.2.2:
   dependencies:
     is-arrayish "^0.3.1"
 
-sinuous@0.27.6:
-  version "0.27.6"
-  resolved "https://registry.yarnpkg.com/sinuous/-/sinuous-0.27.6.tgz#fd510b66e1e7e9e2164a6ea736ab88d3234e7471"
-  integrity sha512-yNskbQ7nBdkoh61Z+BergnWGodJ/oZjXl663u06t3ch88mDoXeWJDYdPNFWeLZSbnh7+UYgOnp0P5c8tPCTe0A==
+sinuous@0.27.7:
+  version "0.27.7"
+  resolved "https://registry.yarnpkg.com/sinuous/-/sinuous-0.27.7.tgz#1fe52072dc807c451e2b0084b1a11aefacbbf422"
+  integrity sha512-wVHJek5SazVQmzF6UjvEqENYgNAm1BUPssLRHC3lslwzXViW+FWqO9zjnpmQFA/Zh6bjRnBAe74mDFMIeipCfQ==
 
 size-plugin-core@^0.0.7:
   version "0.0.7"
