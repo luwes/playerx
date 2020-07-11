@@ -30,8 +30,6 @@ addCssRule(`.vidyard-player-container,.vidyard-player-container>div`, {
  */
 vidyard.canPlay = src => MATCH_URL.test(src);
 
-// 'div'
-
 export function vidyard(element) {
   let api;
   let img;
@@ -92,6 +90,7 @@ export function vidyard(element) {
     error: undefined,
     bufferstart: undefined,
     bufferend: undefined,
+    resize: undefined,
   };
 
   const methods = {

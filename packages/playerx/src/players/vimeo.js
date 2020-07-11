@@ -62,6 +62,10 @@ export function vimeo(element) {
     ready.resolve();
   }
 
+  const customEvents = {
+    resize: undefined,
+  };
+
   const methods = {
     name: 'Vimeo',
     version: '3.x.x',
@@ -87,10 +91,12 @@ export function vimeo(element) {
     },
 
     on(eventName, callback) {
+      if (eventName in customEvents) return;
       api.on(eventName, callback);
     },
 
     off(eventName, callback) {
+      if (eventName in customEvents) return;
       api.off(eventName, callback);
     },
 
