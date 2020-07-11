@@ -75,6 +75,10 @@ export function jwplayer(element) {
     play: 'beforePlay',
   };
 
+  const customEvents = {
+    ready: undefined,
+  };
+
   const methods = {
     name: 'JWPlayer',
     version: '8.x.x',
@@ -117,10 +121,12 @@ export function jwplayer(element) {
     },
 
     on(eventName, callback) {
+      if (eventName in customEvents) return;
       api.on(eventAliases[eventName] || eventName, callback);
     },
 
     off(eventName, callback) {
+      if (eventName in customEvents) return;
       api.off(eventAliases[eventName] || eventName, callback);
     },
 
