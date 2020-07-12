@@ -1,11 +1,4 @@
 require('dotenv').config();
-const minimist = require('minimist');
-
-const argv = minimist(process.argv.slice(2), {
-  default: {
-    player: null,
-  },
-});
 
 const commonCapabilities = {
   browserName: 'Chrome',
