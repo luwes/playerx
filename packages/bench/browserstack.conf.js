@@ -41,18 +41,18 @@ exports.config = {
 
   updateJob: false,
   specs: [
-    'players/brightcove.js',
-    'players/dailymotion.js',
-    'players/facebook.js',
-    'players/file.js',
-    'players/jw-player.js',
-    // 'players/soundcloud.js',  // less useful to test compared to video players
-    'players/streamable.js',
-    'players/twitch.js',
-    'players/vidyard.js',
+    // 'players/brightcove.js',
+    // 'players/dailymotion.js',
+    // 'players/facebook.js',
+    // 'players/file.js',
+    // 'players/jw-player.js',
+    // // 'players/soundcloud.js',  // less useful to test compared to video players
+    // 'players/streamable.js',
+    // 'players/twitch.js',
+    // 'players/vidyard.js',
     'players/vimeo.js',
-    'players/wistia.js',
-    'players/youtube.js',
+    // 'players/wistia.js',
+    // 'players/youtube.js',
   ],
   exclude: [],
 
@@ -63,31 +63,30 @@ exports.config = {
   maxInstances: 4,
 
   capabilities: [
-    {
-      ...commonCapabilities,
-    },
+    // {
+    //   ...commonCapabilities,
+    // },
     {
       ...commonCapabilities,
       'bstack:options': {
         ...options,
         osVersion: '13',
-        deviceName: 'iPhone XS',
+        deviceName: 'iPad 7th',
         realMobile: 'true',
-        geoLocation: 'JP',
         networkProfile: '4g-lte-lossy',
       },
     },
-    {
-      ...commonCapabilities,
-      'bstack:options': {
-        ...options,
-        osVersion: '8.0',
-        deviceName: 'Samsung Galaxy S9',
-        realMobile: 'true',
-        geoLocation: 'BR',
-        networkProfile: '3.5g-hspa-good',
-      },
-    },
+    // {
+    //   ...commonCapabilities,
+    //   'bstack:options': {
+    //     ...options,
+    //     osVersion: '8.0',
+    //     deviceName: 'Samsung Galaxy S9',
+    //     realMobile: 'true',
+    //     geoLocation: 'BR',
+    //     networkProfile: '3.5g-hspa-good',
+    //   },
+    // },
   ],
 
   logLevel: 'warn',
