@@ -73,6 +73,7 @@ export function jwplayer(element) {
     ended: 'complete',
     playing: 'play',
     play: 'beforePlay',
+    ratechange: 'playbackRateChanged',
   };
 
   const customEvents = {
