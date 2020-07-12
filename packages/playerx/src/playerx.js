@@ -48,8 +48,6 @@ export const playerx = (CE, { create }) => element => {
   async function setProp(name, value, oldValue) {
     element.setCache(name, value);
 
-    // if (!element.src) return;
-
     if (name === 'src') {
       if (value !== oldValue) {
         // Give a chance to add more properties on load.
