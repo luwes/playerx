@@ -19,7 +19,9 @@ const options = {
 
 const commonCapabilities = {
   browser: 'chrome',
+  'acceptSslCerts': true,
   'browserstack.use_w3c': true,
+  'browserstack.local': true,
   'bstack:options': {
     ...options,
   },
@@ -28,6 +30,14 @@ const commonCapabilities = {
 exports.config = {
   user: process.env.BROWSERSTACK_USERNAME || 'BROWSERSTACK_USERNAME',
   key: process.env.BROWSERSTACK_ACCESS_KEY || 'BROWSERSTACK_ACC_KEY',
+  services: [
+    ['browserstack', {
+      browserstackLocal: true,
+      opts: {
+
+      }
+    }]
+  ],
 
   updateJob: false,
   specs: [
@@ -61,7 +71,7 @@ exports.config = {
       'bstack:options': {
         ...options,
         osVersion: '13',
-        deviceName: 'iPad 7th',
+        deviceName: 'iPhone 8',
         realMobile: 'true',
         geoLocation: 'JP',
         networkProfile: '4g-lte-lossy',

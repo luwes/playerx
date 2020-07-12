@@ -1088,6 +1088,15 @@
   dependencies:
     "@types/node" "*"
 
+"@wdio/browserstack-service@^6.1.15":
+  version "6.1.15"
+  resolved "https://registry.yarnpkg.com/@wdio/browserstack-service/-/browserstack-service-6.1.15.tgz#04b1aad24d2599fbe3bbd9a17b99fe48d65259b7"
+  integrity sha512-q8qLa44wGSB3tIuZ0yquvAZqr2W7vEwupWiOd1ct0CSYgd4yX/nLd8oypqJCc8jU1ZwNAhu+V3/6hszvwx+HbA==
+  dependencies:
+    "@wdio/logger" "6.0.16"
+    browserstack-local "^1.4.5"
+    got "^11.0.2"
+
 "@wdio/cli@^6.1.25":
   version "6.1.25"
   resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-6.1.25.tgz#f57177653fb66c97451e81ac9e96d64f25f3a812"
