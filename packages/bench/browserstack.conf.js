@@ -1,14 +1,6 @@
 require('dotenv').config();
-const minimist = require('minimist');
-
-const argv = minimist(process.argv.slice(2), {
-  default: {
-    player: null,
-  },
-});
 
 const options = {
-  sessionName: 'Playback',
   buildName:
     'Playback ' +
     (process.env.GITHUB_RUN_NUMBER || process.env.TRAVIS_BUILD_NUMBER || 0),
