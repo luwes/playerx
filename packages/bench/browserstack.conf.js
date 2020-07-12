@@ -63,9 +63,6 @@ exports.config = {
   maxInstances: 4,
 
   capabilities: [
-    // {
-    //   ...commonCapabilities,
-    // },
     {
       ...commonCapabilities,
       'bstack:options': {
@@ -73,20 +70,24 @@ exports.config = {
         osVersion: '13',
         deviceName: 'iPad 7th',
         realMobile: 'true',
+        geoLocation: 'JP',
         networkProfile: '4g-lte-lossy',
       },
     },
-    // {
-    //   ...commonCapabilities,
-    //   'bstack:options': {
-    //     ...options,
-    //     osVersion: '8.0',
-    //     deviceName: 'Samsung Galaxy S9',
-    //     realMobile: 'true',
-    //     geoLocation: 'BR',
-    //     networkProfile: '3.5g-hspa-good',
-    //   },
-    // },
+    {
+      ...commonCapabilities,
+    },
+    {
+      ...commonCapabilities,
+      'bstack:options': {
+        ...options,
+        osVersion: '8.0',
+        deviceName: 'Samsung Galaxy S9',
+        realMobile: 'true',
+        geoLocation: 'BR',
+        networkProfile: '3.5g-hspa-good',
+      },
+    },
   ],
 
   logLevel: 'warn',
