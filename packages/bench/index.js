@@ -14,6 +14,9 @@ module.exports = function(player) {
   describe(`Playback${argv.saucenetwork ? ` (${argv.saucenetwork})` : ''}: ${player}`, function() {
 
     it(`plays the test video`, function() {
+      // Specify this test to only retry up to 2 times
+      this.retries(2);
+
       let url = `https://dev.playerx.io/demo/${player}/`;
       if (argv.clip) url += `${argv.clip}/`;
 
