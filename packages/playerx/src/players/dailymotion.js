@@ -6,6 +6,7 @@ import { getVideoId } from '../helpers/url.js';
 import { createElement } from '../utils/dom.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise } from '../utils/promise.js';
+import { serialize } from '../utils/url.js';
 import { createTimeRanges } from '../utils/time-ranges.js';
 import { createPlayPromise } from '../helpers/video.js';
 import { options } from '../options.js';
@@ -77,7 +78,7 @@ export function dailymotion(element) {
     },
 
     get videoTitle() {
-      return api.video.title;
+      return serialize(`t=${api.video.title}`).get('t');
     },
 
     get videoWidth() {
