@@ -33,7 +33,7 @@ export const mux = (options) => () => (player) => {
 
   function onloadsrc() {
     init = publicPromise();
-    initTime = Date.now();
+    initTime = muxData.utils.now();
   }
 
   async function onloadedsrc() {
