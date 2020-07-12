@@ -22,3 +22,6 @@ module/
 /packages/playerx-demo/public/wistia/
 /packages/playerx-demo/public/youtube/
 /packages/bench/.env
+
+# Local Netlify folder
+.netlify
