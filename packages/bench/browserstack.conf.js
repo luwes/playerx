@@ -41,18 +41,18 @@ exports.config = {
 
   updateJob: false,
   specs: [
-    // 'players/brightcove.js',
-    // 'players/dailymotion.js',
-    // 'players/facebook.js',
-    // 'players/file.js',
-    // 'players/jw-player.js',
-    // // 'players/soundcloud.js',  // less useful to test compared to video players
-    // 'players/streamable.js',
-    // 'players/twitch.js',
-    // 'players/vidyard.js',
+    'players/brightcove.js',
+    'players/dailymotion.js',
+    'players/facebook.js',
+    'players/file.js',
+    'players/jw-player.js',
+    // 'players/soundcloud.js',  // less useful to test compared to video players
+    'players/streamable.js',
+    'players/twitch.js',
+    'players/vidyard.js',
     'players/vimeo.js',
-    // 'players/wistia.js',
-    // 'players/youtube.js',
+    'players/wistia.js',
+    'players/youtube.js',
   ],
   exclude: [],
 
