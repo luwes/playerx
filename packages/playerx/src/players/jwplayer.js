@@ -74,6 +74,7 @@ export function jwplayer(element) {
     playing: 'play',
     play: 'beforePlay',
     ratechange: 'playbackRateChanged',
+    timeupdate: 'time',
   };
 
   const customEvents = {
