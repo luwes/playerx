@@ -15,9 +15,17 @@ export const loading = CE => {
     }
 
     async function newPlay() {
-      await load();
+      // watch out calling load() here
+      // await load();
+      //
+      // in demo calling this on page load would result in a nested load() call
+      // player.ready()
+      //   .then(() => {
+      //     console.error(player.play());
+      //   });
+      //
+      // caused MUX to misreport pageload, player startup time and empty sessions
       player.play = play;
-      player.load = load;
       return play();
     }
 
