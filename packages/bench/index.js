@@ -3,34 +3,17 @@ const minimist = require('minimist');
 
 const argv = minimist(process.argv.slice(2), {
   default: {
-    player: null,
     seek: false,
     clip: null,
     saucenetwork: null
   },
 });
 
-const players = {
-  brightcove: {},
-  dailymotion: {},
-  // facebook: {},    // facebook doesn't start playback
-  file: {},
-  'jw-player': {},
-  // soundcloud: {},  // less useful to test compared to video players
-  streamable: {},
-  twitch: {},
-  vidyard: {},
-  vimeo: {},
-  wistia: {},
-  youtube: {},
-};
-
-
 module.exports = function(player) {
 
   describe(`Playback${argv.saucenetwork ? ` (${argv.saucenetwork})` : ''}: ${player}`, function() {
 
-    it(`${player } plays back the test video`, function() {
+    it(`plays the test video`, function() {
       let url = `https://dev.playerx.io/demo/${player}/`;
       if (argv.clip) url += `${argv.clip}/`;
 

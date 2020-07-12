@@ -11,7 +11,7 @@ const options = {
   sessionName: 'Playback',
   buildName:
     'Playback ' +
-    (process.env.GITHUB_RUN_ID || process.env.TRAVIS_BUILD_NUMBER || 0),
+    (process.env.GITHUB_RUN_NUMBER || process.env.TRAVIS_BUILD_NUMBER || 0),
   projectName: 'Playerx Benchmark',
   debug: true,
   consoleLogs: 'verbose',
@@ -56,24 +56,20 @@ exports.config = {
   ],
   exclude: [],
 
-  beforeSession: function (config, capabilities, specs) {
-    capabilities.name = (specs && specs[0].split('/').pop()) || undefined;
-  },
-
   maxInstances: 4,
 
   capabilities: [
-    {
-      ...commonCapabilities,
-      'bstack:options': {
-        ...options,
-        osVersion: '13',
-        deviceName: 'iPad 7th',
-        realMobile: 'true',
-        geoLocation: 'JP',
-        networkProfile: '4g-lte-lossy',
-      },
-    },
+    // {
+    //   ...commonCapabilities,
+    //   'bstack:options': {
+    //     ...options,
+    //     osVersion: '13',
+    //     deviceName: 'iPad 7th',
+    //     realMobile: 'true',
+    //     geoLocation: 'JP',
+    //     networkProfile: '4g-lte-lossy',
+    //   },
+    // },
     {
       ...commonCapabilities,
     },
