@@ -70,8 +70,8 @@ exports.config = {
       ...commonCapabilities,
       'bstack:options': {
         ...options,
-        osVersion: '13',
-        deviceName: 'iPhone 8',
+        osVersion: '12',
+        deviceName: 'iPhone XR',
         realMobile: 'true',
         geoLocation: 'JP',
         networkProfile: '4g-lte-lossy',
