@@ -10,13 +10,20 @@ const options = {
 };
 
 const commonCapabilities = {
-  browser: 'chrome',
-  'acceptSslCerts': true,
+  browserName: 'Chrome',
+  acceptSslCerts: true,
   'browserstack.use_w3c': true,
   'browserstack.local': true,
   'bstack:options': {
     ...options,
   },
+  chromeOptions: {
+    args: [
+      '--ignore-certificate-errors',
+      '--disable-web-security',
+      '--autoplay-policy=no-user-gesture-required'
+    ]
+  }
 };
 
 exports.config = {
@@ -48,6 +55,11 @@ exports.config = {
   ],
   exclude: [],
 
+  // Adds temporary script file name as title
+  beforeSession: function (config, capabilities, specs) {
+    capabilities.name = (specs && specs[0].split('/').pop()) || undefined;
+  },
+
   maxInstances: 4,
 
   capabilities: [
@@ -70,7 +82,7 @@ exports.config = {
       'bstack:options': {
         ...options,
         osVersion: '8.0',
-        deviceName: 'Samsung Galaxy S9',
+        deviceName: 'Google Pixel 2',
         realMobile: 'true',
         geoLocation: 'BR',
         networkProfile: '3.5g-hspa-good',

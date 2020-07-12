@@ -27,12 +27,29 @@ module.exports = function(player) {
       expect(browser).toHaveTitle('Playerx - API Demo');
 
       browser.setTimeout({ script: 30000 });
-      console.warn(`Starting playback for ${player}`);
+
+      console.warn(`Wait ready for ${player}`);
       assert(browser.executeAsync(async function(done) {
         const plx = document.querySelector('player-x');
         await plx.ready();
-        await plx.play();
         done(true);
+      }));
+
+      console.warn(`Starting playback for ${player}`);
+      assert(browser.executeAsync(async function(done) {
+        const plx = document.querySelector('player-x');
+
+        // facebook on Android doesn't fire a playing event.
+        const onTime = () => {
+          plx.removeEventListener('timeupdate', onTime);
+          done(true);
+        };
+        plx.addEventListener('timeupdate', onTime);
+
+        plx.play();
+        setTimeout(() => {
+          if (plx.paused) plx.click();
+        }, 1000);
       }));
 
       if (argv.seek) {
@@ -53,6 +70,13 @@ module.exports = function(player) {
       assert(browser.executeAsync(async function(done) {
         const plx = document.querySelector('player-x');
         plx.on('ended', () => done(true));
+
+        // facebook on Android doesn't fire an ended event.
+        plx.addEventListener('timeupdate', () => {
+          if (plx.currentTime >= Math.floor(plx.duration)) {
+            done(true);
+          }
+        });
       }));
 
     });
