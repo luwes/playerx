@@ -2,7 +2,7 @@
 import { observable, computed } from 'sinuous/observable';
 import { dhtml, hydrate as hy } from 'sinuous/hydrate';
 import { onconnected, ondisconnected } from './logger.js';
-import { toHHMMSS, round, value, qs, prettyQuality } from './utils/utils.js';
+import { toHHMMSS, round, computedValue, qs, prettyQuality } from './utils/utils.js';
 import { getParam } from './utils/url.js';
 
 const query = `[data-player="${selectPlayer}"][data-clip="${selectClip}"]`;
@@ -16,8 +16,8 @@ const defaults = {
   volume: 1,
 };
 
-const src = value();
-const showing = computed(() => !!src());
+const src = observable();
+const showing = computedValue(() => !!src());
 const autoplay = observable(getParam('autoplay'));
 const playing = observable(false);
 const volume = observable(getParam('volume', defaults.volume));

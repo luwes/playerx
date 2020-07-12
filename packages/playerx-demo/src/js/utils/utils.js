@@ -1,12 +1,22 @@
-import { observable } from 'sinuous/observable';
+import { observable, subscribe, sample } from 'sinuous/observable';
 
 export const qs = (selector) => document.querySelector(selector);
 
-export function value(current, eq) {
+export function computedValue(fn) {
+  let val = observable(fn());
+  subscribe(() => {
+    if (sample(val) !== fn()) {
+      val(fn());
+    }
+  });
+  return val;
+}
+
+export function value(current) {
   const v = observable(current);
   return function(update) {
     if (!arguments.length) return v();
-    if (!(eq ? eq(update, current) : update === current)) {
+    if (update !== current) {
       current = v(update);
     }
     return update;
