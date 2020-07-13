@@ -97,6 +97,10 @@ export function jwplayer(element) {
       return getVideoId(MATCH_URL, element.src);
     },
 
+    get videoTitle() {
+      return api.getPlaylistItem().title;
+    },
+
     get videoWidth() {
       const quality = api.getVisualQuality();
       return quality ? quality.level.width : undefined;
