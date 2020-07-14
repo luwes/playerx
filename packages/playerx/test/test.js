@@ -1,5 +1,6 @@
 import './_polyfills.js';
 
+import './error.js';
 import './methods.js';
 
 import './players/file.js';
