@@ -153,7 +153,11 @@ module.exports = function(config) {
         istanbul({
           include: config.grep ?
             config.grep.replace('/test/', '/src/') :
-            'packages/**/src/**/*.js'
+            'packages/**/src/**/*.js',
+          exclude: [
+            'packages/playerx/src/constants/events.js',
+            'packages/playerx/src/players/index.js',
+          ]
         }),
         automate && babel({
           babelHelpers: 'bundled',
