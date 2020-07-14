@@ -48,13 +48,13 @@ export function testPlayer(options, videoInfo) {
 
     player.volume = 0.5;
     if (['youtube', 'facebook', 'twitch'].includes(player.name.toLowerCase())) {
-      await delay(300); // youtube is async
+      await delay(100); // youtube is async
     }
     t.equal(player.volume, 0.5, 'is half volume');
 
     player.muted = true;
     if (['youtube', 'facebook', 'twitch', 'vidyard'].includes(player.name.toLowerCase())) {
-      await delay(300); // youtube is async
+      await delay(100); // youtube is async
     }
     t.assert(player.muted, 'is muted');
 

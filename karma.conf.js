@@ -10,25 +10,27 @@ const argv = minimist(process.argv.slice(2));
 
 var coverage = String(process.env.COVERAGE) === 'true',
   ci = String(process.env.CI).match(/^(1|true)$/gi),
-  pullRequest = !String(process.env.TRAVIS_PULL_REQUEST).match(/^(0|false|undefined)$/gi),
+  pullRequest = !String(process.env.TRAVIS_PULL_REQUEST).match(
+    /^(0|false|undefined)$/gi
+  ),
   masterBranch = String(process.env.TRAVIS_BRANCH).match(/^master$/gi),
   automate = ci && !pullRequest && masterBranch;
 
 var browserstackLaunchers = {
-  bs_chrome_win: {
+  bs_chrome_mac: {
     base: 'BrowserStack',
     browser: 'Chrome',
-    browser_version: '81.0',
-    os: 'Windows',
-    os_version: '10',
+    browser_version: 'latest',
+    os: 'OS X',
+    os_version: 'Catalina',
     // timeout: '60',
     'browserstack.console': 'verbose',
     chromeOptions: {
       args: [
         '--disable-web-security',
-        '--autoplay-policy=no-user-gesture-required'
-      ]
-    }
+        '--autoplay-policy=no-user-gesture-required',
+      ],
+    },
   },
 };
 
@@ -48,11 +50,11 @@ var localLaunchers = {
       // '--user-agent=',
       '--disable-web-security',
       '--autoplay-policy=no-user-gesture-required',
-    ]
-  }
+    ],
+  },
 };
 
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
     browsers: automate
       ? Object.keys(browserstackLaunchers)
@@ -62,7 +64,7 @@ module.exports = function(config) {
 
     browserStack: {
       username: process.env.BROWSERSTACK_USERNAME,
-      accessKey: process.env.BROWSERSTACK_ACCESS_KEY
+      accessKey: process.env.BROWSERSTACK_ACCESS_KEY,
     },
 
     // browserLogOptions: { terminal: true },
@@ -70,7 +72,7 @@ module.exports = function(config) {
     browserConsoleLogOptions: {
       level: automate ? 'log' : 'warn', // Filter on warn messages.
       format: '%b %T: %m',
-      terminal: true
+      terminal: true,
     },
 
     browserNoActivityTimeout: 60 * 60 * 1000,
@@ -91,12 +93,12 @@ module.exports = function(config) {
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: ['tap-pretty'].concat(
-      coverage ? 'coverage' : [],
+      coverage ? 'coverage' : []
       // automate ? 'saucelabs' : []
     ),
 
     tapReporter: {
-      prettify: require('faucet') // require('tap-spec')
+      prettify: require('faucet'), // require('tap-spec')
     },
 
     formatError(msg) {
@@ -110,8 +112,8 @@ module.exports = function(config) {
       reporters: [
         { type: 'text' },
         { type: 'html' },
-        { type: 'lcovonly', subdir: '.', file: 'lcov.info' }
-      ]
+        { type: 'lcovonly', subdir: '.', file: 'lcov.info' },
+      ],
     },
 
     frameworks: ['tap'],
@@ -126,19 +128,19 @@ module.exports = function(config) {
       // },
       {
         pattern: 'packages/playerx/test/test.js',
-        watched: false
+        watched: false,
       },
     ],
 
     preprocessors: {
-      'packages/playerx*/**/test.js': ['rollup']
+      'packages/playerx*/**/test.js': ['rollup'],
     },
 
     rollupPreprocessor: {
       output: {
         format: 'iife', // Helps prevent naming collisions.
         name: 'playerxTest', // Required for 'iife' format.
-        sourcemap: 'inline' // Sensible for testing.
+        sourcemap: 'inline', // Sensible for testing.
       },
       preserveSymlinks: true,
       plugins: [
@@ -146,27 +148,26 @@ module.exports = function(config) {
           entries: {
             tape: 'tape-browser',
             playerx: __dirname + '/packages/playerx/src/index.js',
-          }
+          },
         }),
         nodeResolve(),
         commonjs(),
         istanbul({
-          include: config.grep ?
-            config.grep.replace('/test/', '/src/') :
-            'packages/**/src/**/*.js',
+          include: config.grep
+            ? config.grep.replace('/test/', '/src/')
+            : 'packages/**/src/**/*.js',
           exclude: [
             'packages/playerx/src/constants/events.js',
             'packages/playerx/src/players/index.js',
-          ]
-        }),
-        automate && babel({
-          babelHelpers: 'bundled',
-          include: [
-            'packages/playerx/**'
           ],
-        })
+        }),
+        automate &&
+          babel({
+            babelHelpers: 'bundled',
+            include: ['packages/playerx/**'],
+          }),
       ].filter(Boolean),
-      onwarn: (msg) => /eval/.test(msg) && void 0
-    }
+      onwarn: (msg) => /eval/.test(msg) && void 0,
+    },
   });
 };
