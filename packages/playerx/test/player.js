@@ -42,25 +42,27 @@ export function testPlayer(options, videoInfo) {
     t.equal(player.src, options.src, 'returns the src');
     t.assert(player.paused, 'is paused');
 
-    // if (!['twitch'].includes(player.name.toLowerCase())) {
-    //   t.equal(player.volume, 1, 'is all turned up');
-    // }
+    if (!['twitch'].includes(player.name.toLowerCase())) {
+      t.equal(player.volume, 1, 'is all turned up');
+    }
 
-    // player.volume = 0.5;
-    // if (['youtube', 'facebook', 'twitch'].includes(player.name.toLowerCase())) {
-    //   await delay(100); // youtube is async
-    // }
-    // t.equal(player.volume, 0.5, 'is half volume');
+    player.volume = 0.5;
+    if (['youtube', 'facebook', 'twitch'].includes(player.name.toLowerCase())) {
+      await delay(100); // youtube is async
+    }
+    t.equal(player.volume, 0.5, 'is half volume');
 
-    // player.muted = true;
-    // if (['youtube', 'facebook', 'twitch', 'vidyard'].includes(player.name.toLowerCase())) {
-    //   await delay(100); // youtube is async
-    // }
-    // t.assert(player.muted, 'is muted');
+    player.muted = true;
+    if (['youtube', 'facebook', 'twitch', 'vidyard'].includes(player.name.toLowerCase())) {
+      await delay(100); // youtube is async
+    }
+    t.assert(player.muted, 'is muted');
 
-    // t.equal(player.width, '100%', 'default 100% width');
-    // t.equal(player.height, '', 'default empty height');
-    // t.equal(player.aspectRatio, 0.5625, 'default aspectratio of 0.5625');
+    // global css makes the width 100%
+    t.equal(player.width, '', 'default empty width');
+    t.equal(player.height, '', 'default empty height');
+    // global css makes this 0.5625
+    t.equal(player.aspectRatio, undefined, 'default undefined aspectratio');
 
     // await player.set('width', 640);
     // t.equal(player.clientWidth, 640, 'width is 640');
