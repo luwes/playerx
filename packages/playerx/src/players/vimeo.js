@@ -1,5 +1,6 @@
 // https://github.com/vimeo/player.js
 
+import * as Events from '../constants/events.js';
 import { define } from '../define.js';
 import { createEmbedIframe } from '../helpers/dom.js';
 import { PlayerError } from '../helpers/error.js';
@@ -58,12 +59,24 @@ export function vimeo(element) {
       element.setCache('error', new PlayerError(name, message));
     });
 
+    // Vimeo's thumb outro loads new clips directly in the player
+    // Update src attribute and fire load src events for metrics, etc.
+    api.on('loaded', ({ id }) => {
+      const vidId = getVideoId(MATCH_URL, element.src);
+      if (String(id) !== vidId) {
+        element.setCache('src', `https://vimeo.com/${id}`);
+        element.fire(Events.LOADSRC);
+        element.fire(Events.LOADEDSRC);
+      }
+    });
+
     await api.ready();
     ready.resolve();
   }
 
   const customEvents = {
     resize: undefined,
+    loaded: undefined,
   };
 
   const methods = {
