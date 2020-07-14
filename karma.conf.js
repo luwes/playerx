@@ -21,8 +21,8 @@ var browserstackLaunchers = {
     base: 'BrowserStack',
     browser: 'Chrome',
     browser_version: 'latest',
-    os: 'OS X',
-    os_version: 'Catalina',
+    os: 'Windows',
+    os_version: '10',
     // timeout: '60',
     'browserstack.console': 'verbose',
     chromeOptions: {
