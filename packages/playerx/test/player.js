@@ -97,9 +97,9 @@ export function testPlayer(options, videoInfo) {
 
     // t.equal(Math.round(player.duration), videoInfo.duration, `is ${videoInfo.duration} long`);
 
-    // Soundcloud throws an error,
+    // Soundcloud and Streamable throws an error,
     //   `Uncaught TypeError: Cannot read property 'postMessage' of null`
-    if (!['soundcloud'].includes(player.key)) {
+    if (!['soundcloud', 'streamable'].includes(player.key)) {
       player.remove();
     }
 

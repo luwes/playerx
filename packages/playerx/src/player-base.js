@@ -12,6 +12,8 @@ export function base(element, player) {
      * @return {*}
      */
     set(name, value) {
+      if (name == null) return;
+
       let descriptor = getPropertyDescriptor(player, name);
       if (descriptor && descriptor.set) return (player[name] = value);
 
@@ -33,6 +35,8 @@ export function base(element, player) {
      * @return {*}
      */
     get(name) {
+      if (name == null) return;
+
       let result;
       const method = getName(name);
       if ((result = getProperty(player, name)) !== undefined) return result;
@@ -46,15 +50,15 @@ export function base(element, player) {
     },
 
     remove() {
-      return player.api.remove();
+      return player.api && player.api.remove();
     },
 
     play() {
-      return player.api.play();
+      return player.api && player.api.play();
     },
 
     pause() {
-      return player.api.pause();
+      return player.api && player.api.pause();
     },
 
     on(eventName, callback) {
