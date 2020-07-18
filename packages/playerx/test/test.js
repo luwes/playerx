@@ -3,6 +3,7 @@ import './_polyfills.js';
 import './error.js';
 import './methods.js';
 import './helpers.js';
+import './can-play.js';
 
 import './players/file.js';
 
