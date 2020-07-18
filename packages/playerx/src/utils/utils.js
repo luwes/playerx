@@ -1,4 +1,8 @@
 
+export function objectValues(o) {
+  return Object.keys(o).map(k=>o[k]);
+}
+
 export function clamp(min, max, value) {
   return value < min ? min : value > max ? max : value;
 }

@@ -1,4 +1,4 @@
-import { createElement } from './dom.js';
+import { createElement, removeNode } from './dom.js';
 
 export function loadScript(src, globalName, readyFnName) {
   if (self[globalName]) {
@@ -18,17 +18,17 @@ export function loadScript(src, globalName, readyFnName) {
     }
 
     script.onload = () => {
-      script.remove();
+      removeNode(script);
       if (!readyFnName) {
         ready();
       }
     };
 
     script.onerror = function(error) {
-      script.remove();
+      removeNode(script);
       reject(error);
     };
 
-    document.head.append(script);
+    document.head.appendChild(script);
   });
 }

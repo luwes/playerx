@@ -4,10 +4,11 @@ import { base } from './player-base.js';
 import * as Events from './constants/events.js';
 import { extend } from './utils/object.js';
 import { publicPromise } from './utils/promise.js';
+import { objectValues } from './utils/utils.js';
 
 export const coreMethodNames = ['play', 'pause', 'stop', 'get'];
 
-const events = Object.values(Events);
+const events = objectValues(Events);
 let listeners = [];
 
 /** @typedef { import('./index').Playerx } Playerx */
@@ -234,7 +235,7 @@ export const playerx = (CE, { create }) => element => {
     events
       .filter(
         (event) =>
-          ![
+          [
             Events.READY,
             Events.LOADSRC,
             Events.LOADEDSRC,
@@ -244,7 +245,7 @@ export const playerx = (CE, { create }) => element => {
             Events.VOLUMECHANGE,
             Events.PROGRESS,
             Events.RESIZE,
-          ].includes(event)
+          ].indexOf(event) === -1
       )
       .forEach((event) => listeners.push([event, fire.bind(null, event)]));
 

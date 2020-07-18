@@ -3505,10 +3505,10 @@ dir-glob@^3.0.1:
   dependencies:
     path-type "^4.0.0"
 
-disco@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/disco/-/disco-1.0.1.tgz#da09b4ea8b3155bdefc235e9d6bc0360e7dc0f78"
-  integrity sha512-dbpoFUZnx/VShCjakDjXbKw30ZxrU3OvP3p76HX/9h8AJLTj29RiewXVY7uO1Z903OxY5z59t/F4aHBMlzAsBA==
+disco@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/disco/-/disco-1.0.2.tgz#7bdc73fc5cd09b3666ba4a3063bd2eb9bac025ee"
+  integrity sha512-k48/O1oNuo7BpbTXtwXeJThLh60S8N+HVkVg8XB0Pu77+CI43YEcAWXxwhXRaFM+cOdoRRfGzj++VG7s1Jn6+w==
 
 dmd@^5.0.1:
   version "5.0.1"

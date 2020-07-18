@@ -34,14 +34,13 @@ const config = {
     commonjs(),
     nodeResolve(),
 
-    production && babel({
+    babel({
       babelHelpers: 'bundled',
-      include: '**/*',
       inputSourceMap: false,
       compact: false,
     }),
 
-    production && terserPlugin
+    terserPlugin
   ]
 };
 

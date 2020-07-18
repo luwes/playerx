@@ -14,7 +14,7 @@ export function computedValue(fn) {
 
 export function value(current) {
   const v = observable(current);
-  return function(update) {
+  return function (update) {
     if (!arguments.length) return v();
     if (update !== current) {
       current = v(update);
@@ -36,8 +36,7 @@ export function toHHMMSS(secs) {
 }
 
 export function round(num, precision) {
-  const f = 10 ** precision;
-  return Math.round((num + Number.EPSILON) * f) / f;
+  return +(Math.round(num + 'e+' + precision) + 'e-' + precision);
 }
 
 export function prettyQuality(height) {

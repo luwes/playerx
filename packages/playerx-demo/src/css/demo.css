@@ -51,6 +51,11 @@ input[type="range"]::-ms-thumb {
   cursor: pointer;
 }
 
+.logo {
+  width: 124px;
+  height: 32px;
+}
+
 .player {
   padding-bottom: 56.25%;
   height: 0;
