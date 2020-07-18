@@ -172,11 +172,10 @@ module.exports = function (config) {
             'packages/playerx/src/players/index.js',
           ],
         }),
-
-          babel({
-            babelHelpers: 'bundled',
-            include: ['packages/playerx/**/*.js'],
-          }),
+        babel({
+          babelHelpers: 'bundled',
+          include: '**/*',
+        }),
       ].filter(Boolean),
       onwarn: (msg) => /eval/.test(msg) && void 0,
     },
