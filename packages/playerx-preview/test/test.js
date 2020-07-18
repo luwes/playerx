@@ -6,7 +6,7 @@ let container;
 
 const test = beforeEach(tape, (assert) => {
   container = document.createElement('div');
-  document.body.append(container);
+  document.body.appendChild(container);
   assert.end();
 });
 

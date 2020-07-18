@@ -85,11 +85,10 @@ export function file(element) {
 
     if (Array.isArray(src)) {
       let sources = src;
-      video.append(...sources.map(source => {
+      sources.map(source => {
         const attrs = typeof source === 'string' ? { src: source } : source;
-        return createElement('source', attrs);
-      }));
-
+        video.appendChild(createElement('source', attrs));
+      });
       video.load();
     } else {
       video.src = src;
@@ -117,6 +116,7 @@ export function file(element) {
   }
 
   const methods = {
+    get key() { return 'file'; },
     get name() { return player.name || ''; },
     get version() { return player.version || ''; },
 

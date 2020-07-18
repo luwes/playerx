@@ -7,7 +7,7 @@ let container;
 
 const test = beforeEach(tape, (assert) => {
   container = document.createElement('div');
-  document.body.append(container);
+  document.body.appendChild(container);
   assert.end();
 });
 
@@ -40,7 +40,7 @@ export function testPlayer(options, playerInfo) {
         account: '1752604059001',
       }
     });
-    container.append(player);
+    container.appendChild(player);
 
     await player.ready();
     console.warn('player.ready', options.src);
