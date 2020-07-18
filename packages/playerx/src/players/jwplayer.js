@@ -4,7 +4,7 @@ import { jwplayer as MATCH_SRC } from '../constants/src-regex.js';
 import { define } from '../define.js';
 import { PlayerError } from '../helpers/error.js';
 import { getVideoId } from '../helpers/url.js';
-import { createElement } from '../utils/dom.js';
+import { createElement, removeNode } from '../utils/dom.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise, promisify } from '../utils/promise.js';
 import { createTimeRanges } from '../utils/time-ranges.js';
@@ -110,7 +110,7 @@ export function jwplayer(element) {
 
     remove() {
       api.remove();
-      div.remove();
+      removeNode(div);
     },
 
     play() {

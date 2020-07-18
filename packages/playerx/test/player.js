@@ -1,6 +1,6 @@
 /* global UAParser */
 import tape from 'tape';
-import { beforeEach, delay } from './_utils.js';
+import { beforeEach, delay, removeNode } from './_utils.js';
 import { Playerx } from '../src/index.js';
 
 let container;
@@ -14,7 +14,7 @@ const test = beforeEach(tape, (assert) => {
 test('creates an element', (t) => {
   const player = new Playerx();
   t.assert(player instanceof HTMLElement);
-  container.remove();
+  removeNode(container);
   t.end();
 });
 

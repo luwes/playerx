@@ -2,6 +2,7 @@
 
 import { define } from '../define.js';
 import { createEmbedIframe } from '../helpers/dom.js';
+import { removeNode } from '../utils/dom.js';
 import { omit } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise, promisify } from '../utils/promise.js';
@@ -74,7 +75,7 @@ export function soundcloud(element) {
     },
 
     remove() {
-      iframe.remove();
+      removeNode(iframe);
     },
 
     stop() {

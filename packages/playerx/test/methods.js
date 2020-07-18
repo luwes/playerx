@@ -1,5 +1,5 @@
 import tape from 'tape';
-import { beforeEach } from './_utils.js';
+import { beforeEach, removeNode } from './_utils.js';
 import { Playerx } from '../src/index.js';
 import { coreMethodNames } from '../src/playerx.js';
 
@@ -22,7 +22,7 @@ test('methods are functions and return promises', (t) => {
 
   coreMethodNames.forEach(testMethod);
 
-  container.remove();
+  removeNode(container);
 
   t.end();
 });

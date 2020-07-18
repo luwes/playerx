@@ -3,7 +3,7 @@
 import { facebook as MATCH_SRC } from '../constants/src-regex.js';
 import { define } from '../define.js';
 import { getVideoId } from '../helpers/url.js';
-import { createElement } from '../utils/dom.js';
+import { createElement, removeNode } from '../utils/dom.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise } from '../utils/promise.js';
 import { uniqueId } from '../utils/utils.js';
@@ -88,7 +88,7 @@ export function facebook(element) {
     },
 
     remove() {
-      div.remove();
+      removeNode(div);
     },
 
     play() {

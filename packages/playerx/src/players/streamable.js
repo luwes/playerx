@@ -4,6 +4,7 @@ import { streamable as MATCH_SRC } from '../constants/src-regex.js';
 import { define } from '../define.js';
 import { createEmbedIframe } from '../helpers/dom.js';
 import { getVideoId } from '../helpers/url.js';
+import { removeNode } from '../utils/dom.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise, promisify } from '../utils/promise.js';
 import { createTimeRanges } from '../utils/time-ranges.js';
@@ -75,7 +76,7 @@ export function streamable(element) {
     },
 
     remove() {
-      iframe.remove();
+      removeNode(iframe);
     },
 
     play() {

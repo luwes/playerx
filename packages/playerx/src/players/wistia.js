@@ -5,7 +5,7 @@ import { define } from '../define.js';
 import { getVideoId } from '../helpers/url.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise } from '../utils/promise.js';
-import { createElement } from '../utils/dom.js';
+import { createElement, removeNode } from '../utils/dom.js';
 import { createPlayPromise } from '../helpers/video.js';
 import { options } from '../options.js';
 export { options };
@@ -124,7 +124,7 @@ export function wistia(element) {
 
     remove() {
       api.remove();
-      div.remove();
+      removeNode(div);
     },
 
     on(eventName, callback) {

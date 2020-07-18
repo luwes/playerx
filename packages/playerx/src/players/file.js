@@ -3,7 +3,7 @@
 
 import { HLS_EXTENSIONS, DASH_EXTENSIONS } from '../constants/src-regex.js';
 import { define } from '../define.js';
-import { createElement } from '../utils/dom.js';
+import { createElement, removeNode } from '../utils/dom.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise } from '../utils/promise.js';
 import { options } from '../options.js';
@@ -138,7 +138,7 @@ export function file(element) {
 
     remove() {
       reset();
-      video.remove();
+      removeNode(video);
     },
 
     on(eventName, callback) {

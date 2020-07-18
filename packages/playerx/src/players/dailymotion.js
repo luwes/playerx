@@ -4,7 +4,7 @@ import { dailymotion as MATCH_SRC } from '../constants/src-regex.js';
 import { define } from '../define.js';
 import { allow } from '../helpers/dom.js';
 import { getVideoId } from '../helpers/url.js';
-import { createElement } from '../utils/dom.js';
+import { createElement, removeNode } from '../utils/dom.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise } from '../utils/promise.js';
 import { serialize } from '../utils/url.js';
@@ -98,7 +98,7 @@ export function dailymotion(element) {
 
     remove() {
       api.destroy(api.id);
-      div.remove();
+      removeNode(div);
     },
 
     play() {

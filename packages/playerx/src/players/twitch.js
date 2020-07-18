@@ -7,7 +7,7 @@ import { loadScript } from '../utils/load-script.js';
 import { publicPromise, promisify } from '../utils/promise.js';
 import { createTimeRanges } from '../utils/time-ranges.js';
 import { createPlayPromise } from '../helpers/video.js';
-import { createElement } from '../utils/dom.js';
+import { createElement, removeNode } from '../utils/dom.js';
 import { uniqueId } from '../utils/utils.js';
 import { options } from '../options.js';
 export { options };
@@ -72,7 +72,7 @@ export function twitch(element) {
 
     remove() {
       api.destroy();
-      div.remove();
+      removeNode(div);
     },
 
     play() {
