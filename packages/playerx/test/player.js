@@ -1,5 +1,5 @@
+/* global UAParser */
 import tape from 'tape';
-import spy from 'ispy';
 import { beforeEach, delay } from './_utils.js';
 import { Playerx } from '../src/index.js';
 
@@ -18,7 +18,12 @@ test('creates an element', (t) => {
   t.end();
 });
 
-export function testPlayer(options, videoInfo) {
+export function testPlayer(options, playerInfo) {
+
+  const parser = new UAParser();
+  if (!playerInfo.ie && parser.getBrowser().name === 'IE') {
+    return;
+  }
 
   test(`basic player tests for ${options.src}`, async (t) => {
     const player = new Playerx();
@@ -58,7 +63,7 @@ export function testPlayer(options, videoInfo) {
 
       player.muted = true;
       if (['youtube', 'facebook', 'twitch', 'vidyard'].includes(player.key)) {
-        await delay(100); // some players are async
+        await delay(200); // some players are async
       }
       t.assert(player.muted, 'is muted');
     }
@@ -96,12 +101,6 @@ export function testPlayer(options, videoInfo) {
     // }
 
     // t.equal(Math.round(player.duration), videoInfo.duration, `is ${videoInfo.duration} long`);
-
-    // Soundcloud and Streamable throws an error,
-    //   `Uncaught TypeError: Cannot read property 'postMessage' of null`
-    if (!['soundcloud', 'streamable'].includes(player.key)) {
-      player.remove();
-    }
 
     t.end();
   });

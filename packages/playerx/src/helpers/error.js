@@ -28,5 +28,6 @@ export class PlayerError extends Error {
     super(message, fileName, lineNumber);
     this.name = 'PlayerError';
     this.code = code;
+    this.message = message;
   }
 }

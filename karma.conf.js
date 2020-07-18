@@ -17,14 +17,19 @@ var coverage = String(process.env.COVERAGE) === 'true',
   automate = ci && !pullRequest && masterBranch;
 
 var browserstackLaunchers = {
-  bs_chrome_mac: {
+  ie11: {
+    base: 'BrowserStack',
+    browser: 'ie',
+    browser_version: '11.0',
+    os: 'Windows',
+    os_version: '7',
+  },
+  chrome: {
     base: 'BrowserStack',
     browser: 'Chrome',
     browser_version: 'latest',
     os: 'Windows',
     os_version: '10',
-    // timeout: '60',
-    'browserstack.console': 'verbose',
     chromeOptions: {
       args: [
         '--disable-web-security',
@@ -119,7 +124,8 @@ module.exports = function (config) {
     frameworks: ['tap'],
 
     files: [
-      'https://polyfill.io/v3/polyfill.min.js?features=Element.prototype.append%2CElement.prototype.remove%2CCustomEvent',
+      'https://unpkg.com/ua-parser-js@0.7.21/dist/ua-parser.min.js',
+      'https://polyfill.io/v3/polyfill.min.js?features=Array.from%2CURLSearchParams%2CElement.prototype.append%2CElement.prototype.remove%2CCustomEvent%2Cfetch%2CPromise%2CString.prototype.startsWith',
       'https://unpkg.com/@webcomponents/custom-elements',
       'https://unpkg.com/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js',
       {
@@ -166,10 +172,10 @@ module.exports = function (config) {
             'packages/playerx/src/players/index.js',
           ],
         }),
-        automate &&
+
           babel({
             babelHelpers: 'bundled',
-            include: ['packages/playerx/**'],
+            include: ['packages/playerx/**/*.js'],
           }),
       ].filter(Boolean),
       onwarn: (msg) => /eval/.test(msg) && void 0,

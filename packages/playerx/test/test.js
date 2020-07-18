@@ -5,17 +5,15 @@ import './methods.js';
 import './helpers.js';
 import './can-play.js';
 
-import './players/file.js';
-
-import './players/youtube.js';
-import './players/twitch.js';
-import './players/vidyard.js';
-
-import './players/vimeo.js';
-import './players/jwplayer.js';
-import './players/wistia.js';
-import './players/facebook.js';
-import './players/dailymotion.js';
 import './players/brightcove.js';
+import './players/dailymotion.js';
+import './players/facebook.js';
+import './players/file.js';
+import './players/jwplayer.js';
 import './players/soundcloud.js';
 import './players/streamable.js';
+import './players/twitch.js';
+import './players/vidyard.js';
+import './players/vimeo.js';
+import './players/wistia.js';
+import './players/youtube.js';

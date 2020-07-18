@@ -1,4 +1,4 @@
-import { getStyle, addCssRule, cssNumber } from '../utils/css.js';
+import { getStyle, addCssRule, deleteCssRule, cssNumber } from '../utils/css.js';
 
 const sheet = getStyle();
 sheet.firstChild.data += `
@@ -29,37 +29,47 @@ sheet.firstChild.data += `
 `;
 
 export function createResponsiveStyle(element) {
-  const { width, height, aspectRatio } = element;
-  const selector = '__';
-  const elementRule = addCssRule(selector, {
-    width,
-    height,
-  });
-  const beforeRule = addCssRule(selector, {
-    'padding-top': `${aspectRatio * 100}%`,
-  });
-  updateSelector(element);
+  let selector = '__';
+  let elementRule = addCssRule(selector);
+  let beforeRule = addCssRule(selector);
 
-  function updateSelector(el) {
+  function updateRules() {
+    const { width, height, aspectRatio } = element;
+
     let selectorText = '';
-    if (el.width) {
-      selectorText += `player-x[width="${el.width}"]`;
+    if (width) {
+      selectorText += `player-x[width="${width}"]`;
     }
-    if (el.height) {
-      selectorText += `[height="${el.height}"]`;
-    } else if (el.aspectRatio) {
-      selectorText += `[aspect-ratio="${el.aspectRatio}"]`;
+    if (height) {
+      selectorText += `[height="${height}"]`;
+    } else if (aspectRatio) {
+      selectorText += `[aspect-ratio="${aspectRatio}"]`;
     }
+
     if (selectorText) {
-      elementRule.selectorText = selectorText;
-      beforeRule.selectorText = selectorText + '::before';
+      if (elementRule.selectorText !== selectorText) {
+        deleteCssRule(elementRule);
+        elementRule = addCssRule(selectorText, {
+          width,
+          height,
+        });
+      }
+      if (beforeRule.selectorText !== (selectorText + '::before')) {
+        deleteCssRule(beforeRule);
+        beforeRule = addCssRule(selectorText + '::before', {
+          'padding-top': `${aspectRatio * 100}%`,
+        });
+      }
+    } else {
+      deleteCssRule(elementRule);
+      deleteCssRule(beforeRule);
     }
   }
 
   return {
     set width(value) {
       elementRule.style.width = value == null ? '' : cssNumber(value);
-      updateSelector(element);
+      updateRules();
     },
 
     get width() {
@@ -68,7 +78,7 @@ export function createResponsiveStyle(element) {
 
     set height(value) {
       elementRule.style.height = value == null ? '' : cssNumber(value);
-      updateSelector(element);
+      updateRules();
     },
 
     get height() {
@@ -77,7 +87,7 @@ export function createResponsiveStyle(element) {
 
     set aspectRatio(value) {
       beforeRule.style.setProperty('padding-top', `${value * 100}%`);
-      updateSelector(element);
+      updateRules();
     },
   };
 }
