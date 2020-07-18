@@ -82,20 +82,20 @@ export function testPlayer(options, videoInfo) {
     t.equal(player.height, '640', 'player.height is 640');
     t.equal(player.clientHeight, 640, 'setting height overrides aspect ratio');
 
-    await player.play();
-    t.assert(!player.paused, 'is playing');
+    // await player.play();
+    // t.assert(!player.paused, 'is playing');
 
-    await delay(1100);
-    t.assert(String(Math.round(player.currentTime)), /[01]/, 'is about 1s in');
+    // await delay(1100);
+    // t.assert(String(Math.round(player.currentTime)), /[01]/, 'is about 1s in');
 
-    if (!['facebook', 'dailymotion', 'soundcloud', 'streamable', 'twitch'].includes(player.key)) {
-      // doesn't support playbackRate
-      player.playbackRate = 2;
-      await delay(1200);
-      t.match(String(Math.round(player.currentTime)), /[34]/, 'is about 3s in');
-    }
+    // if (!['facebook', 'dailymotion', 'soundcloud', 'streamable', 'twitch'].includes(player.key)) {
+    //   // doesn't support playbackRate
+    //   player.playbackRate = 2;
+    //   await delay(1200);
+    //   t.match(String(Math.round(player.currentTime)), /[34]/, 'is about 3s in');
+    // }
 
-    t.equal(Math.round(player.duration), videoInfo.duration, `is ${videoInfo.duration} long`);
+    // t.equal(Math.round(player.duration), videoInfo.duration, `is ${videoInfo.duration} long`);
 
     // Soundcloud throws an error,
     //   `Uncaught TypeError: Cannot read property 'postMessage' of null`
