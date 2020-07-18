@@ -77,5 +77,9 @@ export function base(element, player) {
     getEnded() {
       return element.currentTime == element.duration;
     },
+
+    getKey() {
+      return player.name.toLowerCase();
+    },
   };
 }

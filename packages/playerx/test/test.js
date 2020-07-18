@@ -6,11 +6,11 @@ import './helpers.js';
 
 import './players/file.js';
 
+import './players/youtube.js';
 import './players/twitch.js';
 import './players/vidyard.js';
 
 import './players/vimeo.js';
-import './players/youtube.js';
 import './players/jwplayer.js';
 import './players/wistia.js';
 import './players/facebook.js';

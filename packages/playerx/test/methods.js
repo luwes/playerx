@@ -22,5 +22,7 @@ test('methods are functions and return promises', (t) => {
 
   coreMethodNames.forEach(testMethod);
 
+  container.remove();
+
   t.end();
 });

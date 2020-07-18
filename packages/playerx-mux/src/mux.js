@@ -49,7 +49,7 @@ export const mux = (options) => () => (player) => {
           player_init_time: initTime,
           player_name: 'playerx',
           player_version: version,
-          player_software_name: player.name.toLowerCase(),
+          player_software_name: player.key,
           player_software_version: player.version,
           player_mux_plugin_name: 'playerx-mux',
           player_mux_plugin_version: '0.0.1',

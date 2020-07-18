@@ -110,7 +110,7 @@ export const playerx = (CE, { create }) => element => {
 
     element.fire(Events.LOADSRC);
 
-    if (playerInitiated && canPlay[player.name.toLowerCase()](element.src)) {
+    if (playerInitiated && canPlay[player.key](element.src)) {
       const prevLoad = element.load;
 
       // If `element.load` is called in the player, re-attach events.

@@ -63,7 +63,7 @@ export function createResponsiveStyle(element) {
     },
 
     get width() {
-      return elementRule.style.width;
+      return `${elementRule.style.width}`.replace('px', '');
     },
 
     set height(value) {
@@ -72,7 +72,7 @@ export function createResponsiveStyle(element) {
     },
 
     get height() {
-      return elementRule.style.height;
+      return `${elementRule.style.height}`.replace('px', '');
     },
 
     set aspectRatio(value) {
