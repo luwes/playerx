@@ -83,7 +83,7 @@ export function base(element, player) {
     },
 
     getKey() {
-      return player.name.toLowerCase();
+      return player.name && player.name.toLowerCase();
     },
   };
 }
