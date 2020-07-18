@@ -71,7 +71,7 @@ export function dailymotion(element) {
     },
 
     get videoTitle() {
-      return serialize(`t=${api.video.title}`).get('t');
+      return new URLSearchParams(`t=${api.video.title}`).get('t');
     },
 
     get videoWidth() {

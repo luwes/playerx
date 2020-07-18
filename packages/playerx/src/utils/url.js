@@ -1,6 +1,7 @@
-
 export function serialize(props) {
-  return new URLSearchParams(props);
+  return Object.keys(props)
+    .map((key) => `${key}=${encodeURIComponent(props[key])}`)
+    .join('&');
 }
 
 export function boolToBinary(props) {
