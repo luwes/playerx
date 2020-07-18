@@ -10,7 +10,7 @@
 
 ## Features
 
-- **Uniform player API** across player platforms, this sounds easier than it is. Many players have big differences in their API's. Some work synchronous, others async. Lots of work was put in normalizing these inconsistencies. The end result is an API that comes close the `HTMLMediaElement` API.
+- **Uniform player API** across player platforms. The end result is an API that comes close the `HTMLMediaElement` API.
 - **UI framework independent**, intentionally uses no specific framework to have great interop across the board and keep the bundle size in check.
 - **Responsive** out of the box and easy attributes to maintain a specific aspect-ratio. 
 - **Extensible** with powerful add-ons like custom previews, analytics, custom skins, etc.
