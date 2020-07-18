@@ -59,12 +59,23 @@ async function setSrc(el, src) {
 
 async function fetchThumbnail(src, width, height) {
   const url = `https://noembed.com/embed?url=${src}&maxwidth=${width}&maxheight=${height}`;
-  const response = await fetch(url);
-  const data = await response.json();
+  const data = await requestJson(url);
   if (data.thumbnail_url) {
     src = data.thumbnail_url;
   }
   return src;
+}
+
+export function requestJson(url) {
+  return new Promise((resolve, reject) => {
+    const req = new XMLHttpRequest();
+    req.open('GET', url);
+    req.send();
+    req.onload = function() {
+      resolve(JSON.parse(req.responseText));
+    };
+    req.onerror = reject;
+  });
 }
 
 function addThumbnail(el, src) {

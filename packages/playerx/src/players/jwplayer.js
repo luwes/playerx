@@ -8,6 +8,7 @@ import { createElement, removeNode } from '../utils/dom.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise, promisify } from '../utils/promise.js';
 import { createTimeRanges } from '../utils/time-ranges.js';
+import { requestJson } from '../utils/request.js';
 import { createPlayPromise } from '../helpers/video.js';
 import { options } from '../options.js';
 export { options };
@@ -30,7 +31,7 @@ export function jwplayer(element) {
 
   async function getMedia(id) {
     const mediaUrl = `https://cdn.jwplayer.com/v2/media/${id}`;
-    return (await fetch(mediaUrl)).json();
+    return (await requestJson(mediaUrl));
   }
 
   async function init() {
