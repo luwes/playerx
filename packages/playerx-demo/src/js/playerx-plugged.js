@@ -17,7 +17,7 @@ const defaultConfig = () => (player) => {
   });
 };
 
-const lazyLoader = (url, globalName, options) => () => (player) => {
+const lazyLoader = (url, globalName, options) => (CE) => (player) => {
   const { load } = player;
   let initiated;
 
@@ -30,7 +30,7 @@ const lazyLoader = (url, globalName, options) => () => (player) => {
         if (plugin && typeof plugin !== 'function') {
           plugin = plugin[Object.keys(plugin)[0]];
         }
-        plugin(options)(player.constructor)(player);
+        plugin(options)(CE)(player);
       }
       return load();
     },
