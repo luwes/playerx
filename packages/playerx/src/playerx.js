@@ -1,3 +1,4 @@
+import { canPlay } from './can-play.js';
 import { createResponsiveStyle } from './helpers/css.js';
 import { base } from './player-base.js';
 import * as Events from './constants/events.js';
@@ -109,7 +110,7 @@ export const playerx = (CE, { create }) => element => {
 
     element.fire(Events.LOADSRC);
 
-    if (playerInitiated && player.constructor.canPlay(element.src)) {
+    if (playerInitiated && canPlay[player.name.toLowerCase()](element.src)) {
       const prevLoad = element.load;
 
       // If `element.load` is called in the player, re-attach events.

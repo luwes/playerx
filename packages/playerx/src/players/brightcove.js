@@ -1,5 +1,6 @@
 // https://support.brightcove.com/overview-player-api
 
+import { brightcove as MATCH_SRC } from '../constants/src-regex.js';
 import { define } from '../define.js';
 import { getVideoId } from '../helpers/url.js';
 import { createElement } from '../utils/dom.js';
@@ -10,14 +11,6 @@ import { options } from '../options.js';
 export { options };
 
 const API_GLOBAL = 'bc';
-const MATCH_URL = /brightcove\.com\/.*?videos\/(\d+)/;
-
-/**
- * Returns true if the source can be played by this player.
- * @param  {string} src
- * @return {boolean}
- */
-brightcove.canPlay = src => MATCH_URL.test(src);
 
 export function brightcove(element) {
   let api;
@@ -35,7 +28,7 @@ export function brightcove(element) {
     ready = publicPromise();
 
     const opts = getOptions();
-    const videoId = getVideoId(MATCH_URL, element.src);
+    const videoId = getVideoId(MATCH_SRC, element.src);
     const id = uniqueId('bc');
 
     div = createElement('video-js', {
@@ -67,7 +60,7 @@ export function brightcove(element) {
     },
 
     get videoId() {
-      return getVideoId(MATCH_URL, element.src);
+      return getVideoId(MATCH_SRC, element.src);
     },
 
     get src() {
@@ -79,7 +72,9 @@ export function brightcove(element) {
     },
 
     remove() {
-      api.dispose();
+      // Calling this here errors
+      // Uncaught TypeError: Cannot read property 'parentNode' of null
+      // api.dispose();
     },
 
     stop() {

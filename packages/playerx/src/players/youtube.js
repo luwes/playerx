@@ -1,5 +1,6 @@
 // https://developers.google.com/youtube/iframe_api_reference
 
+import { youtube as MATCH_SRC } from '../constants/src-regex.js';
 import { define } from '../define.js';
 import { createEmbedIframe } from '../helpers/dom.js';
 import { PlayerError } from '../helpers/error.js';
@@ -16,14 +17,6 @@ const EMBED_BASE = 'https://www.youtube.com/embed';
 const API_URL = 'https://www.youtube.com/iframe_api';
 const API_GLOBAL = 'YT';
 const API_GLOBAL_READY = 'onYouTubeIframeAPIReady';
-const MATCH_URL = /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})/;
-
-/**
- * Returns true if the source can be played by this player.
- * @param  {string} src
- * @return {boolean}
- */
-youtube.canPlay = src => MATCH_URL.test(src);
 
 export function youtube(element) {
   let api;
@@ -48,7 +41,7 @@ export function youtube(element) {
     ready = publicPromise();
 
     const opts = getOptions();
-    const videoId = getVideoId(MATCH_URL, element.src);
+    const videoId = getVideoId(MATCH_SRC, element.src);
     const src = `${EMBED_BASE}/${videoId}?${serialize(boolToBinary(opts))}`;
     iframe = createEmbedIframe({ src });
 
@@ -117,7 +110,7 @@ export function youtube(element) {
     },
 
     get videoId() {
-      return getVideoId(MATCH_URL, element.src);
+      return getVideoId(MATCH_SRC, element.src);
     },
 
     get videoTitle() {
@@ -186,7 +179,7 @@ export function youtube(element) {
       element.load();
 
       // `api.cueVideoById` works but `api.getDuration()` is never updated ;(
-      // api.cueVideoById(getVideoId(MATCH_URL, element.src));
+      // api.cueVideoById(getVideoId(MATCH_SRC, element.src));
     },
 
     set controls(value) {

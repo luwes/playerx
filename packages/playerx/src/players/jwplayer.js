@@ -1,5 +1,6 @@
 // https://developer.jwplayer.com/jwplayer/docs/jw8-javascript-api-reference
 
+import { jwplayer as MATCH_SRC } from '../constants/src-regex.js';
 import { define } from '../define.js';
 import { PlayerError } from '../helpers/error.js';
 import { getVideoId } from '../helpers/url.js';
@@ -13,14 +14,6 @@ export { options };
 
 const API_URL = 'https://ssl.p.jwpcdn.com/player/v/8.12.5/jwplayer.js';
 const API_GLOBAL = 'jwplayer';
-const MATCH_URL = /jwplayer\.com\/players\/(\w+)(?:-(\w+))?/;
-
-/**
- * Returns true if the source can be played by this player.
- * @param  {string} src
- * @return {boolean}
- */
-jwplayer.canPlay = src => MATCH_URL.test(src);
 
 export function jwplayer(element) {
   let api;
@@ -44,7 +37,7 @@ export function jwplayer(element) {
     ready = publicPromise();
 
     const opts = getOptions();
-    const id = getVideoId(MATCH_URL, element.src);
+    const id = getVideoId(MATCH_SRC, element.src);
 
     div = createElement('div');
 
@@ -94,7 +87,7 @@ export function jwplayer(element) {
     },
 
     get videoId() {
-      return getVideoId(MATCH_URL, element.src);
+      return getVideoId(MATCH_SRC, element.src);
     },
 
     get videoTitle() {

@@ -1,5 +1,6 @@
 // https://wistia.com/support/developers/player-api
 
+import { wistia as MATCH_SRC } from '../constants/src-regex.js';
 import { define } from '../define.js';
 import { getVideoId } from '../helpers/url.js';
 import { loadScript } from '../utils/load-script.js';
@@ -11,14 +12,6 @@ export { options };
 
 const API_URL = 'https://fast.wistia.com/assets/external/E-v1.js';
 const API_GLOBAL = 'Wistia';
-const MATCH_URL = /(?:wistia\.com|wi\.st)\/(?:medias|embed)\/(.*)$/;
-
-/**
- * Returns true if the source can be played by this player.
- * @param  {string} src
- * @return {boolean}
- */
-wistia.canPlay = src => MATCH_URL.test(src);
 
 export function wistia(element) {
   let api;
@@ -42,7 +35,7 @@ export function wistia(element) {
     ready = publicPromise();
 
     const opts = getOptions();
-    const id = getVideoId(MATCH_URL, element.src);
+    const id = getVideoId(MATCH_SRC, element.src);
 
     div = createElement('div', {
       class: `wistia_embed wistia_async_${id}`,
@@ -148,7 +141,7 @@ export function wistia(element) {
       element.load();
 
       // `api.replaceWith` works but does strange things with resizing ;(
-      // api.replaceWith(getVideoId(MATCH_URL, src), getOptions());
+      // api.replaceWith(getVideoId(MATCH_SRC, src), getOptions());
     },
 
     set currentTime(seconds) {

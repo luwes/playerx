@@ -2,6 +2,7 @@
  * Copyright (c) 2020, Wesley Luyten, @luwes
  * @see LICENSE
  */
+import { canPlay } from './can-play.js';
 import { define } from './define.js';
 import * as players from './players/index.js';
 import { file } from './players/file.js';
@@ -21,10 +22,10 @@ export {
 };
 
 function x(element, ...args) {
-  for (let key in players) {
+  for (let key in canPlay) {
 
     const createPlayer = players[key];
-    if (createPlayer.canPlay(element.src)) {
+    if (canPlay[key](element.src)) {
 
       const player = createPlayer(element, ...args);
       player.constructor = createPlayer;

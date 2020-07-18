@@ -1,5 +1,6 @@
 // https://github.com/embedly/player.js
 
+import { streamable as MATCH_SRC } from '../constants/src-regex.js';
 import { define } from '../define.js';
 import { createEmbedIframe } from '../helpers/dom.js';
 import { getVideoId } from '../helpers/url.js';
@@ -13,14 +14,6 @@ export { options };
 const EMBED_BASE = 'https://streamable.com/o';
 const API_URL = 'https://cdn.embed.ly/player-0.1.0.min.js';
 const API_GLOBAL = 'playerjs';
-const MATCH_URL = /streamable\.com\/(\w+)$/;
-
-/**
- * Returns true if the source can be played by this player.
- * @param  {string} src
- * @return {boolean}
- */
-streamable.canPlay = src => MATCH_URL.test(src);
 
 export function streamable(element) {
   let api;
@@ -40,7 +33,7 @@ export function streamable(element) {
     ready = publicPromise();
 
     const opts = getOptions();
-    const videoId = getVideoId(MATCH_URL, element.src);
+    const videoId = getVideoId(MATCH_SRC, element.src);
     const src = `${EMBED_BASE}/${videoId}`;
     iframe = createEmbedIframe({ src });
 
@@ -74,7 +67,7 @@ export function streamable(element) {
     },
 
     get videoId() {
-      return getVideoId(MATCH_URL, element.src);
+      return getVideoId(MATCH_SRC, element.src);
     },
 
     ready() {

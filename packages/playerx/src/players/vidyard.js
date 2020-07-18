@@ -1,5 +1,6 @@
 // https://knowledge.vidyard.com/hc/en-us/articles/360019034753
 
+import { vidyard as MATCH_SRC } from '../constants/src-regex.js';
 import { define } from '../define.js';
 import { getVideoId } from '../helpers/url.js';
 import { addCssRule } from '../utils/css.js';
@@ -14,7 +15,6 @@ export { options };
 const API_URL = 'https://play.vidyard.com/embed/v4.js';
 const API_GLOBAL = 'VidyardV4';
 const API_GLOBAL_READY = 'onVidyardAPI';
-const MATCH_URL = /vidyard\..*?\/(?:share|watch)\/(\w+)/;
 
 addCssRule(`.vidyard-player-container,.vidyard-player-container>div`, {
   position: 'absolute !important',
@@ -28,7 +28,7 @@ addCssRule(`.vidyard-player-container,.vidyard-player-container>div`, {
  * @param  {string} src
  * @return {boolean}
  */
-vidyard.canPlay = src => MATCH_URL.test(src);
+vidyard.canPlay = src => MATCH_SRC.test(src);
 
 export function vidyard(element) {
   let api;
@@ -48,7 +48,7 @@ export function vidyard(element) {
     ready = publicPromise();
 
     const opts = getOptions();
-    const videoId = getVideoId(MATCH_URL, element.src);
+    const videoId = getVideoId(MATCH_SRC, element.src);
 
     img = createElement('img', {
       class: 'vidyard-player-embed',
@@ -106,7 +106,7 @@ export function vidyard(element) {
     },
 
     get videoId() {
-      return getVideoId(MATCH_URL, element.src);
+      return getVideoId(MATCH_SRC, element.src);
     },
 
     get videoTitle() {

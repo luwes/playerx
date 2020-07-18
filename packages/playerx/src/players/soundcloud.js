@@ -15,14 +15,6 @@ export { options };
 const EMBED_BASE = 'https://w.soundcloud.com/player';
 const API_URL = 'https://w.soundcloud.com/player/api.js';
 const API_GLOBAL = 'SC';
-const MATCH_URL = /(soundcloud\.com|snd\.sc)\/.+$/;
-
-/**
- * Returns true if the source can be played by this player.
- * @param  {string} src
- * @return {boolean}
- */
-soundcloud.canPlay = src => MATCH_URL.test(src);
 
 export function soundcloud(element) {
   let api;

@@ -1,5 +1,6 @@
 // https://developer.dailymotion.com/player/
 
+import { dailymotion as MATCH_SRC } from '../constants/src-regex.js';
 import { define } from '../define.js';
 import { allow } from '../helpers/dom.js';
 import { getVideoId } from '../helpers/url.js';
@@ -15,14 +16,6 @@ export { options };
 const API_URL = 'https://api.dmcdn.net/all.js';
 const API_GLOBAL = 'DM';
 const API_GLOBAL_READY = 'dmAsyncInit';
-const MATCH_URL = /(?:(?:dailymotion\.com(?:\/embed)?\/video)|dai\.ly)\/(\w+)$/;
-
-/**
- * Returns true if the source can be played by this player.
- * @param  {string} src
- * @return {boolean}
- */
-dailymotion.canPlay = src => MATCH_URL.test(src);
 
 export function dailymotion(element) {
   let api;
@@ -31,7 +24,7 @@ export function dailymotion(element) {
 
   function getOptions() {
     return {
-      video: getVideoId(MATCH_URL, element.src),
+      video: getVideoId(MATCH_SRC, element.src),
       autoplay: element.playing || element.autoplay,
       loop: element.loop,
       muted: element.muted,
@@ -43,7 +36,7 @@ export function dailymotion(element) {
 
   async function init() {
     const params = getOptions();
-    const video = getVideoId(MATCH_URL, element.src);
+    const video = getVideoId(MATCH_SRC, element.src);
     div = createElement('div');
 
     const DM = await loadScript(params.apiUrl || API_URL, API_GLOBAL, API_GLOBAL_READY);

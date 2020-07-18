@@ -1,5 +1,6 @@
 // https://github.com/vimeo/player.js
 
+import { vimeo as MATCH_SRC } from '../constants/src-regex.js';
 import * as Events from '../constants/events.js';
 import { define } from '../define.js';
 import { createEmbedIframe } from '../helpers/dom.js';
@@ -15,14 +16,6 @@ export { options };
 const EMBED_BASE = 'https://player.vimeo.com/video';
 const API_URL = 'https://player.vimeo.com/api/player.js';
 const API_GLOBAL = 'Vimeo';
-const MATCH_URL = /vimeo\.com\/(?:video\/)?(\d+)/;
-
-/**
- * Returns true if the source can be played by this player.
- * @param  {string} src
- * @return {boolean}
- */
-vimeo.canPlay = src => MATCH_URL.test(src);
 
 export function vimeo(element) {
   let api;
@@ -44,7 +37,7 @@ export function vimeo(element) {
 
   async function init() {
     const opts = getOptions();
-    const videoId = getVideoId(MATCH_URL, element.src);
+    const videoId = getVideoId(MATCH_SRC, element.src);
     const src = `${EMBED_BASE}/${videoId}?${serialize(boolToBinary(opts))}`;
     iframe = createEmbedIframe({ src });
 
@@ -62,7 +55,7 @@ export function vimeo(element) {
     // Vimeo's thumb outro loads new clips directly in the player
     // Update src attribute and fire load src events for metrics, etc.
     api.on('loaded', ({ id }) => {
-      const vidId = getVideoId(MATCH_URL, element.src);
+      const vidId = getVideoId(MATCH_SRC, element.src);
       if (String(id) !== vidId) {
         element.setCache('src', `https://vimeo.com/${id}`);
         element.fire(Events.LOADSRC);

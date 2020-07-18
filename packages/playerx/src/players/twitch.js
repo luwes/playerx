@@ -1,5 +1,6 @@
 // https://dev.twitch.tv/docs/embed/video-and-clips
 
+import { twitch as MATCH_SRC } from '../constants/src-regex.js';
 import { define } from '../define.js';
 import { getVideoId } from '../helpers/url.js';
 import { loadScript } from '../utils/load-script.js';
@@ -13,14 +14,6 @@ export { options };
 
 const API_URL = 'https://player.twitch.tv/js/embed/v1.js';
 const API_GLOBAL = 'Twitch';
-const MATCH_URL = /twitch\.tv\/videos\/(\d+)($|\?)/;
-
-/**
- * Returns true if the source can be played by this player.
- * @param  {string} src
- * @return {boolean}
- */
-twitch.canPlay = src => MATCH_URL.test(src);
 
 export function twitch(element) {
   let api;
@@ -29,7 +22,7 @@ export function twitch(element) {
 
   function getOptions() {
     return {
-      video: getVideoId(MATCH_URL, element.src),
+      video: getVideoId(MATCH_SRC, element.src),
       height: '100%',
       width: '100%',
       autoplay: element.playing || element.autoplay,
@@ -37,6 +30,7 @@ export function twitch(element) {
       playsinline: element.playsinline,
       controls: element.controls,
       muted: element.muted,
+      parent: location.hostname,
       ...element.config.twitch,
     };
   }
@@ -69,7 +63,7 @@ export function twitch(element) {
     },
 
     get videoId() {
-      return getVideoId(MATCH_URL, element.src);
+      return getVideoId(MATCH_SRC, element.src);
     },
 
     ready() {
@@ -100,7 +94,7 @@ export function twitch(element) {
     },
 
     set src(value) {
-      api.setVideo('v' + getVideoId(MATCH_URL, element.src));
+      api.setVideo('v' + getVideoId(MATCH_SRC, element.src));
     },
 
     set controls(value) {
