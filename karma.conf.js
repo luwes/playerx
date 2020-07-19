@@ -78,7 +78,7 @@ module.exports = function (config) {
       tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER || ('local'+require('./package.json').version),
       connectLocationForSERelay: 'localhost',
       connectPortForSERelay: 4445,
-      startConnect: false
+      startConnect: true
     },
 
     // browserLogOptions: { terminal: true },
