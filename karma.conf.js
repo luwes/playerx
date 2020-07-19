@@ -79,7 +79,6 @@ module.exports = function (config) {
       connectLocationForSERelay: 'localhost',
       connectPortForSERelay: 4445,
       startConnect: false,
-      region: 'eu',
     },
 
     // browserLogOptions: { terminal: true },
