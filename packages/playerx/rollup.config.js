@@ -78,7 +78,7 @@ export default [
     output: {
       ...config.output,
       file: 'dist/polyfills.js',
-      format: 'umd'
+      format: 'iife'
     },
     plugins: [
       ...config.plugins,
