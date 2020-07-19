@@ -160,7 +160,7 @@ module.exports = function (config) {
       output: {
         format: 'iife', // Helps prevent naming collisions.
         name: 'playerxTest', // Required for 'iife' format.
-        sourcemap: 'inline', // Sensible for testing.
+        sourcemap: automate ? false : 'inline', // Sensible for testing.
       },
       preserveSymlinks: true,
       plugins: [
