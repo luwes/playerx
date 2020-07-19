@@ -31,7 +31,7 @@ Demo page: [dev.playerx.io/demo](https://dev.playerx.io/demo/)
 
 ## Browser Support
 
-Sinuous supports modern browsers and IE11+ (requires some polyfills).
+Sinuous supports modern browsers and IE11+ (requires some polyfills).  
 Include this script before importing Playerx.
 
 ```js
