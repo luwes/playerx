@@ -92,11 +92,12 @@ Key | Options
 
 Method | Description
 ------ | -----------
-`play(): Promise` | 
-`pause(): void` | 
-`addEventListener(name, handler, opts): void` |
-`removeEventListener(name, handler, opts): void` |
-`ready(): Promise` |
+`play(): Promise` | Begins playback of the media, returns a promise that resolves when playing starts.
+`pause(): void` | Pauses the media playback.
+`addEventListener(name, handler, opts): void` | The `EventTarget` method sets up a function that will be called whenever the specified event is delivered to the target.
+`removeEventListener(name, handler, opts): void` | This method removes from the `EventTarget` an event listener previously registered.
+`ready(): Promise` | Trigger a function when the player has initialized. You do not need to wait for ready to trigger to begin adding event listeners or calling other methods.
+`load(): Promise` | Resets the media to the beginning and selects the best available source from the sources provided using the src attribute or the `<source>` element.
 
 
 ### Events
