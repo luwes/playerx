@@ -1,23 +1,9 @@
-import 'native-promise-only';
-import '@webcomponents/custom-elements';
-import '@webcomponents/webcomponentsjs/custom-elements-es5-adapter';
 
-if (!Array.from) {
-  Array.from = function (object) {
-    return [].slice.call(object);
-  };
-}
+(self.Promise && self.CustomEvent && Array.from) || document.write(
+  '<script src="//polyfill.io/v3/polyfill.min.js?features=Promise%2CCustomEvent%2CArray.from"></script>'
+);
 
-if (typeof window.CustomEvent !== 'function') {
-  window.CustomEvent = function CustomEvent(event, params) {
-    params = params || { bubbles: false, cancelable: false, detail: null };
-    var evt = document.createEvent('CustomEvent');
-    evt.initCustomEvent(
-      event,
-      params.bubbles,
-      params.cancelable,
-      params.detail
-    );
-    return evt;
-  };
-}
+self.customElements || document.write(
+  '<script src="//unpkg.com/@webcomponents/custom-elements"></script>\
+  <script src="//unpkg.com/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>'
+);

@@ -117,7 +117,7 @@ function setSrc(dataSrc) {
   buffered(0);
   videoHeight(0);
   if (dataSrc) {
-    src(dataSrc.includes(',') ? dataSrc.split(',') : dataSrc);
+    src(dataSrc.indexOf(',') !== -1 ? dataSrc.split(',') : dataSrc);
   }
 }
 

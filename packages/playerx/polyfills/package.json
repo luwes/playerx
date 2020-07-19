@@ -8,10 +8,5 @@
   "scripts": {
     "lint": "eslint .",
     "prepublishOnly": "yarn lint && (cd ../../.. && yarn build)"
-  },
-  "dependencies": {
-    "@webcomponents/custom-elements": "^1.4.1",
-    "@webcomponents/webcomponentsjs": "^2.4.3",
-    "native-promise-only": "^0.8.1"
   }
 }
