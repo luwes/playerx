@@ -103,7 +103,7 @@ export function testPlayer(options, playerInfo) {
     // t.equal(Math.round(player.duration), videoInfo.duration, `is ${videoInfo.duration} long`);
 
     // Some players throw postMessage errors on removal.
-    if (['soundcloud', 'streamable'].includes(player.key)) {
+    if (['soundcloud', 'streamable', 'dailymotion'].includes(player.key)) {
       container.style.visibility = 'hidden';
     } else {
       container.remove();
