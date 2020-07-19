@@ -75,26 +75,18 @@ Prop | Description | Default
 
 Key | Options
 ------ | -----------
-`brightcove` |
-`dailymotion` |
-`facebook` |
-`file` |
-`jwplayer` | 
-`soundcloud` |
-`vidyard` |
-`vimeo` |
-`wistia` | 
-`youtube` |
+`brightcove` | `account: ''` Account key
+`dailymotion` | See all [custom options](https://developer.dailymotion.com/player#player-parameters)
+`facebook` | `appId: ''` Your own [Facebook app ID](https://developers.facebook.com/docs/apps/register#app-id)<br />`version: 'v3.2'`: Facebook SDK version
+`jwplayer` | See all [custom options](https://developer.jwplayer.com/jwplayer/docs/jw8-player-configuration-reference) <br>`player: ''` Player ID used in the player URL. <br>`key: ''` Or via a key for the advanced embed.
+`soundcloud` | See all [custom options](https://developers.soundcloud.com/docs/api/html5-widget#params)
+`vidyard` | See all [custom options](https://knowledge.vidyard.com/hc/en-us/articles/360009879754-Use-query-strings-to-override-player-settings)
+`vimeo` | See all [custom options](https://github.com/vimeo/player.js#embed-options) <br>`color: '00adef'` Specify the color of the video controls. Colors may be overridden by the embed settings of the video. <br>`title: true` Show the title on the video. <br>`byline: true` Show the byline on the video. <br>`portrait: true` Show the portrait on the video.
+`wistia` | See all [custom options](https://wistia.com/doc/embed-options#options_list)
+`youtube` | See all [custom options](https://developers.google.com/youtube/player_parameters?playerVersion=HTML5) <br>`rel: 0` If the rel parameter is set to 0, related videos will come from the same channel as the video that was just played. <br>`iv_load_policy: 3` Setting the parameter's value to 1 causes video annotations to be shown by default, whereas setting to 3 causes video annotations to not be shown by default. <br>`modestbranding: 1` This parameter lets you use a YouTube player that does not show a YouTube logo. Set the parameter value to 1 to prevent the YouTube logo from displaying in the control bar. Note that a small YouTube text label will still display in the upper-right corner of a paused video when the user's mouse pointer hovers over the player.
 
 
 ### Methods
-
-#### Static Methods
-
-Method | Description
------- | -----------
-`canPlay(src): Boolean` | 
-
 
 #### Instance Methods
 
