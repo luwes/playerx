@@ -10,13 +10,15 @@
   "repository": "luwes/playerx",
   "license": "SEE LICENSE IN LICENSE",
   "author": "Wesley Luyten <me@wesleyluyten.com> (https://wesleyluyten.com)",
-  "main": "dist/playerx.min.js",
+  "main": "dist/playerx.js",
   "module": "module/playerx.js",
   "types": "src/index.d.ts",
   "files": [
     "module",
     "dist",
-    "src"
+    "src",
+    "polyfills",
+    "polyfills/package.json"
   ],
   "scripts": {
     "build": "rollup -c --silent",

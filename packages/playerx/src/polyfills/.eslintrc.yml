@@ -1,0 +1,8 @@
+env:
+  es6: false
+
+parserOptions:
+  ecmaVersion: 2015
+
+rules:
+  no-var: off

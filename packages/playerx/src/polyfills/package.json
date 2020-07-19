@@ -1,0 +1,20 @@
+{
+  "name": "playerx-polyfills",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Playerx polyfills",
+  "module": "../module/polyfills.js",
+  "main": "../dist/polyfills.js",
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "lint": "eslint src",
+    "prepublishOnly": "yarn lint && (cd ../../.. && yarn build)"
+  },
+  "dependencies": {
+    "@webcomponents/custom-elements": "^1.4.1",
+    "@webcomponents/webcomponentsjs": "^2.4.3",
+    "native-promise-only": "^0.8.1"
+  }
+}

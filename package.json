@@ -13,7 +13,8 @@
   "author": "Wesley Luyten <me@wesleyluyten.com> (https://wesleyluyten.com)",
   "main": "index.js",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "packages/playerx/src/*"
   ],
   "scripts": {
     "build": "run-s build:*",

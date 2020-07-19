@@ -35,7 +35,18 @@ const config = {
     bundleSize(),
     sourcemaps(),
     nodeResolve(),
-  ]
+  ],
+  onwarn(warning) {
+  // https://github.com/rollup/rollup/wiki/Troubleshooting#this-is-undefined
+    const skip = [
+      'THIS_IS_UNDEFINED',
+      // 'UNKNOWN_OPTION',
+      // 'MISSING_GLOBAL_NAME',
+      // 'CIRCULAR_DEPENDENCY',
+    ];
+    if (skip.includes(warning.code)) return;
+    console.error(warning.message);
+  },
 };
 
 export default [
@@ -56,7 +67,7 @@ export default [
     ...config,
     output: {
       ...config.output,
-      file: 'dist/playerx.min.js',
+      file: 'dist/playerx.js',
       format: 'umd',
       name: 'playerx',
     },
@@ -64,20 +75,33 @@ export default [
       ...config.plugins,
       babel({
         babelHelpers: 'bundled',
-        include: '**/*',
         inputSourceMap: false,
         compact: false,
       }),
       terserPlugin,
     ]
   },
-  // {
-  //   ...config,
-  //   input: 'src/players/vimeo.js',
-  //   output: {
-  //     ...config.output,
-  //     file: 'module/player-vimeo.js',
-  //     format: 'es'
-  //   }
-  // },
+  // polyfills shouldn't go through Babel.
+  production && {
+    ...config,
+    input: 'src/polyfills/index.js',
+    output: {
+      ...config.output,
+      file: 'dist/polyfills.js',
+      format: 'umd'
+    },
+    plugins: [
+      ...config.plugins,
+      terserPlugin,
+    ]
+  },
+  {
+    ...config,
+    input: 'src/polyfills/index.js',
+    output: {
+      ...config.output,
+      file: 'module/polyfills.js',
+      format: 'es'
+    }
+  },
 ].filter(Boolean);
