@@ -14,6 +14,6 @@ import './players/soundcloud.js';
 import './players/streamable.js';
 import './players/twitch.js';
 import './players/vidyard.js';
-// import './players/vimeo.js';
+import './players/vimeo.js';
 import './players/wistia.js';
 import './players/youtube.js';
