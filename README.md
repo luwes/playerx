@@ -129,7 +129,33 @@ Playerx is in early preview and needs more test coverage to be fully production 
 
 Be sure to read the [license](/LICENSE.md) terms. In most cases Playerx is free to use but if your project profits from this software you should buy a commercial license at [dev.playerx.io](https://dev.playerx.io/).
 
+## Supported media
+
+* YouTube videos use the [YouTube iFrame Player API](https://developers.google.com/youtube/iframe_api_reference)
+* Facebook videos use the [Facebook Embedded Video Player API](https://developers.facebook.com/docs/plugins/embedded-video-player/api)
+* SoundCloud tracks use the [SoundCloud Widget API](https://developers.soundcloud.com/docs/api/html5-widget)
+* Streamable videos use [`Player.js`](https://github.com/embedly/player.js)
+* Vimeo videos use the [Vimeo Player API](https://developer.vimeo.com/player/sdk)
+* Wistia videos use the [Wistia Player API](https://wistia.com/doc/player-api)
+* Twitch videos use the [Twitch Interactive Frames API](https://dev.twitch.tv/docs/embed#interactive-frames-for-live-streams-and-vods)
+* DailyMotion videos use the [DailyMotion Player API](https://developer.dailymotion.com/player)
+* Vidyard videos use the [Vidyard Player API](https://knowledge.vidyard.com/hc/en-us/articles/360019034753-Using-the-Vidyard-Player-API)
+* [Supported file types](https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats) are playing using [`<video>`](https://developer.mozilla.org/en/docs/Web/HTML/Element/video) or [`<audio>`](https://developer.mozilla.org/en/docs/Web/HTML/Element/audio) elements
+  * HLS streams are played using [`hls.js`](https://github.com/video-dev/hls.js)
+  * DASH streams are played using [`dash.js`](https://github.com/Dash-Industry-Forum/dash.js)
+
 
 ## Similar Projects
 
 - [React Player](https://github.com/CookPete/react-player)
+
+
+## Big Thanks
+
+To all the services that offered free plans for building, testing and measuring!
+
+- [MUX](https://mux.com/)
+- [BrowserStack](https://www.browserstack.com/)
+- [Sauce Labs](https://saucelabs.com)
+- [Travis CI](https://travis-ci.com/)
+- [Github](https://github.com/)
