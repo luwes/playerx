@@ -8,10 +8,6 @@ cache:
   directories:
     - node_modules
 
-# As --depth implies --single-branch, removing this flag means that all branches will be checked out
-git:
-  depth: false
-
 # Make chrome browser available for testing
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
@@ -25,7 +21,7 @@ install:
   - yarn
 
 addons:
-  chrome: stable
+  # chrome: stable # not needed if Saucelabs is used
   sauce_connect:
     direct_domains: "*.vimeo.com"
 
