@@ -6,3 +6,5 @@ parserOptions:
 
 rules:
   no-var: off
+  fp/no-arguments: off
+  fp/no-this: off

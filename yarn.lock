@@ -7731,6 +7731,13 @@ pkg-up@^2.0.0:
   dependencies:
     find-up "^2.1.0"
 
+playerx@0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/playerx/-/playerx-0.0.8.tgz#5b4f8729112987d6a978fdb77b227fc1d132f701"
+  integrity sha512-PjUSkqDG08HnxCUiOWMxbqy9Np20Mev+CrwG9x0n+7wWqTvln8anrRjeK+XVaoG5UjdYpMW5PDnqkSd6b3lLRw==
+  dependencies:
+    swiss "^2.0.1"
+
 playwright@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/playwright/-/playwright-1.1.1.tgz#20746124542bddd7e925c128b6ec1ace679ffe6a"

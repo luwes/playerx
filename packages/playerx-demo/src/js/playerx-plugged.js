@@ -1,4 +1,3 @@
-import './polyfills';
 import 'playerx-preview';
 import * as playerx from 'playerx';
 import { loading } from 'playerx-loading';
