@@ -84,7 +84,7 @@ export default [
   // polyfills shouldn't go through Babel.
   production && {
     ...config,
-    input: 'src/polyfills/index.js',
+    input: 'polyfills/index.js',
     output: {
       ...config.output,
       file: 'dist/polyfills.js',
@@ -97,7 +97,7 @@ export default [
   },
   {
     ...config,
-    input: 'src/polyfills/index.js',
+    input: 'polyfills/index.js',
     output: {
       ...config.output,
       file: 'module/polyfills.js',

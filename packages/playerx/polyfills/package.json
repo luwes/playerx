@@ -9,7 +9,7 @@
     "src"
   ],
   "scripts": {
-    "lint": "eslint src",
+    "lint": "eslint .",
     "prepublishOnly": "yarn lint && (cd ../../.. && yarn build)"
   },
   "dependencies": {
