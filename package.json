@@ -14,7 +14,7 @@
   "main": "index.js",
   "workspaces": [
     "packages/*",
-    "packages/playerx/src/*"
+    "packages/playerx/*"
   ],
   "scripts": {
     "build": "run-s build:*",

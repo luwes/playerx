@@ -36,17 +36,6 @@ const config = {
     sourcemaps(),
     nodeResolve(),
   ],
-  onwarn(warning) {
-  // https://github.com/rollup/rollup/wiki/Troubleshooting#this-is-undefined
-    const skip = [
-      'THIS_IS_UNDEFINED',
-      // 'UNKNOWN_OPTION',
-      // 'MISSING_GLOBAL_NAME',
-      // 'CIRCULAR_DEPENDENCY',
-    ];
-    if (skip.includes(warning.code)) return;
-    console.error(warning.message);
-  },
 };
 
 export default [
@@ -84,6 +73,7 @@ export default [
   // polyfills shouldn't go through Babel.
   production && {
     ...config,
+    context: 'window',
     input: 'polyfills/index.js',
     output: {
       ...config.output,
@@ -93,10 +83,11 @@ export default [
     plugins: [
       ...config.plugins,
       terserPlugin,
-    ]
+    ],
   },
   {
     ...config,
+    context: 'window',
     input: 'polyfills/index.js',
     output: {
       ...config.output,
