@@ -29,6 +29,18 @@ document.body.innerHTML = `
 Demo page: [dev.playerx.io/demo](https://dev.playerx.io/demo/)
 
 
+## Browser Support
+
+Sinuous supports modern browsers and IE11+ (requires some polyfills).
+Include this script before importing Playerx.
+
+```js
+<script src="//unpkg.com/playerx/dist/polyfills.js"></script>
+```
+
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/luwes.svg)](https://saucelabs.com/u/luwes)
+
+
 ## Docs
 
 ### Properties
