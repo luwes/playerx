@@ -14,7 +14,8 @@
 {% endblock %}
 
 {% block foot %}
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=Object.fromEntries%2CElement.prototype.classList%2CURLSearchParams%2CElement.prototype.matches"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=Object.fromEntries%2CElement.prototype.classList%2CURLSearchParams%2CElement.prototype.matches%2CSet"></script>
+  <script>this.customElements || document.write('<script src="//unpkg.com/playerx/dist/polyfills.js"><\x2fscript>');</script>
   <script src="/js/playerx-plugged.js"></script>
   <script src="/js/playerx-demo.js"></script>
 {% endblock %}
