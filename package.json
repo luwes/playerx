@@ -42,6 +42,7 @@
     "@babel/core": "^7.9.6",
     "@babel/preset-env": "^7.9.6",
     "@rollup/plugin-babel": "^5.0.2",
+    "@rollup/plugin-commonjs": "^14.0.0",
     "@rollup/plugin-node-resolve": "^8.0.0",
     "@webcomponents/custom-elements": "^1.4.1",
     "ansi-colors": "^4.1.1",
