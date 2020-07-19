@@ -1,5 +1,5 @@
 sudo: true
-os: osx
+
 language: node_js
 
 node_js:
@@ -19,8 +19,9 @@ before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH="$HOME/.yarn/bin:$PATH"
 
-services:
-  - xvfb
+# Services are not supported on osx...
+# services:
+#   - xvfb
 
 install:
   - yarn
