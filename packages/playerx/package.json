@@ -24,7 +24,8 @@
     "build": "rollup -c --silent",
     "dev": "rollup -wc --silent",
     "lint": "eslint src",
-    "docs": "jsdoc2md src/index.js"
+    "docs": "jsdoc2md src/index.js",
+    "prepublishOnly": "(cd ../.. && yarn lint && yarn build:js)"
   },
   "dependencies": {
     "swiss": "^2.0.1"
