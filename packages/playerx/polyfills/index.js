@@ -1,6 +1,6 @@
+import 'native-promise-only';
 import '@webcomponents/custom-elements';
 import '@webcomponents/webcomponentsjs/custom-elements-es5-adapter';
-import 'native-promise-only';
 
 if (!Array.from) {
   Array.from = function (object) {

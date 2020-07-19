@@ -5,9 +5,6 @@
   "description": "Playerx polyfills",
   "module": "../module/polyfills.js",
   "main": "../dist/polyfills.js",
-  "files": [
-    "src"
-  ],
   "scripts": {
     "lint": "eslint .",
     "prepublishOnly": "yarn lint && (cd ../../.. && yarn build)"
