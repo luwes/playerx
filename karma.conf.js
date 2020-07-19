@@ -134,7 +134,7 @@ module.exports = function (config) {
 
     files: [
       'https://unpkg.com/ua-parser-js@0.7.21/dist/ua-parser.min.js',
-      'https://polyfill.io/v3/polyfill.min.js?features=Array.from%2CCustomEvent%2Cfetch%2CPromise',
+      'https://polyfill.io/v3/polyfill.min.js?features=Array.from%2CURLSearchParams%2CCustomEvent%2Cfetch%2CPromise',
       'https://unpkg.com/@webcomponents/custom-elements',
       'https://unpkg.com/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js',
       {
