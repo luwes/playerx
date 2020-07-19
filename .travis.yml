@@ -34,7 +34,9 @@ jobs:
   include:
     - stage: Tests
       name: "Unit tests"
-      script: COVERAGE=true yarn test --single-run --console --stack
+      script:
+        - hostname -I
+        - COVERAGE=true yarn test --single-run --console --stack
 
 after_success:
   - yarn run coverage
