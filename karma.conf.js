@@ -16,27 +16,33 @@ var coverage = String(process.env.COVERAGE) === 'true',
   masterBranch = String(process.env.TRAVIS_BRANCH).match(/^master$/gi),
   automate = ci && !pullRequest && masterBranch;
 
-var browserstackLaunchers = {
-  ie11: {
-    base: 'BrowserStack',
-    browser: 'ie',
-    browser_version: '11.0',
-    os: 'Windows',
-    os_version: '7',
+var sauceLabsLaunchers = {
+  sl_chrome: {
+    base: 'SauceLabs',
+    browserName: 'chrome',
+    platform: 'Windows 10'
   },
-  chrome: {
-    base: 'BrowserStack',
-    browser: 'Chrome',
-    browser_version: 'latest',
-    os: 'Windows',
-    os_version: '10',
-    chromeOptions: {
-      args: [
-        '--disable-web-security',
-        '--autoplay-policy=no-user-gesture-required',
-      ],
-    },
+  sl_firefox: {
+    base: 'SauceLabs',
+    browserName: 'firefox',
+    platform: 'Windows 10'
   },
+  sl_safari: {
+    base: 'SauceLabs',
+    browserName: 'safari',
+    platform: 'macOS 10.13'
+  },
+  sl_edge: {
+    base: 'SauceLabs',
+    browserName: 'MicrosoftEdge',
+    platform: 'Windows 10'
+  },
+  sl_ie_11: {
+    base: 'SauceLabs',
+    browserName: 'internet explorer',
+    version: '11.0',
+    platform: 'Windows 7'
+  }
 };
 
 var localLaunchers = {
@@ -62,14 +68,17 @@ var localLaunchers = {
 module.exports = function (config) {
   config.set({
     browsers: automate
-      ? Object.keys(browserstackLaunchers)
+      ? Object.keys(sauceLabsLaunchers)
       : Object.keys(localLaunchers),
 
-    customLaunchers: automate ? browserstackLaunchers : localLaunchers,
+    customLaunchers: automate ? sauceLabsLaunchers : localLaunchers,
 
-    browserStack: {
-      username: process.env.BROWSERSTACK_USERNAME,
-      accessKey: process.env.BROWSERSTACK_ACCESS_KEY,
+    sauceLabs: {
+      build: 'CI #' + process.env.TRAVIS_BUILD_NUMBER + ' (' + process.env.TRAVIS_BUILD_ID + ')',
+      tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER || ('local'+require('./package.json').version),
+      connectLocationForSERelay: 'localhost',
+      connectPortForSERelay: 4445,
+      startConnect: false
     },
 
     // browserLogOptions: { terminal: true },
@@ -98,8 +107,8 @@ module.exports = function (config) {
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: ['tap-pretty'].concat(
-      coverage ? 'coverage' : []
-      // automate ? 'saucelabs' : []
+      coverage ? 'coverage' : [],
+      automate ? 'saucelabs' : []
     ),
 
     tapReporter: {
