@@ -27,16 +27,16 @@ var sauceLabsLaunchers = {
     browserName: 'firefox',
     platform: 'Windows 10'
   },
-  // sl_safari: {
-  //   base: 'SauceLabs',
-  //   browserName: 'safari',
-  //   platform: 'macOS 10.13'
-  // },
-  // sl_edge: {
-  //   base: 'SauceLabs',
-  //   browserName: 'MicrosoftEdge',
-  //   platform: 'Windows 10'
-  // },
+  sl_safari: {
+    base: 'SauceLabs',
+    browserName: 'safari',
+    platform: 'macOS 10.13'
+  },
+  sl_edge: {
+    base: 'SauceLabs',
+    browserName: 'MicrosoftEdge',
+    platform: 'Windows 10'
+  },
   // sl_ie_11: {
   //   base: 'SauceLabs',
   //   browserName: 'internet explorer',
@@ -92,7 +92,7 @@ module.exports = function (config) {
     browserNoActivityTimeout: 60 * 60 * 1000,
 
     // Especially on services like SauceLabs and Browserstack, it makes sense only to launch a limited amount of browsers at once, and only start more when those have finished. Using this configuration, you can specify how many browsers should be running at once at any given point in time.
-    concurrency: 2,
+    concurrency: 5,
 
     // The captureTimeout value represents the maximum boot-up time allowed for a browser to start and connect to Karma. If any browser does not get captured within the timeout, Karma will kill it and try to launch it again and, after three attempts to capture it, Karma will give up.
     captureTimeout: 60000,
