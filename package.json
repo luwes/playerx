@@ -47,7 +47,7 @@
     "@webcomponents/custom-elements": "^1.4.1",
     "ansi-colors": "^4.1.1",
     "babel-plugin-transform-async-to-promises": "^0.8.15",
-    "codecov": "^3.7.0",
+    "codecov": "^3.7.1",
     "cross-env": "^7.0.2",
     "eslint": "^7.0.0",
     "eslint-plugin-fp": "^2.3.0",
