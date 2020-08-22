@@ -20,22 +20,22 @@ var sauceLabsLaunchers = {
   sl_chrome: {
     base: 'SauceLabs',
     browserName: 'chrome',
-    platform: 'Windows 10'
+    platform: 'Windows 10',
   },
   sl_firefox: {
     base: 'SauceLabs',
     browserName: 'firefox',
-    platform: 'Windows 10'
+    platform: 'Windows 10',
   },
   sl_safari: {
     base: 'SauceLabs',
     browserName: 'safari',
-    platform: 'macOS 10.13'
+    platform: 'macOS 10.13',
   },
   sl_edge: {
     base: 'SauceLabs',
     browserName: 'MicrosoftEdge',
-    platform: 'Windows 10'
+    platform: 'Windows 10',
   },
   // sl_ie_11: {
   //   base: 'SauceLabs',
@@ -74,8 +74,15 @@ module.exports = function (config) {
     customLaunchers: automate ? sauceLabsLaunchers : localLaunchers,
 
     sauceLabs: {
-      build: 'CI #' + process.env.TRAVIS_BUILD_NUMBER + ' (' + process.env.TRAVIS_BUILD_ID + ')',
-      tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER || ('local'+require('./package.json').version),
+      build:
+        'CI #' +
+        process.env.TRAVIS_BUILD_NUMBER +
+        ' (' +
+        process.env.TRAVIS_BUILD_ID +
+        ')',
+      tunnelIdentifier:
+        process.env.TRAVIS_JOB_NUMBER ||
+        'local' + require('./package.json').version,
       connectLocationForSERelay: 'localhost',
       connectPortForSERelay: 4445,
       startConnect: false,
@@ -140,7 +147,7 @@ module.exports = function (config) {
       {
         pattern: 'packages/playerx-demo/src/_data/dev/players.yaml',
         included: false,
-        served: true
+        served: true,
       },
       // {
       //   pattern: config.grep || 'packages/playerx/test/test.js',
