@@ -3,11 +3,11 @@
   "version": "0.0.1",
   "description": "Playerx MUX",
   "keywords": [],
-  "homepage": "https://github.com/luwes/playerx#readme",
+  "homepage": "https://github.com/playerxo/playerx#readme",
   "bugs": {
-    "url": "https://github.com/luwes/playerx/issues"
+    "url": "https://github.com/playerxo/playerx/issues"
   },
-  "repository": "luwes/playerx",
+  "repository": "playerxo/playerx",
   "license": "SEE LICENSE IN LICENSE",
   "author": "Wesley Luyten <me@wesleyluyten.com> (https://wesleyluyten.com)",
   "main": "dist/playerx-mux.min.js",
