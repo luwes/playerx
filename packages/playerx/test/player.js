@@ -1,5 +1,6 @@
 /* global UAParser */
 import tape from 'tape';
+import _ from 'lodash';
 import { beforeEach, delay, removeNode } from './_utils.js';
 import { Playerx } from '../src/index.js';
 
@@ -18,15 +19,48 @@ test('creates an element', (t) => {
   t.end();
 });
 
-export function testPlayer(options, playerInfo) {
+const defaultBrowsers = (enabled = true) => ({
+  chrome: enabled,
+  firefox: enabled,
+  safari: enabled,
+  ie: enabled,
+});
 
-  const parser = new UAParser();
-  if (playerInfo.ie === false && parser.getBrowser().name === 'IE') {
-    return;
+const defaultTests = {
+  basic: {
+    browsers: { ...defaultBrowsers(true) },
+  },
+  volume: {
+    browsers: { ...defaultBrowsers(true) },
+  },
+  play: false,
+};
+
+const isTestEnabled = (type, tests) => {
+  const testSection = tests[type];
+  if (!testSection) return false;
+  if (testSection === true) {
+    console.warn(`Running ${type} tests`);
+    return true;
   }
 
-  if (playerInfo.safari === false && parser.getBrowser().name === 'Safari') {
-    return;
+  if (testSection && testSection.browsers) {
+    const parser = new UAParser();
+    const browserKey = Object.keys(testSection.browsers).find((key) =>
+      parser.getBrowser().name.toLowerCase().includes(key)
+    );
+    return !!testSection.browsers[browserKey];
+  }
+
+  console.warn(`Running ${type} tests`);
+  return true;
+};
+
+export function testPlayer(options) {
+  const tests = _.merge({}, defaultTests, options.tests);
+
+  if (!isTestEnabled('basic', tests)) {
+    return false;
   }
 
   test(`basic player tests for ${options.src}`, async (t) => {
@@ -42,39 +76,23 @@ export function testPlayer(options, playerInfo) {
       },
       brightcove: {
         account: '1752604059001',
-      }
+      },
     });
     container.appendChild(player);
 
     await player.ready();
     console.warn('player.ready', options.src);
 
-    t.equal(typeof player.api, 'object', 'internal `api` getter exists and is an object');
+    t.equal(
+      typeof player.api,
+      'object',
+      'internal `api` getter exists and is an object'
+    );
 
     t.deepEqual(player.buffered.length, 0, 'buffered ranges are empty on init');
 
     t.equal(player.src, options.src, 'returns the src');
     t.assert(player.paused, 'is paused');
-
-    if (!['twitch'].includes(player.key)) {
-      t.equal(player.volume, 1, 'is all turned up');
-    }
-
-    // skip some, it's failing in CI but passes locally
-    if (!['youtube', 'facebook', 'twitch'].includes(player.key)) {
-
-      player.volume = 0.5;
-      if (['youtube', 'facebook', 'twitch'].includes(player.key)) {
-        await delay(100); // some players are async
-      }
-      t.equal(player.volume, 0.5, 'is half volume');
-
-      player.muted = true;
-      if (['youtube', 'facebook', 'twitch', 'vidyard'].includes(player.key)) {
-        await delay(200); // some players are async
-      }
-      t.assert(player.muted, 'is muted');
-    }
 
     // global css makes the width 100%
     t.equal(player.width, '', 'default empty width');
@@ -95,23 +113,54 @@ export function testPlayer(options, playerInfo) {
     t.equal(player.height, '640', 'player.height is 640');
     t.equal(player.clientHeight, 640, 'setting height overrides aspect ratio');
 
-    // facebook doesn't play via `play()` API alone
-    if (!['facebook', 'youtube'].includes(player.key)) {
+    // skip some, it's failing in CI but passes locally
+    if (isTestEnabled('volume', tests)) {
+
+      if (!['twitch'].includes(player.key)) {
+        t.equal(player.volume, 1, 'is all turned up');
+      }
+
+      player.volume = 0.5;
+      if (tests.volume.async) {
+        await delay(100); // some players are async
+      }
+      t.equal(player.volume, 0.5, 'is half volume');
+
+      player.muted = true;
+      if (tests.volume.async) {
+        await delay(200); // some players are async
+      }
+      t.assert(player.muted, 'is muted');
+    }
+
+    if (isTestEnabled('play', tests)) {
 
       await player.play();
       t.assert(!player.paused, 'is playing');
 
       await delay(1100);
-      t.assert(String(Math.round(player.currentTime)), /[01]/, 'is about 1s in');
+      t.assert(
+        String(Math.round(player.currentTime)),
+        /[01]/,
+        'is about 1s in'
+      );
 
       if (player.supports('playbackRate')) {
         // doesn't support playbackRate
         player.playbackRate = 2;
         await delay(1500);
-        t.match(String(Math.round(player.currentTime)), /[34]/, 'is about 3s in');
+        t.match(
+          String(Math.round(player.currentTime)),
+          /[34]/,
+          'is about 3s in'
+        );
       }
 
-      t.equal(Math.round(player.duration), playerInfo.duration, `is ${playerInfo.duration} long`);
+      t.equal(
+        Math.round(player.duration),
+        options.duration,
+        `is ${options.duration} long`
+      );
     }
 
     // Some players throw postMessage errors on removal.
@@ -123,5 +172,4 @@ export function testPlayer(options, playerInfo) {
 
     t.end();
   });
-
 }
