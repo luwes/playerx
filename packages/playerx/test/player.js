@@ -21,7 +21,11 @@ test('creates an element', (t) => {
 export function testPlayer(options, playerInfo) {
 
   const parser = new UAParser();
-  if (!playerInfo.ie && parser.getBrowser().name === 'IE') {
+  if (playerInfo.ie === false && parser.getBrowser().name === 'IE') {
+    return;
+  }
+
+  if (playerInfo.safari === false && parser.getBrowser().name === 'Safari') {
     return;
   }
 
