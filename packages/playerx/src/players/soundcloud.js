@@ -58,9 +58,14 @@ export function soundcloud(element) {
     ready.resolve();
   }
 
+  const unsupported = {
+    playbackRate: undefined,
+  };
+
   const methods = {
     name: 'SoundCloud',
     version: '1.x.x',
+    unsupported,
 
     get element() {
       return iframe;

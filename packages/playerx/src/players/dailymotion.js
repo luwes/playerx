@@ -53,9 +53,14 @@ export function dailymotion(element) {
     ended: 'end',
   };
 
+  const unsupported = {
+    playbackRate: undefined,
+  };
+
   const methods = {
     name: 'Dailymotion',
     version: '1.x.x',
+    unsupported,
 
     get element() {
       return div;

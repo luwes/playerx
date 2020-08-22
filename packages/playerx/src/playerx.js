@@ -397,6 +397,10 @@ export const playerx = (CE, { create }) => element => {
     return elementReady;
   }
 
+  function supports(method) {
+    return player.supports(method);
+  }
+
   const methods = {
     fire,
     load,
@@ -406,6 +410,7 @@ export const playerx = (CE, { create }) => element => {
     getProp,
     setProp,
     ready,
+    supports,
   };
 
   coreMethodNames.forEach((name) => {

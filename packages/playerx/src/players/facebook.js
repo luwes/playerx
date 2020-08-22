@@ -67,9 +67,14 @@ export function facebook(element) {
     bufferend: 'finishedBuffering',
   };
 
+  const unsupported = {
+    playbackRate: undefined,
+  };
+
   const methods = {
     name: 'Facebook',
     version: '1.x.x',
+    unsupported,
 
     get element() {
       return div;

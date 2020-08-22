@@ -90,5 +90,11 @@ export function base(element, player) {
     getBuffered() {
       return createTimeRanges();
     },
+
+    unsupported: {},
+    supports(method) {
+      console.warn(method, player.key, !(method in player.unsupported));
+      return !(method in player.unsupported);
+    },
   };
 }

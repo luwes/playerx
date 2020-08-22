@@ -54,9 +54,14 @@ export function streamable(element) {
     progress: undefined,
   };
 
+  const unsupported = {
+    playbackRate: undefined,
+  };
+
   const methods = {
     name: 'Streamable',
     version: '1.x.x',
+    unsupported,
 
     get element() {
       return iframe;

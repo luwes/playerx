@@ -96,10 +96,10 @@ export function testPlayer(options, playerInfo) {
       await delay(1100);
       t.assert(String(Math.round(player.currentTime)), /[01]/, 'is about 1s in');
 
-      if (!['facebook', 'dailymotion', 'soundcloud', 'streamable', 'twitch'].includes(player.key)) {
+      if (player.supports('playbackRate')) {
         // doesn't support playbackRate
         player.playbackRate = 2;
-        await delay(1200);
+        await delay(1500);
         t.match(String(Math.round(player.currentTime)), /[34]/, 'is about 3s in');
       }
 
