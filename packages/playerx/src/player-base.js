@@ -50,6 +50,11 @@ export function base(element, player) {
       if ((result = getMethod(player.api, method)) !== undefined) return result;
     },
 
+    unsupported: {},
+    supports(method) {
+      return !(method in player.unsupported);
+    },
+
     remove() {
       return player.api && player.api.remove();
     },
@@ -89,12 +94,6 @@ export function base(element, player) {
 
     getBuffered() {
       return createTimeRanges();
-    },
-
-    unsupported: {},
-    supports(method) {
-      console.warn(method, player.key, !(method in player.unsupported));
-      return !(method in player.unsupported);
     },
   };
 }

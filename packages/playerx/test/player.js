@@ -45,6 +45,8 @@ export function testPlayer(options, playerInfo) {
     await player.ready();
     console.warn('player.ready', options.src);
 
+    t.equal(typeof player.api, 'object', 'internal `api` getter exists and is an object');
+
     t.deepEqual(player.buffered.length, 0, 'buffered ranges are empty on init');
 
     t.equal(player.src, options.src, 'returns the src');
