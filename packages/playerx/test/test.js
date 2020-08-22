@@ -4,6 +4,7 @@ import './error.js';
 import './methods.js';
 import './helpers.js';
 import './can-play.js';
+import './utils.js';
 
 import './players/brightcove.js';
 import './players/dailymotion.js';

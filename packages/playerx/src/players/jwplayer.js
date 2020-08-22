@@ -166,7 +166,7 @@ export function jwplayer(element) {
       return api.getConfig().repeat;
     },
 
-    async getBuffered() {
+    getBuffered() {
       return createTimeRanges(0, api.getBuffer() / 100 * api.getDuration());
     },
   };

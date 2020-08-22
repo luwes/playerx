@@ -1,4 +1,5 @@
 import { getName, setName } from './helpers/string.js';
+import { createTimeRanges } from './utils/time-ranges.js';
 import { isMethod, getProperty, getMethod } from './utils/utils.js';
 import { getPropertyDescriptor } from './utils/object.js';
 
@@ -84,6 +85,10 @@ export function base(element, player) {
 
     getKey() {
       return player.name && player.name.toLowerCase();
+    },
+
+    getBuffered() {
+      return createTimeRanges();
     },
   };
 }

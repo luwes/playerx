@@ -346,11 +346,14 @@ export const playerx = (CE, { create }) => element => {
 
     let old = progress;
     let buffered = await element.get('buffered');
-    if (buffered && buffered.length) {
-      progress = buffered.end(buffered.length - 1);
-      if (progress !== old) {
-        element.setCache('buffered', buffered);
-        element.fire('progress');
+    if (buffered) {
+      element.setCache('buffered', buffered);
+
+      if (buffered.length) {
+        progress = buffered.end(buffered.length - 1);
+        if (progress !== old) {
+          element.fire('progress');
+        }
       }
     }
   }

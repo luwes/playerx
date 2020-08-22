@@ -7,7 +7,6 @@ import { getVideoId } from '../helpers/url.js';
 import { removeNode } from '../utils/dom.js';
 import { loadScript } from '../utils/load-script.js';
 import { publicPromise, promisify } from '../utils/promise.js';
-import { createTimeRanges } from '../utils/time-ranges.js';
 import { createPlayPromise } from '../helpers/video.js';
 import { options } from '../options.js';
 export { options };
@@ -137,10 +136,10 @@ export function streamable(element) {
       return promisify(api.getMuted, api)();
     },
 
-    async getBuffered() {
-      // bug in player.js - https://github.com/embedly/player.js/issues/79
-      return createTimeRanges();
-    },
+    // getBuffered() {
+    //   // bug in player.js - https://github.com/embedly/player.js/issues/79
+    //   return createTimeRanges();
+    // },
   };
 
   init();

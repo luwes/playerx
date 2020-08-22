@@ -139,7 +139,7 @@ export function dailymotion(element) {
       api.seek(seconds);
     },
 
-    async getBuffered() {
+    getBuffered() {
       return createTimeRanges(0, api.bufferedTime);
     },
   };
