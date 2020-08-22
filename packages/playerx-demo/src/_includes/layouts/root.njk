@@ -11,7 +11,9 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
-      gtag('config', 'UA-171656144-1');
+      gtag('config', 'UA-171656144-1', {
+        cookie_domain: '{{ site.url }}'
+      });
     </script>
 
     <script>

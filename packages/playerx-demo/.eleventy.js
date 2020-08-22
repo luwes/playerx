@@ -11,8 +11,9 @@ module.exports = function(eleventyConfig) {
 
   eleventyConfig.setBrowserSyncConfig({
     watch: true,
-    https: true,
-    port: 443,
+    // https: true,
+    // port: 443,
+    port: 80,
     server: {
       baseDir: './public',
       middleware: [compress()]

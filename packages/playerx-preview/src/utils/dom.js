@@ -17,3 +17,8 @@ export function removeNode(node) {
   let parentNode = node.parentNode;
   if (parentNode) parentNode.removeChild(node);
 }
+
+export function findAncestor(el, sel) {
+  while ((el = el.parentElement) && !el.matches(sel));
+  return el;
+}

@@ -90,6 +90,11 @@ player = hy(dhtml`
 
 onconnected({ target: player });
 
+// player.ready()
+//   .then(() => {
+//     console.error(player.play());
+//   });
+
 hy(dhtml`
   <div class="sources" onclick=${(e) => setSrc(e.target.dataset.src)}>
     ${[...Array(30)].map(() => dhtml`

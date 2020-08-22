@@ -50,14 +50,19 @@ export const playerx = (CE, { create }) => element => {
   async function setProp(name, value, oldValue) {
     element.setCache(name, value);
 
-    if (name === 'src') {
-      if (value !== oldValue) {
+    if (value !== oldValue) {
+      element.fire('prop', {
+        name,
+        value,
+      });
+
+      if (name === 'src') {
         // Give a chance to add more properties on load.
         await Promise.resolve();
         element.load();
+      } else {
+        playerSet(name);
       }
-    } else {
-      playerSet(name);
     }
   }
 
@@ -83,13 +88,15 @@ export const playerx = (CE, { create }) => element => {
   }
 
   function disconnected() {
-    destroy(player);
+    unload();
   }
 
-  function destroy(oldPlayer) {
+  function unload() {
     clearAllTimeouts();
     detachEvents();
-    oldPlayer.remove();
+    if (player) {
+      player.remove();
+    }
   }
 
   function clearAllTimeouts() {
@@ -136,9 +143,8 @@ export const playerx = (CE, { create }) => element => {
   }
 
   function init() {
-    let oldPlayer = player;
-    if (playerInitiated && oldPlayer) {
-      destroy(oldPlayer);
+    if (playerInitiated) {
+      unload();
     }
 
     playerInitiated = true;
@@ -391,6 +397,7 @@ export const playerx = (CE, { create }) => element => {
   const methods = {
     fire,
     load,
+    unload,
     connected,
     disconnected,
     getProp,

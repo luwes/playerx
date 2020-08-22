@@ -6,31 +6,62 @@ export const loading = CE => {
     reflect: true,
   });
 
-  return player => {
-    const { load, play } = player;
+  return element => {
+    let { load } = element;
+    let observer;
+    let loadCalled;
 
     function newLoad() {
-      if (player.loading === 'user') return;
+      if (observer) {
+        observer.unobserve(element);
+      }
+
+      if (element.loading === 'user') {
+        loadCalled = false;
+        element.unload();
+        element.load = lazyLoad;
+        return;
+      }
+
+      if (element.loading === 'lazy') {
+        element.unload();
+        observer = initIntersectionObserver();
+        return;
+      }
+
       return load();
     }
 
-    async function newPlay() {
-      // watch out calling load() here
-      // await load();
-      //
-      // in demo calling this on page load would result in a nested load() call
-      // player.ready()
-      //   .then(() => {
-      //     console.error(player.play());
-      //   });
-      //
-      // caused MUX to misreport pageload, player startup time and empty sessions
-      player.play = play;
-      return play();
+    async function lazyLoad() {
+      loadCalled = true;
+      try {
+        await load();
+        element.load = newLoad;
+      } catch (error) {
+        //...
+      }
+    }
+
+    function initIntersectionObserver() {
+      if (
+        'IntersectionObserver' in window &&
+        'IntersectionObserverEntry' in window
+      ) {
+        const intersectionObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting && !loadCalled) {
+              intersectionObserver.unobserve(element);
+              lazyLoad();
+            }
+          });
+        });
+
+        intersectionObserver.observe(element);
+        return intersectionObserver;
+      }
     }
 
     return {
-      play: newPlay,
       load: newLoad,
     };
   };
