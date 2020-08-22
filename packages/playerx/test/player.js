@@ -96,7 +96,7 @@ export function testPlayer(options, playerInfo) {
     t.equal(player.clientHeight, 640, 'setting height overrides aspect ratio');
 
     // facebook doesn't play via `play()` API alone
-    if (!['facebook'].includes(player.key)) {
+    if (!['facebook', 'youtube'].includes(player.key)) {
 
       await player.play();
       t.assert(!player.paused, 'is playing');
