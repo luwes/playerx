@@ -79,6 +79,10 @@ export function testPlayer(options) {
     await player.ready();
     console.warn('player.ready', options.src);
 
+    if (tests.basic.delay) {
+      await delay(tests.basic.delay);
+    }
+
     t.equal(
       typeof player.api,
       'object',
