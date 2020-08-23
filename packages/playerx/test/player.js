@@ -90,7 +90,7 @@ export function testPlayer(options) {
     t.deepEqual(player.buffered.length, 0, 'buffered ranges are empty on init');
 
     t.equal(player.src, options.src, 'returns the src');
-    t.assert(player.paused, 'is paused');
+    t.assert(player.paused, 'is paused on initialization');
     t.assert(!player.ended, 'is not ended');
 
     t.assert(!player.loop, 'loop is false by default');
@@ -137,10 +137,8 @@ export function testPlayer(options) {
 
     // the play tests fails for some players in Saucelabs
     if (isTestEnabled('play', tests)) {
-      console.warn('player.play()');
       await player.play();
-      console.warn('player is playing!');
-      t.assert(!player.paused, 'is playing');
+      t.assert(!player.paused, 'is playing after player.play()');
 
       await delay(1100);
       t.assert(
@@ -163,14 +161,14 @@ export function testPlayer(options) {
 
       player.playing = false;
       await delay(100);
-      t.assert(player.paused, 'is paused');
+      t.assert(player.paused, 'is paused after player.playing = false');
 
       player.setAttribute('playing', '');
       await delay(100);
-      t.assert(!player.paused, 'is playing');
+      t.assert(!player.paused, `is playing after player.setAttribute('playing', '')`);
 
       await player.stop();
-      t.assert(player.paused, 'is paused');
+      t.assert(player.paused, 'is paused after player.stop()');
       t.equal(Math.floor(player.currentTime), 0, 'timeline is reset');
 
       t.equal(

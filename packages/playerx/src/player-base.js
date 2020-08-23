@@ -72,7 +72,7 @@ export function base(element, player) {
       await player.pause();
       await player.set('currentTime', 0);
       // add small delay so previous calls are sure to be completed.
-      await delay(50);
+      await delay(70);
     },
 
     on(eventName, callback) {

@@ -9,6 +9,7 @@ const tests = {
       ie: false,
       // threw an error, 'VIDEOJS:', 'ERROR:', '(CODE:3 MEDIA_ERR_DECODE)'
       safari: false,
+      firefox: false,
     },
   },
   remove: false,
