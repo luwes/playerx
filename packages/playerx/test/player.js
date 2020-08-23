@@ -23,6 +23,7 @@ export const defaultBrowsers = (enabled = true) => ({
   chrome: enabled,
   firefox: enabled,
   safari: enabled,
+  edge: enabled,
   ie: enabled,
 });
 
