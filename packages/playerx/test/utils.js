@@ -1,6 +1,7 @@
 import test from 'tape';
 import { camelCase, kebabCase, startCase } from '../src/utils/string.js';
 import { createTimeRanges } from '../src/utils/time-ranges.js';
+import { omit } from '../src/utils/object.js';
 
 test(`kebabCase`, async (t) => {
   t.plan(1);
@@ -28,4 +29,10 @@ test(`createTimeRanges`, async (t) => {
   t.deepEqual(timeRanges, [[0, 3]]);
   t.equal(timeRanges.start(0), 0);
   t.equal(timeRanges.end(0), 3);
+});
+
+test(`omit`, async (t) => {
+  t.plan(1);
+
+  t.assert(!('url' in omit(['url'], { url: '' })), 'url prop is omit');
 });
