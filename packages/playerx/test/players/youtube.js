@@ -5,6 +5,9 @@ const duration = 46;
 
 const tests = {
   play: true,
+  volume: {
+    async: true,
+  },
   remove: false,
 };
 
