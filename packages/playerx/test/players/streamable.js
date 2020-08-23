@@ -1,4 +1,4 @@
-import { testPlayer } from '../player.js';
+import { testPlayer, defaultBrowsers } from '../player.js';
 
 const src = 'https://streamable.com/aizxh';
 const duration = 46;
@@ -9,7 +9,13 @@ const tests = {
       ie: false,
     },
   },
-  play: true,
+  play: {
+    browsers: {
+      ...defaultBrowsers(true),
+      // Streamable had issues with play/pause states in Firefox
+      firefox: false,
+    },
+  },
   remove: false,
 };
 
