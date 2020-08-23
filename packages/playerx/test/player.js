@@ -39,17 +39,13 @@ const defaultTests = {
 const isTestEnabled = (type, tests) => {
   const testSection = tests[type];
   if (!testSection) return false;
-  if (testSection === true) {
-    console.warn(`Running ${type} tests`);
-    return true;
-  }
 
-  if (testSection && testSection.browsers) {
+  if (typeof testSection === 'object' && testSection.browsers) {
     const parser = new UAParser();
     const browserKey = Object.keys(testSection.browsers).find((key) =>
       parser.getBrowser().name.toLowerCase().includes(key)
     );
-    return !!testSection.browsers[browserKey];
+    if (!testSection.browsers[browserKey]) return false;
   }
 
   console.warn(`Running ${type} tests`);
