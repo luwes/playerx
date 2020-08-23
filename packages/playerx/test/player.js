@@ -176,9 +176,8 @@ export function testPlayer(options, retries = 3) {
       await delay(100);
       t.assert(player.paused, 'is paused after player.playing = false');
 
-      player.setAttribute('playing', '');
-      await delay(100);
-      t.assert(!player.paused, `is playing after player.setAttribute('playing', '')`);
+      await player.play();
+      t.assert(!player.paused, 'is playing after player.play()');
 
       await player.stop();
       t.assert(player.paused, 'is paused after player.stop()');
