@@ -84,6 +84,10 @@ export function vimeo(element) {
       return api;
     },
 
+    get videoId() {
+      return getVideoId(MATCH_SRC, element.src);
+    },
+
     ready() {
       return ready;
     },

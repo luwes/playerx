@@ -5,6 +5,7 @@ const duration = 213;
 
 const tests = {
   remove: false,
+  play: true,
 };
 
 testPlayer({ src, duration, tests });

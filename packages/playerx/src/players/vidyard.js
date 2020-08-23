@@ -93,9 +93,14 @@ export function vidyard(element) {
     resize: undefined,
   };
 
+  const unsupported = {
+    controls: undefined,
+  };
+
   const methods = {
     name: 'Vidyard',
     version: '1.x.x',
+    unsupported,
 
     get element() {
       return img;

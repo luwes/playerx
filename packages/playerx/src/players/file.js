@@ -35,7 +35,9 @@ export function file(element) {
       loop: element.loop,
       playsinline: element.playsinline,
       controls: element.controls,
-      preload: element.preload,
+      // The default value is different for each browser.
+      // The spec advises it to be set to metadata.
+      preload: element.preload || 'metadata',
       src: element.src,
       ...element.config.file,
     };
@@ -131,7 +133,7 @@ export function file(element) {
     },
 
     get videoId() {
-      return video.currentSrc.split('/').pop();
+      return (video.currentSrc || video.src).split('/').pop();
     },
 
     ready() {

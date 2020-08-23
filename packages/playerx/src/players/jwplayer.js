@@ -24,7 +24,9 @@ export function jwplayer(element) {
   function getOptions() {
     return {
       autostart: element.playing || element.autoplay,
-      preload: element.preload,
+      // The default value is different for each browser.
+      // The spec advises it to be set to metadata.
+      preload: element.preload || 'metadata',
       ...element.config.jwplayer,
     };
   }

@@ -22,7 +22,9 @@ export function wistia(element) {
     return {
       autoPlay: element.playing || element.autoplay,
       muted: element.muted,
-      preload: element.preload,
+      // The default value is different for each browser.
+      // The spec advises it to be set to metadata.
+      preload: element.preload || 'metadata',
       playsinline: element.playsinline,
       endVideoBehavior: element.loop && 'loop',
       chromeless: !element.controls,

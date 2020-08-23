@@ -56,6 +56,7 @@ export function streamable(element) {
 
   const unsupported = {
     playbackRate: undefined,
+    controls: undefined,
   };
 
   const methods = {

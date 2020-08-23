@@ -1,7 +1,9 @@
 // https://developers.soundcloud.com/docs/api/html5-widget
 
+import { soundcloud as MATCH_SRC } from '../constants/src-regex.js';
 import { define } from '../define.js';
 import { createEmbedIframe } from '../helpers/dom.js';
+import { getVideoId } from '../helpers/url.js';
 import { removeNode } from '../utils/dom.js';
 import { omit } from '../utils/object.js';
 import { loadScript } from '../utils/load-script.js';
@@ -60,6 +62,7 @@ export function soundcloud(element) {
 
   const unsupported = {
     playbackRate: undefined,
+    controls: undefined,
   };
 
   const methods = {
@@ -73,6 +76,10 @@ export function soundcloud(element) {
 
     get api() {
       return api;
+    },
+
+    get videoId() {
+      return getVideoId(MATCH_SRC, element.src);
     },
 
     ready() {

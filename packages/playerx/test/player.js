@@ -82,17 +82,20 @@ export function testPlayer(options) {
     ]);
     console.warn('player.ready', options.src);
 
-    t.equal(
-      typeof player.api,
-      'object',
-      'internal `api` getter exists and is an object'
-    );
+    t.equal(typeof player.api, 'object', 'internal `api` getter is an object');
+
+    t.equal(typeof player.videoId, 'string', 'videoId is a string');
+    t.assert(player.videoId != '', 'videoId is not empty');
 
     t.deepEqual(player.buffered.length, 0, 'buffered ranges are empty on init');
 
     t.equal(player.src, options.src, 'returns the src');
     t.assert(player.paused, 'is paused');
     t.assert(!player.ended, 'is not ended');
+
+    t.assert(!player.loop, 'loop is false by default');
+    player.loop = true;
+    t.assert(player.loop, 'loop is true');
 
     // global css makes the width 100%
     t.equal(player.width, '', 'default empty width');
@@ -115,27 +118,25 @@ export function testPlayer(options) {
 
     // skip some, it's failing in CI but passes locally
     if (isTestEnabled('volume', tests)) {
-
       if (!['twitch'].includes(player.key)) {
         t.equal(player.volume, 1, 'is all turned up');
       }
 
       player.volume = 0.5;
       if (tests.volume.async) {
-        await delay(100); // some players are async
+        await delay(100);
       }
       t.equal(player.volume, 0.5, 'is half volume');
 
       player.muted = true;
       if (tests.volume.async) {
-        await delay(200); // some players are async
+        await delay(100);
       }
       t.assert(player.muted, 'is muted');
     }
 
     // the play tests fails for some players in Saucelabs
     if (isTestEnabled('play', tests)) {
-
       console.warn('player.play()');
       await player.play();
       console.warn('player is playing!');
@@ -157,6 +158,7 @@ export function testPlayer(options) {
           /[34]/,
           'is about 3s in'
         );
+        player.playbackRate = 1;
       }
 
       player.playing = false;

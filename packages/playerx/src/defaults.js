@@ -68,6 +68,8 @@ export const props = {
       wistia: {
         // videoFoam: false,
         // silentAutoPlay: 'allow',
+        // newLook: false,
+        // playerColor: 'ff0000',
       },
       dailymotion: {
         'queue-enable': false,
