@@ -1,16 +1,17 @@
 /* global UAParser */
 import tape from 'tape';
 import _ from 'lodash';
-import { beforeEach, delay, removeNode } from './_utils.js';
+import { beforeEach, withRetries, delay, removeNode } from './_utils.js';
 import { Playerx } from '../src/index.js';
 
 let container;
 
-const test = beforeEach(tape, (assert) => {
+let test = beforeEach(tape, (assert) => {
   container = document.createElement('div');
   document.body.appendChild(container);
   assert.end();
 });
+test = withRetries(test);
 
 test('creates an element', (t) => {
   const player = new Playerx();
@@ -52,14 +53,17 @@ const isTestEnabled = (type, tests) => {
   return true;
 };
 
-export function testPlayer(options, retries = 3) {
+export function testPlayer(options) {
   const tests = _.merge({}, defaultTests, options.tests);
 
   if (!isTestEnabled('basic', tests)) {
     return false;
   }
 
-  test(`basic player tests (try: ${4 - retries}) for ${options.src}`, async (t) => {
+  test(`basic player tests for ${options.src}`, async (t) => {
+    t.retries(2);
+    t.timeoutAfter(20000); // 20s
+
     const player = new Playerx();
     player.src = options.src;
     Object.assign(player.config, {
@@ -76,34 +80,8 @@ export function testPlayer(options, retries = 3) {
     });
     container.appendChild(player);
 
-    const retry = (failMsg) => {
-      retries--;
-      if (retries >= 1) {
-        t.end();
-        removeNode(container);
-        testPlayer(options, retries);
-      } else {
-        t.end(failMsg);
-      }
-    };
-
-    const assertRetry = async (val, msg) => {
-      if (val) {
-        t.pass(msg);
-        return Promise.resolve();
-      } else {
-        retry(msg);
-        return new Promise(() => {});
-      }
-    };
-
-    // Dailymotion has an issue were the embed not always loads, retry if needed.
-    const retryTimeout = setTimeout(retry, 5000);
-
     await player.ready();
     console.warn('player.ready', options.src);
-
-    clearTimeout(retryTimeout);
 
     t.equal(typeof player.api, 'object', 'internal `api` getter is an object');
 
@@ -184,14 +162,14 @@ export function testPlayer(options, retries = 3) {
 
       player.playing = false;
       await delay(200);
-      await assertRetry(player.paused, 'is paused after player.playing = false');
+      t.assert(player.paused, 'is paused after player.playing = false');
 
       await player.play();
-      await assertRetry(!player.paused, 'is playing after player.play()');
+      t.assert(!player.paused, 'is playing after player.play()');
 
       await player.stop();
-      await assertRetry(player.paused, 'is paused after player.stop()');
-      await assertRetry(Math.floor(player.currentTime) === 0, 'timeline is reset');
+      t.assert(player.paused, 'is paused after player.stop()');
+      t.assert(Math.floor(player.currentTime) === 0, 'timeline is reset');
 
       t.equal(
         Math.round(player.duration),
@@ -202,11 +180,12 @@ export function testPlayer(options, retries = 3) {
 
     // Some players throw postMessage errors on removal.
     if (tests.remove === false) {
-      container.style.visibility = 'hidden';
+      container.style.display = 'none';
     } else {
       container.remove();
     }
 
     t.end();
   });
+
 }
