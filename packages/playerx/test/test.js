@@ -6,11 +6,12 @@ import './helpers.js';
 import './can-play.js';
 import './utils.js';
 
+import './players/file-dash.js';
+import './players/file-hls.js';
+
 import './players/brightcove.js';
 import './players/dailymotion.js';
 import './players/facebook.js';
-import './players/file-hls.js';
-import './players/file-dash.js';
 import './players/jwplayer.js';
 import './players/soundcloud.js';
 import './players/streamable.js';

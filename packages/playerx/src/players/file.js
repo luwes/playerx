@@ -5,7 +5,7 @@ import { HLS_EXTENSIONS, DASH_EXTENSIONS } from '../constants/src-regex.js';
 import { define } from '../define.js';
 import { createElement, removeNode } from '../utils/dom.js';
 import { loadScript } from '../utils/load-script.js';
-import { publicPromise } from '../utils/promise.js';
+import { publicPromise, promisify } from '../utils/promise.js';
 import { options } from '../options.js';
 export { options };
 
@@ -75,11 +75,13 @@ export function file(element) {
       const Dash = await loadScript(opts.dashUrl || DASH_URL, DASH_GLOBAL);
       dash = Dash.MediaPlayer().create();
       dash.on('error', () => element.fire('error'));
+      const sourceInit = promisify(dash.on, dash)('sourceInitialized');
       dash.initialize(video, src, autoplay);
       player = {
         name: 'dash.js',
         version: dash.getVersion(),
       };
+      await sourceInit;
       return;
     }
 

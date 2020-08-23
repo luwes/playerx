@@ -89,6 +89,7 @@ export function testPlayer(options) {
 
     t.equal(player.src, options.src, 'returns the src');
     t.assert(player.paused, 'is paused');
+    t.assert(!player.ended, 'is not ended');
 
     // global css makes the width 100%
     t.equal(player.width, '', 'default empty width');
@@ -132,7 +133,9 @@ export function testPlayer(options) {
     // the play tests fails for some players in Saucelabs
     if (isTestEnabled('play', tests)) {
 
+      console.warn('player.play()');
       await player.play();
+      console.warn('player is playing!');
       t.assert(!player.paused, 'is playing');
 
       await delay(1100);
@@ -152,6 +155,10 @@ export function testPlayer(options) {
           'is about 3s in'
         );
       }
+
+      player.playing = false;
+      await delay(100);
+      t.assert(player.paused, 'is paused');
 
       t.equal(
         Math.round(player.duration),

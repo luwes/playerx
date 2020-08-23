@@ -85,7 +85,7 @@ export function base(element, player) {
     },
 
     getEnded() {
-      return element.currentTime == element.duration;
+      return element.currentTime > 0 && element.currentTime == element.duration;
     },
 
     getKey() {

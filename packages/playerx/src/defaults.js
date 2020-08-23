@@ -23,7 +23,7 @@ const reflectProps = reflect({
   height: undefined,
   loop: false,
   muted: false,
-  playing: false,
+  playing: false,             // custom property
   playsinline: false,
   preload: undefined,
   src: undefined,
