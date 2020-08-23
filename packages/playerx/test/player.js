@@ -87,9 +87,10 @@ export function testPlayer(options, retries = 3) {
       }
     };
 
-    const assertRetry = (val, msg) => {
+    const assertRetry = async (val, msg) => {
       if (val) {
         t.pass(msg);
+        return Promise.resolve();
       } else {
         retry(msg);
         return new Promise(() => {});
