@@ -19,7 +19,7 @@ test('creates an element', (t) => {
   t.end();
 });
 
-const defaultBrowsers = (enabled = true) => ({
+export const defaultBrowsers = (enabled = true) => ({
   chrome: enabled,
   firefox: enabled,
   safari: enabled,
@@ -129,6 +129,7 @@ export function testPlayer(options) {
       t.assert(player.muted, 'is muted');
     }
 
+    // the play tests fails for some players in Saucelabs
     if (isTestEnabled('play', tests)) {
 
       await player.play();
