@@ -70,9 +70,9 @@ export function base(element, player) {
 
     async stop() {
       await player.pause();
+      await delay(130); // add small delay for async call completion
       await player.set('currentTime', 0);
-      // add small delay so previous calls are sure to be completed.
-      await delay(70);
+      await delay(130); // add small delay for async call completion
     },
 
     on(eventName, callback) {

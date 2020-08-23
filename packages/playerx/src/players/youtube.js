@@ -6,7 +6,7 @@ import { createEmbedIframe } from '../helpers/dom.js';
 import { PlayerError } from '../helpers/error.js';
 import { getVideoId } from '../helpers/url.js';
 import { loadScript } from '../utils/load-script.js';
-import { publicPromise } from '../utils/promise.js';
+import { publicPromise, delay } from '../utils/promise.js';
 import { serialize, boolToBinary } from '../utils/url.js';
 import { createTimeRanges } from '../utils/time-ranges.js';
 import { createPlayPromise } from '../helpers/video.js';
@@ -153,8 +153,12 @@ export function youtube(element) {
       return api.pauseVideo();
     },
 
-    stop() {
-      return api.stopVideo();
+    async stop() {
+      element.pause();
+      element.currentTime = 0;
+      await delay(60); // add small delay for async call completion
+
+      api.stopVideo();
     },
 
     on(eventName, callback) {
