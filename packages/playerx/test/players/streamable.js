@@ -9,6 +9,7 @@ const tests = {
       ie: false,
     },
   },
+  remove: false,
 };
 
 testPlayer({ src, duration, tests });

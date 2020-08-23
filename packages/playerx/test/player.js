@@ -48,7 +48,6 @@ const isTestEnabled = (type, tests) => {
     if (!testSection.browsers[browserKey]) return false;
   }
 
-  console.warn(`Running ${type} tests`);
   return true;
 };
 
@@ -161,7 +160,7 @@ export function testPlayer(options) {
     }
 
     // Some players throw postMessage errors on removal.
-    if (['soundcloud', 'streamable', 'dailymotion'].includes(player.key)) {
+    if (tests.remove === false) {
       container.style.visibility = 'hidden';
     } else {
       container.remove();
