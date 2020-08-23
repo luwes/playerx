@@ -7,6 +7,8 @@ const tests = {
   play: {
     browsers: {
       ...defaultBrowsers(true),
+      // threw an error `null is not an object
+      // (evaluating 'e.impl.getMediaElement')` in Saucelabs
       safari: false,
     },
   },
