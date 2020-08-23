@@ -137,13 +137,13 @@ export function testPlayer(options, retries = 3) {
 
       player.volume = 0.5;
       if (tests.volume.async) {
-        await delay(100);
+        await delay(200);
       }
       t.equal(player.volume, 0.5, 'is half volume');
 
       player.muted = true;
       if (tests.volume.async) {
-        await delay(100);
+        await delay(200);
       }
       t.assert(player.muted, 'is muted');
     }
@@ -173,7 +173,7 @@ export function testPlayer(options, retries = 3) {
       }
 
       player.playing = false;
-      await delay(100);
+      await delay(200);
       t.assert(player.paused, 'is paused after player.playing = false');
 
       await player.play();
