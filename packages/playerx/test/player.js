@@ -76,19 +76,27 @@ export function testPlayer(options, retries = 3) {
     });
     container.appendChild(player);
 
-    // Dailymotion has an issue were the embed not always loads, retry if needed.
-    const retryTimeout = setTimeout(() => {
+    const retry = (failMsg) => {
       retries--;
       if (retries >= 1) {
-        t.pass();
         t.end();
         removeNode(container);
         testPlayer(options, retries);
       } else {
-        t.fail();
-        t.end();
+        t.end(failMsg);
       }
-    }, 5000);
+    };
+
+    const assertRetry = (val, msg) => {
+      if (val) {
+        t.pass(msg);
+      } else {
+        retry(msg);
+      }
+    };
+
+    // Dailymotion has an issue were the embed not always loads, retry if needed.
+    const retryTimeout = setTimeout(retry, 5000);
 
     await player.ready();
     console.warn('player.ready', options.src);
@@ -174,14 +182,14 @@ export function testPlayer(options, retries = 3) {
 
       player.playing = false;
       await delay(200);
-      t.assert(player.paused, 'is paused after player.playing = false');
+      assertRetry(player.paused, 'is paused after player.playing = false');
 
       await player.play();
-      t.assert(!player.paused, 'is playing after player.play()');
+      assertRetry(!player.paused, 'is playing after player.play()');
 
       await player.stop();
-      t.assert(player.paused, 'is paused after player.stop()');
-      t.equal(Math.floor(player.currentTime), 0, 'timeline is reset');
+      assertRetry(player.paused, 'is paused after player.stop()');
+      assertRetry(Math.floor(player.currentTime) === 0, 'timeline is reset');
 
       t.equal(
         Math.round(player.duration),
