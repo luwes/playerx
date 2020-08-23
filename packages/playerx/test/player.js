@@ -92,6 +92,7 @@ export function testPlayer(options, retries = 3) {
         t.pass(msg);
       } else {
         retry(msg);
+        return new Promise(() => {});
       }
     };
 
@@ -182,14 +183,14 @@ export function testPlayer(options, retries = 3) {
 
       player.playing = false;
       await delay(200);
-      assertRetry(player.paused, 'is paused after player.playing = false');
+      await assertRetry(player.paused, 'is paused after player.playing = false');
 
       await player.play();
-      assertRetry(!player.paused, 'is playing after player.play()');
+      await assertRetry(!player.paused, 'is playing after player.play()');
 
       await player.stop();
-      assertRetry(player.paused, 'is paused after player.stop()');
-      assertRetry(Math.floor(player.currentTime) === 0, 'timeline is reset');
+      await assertRetry(player.paused, 'is paused after player.stop()');
+      await assertRetry(Math.floor(player.currentTime) === 0, 'timeline is reset');
 
       t.equal(
         Math.round(player.duration),
