@@ -52,14 +52,14 @@ const isTestEnabled = (type, tests) => {
   return true;
 };
 
-export function testPlayer(options) {
+export function testPlayer(options, retries = 3) {
   const tests = _.merge({}, defaultTests, options.tests);
 
   if (!isTestEnabled('basic', tests)) {
     return false;
   }
 
-  test(`basic player tests for ${options.src}`, async (t) => {
+  test(`basic player tests (try: ${4 - retries}) for ${options.src}`, async (t) => {
     const player = new Playerx();
     player.src = options.src;
     Object.assign(player.config, {
@@ -76,11 +76,24 @@ export function testPlayer(options) {
     });
     container.appendChild(player);
 
-    await Promise.race([
-      player.ready(),
-      delay(5000), // if not ready in 5s try to bust through
-    ]);
+    // Dailymotion has an issue were the embed not always loads, retry if needed.
+    const retryTimeout = setTimeout(() => {
+      retries--;
+      if (retries >= 1) {
+        t.pass();
+        t.end();
+        removeNode(container);
+        testPlayer(options, retries);
+      } else {
+        t.fail();
+        t.end();
+      }
+    }, 5000);
+
+    await player.ready();
     console.warn('player.ready', options.src);
+
+    clearTimeout(retryTimeout);
 
     t.equal(typeof player.api, 'object', 'internal `api` getter is an object');
 
