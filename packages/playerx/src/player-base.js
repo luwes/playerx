@@ -2,6 +2,7 @@ import { getName, setName } from './helpers/string.js';
 import { createTimeRanges } from './utils/time-ranges.js';
 import { isMethod, getProperty, getMethod } from './utils/utils.js';
 import { getPropertyDescriptor } from './utils/object.js';
+import { delay } from './utils/promise.js';
 
 export function base(element, player) {
   return {
@@ -65,6 +66,13 @@ export function base(element, player) {
 
     pause() {
       return player.api && player.api.pause();
+    },
+
+    async stop() {
+      await player.pause();
+      await player.set('currentTime', 0);
+      // add small delay so previous calls are sure to be completed.
+      await delay(50);
     },
 
     on(eventName, callback) {

@@ -96,7 +96,8 @@ export function vimeo(element) {
       return api.destroy();
     },
 
-    stop() {
+    async stop() {
+      await api.setCurrentTime(0);
       return api.unload();
     },
 

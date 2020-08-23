@@ -90,10 +90,6 @@ export function soundcloud(element) {
       removeNode(iframe);
     },
 
-    stop() {
-      api.seekTo(0);
-    },
-
     on(eventName, callback) {
       api.bind(eventAliases[eventName] || eventName, callback);
     },

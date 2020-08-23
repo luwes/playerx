@@ -90,11 +90,6 @@ export function streamable(element) {
       return createPlayPromise(element);
     },
 
-    stop() {
-      element.currentTime = 1e9;
-      element.play();
-    },
-
     on(eventName, callback) {
       if (eventName in customEvents) return;
       api.on(eventAliases[eventName] || eventName, callback);

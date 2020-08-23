@@ -165,6 +165,14 @@ export function testPlayer(options) {
       await delay(100);
       t.assert(player.paused, 'is paused');
 
+      player.setAttribute('playing', '');
+      await delay(100);
+      t.assert(!player.paused, 'is playing');
+
+      await player.stop();
+      t.assert(player.paused, 'is paused');
+      t.equal(Math.floor(player.currentTime), 0, 'timeline is reset');
+
       t.equal(
         Math.round(player.duration),
         options.duration,

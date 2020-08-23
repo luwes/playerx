@@ -4,7 +4,7 @@ import { wistia as MATCH_SRC } from '../constants/src-regex.js';
 import { define } from '../define.js';
 import { getVideoId } from '../helpers/url.js';
 import { loadScript } from '../utils/load-script.js';
-import { publicPromise } from '../utils/promise.js';
+import { publicPromise, delay } from '../utils/promise.js';
 import { createElement, removeNode } from '../utils/dom.js';
 import { createPlayPromise } from '../helpers/video.js';
 import { options } from '../options.js';
@@ -118,6 +118,11 @@ export function wistia(element) {
       // wistia.play doesn't return a play promise.
       api.play();
       return createPlayPromise(element);
+    },
+
+    getPaused() {
+      // Possible values are beforeplay, playing, paused and ended.
+      return api.state() !== 'playing';
     },
 
     stop() {
