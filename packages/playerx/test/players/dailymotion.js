@@ -5,7 +5,6 @@ const duration = 46;
 
 const tests = {
   basic: {
-    delay: 1000,
     browsers: {
       ie: false,
       // threw an error, 'VIDEOJS:', 'ERROR:', '(CODE:3 MEDIA_ERR_DECODE)'

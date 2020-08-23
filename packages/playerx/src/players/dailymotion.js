@@ -42,6 +42,8 @@ export function dailymotion(element) {
     api = DM.player(div, {
       video,
       params,
+      width: '100%',
+      height: '100%',
       events: {
         apiready: ready.resolve,
       }

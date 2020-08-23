@@ -76,12 +76,11 @@ export function testPlayer(options) {
     });
     container.appendChild(player);
 
-    await player.ready();
+    await Promise.race([
+      player.ready(),
+      delay(5000), // if not ready in 5s try to bust through
+    ]);
     console.warn('player.ready', options.src);
-
-    if (tests.basic.delay) {
-      await delay(tests.basic.delay);
-    }
 
     t.equal(
       typeof player.api,
