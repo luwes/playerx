@@ -7,20 +7,7 @@ export function removeNode(node) {
   if (parentNode) parentNode.removeChild(node);
 }
 
-export function beforeEach(test, handler) {
-  return function tapish(name, cb) {
-    test(name, function(assert) {
-      let _end = assert.end;
-      assert.end = function() {
-        assert.end = _end;
-        cb(assert);
-      };
-      handler(assert);
-    });
-  };
-}
-
-export function withRetries(test) {
+export function tapeRetries(test) {
   return function retry(name, cb, retryCount = 0, retryName) {
     test(retryName || name, function(t) {
 

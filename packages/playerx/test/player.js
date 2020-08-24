@@ -1,24 +1,11 @@
 /* global UAParser */
 import tape from 'tape';
 import _ from 'lodash';
-import { beforeEach, withRetries, delay, removeNode } from './_utils.js';
+import { tapeRetries, delay, removeNode } from './_utils.js';
 import { Playerx } from '../src/index.js';
 
 let container;
-
-let test = beforeEach(tape, (assert) => {
-  container = document.createElement('div');
-  document.body.appendChild(container);
-  assert.end();
-});
-test = withRetries(test);
-
-test('creates an element', (t) => {
-  const player = new Playerx();
-  t.assert(player instanceof HTMLElement);
-  removeNode(container);
-  t.end();
-});
+let test = tapeRetries(tape);
 
 export const defaultBrowsers = (enabled = true) => ({
   chrome: enabled,
@@ -78,6 +65,9 @@ export function testPlayer(options) {
         account: '1752604059001',
       },
     });
+
+    container = document.createElement('div');
+    document.body.appendChild(container);
     container.appendChild(player);
 
     await player.ready();
@@ -190,7 +180,7 @@ export function testPlayer(options) {
     if (tests.remove === false) {
       container.style.visibility = 'hidden';
     } else {
-      container.remove();
+      removeNode(container);
     }
 
     t.end();

@@ -1,15 +1,13 @@
-import tape from 'tape';
-import { beforeEach, removeNode } from './_utils.js';
+import test from 'tape';
 import { Playerx } from '../src/index.js';
 import { coreMethodNames } from '../src/playerx.js';
 
 const src = 'https://vimeo.com/357274789';
-let container;
 
-const test = beforeEach(tape, (assert) => {
-  container = document.createElement('div');
-  document.body.appendChild(container);
-  assert.end();
+test('creates an element', (t) => {
+  const player = new Playerx();
+  t.assert(player instanceof HTMLElement);
+  t.end();
 });
 
 test('methods are functions and return promises', (t) => {
@@ -21,8 +19,6 @@ test('methods are functions and return promises', (t) => {
   };
 
   coreMethodNames.forEach(testMethod);
-
-  removeNode(container);
 
   t.end();
 });
