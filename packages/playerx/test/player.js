@@ -180,7 +180,8 @@ export function testPlayer(options) {
 
     // Some players throw postMessage errors on removal.
     if (tests.remove === false) {
-      container.style.display = 'none';
+      container.style.visibility = 'hidden';
+      container.style.height = '0';
     } else {
       container.remove();
     }

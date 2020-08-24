@@ -40,8 +40,7 @@ export function withRetries(test) {
       t.timeoutAfter = function(ms) {
         timeout = setTimeout(() => {
           if (retryCount < retries) {
-            t.comment(`Retrying on timeout after ${ms}ms`);
-            t.retry();
+            t.retry(`Retrying on timeout after ${ms}ms`);
           } else {
             t.fail(`${name} timed out after ${ms}ms`);
             t.end();
@@ -52,16 +51,16 @@ export function withRetries(test) {
       let _assert = t._assert;
       t._assert = function(ok, opts) {
         if (!ok) {
-          t.comment(`Retrying on failing assert "${opts.message}"`);
-          t.retry();
+          t.retry(`Retrying on failing assert "${opts.message}"`);
         }
-        _assert(ok, { ...opts, extra: { ...extra, ...opts.extra } });
+        _assert(ok, { ...opts, extra: { skip, ...opts.extra } });
       };
 
-      let extra = {};
-      t.retry = function() {
-        if (retryCount < retries) {
-          extra = { skip: true };
+      let skip = false;
+      t.retry = function(msg) {
+        if (!skip && retryCount < retries) {
+          skip = true;
+          if (msg) t.comment(msg);
           t.end();
           retry(name, cb, ++retryCount, `Retry ${retryCount} "${name}"`);
         }
