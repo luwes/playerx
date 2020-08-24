@@ -1,4 +1,4 @@
-import { testPlayer } from '../player.js';
+import { testPlayer, defaultBrowsers } from '../player.js';
 
 const src = 'https://www.dailymotion.com/video/x7sgamf';
 const duration = 46;
@@ -9,7 +9,13 @@ const tests = {
       ie: false,
     },
   },
-  play: true,
+  play: {
+    browsers: {
+      ...defaultBrowsers(true),
+      // DM has issues with play/pause state.
+      safari: false,
+    },
+  },
   remove: false,
 };
 
