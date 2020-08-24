@@ -33,23 +33,26 @@ export function withRetries(test) {
       t.end = function(err) {
         end(err);
         t.end = () => {}; // only call end() once.
-
         clearTimeout(timeout);
       };
 
       let timeout;
-      let timeoutAfter = t.timeoutAfter;
       t.timeoutAfter = function(ms) {
-        if (retryCount < retries) {
-          timeout = setTimeout(() => t.retry(), ms);
-        } else {
-          timeoutAfter(ms);
-        }
+        timeout = setTimeout(() => {
+          if (retryCount < retries) {
+            t.comment(`Retrying on timeout after ${ms}ms`);
+            t.retry();
+          } else {
+            t.fail(`${name} timed out after ${ms}ms`);
+            t.end();
+          }
+        }, ms);
       };
 
       let _assert = t._assert;
       t._assert = function(ok, opts) {
         if (!ok) {
+          t.comment(`Retrying on failing assert "${opts.message}"`);
           t.retry();
         }
         _assert(ok, { ...opts, extra: { ...extra, ...opts.extra } });
