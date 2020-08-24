@@ -61,8 +61,8 @@ export function testPlayer(options) {
   }
 
   test(`basic player tests for ${options.src}`, async (t) => {
-    t.retries(2);
-    t.timeoutAfter(20000); // 20s
+    t.retries(3);
+    t.timeoutAfter(10000); // 10s
 
     const player = new Playerx();
     player.src = options.src;
