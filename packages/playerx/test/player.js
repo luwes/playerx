@@ -81,60 +81,63 @@ export function testPlayer(options) {
     container.appendChild(player);
 
     await player.ready();
-    console.warn('player.ready', options.src);
 
-    t.equal(typeof player.api, 'object', 'internal `api` getter is an object');
+    const p = (msg) => `[${player.key}] ${msg}`;
 
-    t.equal(typeof player.videoId, 'string', 'videoId is a string');
-    t.assert(player.videoId != '', 'videoId is not empty');
+    console.warn(p(`player.ready()`));
 
-    t.deepEqual(player.buffered.length, 0, 'buffered ranges are empty on init');
+    t.equal(typeof player.api, 'object', p('internal `api` getter is an object'));
 
-    t.equal(player.src, options.src, 'returns the src');
-    t.assert(player.paused, 'is paused on initialization');
-    t.assert(!player.ended, 'is not ended');
+    t.equal(typeof player.videoId, 'string', p('videoId is a string'));
+    t.assert(player.videoId != '', p('videoId is not empty'));
 
-    t.assert(!player.loop, 'loop is false by default');
+    t.deepEqual(player.buffered.length, 0, p('buffered ranges are empty on init'));
+
+    t.equal(player.src, options.src, p('returns the src'));
+    t.assert(player.paused, p('is paused on initialization'));
+    t.assert(!player.ended, p('is not ended'));
+
+    t.assert(!player.loop, p('loop is false by default'));
     player.loop = true;
-    t.assert(player.loop, 'loop is true');
+    t.assert(player.loop, p('loop is true'));
 
     // global css makes the width 100%
-    t.equal(player.width, '', 'default empty width');
-    t.equal(player.height, '', 'default empty height');
+    t.equal(player.width, '', p('default empty width'));
+    t.equal(player.height, '', p('default empty height'));
     // global css makes this 0.5625
-    t.equal(player.aspectRatio, undefined, 'default undefined aspectratio');
+    t.equal(player.aspectRatio, undefined, p('default undefined aspectratio'));
 
     await player.set('width', 640);
     container.offsetWidth;
-    t.equal(player.width, '640', 'player.width is 640');
-    t.equal(player.clientWidth, 640, 'player.clientWidth is 640');
+    t.equal(player.width, '640', p('player.width is 640'));
+    t.equal(player.clientWidth, 640, p('player.clientWidth is 640'));
 
     await player.set('aspectRatio', 0.5);
-    t.equal(player.aspectRatio, 0.5, 'player.aspectRatio is 0.5');
-    t.equal(player.clientHeight, 320, 'aspect ratio of 0.5 halfs the height');
+    t.equal(player.aspectRatio, 0.5, p('player.aspectRatio is 0.5'));
+    t.equal(player.clientHeight, 320, p('aspect ratio of 0.5 halfs the height'));
 
     await player.set('height', 640);
-    t.equal(player.height, '640', 'player.height is 640');
-    t.equal(player.clientHeight, 640, 'setting height overrides aspect ratio');
+    t.equal(player.height, '640', p('player.height is 640'));
+    t.equal(player.clientHeight, 640, p('setting height overrides aspect ratio'));
 
     // skip some, it's failing in CI but passes locally
     if (isTestEnabled('volume', tests)) {
 
       if (!['twitch'].includes(player.key)) {
-        t.equal(player.volume, 1, 'is all turned up');
+        t.equal(player.volume, 1, p('is all turned up'));
       }
 
       player.volume = 0.5;
       if (tests.volume.async) {
         await delay(200);
       }
-      t.equal(player.volume, 0.5, 'is half volume');
+      t.equal(player.volume, 0.5, p('is half volume'));
 
       player.muted = true;
       if (tests.volume.async) {
         await delay(200);
       }
-      t.assert(player.muted, 'is muted');
+      t.assert(player.muted, p('is muted'));
     }
 
     // the play tests fails for some players in Saucelabs
@@ -142,13 +145,13 @@ export function testPlayer(options) {
       player.muted = true;
 
       await player.play();
-      t.assert(!player.paused, 'is playing after player.play()');
+      t.assert(!player.paused, p('is playing after player.play()'));
 
       await delay(1100);
       t.assert(
         String(Math.round(player.currentTime)),
         /[01]/,
-        'is about 1s in'
+        p('is about 1s in')
       );
 
       if (player.supports('playbackRate')) {
@@ -158,22 +161,22 @@ export function testPlayer(options) {
         t.match(
           String(Math.round(player.currentTime)),
           /[34]/,
-          'is about 3s in'
+          p('is about 3s in')
         );
         player.playbackRate = 1;
       }
 
       player.playing = false;
       await delay(200);
-      t.assert(player.paused, 'is paused after player.playing = false');
+      t.assert(player.paused, p('is paused after player.playing = false'));
 
       player.playing = true;
       await delay(200);
-      t.assert(!player.paused, 'is playing after player.play()');
+      t.assert(!player.paused, p('is playing after player.play()'));
 
       await player.stop();
-      t.assert(player.paused, 'is paused after player.stop()');
-      t.equal(Math.floor(player.currentTime), 0, 'timeline is reset');
+      t.assert(player.paused, p('is paused after player.stop()'));
+      t.equal(Math.floor(player.currentTime), 0, p('timeline is reset'));
 
       t.equal(
         Math.round(player.duration),

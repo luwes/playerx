@@ -91,7 +91,7 @@ module.exports = function (config) {
     // browserLogOptions: { terminal: true },
     // browserConsoleLogOptions: { terminal: true },
     browserConsoleLogOptions: {
-      level: automate ? 'log' : 'warn', // Filter on warn messages.
+      level: automate || !!argv.console ? 'log' : 'warn', // Filter on warn messages.
       format: '%b %T: %m',
       terminal: true,
     },

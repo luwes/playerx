@@ -57,12 +57,16 @@ export function withRetries(test) {
       };
 
       let skip = false;
-      t.retry = function(msg) {
+      t.retry = async function(msg) {
         if (!skip && retryCount < retries) {
           skip = true;
           if (msg) t.comment(msg);
           t.end();
-          retry(name, cb, ++retryCount, `Retry ${retryCount} "${name}"`);
+
+          ++retryCount;
+          // Wait one tick so the rest of assertions are skipped before the retry.
+          await Promise.resolve();
+          retry(name, cb, retryCount, `Retry ${retryCount} "${name}"`);
         }
       };
 
