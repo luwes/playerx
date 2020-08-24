@@ -16,6 +16,7 @@ import './players/twitch.js';
 
 import './players/file-dash.js';
 import './players/file-hls.js';
+import './players/file-progressive.js';
 import './players/brightcove.js';
 import './players/jwplayer.js';
 import './players/vidyard.js';
