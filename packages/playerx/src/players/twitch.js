@@ -4,7 +4,7 @@ import { twitch as MATCH_SRC } from '../constants/src-regex.js';
 import { define } from '../define.js';
 import { getVideoId } from '../helpers/url.js';
 import { loadScript } from '../utils/load-script.js';
-import { publicPromise, promisify } from '../utils/promise.js';
+import { publicPromise, promisify, delay } from '../utils/promise.js';
 import { createTimeRanges } from '../utils/time-ranges.js';
 import { createPlayPromise } from '../helpers/video.js';
 import { createElement, removeNode } from '../utils/dom.js';
@@ -86,8 +86,10 @@ export function twitch(element) {
       return createPlayPromise(element);
     },
 
-    stop() {
+    async stop() {
+      await element.pause();
       api.seek(0);
+      await delay(60); // add small delay for async call completion
     },
 
     on(eventName, callback) {

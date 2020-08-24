@@ -119,6 +119,7 @@ export function testPlayer(options) {
 
     // skip some, it's failing in CI but passes locally
     if (isTestEnabled('volume', tests)) {
+
       if (!['twitch'].includes(player.key)) {
         t.equal(player.volume, 1, 'is all turned up');
       }
@@ -138,6 +139,8 @@ export function testPlayer(options) {
 
     // the play tests fails for some players in Saucelabs
     if (isTestEnabled('play', tests)) {
+      player.muted = true;
+
       await player.play();
       t.assert(!player.paused, 'is playing after player.play()');
 
@@ -164,12 +167,13 @@ export function testPlayer(options) {
       await delay(200);
       t.assert(player.paused, 'is paused after player.playing = false');
 
-      await player.play();
+      player.playing = true;
+      await delay(200);
       t.assert(!player.paused, 'is playing after player.play()');
 
       await player.stop();
       t.assert(player.paused, 'is paused after player.stop()');
-      t.assert(Math.floor(player.currentTime) === 0, 'timeline is reset');
+      t.equal(Math.floor(player.currentTime), 0, 'timeline is reset');
 
       t.equal(
         Math.round(player.duration),
@@ -181,7 +185,6 @@ export function testPlayer(options) {
     // Some players throw postMessage errors on removal.
     if (tests.remove === false) {
       container.style.visibility = 'hidden';
-      container.style.height = '0';
     } else {
       container.remove();
     }

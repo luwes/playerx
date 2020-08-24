@@ -10,6 +10,7 @@ const tests = {
     },
   },
   volume: false,
+  play: true,
 };
 
 testPlayer({ src, duration, tests });

@@ -3,6 +3,7 @@ import { camelCase, kebabCase, startCase } from '../src/utils/string.js';
 import { createTimeRanges } from '../src/utils/time-ranges.js';
 import { omit } from '../src/utils/object.js';
 import { boolToBinary } from '../src/utils/url.js';
+import { loadScript } from '../src/utils/load-script.js';
 
 test(`kebabCase`, async (t) => {
   t.plan(1);
@@ -42,4 +43,15 @@ test(`boolToBinary`, async (t) => {
   t.plan(1);
 
   t.deepEqual(boolToBinary({ t: true, f: false }), { t: 1, f: 0 });
+});
+
+test(`loadScript`, async (t) => {
+  t.plan(1);
+
+  try {
+    await loadScript('http://fail.org/nonexistant.js');
+    t.fail('Should throw on a bad url');
+  } catch (err) {
+    t.pass();
+  }
 });
