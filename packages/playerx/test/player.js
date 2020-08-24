@@ -91,7 +91,7 @@ export function testPlayer(options) {
     t.equal(typeof player.videoId, 'string', p('videoId is a string'));
     t.assert(player.videoId != '', p('videoId is not empty'));
 
-    t.deepEqual(player.buffered.length, 0, p('buffered ranges are empty on init'));
+    t.equal(player.buffered.length, 0, p('buffered ranges are empty on init'));
 
     t.equal(player.src, options.src, p('returns the src'));
     t.assert(player.paused, p('is paused on initialization'));
@@ -167,14 +167,15 @@ export function testPlayer(options) {
       }
 
       player.playing = false;
-      await delay(200);
+      await delay(250);
       t.assert(player.paused, p('is paused after player.playing = false'));
 
       player.playing = true;
-      await delay(200);
+      await delay(250);
       t.assert(!player.paused, p('is playing after player.play()'));
 
       await player.stop();
+      await delay(120); // add some more delay for slow CI
       t.assert(player.paused, p('is paused after player.stop()'));
       t.equal(Math.floor(player.currentTime), 0, p('timeline is reset'));
 
