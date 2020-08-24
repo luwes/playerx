@@ -113,11 +113,6 @@ export function dailymotion(element) {
       return createPlayPromise(element);
     },
 
-    stop() {
-      api.seek(0);
-      setTimeout(() => api.pause());
-    },
-
     on(eventName, callback) {
       api.addEventListener(eventAliases[eventName] || eventName, callback);
     },

@@ -9,6 +9,7 @@ const tests = {
       ie: false,
     },
   },
+  play: true,
   remove: false,
 };
 

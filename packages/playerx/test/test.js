@@ -7,10 +7,10 @@ import './can-play.js';
 import './utils.js';
 
 // Run the buggy players first
+import './players/dailymotion.js';
 import './players/youtube.js';
 import './players/streamable.js';
 import './players/soundcloud.js';
-import './players/dailymotion.js';
 import './players/facebook.js';
 import './players/twitch.js';
 
