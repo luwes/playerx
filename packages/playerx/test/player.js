@@ -181,7 +181,7 @@ export function testPlayer(options) {
       t.equal(
         Math.round(player.duration),
         options.duration,
-        `is ${options.duration} long`
+        p(`is ${options.duration} long`)
       );
     }
 
