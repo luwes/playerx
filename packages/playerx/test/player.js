@@ -134,6 +134,7 @@ export function testPlayer(options, cb) {
     t.assert(!player.paused, 'is playing after player.playing = true', { skip });
 
     await player.stop();
+    await delay(120); // add some more delay for slow CI, fix for Streamable
     t.assert(player.paused, 'is paused after player.stop()', { skip });
     t.equal(Math.floor(player.currentTime), 0, 'timeline is reset', { skip });
 
