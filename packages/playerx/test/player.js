@@ -11,7 +11,7 @@ export function testPlayer(options) {
 
   test(`basic player tests for ${options.src}`, { skip }, async (t) => {
     t.retries(3);
-    t.timeoutAfter(20000); // 20s
+    t.timeoutAfter(10000); // 10s
 
     const ctx = setUp({ options, tests });
     const { player, container } = ctx;
