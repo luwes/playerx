@@ -120,7 +120,7 @@ export function testPlayer(options) {
 
     player.playing = true;
     await delay(250);
-    t.assert(!player.paused, 'is playing after player.play()', { skip });
+    t.assert(!player.paused, 'is playing after player.playing = true', { skip });
 
     await player.stop();
     await delay(120); // add some more delay for slow CI
