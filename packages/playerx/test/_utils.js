@@ -25,12 +25,12 @@ export const isTestEnabled = (type, tests) => {
 };
 
 export function tapePrefix(test) {
-  return function (name, opts, cb) {
-    test(name, opts, function (t) {
+  return function (name, options, cb) {
+    test(name, options, function (t) {
       let _assert = t._assert;
-      t._assert = function (ok, _opts) {
-        _opts.message = t.prefix(_opts.message);
-        _assert(ok, _opts);
+      t._assert = function (ok, opts) {
+        opts.message = t.prefix(opts.message);
+        _assert(ok, opts);
       };
       cb(t);
     });
@@ -38,8 +38,8 @@ export function tapePrefix(test) {
 }
 
 export function tapeRetries(test) {
-  return function retry(name, opts, cb, retryCount = 0, retryName) {
-    test(retryName || name, opts, function (t) {
+  return function retry(name, options, cb, retryCount = 0, retryName) {
+    test(retryName || name, options, function (t) {
       let retries = 0;
       t.retries = function (val) {
         retries = val;
@@ -65,11 +65,13 @@ export function tapeRetries(test) {
       };
 
       let _assert = t._assert;
-      t._assert = function (ok, _opts) {
-        if (!ok && !_opts.skip && !_opts.extra.skip) {
-          t.retry(`Retrying on failing assert "${_opts.message}"`);
+      t._assert = function (ok, opts) {
+        if (!ok && !opts.skip && !(opts.extra && opts.extra.skip)) {
+          t.retry(`Retrying on failing assert "${opts.message}"`);
+          _assert(ok, { ...opts, extra: { ...opts.extra, skip } });
+        } else {
+          _assert(ok, opts);
         }
-        _assert(ok, { ..._opts, extra: { skip, ..._opts.extra } });
       };
 
       let skip = false;
@@ -82,7 +84,7 @@ export function tapeRetries(test) {
           ++retryCount;
           // Wait one tick so the rest of assertions are skipped before the retry.
           await Promise.resolve();
-          retry(name, opts, cb, retryCount, `Retry ${retryCount} "${name}"`);
+          retry(name, options, cb, retryCount, `Retry ${retryCount} "${name}"`);
         }
       };
 
