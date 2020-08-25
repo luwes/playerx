@@ -63,6 +63,7 @@ export function tapeRetries(test) {
         timeout = setTimeout(() => {
           if (retryCount < retries) {
             t.retry(`Retrying on timeout after ${ms}ms`);
+            t.end();
           } else {
             t.fail(`${name} timed out after ${ms}ms`);
             t.end();
