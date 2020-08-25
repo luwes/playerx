@@ -14,8 +14,15 @@ test('methods are functions and return promises', (t) => {
   const player = new Playerx({ src });
 
   const testMethod = (methodName) => {
-    t.equal(typeof player[methodName], 'function', `player.${methodName} is a function`);
-    t.assert(player[methodName]() instanceof Promise, `player.${methodName}() returns a promise`);
+    t.equal(
+      typeof player[methodName],
+      'function',
+      `player.${methodName} is a function`
+    );
+    t.assert(
+      player[methodName]() instanceof Promise,
+      `player.${methodName}() returns a promise`
+    );
   };
 
   coreMethodNames.forEach(testMethod);

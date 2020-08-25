@@ -91,7 +91,7 @@ module.exports = function (config) {
     // browserLogOptions: { terminal: true },
     // browserConsoleLogOptions: { terminal: true },
     browserConsoleLogOptions: {
-      level: automate || !!argv.console ? 'log' : 'warn', // Filter on warn messages.
+      level: automate || !!argv.log ? 'log' : 'warn', // Filter on warn messages.
       format: '%b %T: %m',
       terminal: true,
     },
@@ -140,7 +140,6 @@ module.exports = function (config) {
     frameworks: ['tap'],
 
     files: [
-      'https://unpkg.com/ua-parser-js@0.7.21/dist/ua-parser.min.js',
       'https://polyfill.io/v3/polyfill.min.js?features=Array.from%2CURLSearchParams%2CCustomEvent%2Cfetch%2CPromise',
       {
         pattern: 'https://unpkg.com/@webcomponents/custom-elements',
