@@ -184,6 +184,7 @@ function tearDown(ctx) {
   // Some players throw postMessage errors on removal.
   if (ctx.tests.remove === false) {
     ctx.container.style.visibility = 'hidden';
+    ctx.container.style.height = '1px';
   } else {
     removeNode(ctx.container);
   }
