@@ -66,11 +66,11 @@ export function testPlayer(options) {
       'setting height overrides aspect ratio'
     );
 
-    // skip some, it's failing in CI but passes locally
+    /**
+     * Volume tests
+     */
     skip = !isTestEnabled('volume', tests);
-    if (!['twitch'].includes(player.key)) {
-      t.equal(player.volume, 1, 'is all turned up', { skip });
-    }
+    t.equal(player.volume, 1, 'is all turned up', { skip });
 
     player.volume = 0.5;
     if (tests.volume.async) {
@@ -84,7 +84,9 @@ export function testPlayer(options) {
     }
     t.assert(player.muted, 'is muted', { skip });
 
-    // the play tests fails for some players in Saucelabs
+    /**
+     * Play tests
+     */
     skip = !isTestEnabled('play', tests);
     player.muted = true;
 

@@ -69,7 +69,7 @@ export function tapeRetries(test) {
         if (!ok && !_opts.skip && !_opts.extra.skip) {
           t.retry(`Retrying on failing assert "${_opts.message}"`);
         }
-        _assert(ok, { ..._opts, extra: { skip, ..._opts.extra } });
+        _assert(ok, { ..._opts, skip });
       };
 
       let skip = false;
