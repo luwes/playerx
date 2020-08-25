@@ -47,9 +47,15 @@ export function tapeRetries(test) {
 
       let end = t.end;
       t.end = function (err) {
-        end(err);
         t.end = () => {}; // only call end() once.
+
         clearTimeout(timeout);
+        end(err);
+
+        if (retrying) {
+          console.warn(`Retry ${retryCount} "${name}"`);
+          retry(name, options, cb, retryCount, `Retry ${retryCount} "${name}"`);
+        }
       };
 
       let timeout;
@@ -68,23 +74,18 @@ export function tapeRetries(test) {
       t._assert = function (ok, opts) {
         if (!ok && !opts.skip && !(opts.extra && opts.extra.skip)) {
           t.retry(`Retrying on failing assert "${opts.message}"`);
-          _assert(ok, { ...opts, extra: { ...opts.extra, skip } });
+          _assert(ok, { ...opts, extra: { ...opts.extra, skip: retrying } });
         } else {
           _assert(ok, opts);
         }
       };
 
-      let skip = false;
+      let retrying = false;
       t.retry = async function (msg) {
-        if (!skip && retryCount < retries) {
-          skip = true;
-          if (msg) t.comment(msg);
-          t.end();
-
+        if (!retrying && retryCount < retries) {
+          retrying = true;
           ++retryCount;
-          // Wait one tick so the rest of assertions are skipped before the retry.
-          await Promise.resolve();
-          retry(name, options, cb, retryCount, `Retry ${retryCount} "${name}"`);
+          if (msg) t.comment(msg);
         }
       };
 

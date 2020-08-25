@@ -5,20 +5,22 @@ import { Playerx } from '../src/index.js';
 
 let test = tapePrefix(tapeRetries(tape));
 
-export function testPlayer(options) {
+export function testPlayer(options, cb) {
   const tests = merge({}, defaultTests, options.tests);
   let skip = !isTestEnabled('basic', tests);
 
-  test(`basic player tests for ${options.src}`, { skip }, async (t) => {
+  test(`Basic player tests for ${options.src}`, { skip }, async (t) => {
     t.retries(3);
     t.timeoutAfter(10000); // 10s
 
-    const ctx = setUp({ options, tests });
+    let ctx = setUp({ options, tests });
     const { player, container } = ctx;
     t.prefix = (msg) => `[${player.key}] ${msg}`;
 
     await player.ready();
     console.warn(t.prefix(`player.ready()`));
+
+    if (cb) ctx = cb(ctx);
 
     t.equal(
       typeof player.api,
@@ -69,7 +71,9 @@ export function testPlayer(options) {
     /**
      * Volume tests
      */
+    t.comment(`Volume tests for ${options.src}`);
     skip = !isTestEnabled('volume', tests);
+
     t.equal(player.volume, 1, 'is all turned up', { skip });
 
     player.volume = 0.5;
@@ -87,10 +91,17 @@ export function testPlayer(options) {
     /**
      * Play tests
      */
+    t.comment(`Play tests for ${options.src}`);
     skip = !isTestEnabled('play', tests);
-    player.muted = true;
 
-    await player.play();
+    try {
+      await Promise.race([
+        player.play(),
+        delay(2000), // Wistia doesn't resolve promise on Safari CI
+      ]);
+    } catch (error) {
+      console.warn(error);
+    }
     t.assert(!player.paused, 'is playing after player.play()', { skip });
 
     await delay(1100);
@@ -123,7 +134,6 @@ export function testPlayer(options) {
     t.assert(!player.paused, 'is playing after player.playing = true', { skip });
 
     await player.stop();
-    await delay(120); // add some more delay for slow CI
     t.assert(player.paused, 'is paused after player.stop()', { skip });
     t.equal(Math.floor(player.currentTime), 0, 'timeline is reset', { skip });
 
@@ -171,6 +181,9 @@ function setUp(ctx) {
     brightcove: {
       account: '1752604059001',
     },
+    wistia: {
+      doNotTrack: true,
+    },
   });
 
   const container = document.createElement('div');
@@ -181,6 +194,8 @@ function setUp(ctx) {
 }
 
 function tearDown(ctx) {
+  console.warn(`Removing ${ctx.options.src}`);
+
   // Some players throw postMessage errors on removal.
   if (ctx.tests.remove === false) {
     ctx.container.style.visibility = 'hidden';
