@@ -1,6 +1,12 @@
 import tape from 'tape';
 import { merge } from 'lodash-es';
-import { tapeRetries, tapePrefix, delay, removeNode, isTestEnabled } from './_utils.js';
+import {
+  tapeRetries,
+  tapePrefix,
+  delay,
+  removeNode,
+  isTestEnabled,
+} from './_utils.js';
 import { Playerx } from '../src/index.js';
 
 let test = tapePrefix(tapeRetries(tape));
@@ -22,11 +28,7 @@ export function testPlayer(options, cb) {
 
     if (cb) ctx = cb(ctx);
 
-    t.equal(
-      typeof player.api,
-      'object',
-      'internal `api` getter is an object'
-    );
+    t.equal(typeof player.api, 'object', 'internal `api` getter is an object');
 
     t.equal(typeof player.videoId, 'string', 'videoId is a string');
     t.assert(player.videoId != '', 'videoId is not empty');
@@ -54,19 +56,11 @@ export function testPlayer(options, cb) {
 
     await player.set('aspectRatio', 0.5);
     t.equal(player.aspectRatio, 0.5, 'player.aspectRatio is 0.5');
-    t.equal(
-      player.clientHeight,
-      320,
-      'aspect ratio of 0.5 halfs the height'
-    );
+    t.equal(player.clientHeight, 320, 'aspect ratio of 0.5 halfs the height');
 
     await player.set('height', 640);
     t.equal(player.height, '640', 'player.height is 640');
-    t.equal(
-      player.clientHeight,
-      640,
-      'setting height overrides aspect ratio'
-    );
+    t.equal(player.clientHeight, 640, 'setting height overrides aspect ratio');
 
     /**
      * Volume tests
@@ -105,12 +99,9 @@ export function testPlayer(options, cb) {
     t.assert(!player.paused, 'is playing after player.play()', { skip });
 
     await delay(1100);
-    t.assert(
-      String(Math.round(player.currentTime)),
-      /[01]/,
-      'is about 1s in',
-      { skip }
-    );
+    t.assert(String(Math.round(player.currentTime)), /[01]/, 'is about 1s in', {
+      skip,
+    });
 
     if (player.supports('playbackRate')) {
       // doesn't support playbackRate
@@ -131,7 +122,9 @@ export function testPlayer(options, cb) {
 
     player.playing = true;
     await delay(250);
-    t.assert(!player.paused, 'is playing after player.playing = true', { skip });
+    t.assert(!player.paused, 'is playing after player.playing = true', {
+      skip,
+    });
 
     await player.stop();
     await delay(120); // add some more delay for slow CI, fix for Streamable
