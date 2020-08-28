@@ -34,6 +34,8 @@ const controls = observable(getParam('controls', defaults.controls));
 const preload = observable(getParam('preload', defaults.preload));
 const videoHeight = observable();
 const quality = computed(() => prettyQuality(videoHeight()));
+const unsupportsPlaybackRate = observable(false);
+const unsupportsControls = observable(false);
 
 setSrc(getParam('src', defaults.src));
 
@@ -72,6 +74,10 @@ const props = {
     if (len && duration()) {
       buffered(player.buffered.end(len - 1) / duration());
     }
+  },
+  onloadedsrc: () => {
+    unsupportsPlaybackRate(!player.supports('playbackRate'));
+    unsupportsControls(!player.supports('controls'));
   },
 };
 
@@ -152,9 +158,9 @@ function remove() {
 
 hy(dhtml`
   <div id="controls-2">
-    <button onclick=${() => player.set('playbackRate', 0.5)} />
-    <button onclick=${() => player.set('playbackRate', 1)} />
-    <button onclick=${() => player.set('playbackRate', 2)} />
+    <button onclick=${() => player.set('playbackRate', 0.5)} disabled=${unsupportsPlaybackRate} />
+    <button onclick=${() => player.set('playbackRate', 1)} disabled=${unsupportsPlaybackRate} />
+    <button onclick=${() => player.set('playbackRate', 2)} disabled=${unsupportsPlaybackRate} />
   </div>
 `);
 
@@ -195,7 +201,7 @@ hy(dhtml`
 `);
 
 hy(dhtml`
-  <input id="controls" oninput=${e =>
+  <input id="controls" disabled=${unsupportsControls} oninput=${e =>
     controls(e.target.checked)} checked=${controls} />
 `);
 

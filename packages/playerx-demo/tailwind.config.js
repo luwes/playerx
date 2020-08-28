@@ -1,4 +1,5 @@
 const ui = require('@tailwindcss/ui');
+const { variants } = require('tailwindcss/defaultConfig');
 const { fontFamily } = require('tailwindcss/defaultTheme');
 const hexRgb = require('hex-rgb');
 
@@ -24,6 +25,10 @@ module.exports = {
   plugins: [
     ui,
   ],
+  variants: {
+    opacity: [...variants.opacity, 'disabled'],
+    cursor: [...variants.cursor, 'disabled'],
+  },
   theme: {
     extend: {
       fontFamily: {

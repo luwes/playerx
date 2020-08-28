@@ -69,7 +69,7 @@ input[type="range"]::-ms-thumb {
   @apply bg-cool-gray-500 shadow-inner;
 }
 
-.btn:hover {
+.btn:hover:enabled {
   @apply bg-cool-gray-600;
 }
 
