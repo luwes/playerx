@@ -10,7 +10,7 @@
 
 ## Features
 
-- **Uniform player API** across player platforms. The end result is an API that comes close the `HTMLMediaElement` API.
+- **Uniform player API** across player platforms. Mimics the `HTMLMediaElement` API when possible.
 - **UI framework independent**, intentionally uses no specific framework to have great interop across the board and keep the bundle size in check.
 - **Responsive** out of the box and easy attributes to maintain a specific aspect-ratio. 
 - **Extensible** with powerful add-ons like custom previews, analytics, custom skins, etc.
@@ -39,6 +39,16 @@ Include this script before importing Playerx.
 ```
 
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/luwes.svg?sanitize=true)](https://saucelabs.com/u/luwes)
+
+
+## Status
+
+Playerx is in early preview and needs more test coverage to be fully production ready. We aim to have the Playerx core in a ready state by August 2020. Documentation is also high on the todo list.
+
+
+## ⚠️ License
+
+Be sure to read the [license](/LICENSE.md) terms. In most cases Playerx is free to use but if your project profits from this software you should buy a commercial license at [dev.playerx.io](https://dev.playerx.io/).
 
 
 ## Docs
@@ -120,14 +130,6 @@ Event | Description
 `volumechange` |
 
 
-## Status
-
-Playerx is in early preview and needs more test coverage to be fully production ready. We aim to have the Playerx core in a ready state by August 2020. Documentation is also high on the todo list.
-
-
-## ⚠️ License
-
-Be sure to read the [license](/LICENSE.md) terms. In most cases Playerx is free to use but if your project profits from this software you should buy a commercial license at [dev.playerx.io](https://dev.playerx.io/).
 
 ## Supported media
 
