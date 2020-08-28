@@ -33,7 +33,7 @@ export function brightcove(element) {
 
     div = createElement('video-js', {
       id,
-      controls: element.controls,
+      controls: opts.controls ? '' : null,
       'data-video-id': videoId,
       style: 'width:100%;height:100%',
     });
