@@ -26,7 +26,6 @@ export const playerx = (CE, { create }) => element => {
   let { volume, muted, currentTime, duration } = element;
   let elementReady = publicPromise();
   let apiReady;
-  let playerInitiated;
   let currentTimeTimeout;
   let durationTimeout;
   let progressTimeout;
@@ -68,13 +67,13 @@ export const playerx = (CE, { create }) => element => {
 
   function playerSet(name) {
     const value = element.cache(name);
-    if (player && player.set) {
+    if (player.set) {
       return player.set(name, value);
     }
   }
 
   function getProp(name) {
-    if (player && player.get) {
+    if (player.get) {
       const value = player.get(name);
       if (value !== undefined && !(value instanceof Promise)) {
         return value;
@@ -94,9 +93,9 @@ export const playerx = (CE, { create }) => element => {
   function unload() {
     clearAllTimeouts();
     detachEvents();
-    if (player) {
-      player.remove();
-    }
+    player.remove();
+    // Set `player.api` getter to null.
+    extend(player, { api: null });
   }
 
   function clearAllTimeouts() {
@@ -112,13 +111,13 @@ export const playerx = (CE, { create }) => element => {
 
     apiReady = publicPromise();
     // The first time if player is null we use the promise defined at the top.
-    if (playerInitiated) {
+    if (player.api) {
       elementReady = publicPromise();
     }
 
     element.fire(Events.LOADSRC);
 
-    if (playerInitiated && canPlay[element.key](element.src)) {
+    if (player.api && canPlay[element.key](element.src)) {
       const prevLoad = element.load;
 
       // If `element.load` is called in the player, re-attach events.
@@ -143,11 +142,10 @@ export const playerx = (CE, { create }) => element => {
   }
 
   function init() {
-    if (playerInitiated) {
+    if (player.api) {
       unload();
     }
 
-    playerInitiated = true;
     player = {};
     player = extend(player, base(element, player), create(element), responsiveStyle);
     player.constructor = player.constructor || create;
@@ -416,7 +414,7 @@ export const playerx = (CE, { create }) => element => {
   coreMethodNames.forEach((name) => {
     methods[name] = async function (...args) {
       await apiReady;
-      if (player && player[name]) {
+      if (player[name]) {
         return player[name](...args);
       }
     };
