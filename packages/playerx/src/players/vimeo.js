@@ -68,7 +68,6 @@ export function vimeo(element) {
   }
 
   const customEvents = {
-    resize: undefined,
     loaded: undefined,
   };
 
