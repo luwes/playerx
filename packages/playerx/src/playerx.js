@@ -94,8 +94,7 @@ export const playerx = (CE, { create }) => element => {
     clearAllTimeouts();
     detachEvents();
     player.remove();
-    // Set `player.api` getter to null.
-    extend(player, { api: null });
+    player = {};
   }
 
   function clearAllTimeouts() {
@@ -122,10 +121,10 @@ export const playerx = (CE, { create }) => element => {
 
       // If `element.load` is called in the player, re-attach events.
       let initEvents = false;
-      element.load = () => (initEvents = true) && init();
-
       // Here to use `element.load()` in players. Preventing an endless loop.
       // When a player calls this it is meant to re-init the player.
+      element.load = () => (initEvents = true) && init();
+
       await playerSet('src');
       element.load = prevLoad;
 
