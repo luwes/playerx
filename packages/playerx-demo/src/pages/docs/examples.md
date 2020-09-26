@@ -1,8 +1,9 @@
 ---
+permalink: docs/examples/
 title: Examples
 eleventyNavigation:
   key: Examples
-  parent: Introduction
+  parent: Docs
   order: 2
 tags: docs
 layout: layouts/docs.njk

@@ -1,0 +1,10 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@import "inter.css";
+@import "base.css";
+@import "prism-ghcolors.css";
+@import "markdown.css";
+@import "home.css";
+@import "demo.css";
+@import "player.css";

@@ -1,36 +1,37 @@
 import { observable } from 'sinuous';
-import { hydrate, dhtml } from 'sinuous/hydrate';
+import { hydrate as hy, dhtml } from 'sinuous/hydrate';
+import { dropdown } from './helpers/dropdown.js';
+import { cx } from './utils/dom.js';
+import { invert } from './utils/utils.js';
 
 const burgerIsActive = observable(false);
 const openBurgerMenu = invert(burgerIsActive);
+const pluginsDropdown = dropdown();
 
-hydrate(
-  dhtml`<a id=burger
-    class=${cx({ active: burgerIsActive })}
-    onclick=${openBurgerMenu} />`
-);
+hy(dhtml`<a id=burger
+  class=${cx({ active: burgerIsActive })}
+  onclick=${openBurgerMenu} />
+`);
 
-hydrate(
-  dhtml`<div id=main-menu
-    class=${cx({ active: burgerIsActive })} />`
-);
+hy(dhtml`<div id=main-menu
+  class=${cx({ active: burgerIsActive })} />
+`);
 
-function cx(classes) {
-  return function () {
-    const { el } = this;
-    Object.keys(classes).forEach((key) => {
-      const value = classes[key];
-      el.classList.toggle(key, typeof value === 'function' ? value() : value);
-    });
-    return el.className;
-  };
-}
+hy(dhtml`
+  <body onclick=${() => pluginsDropdown.close()} />
+`);
 
-function invert(accessor) {
-  return () => accessor(!accessor());
-}
+hy(dhtml`
+  <div id=menu-item-plugins>
+    <a onclick=${pluginsDropdown.toggle}
+      aria-expanded=${pluginsDropdown.isOpen} />
+    <div class="menu-options ${pluginsDropdown}"
+      hidden=${pluginsDropdown.isHidden}
+      aria-hidden=${pluginsDropdown.isHidden} />
+  </div>
+`);
 
-hydrate(dhtml`<div id=tweet-button onclick=${openTweetWindow} />`);
+hy(dhtml`<div id=tweet-button onclick=${openTweetWindow} />`);
 
 function openTweetWindow(e) {
   e.preventDefault();

@@ -32,10 +32,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: [
-          'Inter',
-          ...fontFamily.sans
-        ],
+        sans: ['Inter var', ...fontFamily.sans],
+        source: ['Source Sans Pro', ...fontFamily.sans],
+        system: fontFamily.sans,
       },
       colors: {
         aquamarine

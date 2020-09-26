@@ -34,8 +34,8 @@ const controls = observable(getParam('controls', defaults.controls));
 const preload = observable(getParam('preload', defaults.preload));
 const videoHeight = observable();
 const quality = computed(() => prettyQuality(videoHeight()));
-const unsupportsPlaybackRate = observable(false);
-const unsupportsControls = observable(false);
+const unsupportsPlaybackRate = observable(true);
+const unsupportsControls = observable(true);
 
 setSrc(getParam('src', defaults.src));
 

@@ -2,6 +2,10 @@ import { observable, subscribe, sample } from 'sinuous/observable';
 
 export const qs = (selector) => document.querySelector(selector);
 
+export function invert(accessor) {
+  return () => accessor(!accessor());
+}
+
 export function computedValue(fn) {
   let val = observable(fn());
   subscribe(() => {

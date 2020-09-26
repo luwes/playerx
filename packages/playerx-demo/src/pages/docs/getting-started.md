@@ -1,4 +1,5 @@
 ---
+permalink: docs/getting-started/
 title: "Getting Started"
 menu: Docs
 eleventyNavigation:

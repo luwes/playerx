@@ -1,0 +1,34 @@
+html {
+  font-size: 14px;
+
+  @media (min-width: 420px) {
+    font-size: 16px;
+  }
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+body:not(.showfocus) button,
+input[type="range"] {
+  outline: none;
+}
+
+[hidden] {
+  display: none !important
+}
+
+.focus\:outline-0:focus {
+  outline: 0!important
+}
+
+::selection {
+  background: #AEFCE2;
+}
+
+.logo {
+  width: 124px;
+  height: 32px;
+}

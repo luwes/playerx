@@ -3,6 +3,7 @@ const purgecss = require('@fullhuman/postcss-purgecss');
 const plugins = [
   require('postcss-import'),
   require('tailwindcss'),
+  require('postcss-nested'),
   require('autoprefixer'),
   // require('postcss-comment'),
   // require('postcss-mixins'),

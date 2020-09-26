@@ -1,0 +1,85 @@
+---
+permalink: plugins/loading/
+title: "Playerx - Loading Plugin"
+eleventyNavigation:
+  key: Loading
+  parent: Plugins
+  order: 1
+---
+
+{% extends "layouts/base.njk" %}
+
+{% block content %}
+  <main class="relative overflow-hidden flex-grow">
+    <div class="container mx-auto flex pt-8 px-6 xl:px-12">
+      <div class="w-full md:w-1/5"></div>
+      <div class="markdown w-full md:w-3/5">
+        <h1>
+          Loading Plugin
+        </h1>
+        <p>
+          The loading plugin adds a handy <code>loading</code> attribute to the <code>{{ "<player-x>" | escape }}</code> element which can be configured to delay the loading of the provided media source. Media players are generally very big in size and <a href="https://developer.mozilla.org/en-US/docs/Web/Performance/Lazy_loading" target="_blank">lazy loading</a> this JS resource is the best strategy to improve page load times. The <code>loading</code> attribute can have a value <code>user</code> or <code>lazy</code>.
+        </p>
+
+        <h2>
+          Example with <code>loading="user"</code>
+        </h2>
+        <p>
+          As the <code>user</code> attribute value implies the loading is done by the user. By manually calling the <code>load()</code> method on the playerx instance the resource is loaded. In this example after the user clicks the preview the Vimeo player is loaded.
+        </p>
+
+        <div class="w-4/5 relative">
+          <player-x loading="user" src="https://vimeo.com/357274789" controls autoplay>
+            <plx-media></plx-media>
+            <div class="plx-preview bg-yellow-300 w-full h-full absolute">
+              <button class="plx-playbtn hover:bg-green-500"></button>
+            </div>
+          </player-x>
+          <script>
+            const btn = document.querySelector('.plx-preview');
+            btn.addEventListener('click', async () => {
+              const plx = document.querySelector('player-x');
+              plx.loading = null;
+              await plx.load();
+            });
+          </script>
+        </div>
+
+        {%- highlight "html" -%}
+<player-x loading="user" src="https://vimeo.com/357274789" controls autoplay>
+  <plx-media></plx-media>
+  <div class="plx-preview">
+    <button class="plx-playbtn"></button>
+  </div>
+</player-x>
+<script>
+  const btn = document.querySelector('.plx-preview');
+  btn.addEventListener('click', () => {
+    const plx = document.querySelector('player-x');
+    plx.loading = null;
+    plx.load();
+  });
+</script>
+        {%- endhighlight -%}
+
+        <h2>
+          Example with <code>loading="lazy"</code>
+        </h2>
+        <p>
+          When the value is <code>lazy</code> playerx behaves much like <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#attr-loading" target="_blank"><code>{{ '<img loading="lazy">' | escape }}</code></a>. It defers loading the resource until it reaches a calculated distance from the viewport.
+        </p>
+        <p>Scroll down to see for it for yourself...</p>
+
+        <div class="h-64"></div>
+
+        <div class="w-4/5 relative">
+          <player-x loading="lazy" src="https://vimeo.com/357274789" controls></player-x>
+        </div>
+
+        {%- highlight "html" -%}
+<player-x loading="lazy" src="https://vimeo.com/357274789" controls></player-x>
+        {%- endhighlight -%}
+      </div>
+    </div>
+  </main>
+{% endblock %}
