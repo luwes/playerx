@@ -12,7 +12,6 @@ const terserPlugin = terser({
   compress: {
     passes: 2,
     drop_console: production,
-    sequences: false, // caused an issue with Babel where sequence order was wrong
   },
   mangle: {
     properties: {
@@ -22,20 +21,22 @@ const terserPlugin = terser({
 });
 
 const config = {
-  input: 'src/index.js',
+  input: 'src/preview.js',
   watch: {
     clearScreen: false
   },
   output: {
     format: 'es',
     sourcemap: true,
-    file: 'module/playerx.js',
+    file: 'esm/preview.js',
+    globals: { '@playerx/player': 'playerx' },
   },
+  external: ['@playerx/player'],
   plugins: [
     bundleSize(),
     sourcemaps(),
     nodeResolve(),
-  ],
+  ]
 };
 
 export default [
@@ -44,8 +45,8 @@ export default [
     ...config,
     output: {
       ...config.output,
-      file: 'module/playerx.min.js',
-      format: 'es',
+      file: 'esm/preview.min.js',
+      format: 'es'
     },
     plugins: [
       ...config.plugins,
@@ -56,43 +57,19 @@ export default [
     ...config,
     output: {
       ...config.output,
-      file: 'dist/playerx.js',
+      file: 'umd/preview.js',
       format: 'umd',
-      name: 'playerx',
+      name: 'plxPreview',
     },
     plugins: [
       ...config.plugins,
       babel({
         babelHelpers: 'bundled',
+        include: '**/*',
         inputSourceMap: false,
         compact: false,
       }),
       terserPlugin,
     ]
-  },
-  // polyfills shouldn't go through Babel.
-  production && {
-    ...config,
-    context: 'window',
-    input: 'polyfills/index.js',
-    output: {
-      ...config.output,
-      file: 'dist/polyfills.js',
-      format: 'iife'
-    },
-    plugins: [
-      ...config.plugins,
-      terserPlugin,
-    ],
-  },
-  {
-    ...config,
-    context: 'window',
-    input: 'polyfills/index.js',
-    output: {
-      ...config.output,
-      file: 'module/polyfills.js',
-      format: 'es'
-    }
   },
 ].filter(Boolean);

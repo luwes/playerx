@@ -1,5 +1,5 @@
 {
-  "name": "playerx",
+  "name": "@playerx/player",
   "version": "0.0.12",
   "description": "Playerx",
   "keywords": [],
@@ -10,15 +10,13 @@
   "repository": "playerxo/playerx",
   "license": "SEE LICENSE IN LICENSE",
   "author": "Wesley Luyten <me@wesleyluyten.com> (https://wesleyluyten.com)",
-  "main": "dist/playerx.js",
-  "module": "module/playerx.js",
+  "main": "umd/player.js",
+  "module": "esm/player.js",
   "types": "src/index.d.ts",
   "files": [
-    "module",
-    "dist",
-    "src",
-    "polyfills",
-    "polyfills/package.json"
+    "esm",
+    "umd",
+    "src"
   ],
   "scripts": {
     "build": "rollup -c --silent",

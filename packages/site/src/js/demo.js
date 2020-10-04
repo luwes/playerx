@@ -81,7 +81,7 @@ const props = {
   },
 };
 
-/** @typedef { import('playerx').Playerx } Playerx */
+/** @typedef { import('@playerx/player').Playerx } Playerx */
 
 /** @type Playerx */
 let player;

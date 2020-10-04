@@ -22,7 +22,7 @@ As the `user` attribute value implies the loading is done by the user. By manual
   <plx-player loading="user" src="https://vimeo.com/357274789" controls autoplay>
     <plx-media></plx-media>
     <div class="plx-preview bg-yellow-300 w-full h-full absolute">
-      <button is="plx-button" playermethod="load" class="plx-playbtn hover:bg-green-500"></button>
+      <button class="plx-playbtn hover:bg-green-500"></button>
     </div>
   </plx-player>
 </div>
@@ -31,7 +31,7 @@ As the `user` attribute value implies the loading is done by the user. By manual
 <plx-player loading="user" src="https://vimeo.com/357274789" controls autoplay>
   <plx-media></plx-media>
   <div class="plx-preview">
-    <button is="plx-button" playermethod="load" class="plx-playbtn"></button>
+    <button class="plx-playbtn"></button>
   </div>
 </plx-player>
 ```

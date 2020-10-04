@@ -13,64 +13,66 @@ const terserPlugin = terser({
   compress: {
     passes: 2,
     drop_console: production,
-  },
-  mangle: {
-    properties: {
-      regex: /^_\w/
-    }
+    sequences: false, // caused an issue with Babel where sequence order was wrong
   }
 });
 
 const config = {
-  input: 'src/mux.js',
+  input: 'src/js/index.js',
   watch: {
     clearScreen: false
   },
   output: {
-    format: 'es',
+    format: 'iife',
     sourcemap: true,
-    file: 'module/playerx-mux.js',
-    globals: { playerx: 'playerx' },
+    file: 'public/js/playerx-demo.js',
+    name: 'playerxDemo',
   },
-  external: ['playerx'],
   plugins: [
     bundleSize(),
     sourcemaps(),
     commonjs(),
     nodeResolve(),
+
+    babel({
+      babelHelpers: 'bundled',
+      inputSourceMap: false,
+      compact: false,
+    }),
+
+    terserPlugin
   ]
 };
 
 export default [
   config,
-  production && {
+  {
     ...config,
+    input: 'src/js/playerx-plugged.js',
     output: {
       ...config.output,
-      file: 'module/playerx-mux.min.js',
-      format: 'es'
+      file: 'public/js/playerx-plugged.js',
+      name: 'playerx',
     },
-    plugins: [
-      ...config.plugins,
-      terserPlugin,
-    ]
   },
-  production && {
+  {
     ...config,
+    input: 'src/js/site.js',
     output: {
       ...config.output,
-      file: 'dist/playerx-mux.min.js',
-      format: 'umd',
-      name: 'plxMux',
+      file: 'public/js/site.js',
+      name: 'site',
     },
-    plugins: [
-      ...config.plugins,
-      production && babel({
-        babelHelpers: 'bundled',
-        inputSourceMap: false,
-        compact: false,
-      }),
-      terserPlugin,
-    ]
   },
-].filter(Boolean);
+  {
+    ...config,
+    input: 'src/js/mux.js',
+    output: {
+      ...config.output,
+      file: 'public/js/mux.js',
+      name: 'muxLazy',
+      globals: { '@playerx/player': 'playerx' },
+    },
+    external: ['@playerx/player'],
+  },
+];

@@ -1,0 +1,31 @@
+{
+  "name": "@playerx/polyfills",
+  "version": "0.0.1",
+  "description": "Playerx polyfills",
+  "module": "esm/polyfills.js",
+  "main": "umd/polyfills.js",
+  "scripts": {
+    "lint": "eslint .",
+    "prepublishOnly": "yarn lint && (cd ../../.. && yarn build)"
+  },
+  "peerDependencies": {
+    "@playerx/player": ">=0.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.4",
+    "@babel/preset-env": "^7.11.0",
+    "@rollup/plugin-alias": "^3.0.1",
+    "@rollup/plugin-babel": "^5.2.0",
+    "@rollup/plugin-node-resolve": "^8.0.0",
+    "@rollup/plugin-replace": "^2.3.1",
+    "@webcomponents/custom-elements": "^1.4.2",
+    "babel-plugin-transform-async-to-promises": "^0.8.15",
+    "eslint": "^7.7.0",
+    "eslint-plugin-fp": "^2.3.0",
+    "eslint-plugin-import": "^2.20.1",
+    "rollup": "^2.26.5",
+    "rollup-plugin-size": "^0.2.2",
+    "rollup-plugin-sourcemaps": "^0.6.1",
+    "rollup-plugin-terser": "^5.3.0"
+  }
+}

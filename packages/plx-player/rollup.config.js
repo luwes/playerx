@@ -1,5 +1,4 @@
 import nodeResolve from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
 import babel from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 import bundleSize from 'rollup-plugin-size';
@@ -14,65 +13,61 @@ const terserPlugin = terser({
     passes: 2,
     drop_console: production,
     sequences: false, // caused an issue with Babel where sequence order was wrong
+  },
+  mangle: {
+    properties: {
+      regex: /^_\w/
+    }
   }
 });
 
 const config = {
-  input: 'src/js/index.js',
+  input: 'src/index.js',
   watch: {
     clearScreen: false
   },
   output: {
-    format: 'iife',
+    format: 'es',
     sourcemap: true,
-    file: 'public/js/playerx-demo.js',
-    name: 'playerxDemo',
+    file: 'esm/player.js',
   },
   plugins: [
     bundleSize(),
     sourcemaps(),
-    commonjs(),
     nodeResolve(),
-
-    babel({
-      babelHelpers: 'bundled',
-      inputSourceMap: false,
-      compact: false,
-    }),
-
-    terserPlugin
-  ]
+  ],
 };
 
 export default [
   config,
-  {
+  production && {
     ...config,
-    input: 'src/js/playerx-plugged.js',
     output: {
       ...config.output,
-      file: 'public/js/playerx-plugged.js',
+      file: 'esm/player.min.js',
+      format: 'es',
+    },
+    plugins: [
+      ...config.plugins,
+      terserPlugin,
+    ]
+  },
+  production && {
+    ...config,
+    output: {
+      ...config.output,
+      file: 'umd/player.js',
+      format: 'umd',
       name: 'playerx',
     },
+    plugins: [
+      ...config.plugins,
+      babel({
+        babelHelpers: 'bundled',
+        inputSourceMap: false,
+        compact: false,
+      }),
+      terserPlugin,
+    ]
   },
-  {
-    ...config,
-    input: 'src/js/site.js',
-    output: {
-      ...config.output,
-      file: 'public/js/site.js',
-      name: 'site',
-    },
-  },
-  {
-    ...config,
-    input: 'src/js/mux.js',
-    output: {
-      ...config.output,
-      file: 'public/js/mux.js',
-      name: 'muxLazy',
-      globals: { playerx: 'playerx' },
-    },
-    external: ['playerx'],
-  },
-];
+].filter(Boolean);

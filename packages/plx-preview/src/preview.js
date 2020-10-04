@@ -1,4 +1,4 @@
-import { Element, property, addCssRule } from 'playerx';
+import { Element, property, addCssRule } from '@playerx/player';
 import { createElement, findAncestor } from './utils/dom.js';
 import { getThumbnailDimensions } from './utils/image.js';
 import { requestJson } from './utils/request.js';

@@ -1,7 +1,7 @@
 // https://docs.mux.com/docs/javascript-building-a-custom-integration
 
 import muxData from 'mux-embed';
-import { VideoEvents, version } from 'playerx';
+import { VideoEvents, version } from '@playerx/player';
 import { findSrcFile } from './helpers.js';
 import { uniqueId, camelCase, publicPromise, getMimeType } from './utils.js';
 

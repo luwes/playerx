@@ -1,6 +1,6 @@
 [build]
   base    = ""
-  publish = "packages/playerx-demo/public"
+  publish = "packages/site/public"
   command = "yarn build"
 
 [build.environment]

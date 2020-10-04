@@ -1,4 +1,5 @@
 import nodeResolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
 import babel from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 import bundleSize from 'rollup-plugin-size';
@@ -21,20 +22,21 @@ const terserPlugin = terser({
 });
 
 const config = {
-  input: 'src/preview.js',
+  input: 'src/mux.js',
   watch: {
     clearScreen: false
   },
   output: {
     format: 'es',
     sourcemap: true,
-    file: 'module/playerx-preview.js',
-    globals: { playerx: 'playerx' },
+    file: 'esm/mux.js',
+    globals: { '@playerx/player': 'playerx' },
   },
-  external: ['playerx'],
+  external: ['@playerx/player'],
   plugins: [
     bundleSize(),
     sourcemaps(),
+    commonjs(),
     nodeResolve(),
   ]
 };
@@ -45,7 +47,7 @@ export default [
     ...config,
     output: {
       ...config.output,
-      file: 'module/playerx-preview.min.js',
+      file: 'esm/mux.min.js',
       format: 'es'
     },
     plugins: [
@@ -57,15 +59,14 @@ export default [
     ...config,
     output: {
       ...config.output,
-      file: 'dist/playerx-preview.min.js',
+      file: 'umd/mux.js',
       format: 'umd',
-      name: 'plxPreview',
+      name: 'plxMux',
     },
     plugins: [
       ...config.plugins,
-      babel({
+      production && babel({
         babelHelpers: 'bundled',
-        include: '**/*',
         inputSourceMap: false,
         compact: false,
       }),

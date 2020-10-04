@@ -147,22 +147,22 @@ module.exports = function (config) {
       },
       'https://unpkg.com/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js',
       {
-        pattern: 'packages/playerx-demo/src/_data/dev/players.yaml',
+        pattern: 'packages/site/src/_data/dev/players.yaml',
         included: false,
         served: true,
       },
       // {
-      //   pattern: config.grep || 'packages/playerx/test/test.js',
+      //   pattern: config.grep || 'packages/plx-player/test/test.js',
       //   watched: false
       // },
       {
-        pattern: 'packages/playerx/test/test.js',
+        pattern: 'packages/plx-player/test/test.js',
         watched: false,
       },
     ],
 
     preprocessors: {
-      'packages/playerx*/**/test.js': ['rollup'],
+      'packages/plx-player*/**/test.js': ['rollup'],
     },
 
     rollupPreprocessor: {
@@ -176,7 +176,6 @@ module.exports = function (config) {
         alias({
           entries: {
             tape: 'tape-browser',
-            playerx: __dirname + '/packages/playerx/src/index.js',
           },
         }),
         nodeResolve(),
@@ -186,8 +185,8 @@ module.exports = function (config) {
             ? config.grep.replace('/test/', '/src/')
             : 'packages/**/src/**/*.js',
           exclude: [
-            'packages/playerx/src/constants/events.js',
-            'packages/playerx/src/players/index.js',
+            'packages/plx-player/src/constants/events.js',
+            'packages/plx-player/src/players/index.js',
           ],
         }),
         babel({

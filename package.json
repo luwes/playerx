@@ -13,27 +13,26 @@
   "author": "Wesley Luyten <me@wesleyluyten.com> (https://wesleyluyten.com)",
   "main": "index.js",
   "workspaces": [
-    "packages/*",
-    "packages/playerx/*"
+    "packages/*"
   ],
   "scripts": {
     "build": "run-s build:*",
     "build:js": "run-s build:js:*",
-    "build:js:playerx": "yarn workspace playerx build",
-    "build:js:preview": "yarn workspace playerx-preview build",
-    "build:js:mux": "yarn workspace playerx-mux build",
-    "build:demo": "yarn workspace playerx-demo build",
+    "build:js:player": "yarn workspace @playerx/player build",
+    "build:js:preview": "yarn workspace @playerx/preview build",
+    "build:js:mux": "yarn workspace @playerx/mux build",
+    "build:demo": "yarn workspace site build",
     "coverage": "codecov",
     "dev": "cross-env NODE_ENV=dev run-p dev:*",
-    "dev:demo": "yarn workspace playerx-demo dev",
-    "dev:playerx": "yarn workspace playerx dev",
-    "dev:preview": "yarn workspace playerx-preview dev",
-    "dev:mux": "yarn workspace playerx-mux dev",
-    "serve": "yarn workspace playerx-demo serve",
+    "dev:demo": "yarn workspace site dev",
+    "dev:player": "yarn workspace @playerx/player dev",
+    "dev:preview": "yarn workspace @playerx/preview dev",
+    "dev:mux": "yarn workspace @playerx/mux dev",
+    "serve": "yarn workspace site serve",
     "lint": "eslint packages/*/src",
     "test": "cross-env COVERAGE=true karma start",
     "docs": "run-p docs:*",
-    "docs:playerx": "yarn workspace playerx docs",
+    "docs:playerx": "yarn workspace @playerx/player docs",
     "bench": "yarn workspace bench start"
   },
   "devDependencies": {

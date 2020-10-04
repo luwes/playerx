@@ -19,7 +19,7 @@
 ## Usage ([Codesandbox](https://codesandbox.io/s/hello-playerx-22ku4))
 
 ```js
-import 'playerx';
+import '@playerx/player';
 
 document.body.innerHTML = `
   <plx-player src="https://vimeo.com/357274789"></plx-player>
@@ -35,7 +35,7 @@ Playerx supports modern browsers and IE11+ (requires some polyfills).
 Include this script before importing Playerx.
 
 ```js
-<script src="//unpkg.com/playerx/dist/polyfills.js"></script>
+<script src="//unpkg.com/@playerx/polyfills/umd/polyfills.js"></script>
 ```
 
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/luwes.svg?sanitize=true)](https://saucelabs.com/u/luwes)

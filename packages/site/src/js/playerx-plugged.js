@@ -1,5 +1,5 @@
-import 'playerx-preview';
-import * as playerx from 'playerx';
+import '@playerx/preview';
+import * as playerx from '@playerx/player';
 
 const { Playerx } = playerx;
 
