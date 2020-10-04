@@ -6,7 +6,7 @@ import { invert } from './utils/utils.js';
 
 const burgerIsActive = observable(false);
 const openBurgerMenu = invert(burgerIsActive);
-const pluginsDropdown = dropdown();
+const docsDropdown = dropdown();
 
 hy(dhtml`<a id=burger
   class=${cx({ active: burgerIsActive })}
@@ -18,18 +18,18 @@ hy(dhtml`<div id=main-menu
 `);
 
 hy(dhtml`
-  <body onclick=${() => pluginsDropdown.close()} />
+  <body onclick=${() => docsDropdown.close()} />
 `);
 
-hy(dhtml`
-  <div id=menu-item-plugins>
-    <a onclick=${pluginsDropdown.toggle}
-      aria-expanded=${pluginsDropdown.isOpen} />
-    <div class="menu-options ${pluginsDropdown}"
-      hidden=${pluginsDropdown.isHidden}
-      aria-hidden=${pluginsDropdown.isHidden} />
-  </div>
-`);
+// hy(dhtml`
+//   <div id=menu-item-docs>
+//     <a onclick=${docsDropdown.toggle}
+//       aria-expanded=${docsDropdown.isOpen} />
+//     <div class="menu-options ${docsDropdown}"
+//       hidden=${docsDropdown.isHidden}
+//       aria-hidden=${docsDropdown.isHidden} />
+//   </div>
+// `);
 
 hy(dhtml`<div id=tweet-button onclick=${openTweetWindow} />`);
 

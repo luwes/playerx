@@ -128,4 +128,4 @@ export function vimeo(element) {
   return methods;
 }
 
-export const Vimeo = define('player-vimeo', vimeo);
+export const Vimeo = define('plx-vimeo', vimeo);

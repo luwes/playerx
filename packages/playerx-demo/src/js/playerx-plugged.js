@@ -1,6 +1,7 @@
 import 'playerx-preview';
 import * as playerx from 'playerx';
-import { loading } from 'playerx-loading';
+
+const { Playerx } = playerx;
 
 const defaultConfig = () => (player) => {
   Object.assign(player.config, {
@@ -37,12 +38,11 @@ const lazyLoader = (url, globalName, options) => (CE) => (player) => {
   };
 };
 
-playerx.options.plugins.push(
+Playerx.mixins.push(
   defaultConfig,
   lazyLoader('/js/mux.js', 'muxLazy', {
     env_key: 'ilc02s65tkrc2mk69b7q2qdkf',
-  }),
-  loading
+  })
 );
 
 export default playerx;

@@ -150,4 +150,4 @@ export function facebook(element) {
   return methods;
 }
 
-export const Facebook = define('player-facebook', facebook);
+export const Facebook = define('plx-facebook', facebook);

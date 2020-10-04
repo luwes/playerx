@@ -151,4 +151,4 @@ export function dailymotion(element) {
   return methods;
 }
 
-export const Dailymotion = define('player-dailymotion', dailymotion);
+export const Dailymotion = define('plx-dailymotion', dailymotion);

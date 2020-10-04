@@ -123,4 +123,4 @@ export function twitch(element) {
   return methods;
 }
 
-export const Twitch = define('player-twitch', twitch);
+export const Twitch = define('plx-twitch', twitch);

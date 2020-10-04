@@ -1,15 +1,30 @@
-export const loading = CE => {
-
+export const LoadingMixin = (CE) => {
   CE.defineProp('loading', {
     get: (el, val) => val,
     set: (el, val) => val,
     reflect: true,
   });
 
-  return element => {
+  return (element) => {
     let { load } = element;
     let observer;
     let loadCalled;
+
+    element.onclick = onclick;
+
+    function onclick() {
+      if (element.loading) {
+        if (element.loading === 'user') {
+          element.load();
+        }
+      } else {
+        if (element.paused) {
+          element.play();
+        } else {
+          element.pause();
+        }
+      }
+    }
 
     function newLoad() {
       if (observer) {
@@ -35,6 +50,7 @@ export const loading = CE => {
     async function lazyLoad() {
       loadCalled = true;
       try {
+        element.loading = null;
         await load();
         element.load = newLoad;
       } catch (error) {
@@ -48,7 +64,7 @@ export const loading = CE => {
         'IntersectionObserverEntry' in window
       ) {
         const intersectionObserver = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
+          entries.forEach((entry) => {
             if (entry.isIntersecting && !loadCalled) {
               intersectionObserver.unobserve(element);
               lazyLoad();

@@ -1,5 +1,5 @@
 <aside class="menu">
-  {% set navPages = collections.all | eleventyNavigation %}
+  {% set navPages = collections.docs | eleventyNavigation %}
   {%- for parent in navPages -%}
     <p class="menu-label">
       {{ parent.key }}

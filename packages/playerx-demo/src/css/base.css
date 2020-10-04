@@ -32,3 +32,31 @@ input[type="range"] {
   width: 124px;
   height: 32px;
 }
+
+.menu-label {
+  @apply text-gray-600 text-xs uppercase tracking-widest
+}
+
+.menu-label:not(:last-child) {
+  @apply mb-4
+}
+
+.menu-label:not(:first-child) {
+  @apply mt-4
+}
+
+.menu-list {
+  @apply leading-tight
+}
+
+.menu-list a {
+  @apply block rounded-sm py-2 px-3 text-gray-700
+}
+
+.menu-list a:hover {
+  @apply text-gray-900 bg-gray-100
+}
+
+.menu-list a.is-active {
+  @apply text-white bg-blue-600
+}

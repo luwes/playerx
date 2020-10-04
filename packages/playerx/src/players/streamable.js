@@ -148,4 +148,4 @@ export function streamable(element) {
   return methods;
 }
 
-export const Streamable = define('player-streamable', streamable);
+export const Streamable = define('plx-streamable', streamable);

@@ -22,7 +22,7 @@
 import 'playerx';
 
 document.body.innerHTML = `
-  <player-x src="https://vimeo.com/357274789"></player-x>
+  <plx-player src="https://vimeo.com/357274789"></plx-player>
 `;
 ```
 

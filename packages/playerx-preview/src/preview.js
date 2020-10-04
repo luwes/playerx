@@ -7,7 +7,6 @@ const IMAGE_EXTENSIONS = /\.(jpe?g|gif|a?png|svg|webp)($|\?)/i;
 
 addCssRule('plx-preview', {
   display: 'block',
-  transition: 'opacity .1s',
 });
 
 addCssRule('plx-preview img', {
@@ -16,20 +15,21 @@ addCssRule('plx-preview img', {
   height: 'auto',
 });
 
-addCssRule('plx-preview.hidden', {
-  display: 'none',
-});
-
-addCssRule('plx-preview.opacity-0', {
+addCssRule('plx-player:not([loading]) plx-preview', {
   opacity: 0,
+  'pointer-events': 'none',
 });
 
-addCssRule('plx-preview button', {
-  position: 'relative',
-});
-
-const props = {
-  oembedUrl: property('https://api.playerx.io/oembed'),
+export const PlxPreviewProps = {
+  player: {
+    get: (el) => {
+      if (el.hasAttribute('player')) {
+        return document.querySelector(`#${el.hasAttribute('player')}`);
+      }
+      return findAncestor(el, 'plx-player');
+    },
+  },
+  oembedurl: property('https://api.playerx.io/oembed'),
   title: property(),
   loading: property(),
   src: {
@@ -48,17 +48,7 @@ async function setSrc(el, src, oldSrc) {
   }
 }
 
-const setup = () => (el) => {
-
-  function connected() {
-    el.addEventListener('click', onClick);
-    el.addEventListener('transitionend', onTransitionEnd);
-
-    const player = getPlayer();
-    if (player) {
-      player.addEventListener('play', onPlay);
-    }
-  }
+export const PlxPreviewMixin = () => (el) => {
 
   async function load() {
     await Promise.resolve();
@@ -79,7 +69,7 @@ const setup = () => (el) => {
     try {
       if (!IMAGE_EXTENSIONS.test(el.src)) {
 
-        let url = `${el.oembedUrl}?url=${el.src}`;
+        let url = `${el.oembedurl}?url=${el.src}`;
         if (width) url += `&maxwidth=${width}`;
         if (height) url += `&maxheight=${height}`;
 
@@ -87,18 +77,6 @@ const setup = () => (el) => {
       }
 
       await addThumbnail(data);
-
-      // Wait until the thumbnail is loaded to preconnect,
-      // this could be delayed with `loading=lazy`.
-      if (data.head) {
-        data.head.forEach(attrs => {
-          if (attrs.type === 'link') {
-            delete attrs.type;
-            attrs.crossorigin = '';
-            document.head.appendChild(createElement('link', attrs));
-          }
-        });
-      }
 
     } catch (error) {
       //...
@@ -140,47 +118,15 @@ const setup = () => (el) => {
     }
   }
 
-  async function onClick() {
-    const player = getPlayer();
-    if (player) {
-      await player.load();
-
-      player.play();
-      onPlay();
-    }
-  }
-
-  function onTransitionEnd() {
-    el.classList.add('hidden');
-  }
-
-  function onPlay() {
-    el.classList.add('opacity-0');
-  }
-
-  /** @typedef { import('playerx').Playerx } Playerx */
-
-  /**
-   * @type {() => Playerx}
-   */
-  function getPlayer() {
-    return findAncestor(el, 'player-x');
-  }
-
   return {
-    connected,
     load,
     unload,
   };
 };
 
-const PlxPreview = Element({
-  props,
-  setup,
+export const PlxPreview = Element({
+  props: PlxPreviewProps,
+  setup: PlxPreviewMixin,
 });
 
 customElements.define('plx-preview', PlxPreview);
-
-export {
-  PlxPreview
-};

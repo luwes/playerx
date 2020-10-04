@@ -227,4 +227,4 @@ export function youtube(element) {
   return methods;
 }
 
-export const YouTube = define('player-youtube', youtube);
+export const YouTube = define('plx-youtube', youtube);

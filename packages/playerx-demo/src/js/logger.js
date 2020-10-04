@@ -6,7 +6,7 @@ import { map } from 'sinuous/map';
 import { dhtml, hydrate as hy } from 'sinuous/hydrate';
 import { round } from './utils/utils.js';
 
-observe('player-x');
+observe('plx-player');
 
 const eventData = {
   loadsrc: (player) => player.src,

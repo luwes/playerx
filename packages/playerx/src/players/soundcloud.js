@@ -160,4 +160,4 @@ export function soundcloud(element) {
   return methods;
 }
 
-export const SoundCloud = define('player-soundcloud', soundcloud);
+export const SoundCloud = define('plx-soundcloud', soundcloud);

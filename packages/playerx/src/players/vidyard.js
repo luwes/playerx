@@ -187,4 +187,4 @@ export function vidyard(element) {
   return methods;
 }
 
-export const Vidyard = define('player-vidyard', vidyard);
+export const Vidyard = define('plx-vidyard', vidyard);

@@ -182,4 +182,4 @@ export function wistia(element) {
   return methods;
 }
 
-export const Vimeo = define('player-wistia', wistia);
+export const Vimeo = define('plx-wistia', wistia);

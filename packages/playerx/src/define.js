@@ -1,6 +1,6 @@
 import { Element } from 'swiss';
-import { playerx } from './playerx.js';
-import { options } from './options.js';
+import { PlayerxMixin } from './playerx-mixin.js';
+import { LoadingMixin } from './loading.js';
 import { props } from './defaults.js';
 
 export function define(name, create) {
@@ -9,10 +9,13 @@ export function define(name, create) {
     create
   });
 
+  CE.mixins.push(PlayerxMixin, LoadingMixin);
+
   // Wait one tick to define the custom element for plugins to be added.
   Promise.resolve().then(() => {
-    CE.mixins.push(playerx, ...options.plugins);
-    customElements.define(name, CE);
+    if (!customElements.get(name)) {
+      customElements.define(name, CE);
+    }
   });
 
   return CE;

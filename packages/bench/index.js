@@ -33,14 +33,14 @@ module.exports = function(player) {
 
       console.warn(`Wait ready for ${player}`);
       assert(browser.executeAsync(async function(done) {
-        const plx = document.querySelector('player-x');
+        const plx = document.querySelector('plx-player');
         await plx.ready();
         done(true);
       }));
 
       console.warn(`Starting playback for ${player}`);
       assert(browser.executeAsync(async function(done) {
-        const plx = document.querySelector('player-x');
+        const plx = document.querySelector('plx-player');
 
         // facebook on Android doesn't fire a playing event.
         const onTime = () => {
@@ -59,7 +59,7 @@ module.exports = function(player) {
         console.warn(`Seeking 10s from the end for ${player}`);
         assert(browser.executeAsync(async function(done) {
           setTimeout(() => {
-            const plx = document.querySelector('player-x');
+            const plx = document.querySelector('plx-player');
             plx.currentTime = plx.duration - 10;
             done(true);
           }, 10000);
@@ -71,7 +71,7 @@ module.exports = function(player) {
 
       console.warn(`Waiting until ended for ${player}`);
       assert(browser.executeAsync(async function(done) {
-        const plx = document.querySelector('player-x');
+        const plx = document.querySelector('plx-player');
         plx.on('ended', () => done(true));
 
         // facebook on Android doesn't fire an ended event.

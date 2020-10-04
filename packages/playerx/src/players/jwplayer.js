@@ -179,4 +179,4 @@ export function jwplayer(element) {
   return methods;
 }
 
-export const Jwplayer = define('player-jwplayer', jwplayer);
+export const Jwplayer = define('plx-jwplayer', jwplayer);

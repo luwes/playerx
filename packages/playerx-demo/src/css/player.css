@@ -1,9 +1,9 @@
 /* preview + play button */
-player-x .plx-preview {
+plx-player .plx-preview {
   transition: all 0.5s cubic-bezier(0, 0, 0.2, 1);
 }
 
-player-x .plx-playbtn {
+plx-player .plx-playbtn {
   font-size: 10px;
   width: 6.5em;
   height: 4em;
@@ -23,32 +23,31 @@ player-x .plx-playbtn {
 }
 
 /* play button triangle */
-player-x .plx-playbtn::before {
+plx-player .plx-playbtn::before {
   content: '';
   border-style: solid;
   border-width: 10px 0 10px 20px;
   border-color: transparent transparent transparent #fff;
 }
 
-player-x .plx-playbtn,
-player-x .plx-playbtn::before {
+plx-player .plx-playbtn,
+plx-player .plx-playbtn::before {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate3d(-50%, -50%, 0);
 }
 
-player-x .plx-playbtn::before {
+plx-player .plx-playbtn::before {
   left: calc(50% + 1px);
 }
 
 /* Post-click styles */
-player-x:not([loading]) {
+plx-player:not([loading]) {
   cursor: unset;
 }
 
-player-x:not([loading])::before,
-player-x:not([loading]) .plx-preview {
+plx-player:not([loading]) .plx-preview {
   opacity: 0;
   pointer-events: none;
 }

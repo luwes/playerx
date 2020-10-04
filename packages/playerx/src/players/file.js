@@ -170,4 +170,4 @@ export function file(element) {
   return methods;
 }
 
-export const File = define('player-file', file);
+export const File = define('plx-file', file);

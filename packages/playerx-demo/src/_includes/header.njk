@@ -15,7 +15,7 @@
       <div id="main-menu" class="w-full flex-grow hidden lg:flex lg:items-center lg:w-auto">
         <div class="w-1/2 lg:w-auto lg:flex-grow mt-2 py-1 lg:mt-0">
 
-          {%- set navPages = collections.all | eleventyNavigation -%}
+          {%- set navPages = collections.main | eleventyNavigation -%}
           {%- for parent in navPages -%}
 
             <div id="menu-item-{{ parent.key | lower }}" class="relative inline-block text-left">

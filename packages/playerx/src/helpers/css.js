@@ -1,32 +1,4 @@
-import { getStyle, addCssRule, deleteCssRule, cssNumber } from '../utils/css.js';
-
-const sheet = getStyle();
-sheet.firstChild.data += `
-  player-x {
-    display: block;
-    position: relative;
-    width: 100%
-  }
-  player-x::before {
-    content: "";
-    margin-left: -1px;
-    width: 1px;
-    height: 0;
-    float: left;
-    padding-top: 56.25%
-  }
-  player-x::after {
-    content: "";
-    display: table;
-    clear: both
-  }
-  plx-media,plx-media>* {
-    display: block;
-    position: absolute;
-    width: 100%;
-    height: 100%
-  }
-`;
+import { addCssRule, deleteCssRule, cssNumber } from '../utils/css.js';
 
 export function createResponsiveStyle(element) {
   let selector = '__';
@@ -38,7 +10,7 @@ export function createResponsiveStyle(element) {
 
     let selectorText = '';
     if (width) {
-      selectorText += `player-x[width="${width}"]`;
+      selectorText += `${element.tagName}[width="${width}"]`;
     }
     if (height) {
       selectorText += `[height="${height}"]`;

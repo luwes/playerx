@@ -92,4 +92,4 @@ export function brightcove(element) {
   return methods;
 }
 
-export const Brightcove = define('player-brightcove', brightcove);
+export const Brightcove = define('plx-brightcove', brightcove);
