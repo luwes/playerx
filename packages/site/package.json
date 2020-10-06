@@ -29,7 +29,7 @@
   "dependencies": {
     "@tailwindcss/ui": "^0.5.0",
     "disco": "1.0.2",
-    "@playerx/player": "0.0.12",
+    "playerx": "0.0.12",
     "@playerx/mux": "0.0.1",
     "@playerx/preview": "0.0.1",
     "sinuous": "0.27.9",

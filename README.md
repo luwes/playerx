@@ -19,10 +19,10 @@
 ## Usage ([Codesandbox](https://codesandbox.io/s/hello-playerx-22ku4))
 
 ```js
-import '@playerx/player';
+import 'playerx';
 
 document.body.innerHTML = `
-  <plx-player src="https://vimeo.com/357274789"></plx-player>
+  <player-x src="https://vimeo.com/357274789"></player-x>
 `;
 ```
 

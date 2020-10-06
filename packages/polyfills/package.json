@@ -9,7 +9,7 @@
     "prepublishOnly": "yarn lint && (cd ../../.. && yarn build)"
   },
   "peerDependencies": {
-    "@playerx/player": ">=0.0.1"
+    "playerx": ">=0.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",

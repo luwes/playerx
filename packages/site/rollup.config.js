@@ -71,8 +71,8 @@ export default [
       ...config.output,
       file: 'public/js/mux.js',
       name: 'muxLazy',
-      globals: { '@playerx/player': 'playerx' },
+      globals: { 'playerx': 'playerx' },
     },
-    external: ['@playerx/player'],
+    external: ['playerx'],
   },
 ];

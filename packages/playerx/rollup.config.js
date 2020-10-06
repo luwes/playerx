@@ -29,7 +29,7 @@ const config = {
   output: {
     format: 'es',
     sourcemap: true,
-    file: 'esm/player.js',
+    file: 'esm/playerx.js',
   },
   plugins: [
     bundleSize(),
@@ -44,7 +44,7 @@ export default [
     ...config,
     output: {
       ...config.output,
-      file: 'esm/player.min.js',
+      file: 'esm/playerx.min.js',
       format: 'es',
     },
     plugins: [
@@ -56,7 +56,7 @@ export default [
     ...config,
     output: {
       ...config.output,
-      file: 'umd/player.js',
+      file: 'umd/playerx.js',
       format: 'umd',
       name: 'playerx',
     },

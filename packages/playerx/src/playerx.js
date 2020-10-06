@@ -10,7 +10,7 @@ import { file } from './players/file.js';
  * Playerx, plays almost everything.
  * @type {Playerx}
  */
-export const Playerx = define('plx-player', x);
+export const Playerx = define('player-x', x);
 
 function x(element, ...args) {
   for (let key in canPlay) {

@@ -81,13 +81,13 @@ const props = {
   },
 };
 
-/** @typedef { import('@playerx/player').Playerx } Playerx */
+/** @typedef { import('playerx').Playerx } Playerx */
 
 /** @type Playerx */
 let player;
 player = hy(dhtml`
   ${() => showing() && (player = dhtml`
-    <plx-player ...${props}>
+    <player-x ...${props}>
       <plx-media></plx-media>
       <plx-preview src=${src} />
     <//>

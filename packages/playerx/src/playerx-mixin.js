@@ -9,12 +9,12 @@ import { objectValues } from './utils/utils.js';
 
 const sheet = getStyle();
 sheet.firstChild.data += `
-  plx-player {
+  player-x {
     display: block;
     position: relative;
     width: 100%
   }
-  plx-player::before {
+  player-x::before {
     content: "";
     margin-left: -1px;
     width: 1px;
@@ -22,12 +22,12 @@ sheet.firstChild.data += `
     float: left;
     padding-top: 56.25%
   }
-  plx-player::after {
+  player-x::after {
     content: "";
     display: table;
     clear: both
   }
-  plx-player plx-media,plx-player plx-media>* {
+  player-x plx-media,player-x plx-media>* {
     display: block;
     position: absolute;
     top: 0;

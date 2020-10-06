@@ -30,9 +30,9 @@ const config = {
     format: 'es',
     sourcemap: true,
     file: 'esm/mux.js',
-    globals: { '@playerx/player': 'playerx' },
+    globals: { 'playerx': 'playerx' },
   },
-  external: ['@playerx/player'],
+  external: ['playerx'],
   plugins: [
     bundleSize(),
     sourcemaps(),

@@ -12,18 +12,18 @@ layout: layouts/docs.njk
 
 # Preview Element
 
-The `<plx-preview>` element embeds a preview image or video. It's often used with the [`loading=user`](/docs/loading/) set on the `<plx-player>` element so when the user clicks the preview the actual media player is loaded.
+The `<plx-preview>` element embeds a preview image or video. It's often used with the [`loading=user`](/docs/loading/) set on the `<player-x>` element so when the user clicks the preview the actual media player is loaded.
 
 <div class="w-4/5 relative bg-black">
-  <plx-player loading="user" src="https://vimeo.com/357274789" controls autoplay>
+  <player-x loading="user" src="https://vimeo.com/357274789" controls autoplay>
     <plx-media></plx-media>
     <plx-preview src="https://vimeo.com/357274789" oembedurl="{{ site.apiUrl }}/oembed"></plx-preview>
-  </plx-player>
+  </player-x>
 </div>
 
 ```html
-<plx-player loading="user" src="https://vimeo.com/357274789" controls autoplay>
+<player-x loading="user" src="https://vimeo.com/357274789" controls autoplay>
   <plx-media></plx-media>
   <plx-preview src="https://vimeo.com/357274789"></plx-preview>
-</plx-player>
+</player-x>
 ```

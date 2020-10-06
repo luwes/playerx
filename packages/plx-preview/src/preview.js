@@ -1,4 +1,4 @@
-import { Element, property, addCssRule } from '@playerx/player';
+import { Element, property, addCssRule } from 'playerx';
 import { createElement, findAncestor } from './utils/dom.js';
 import { getThumbnailDimensions } from './utils/image.js';
 import { requestJson } from './utils/request.js';
@@ -15,7 +15,7 @@ addCssRule('plx-preview img', {
   height: 'auto',
 });
 
-addCssRule('plx-player:not([loading]) plx-preview', {
+addCssRule('player-x:not([loading]) plx-preview', {
   opacity: 0,
   'pointer-events': 'none',
 });
@@ -26,7 +26,7 @@ export const PlxPreviewProps = {
       if (el.hasAttribute('player')) {
         return document.querySelector(`#${el.hasAttribute('player')}`);
       }
-      return findAncestor(el, 'plx-player');
+      return findAncestor(el, 'player-x');
     },
   },
   oembedurl: property('https://api.playerx.io/oembed'),

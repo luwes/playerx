@@ -151,18 +151,14 @@ module.exports = function (config) {
         included: false,
         served: true,
       },
-      // {
-      //   pattern: config.grep || 'packages/plx-player/test/test.js',
-      //   watched: false
-      // },
       {
-        pattern: 'packages/plx-player/test/test.js',
+        pattern: 'packages/playerx/test/test.js',
         watched: false,
       },
     ],
 
     preprocessors: {
-      'packages/plx-player*/**/test.js': ['rollup'],
+      'packages/playerx*/**/test.js': ['rollup'],
     },
 
     rollupPreprocessor: {
@@ -181,12 +177,9 @@ module.exports = function (config) {
         nodeResolve(),
         commonjs(),
         istanbul({
-          include: config.grep
-            ? config.grep.replace('/test/', '/src/')
-            : 'packages/**/src/**/*.js',
+          include: 'packages/**/src/**/*.js',
           exclude: [
-            'packages/plx-player/src/constants/events.js',
-            'packages/plx-player/src/players/index.js',
+            'packages/playerx/src/constants/events.js',
           ],
         }),
         babel({
