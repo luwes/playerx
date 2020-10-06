@@ -8,8 +8,7 @@ import * as VideoEvents from './constants/video-events.js';
 import { options } from './options.js';
 
 export * from 'swiss';
-export { addCssRule, getStyle } from './utils/css.js';
-export { loadScript } from './utils/load-script.js';
+export { addCssRule, getStyle, loadScript } from './utils.js';
 export { Playerx } from './playerx.js';
 export {
   Events,

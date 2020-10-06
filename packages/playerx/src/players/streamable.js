@@ -2,14 +2,17 @@
 
 import { streamable as MATCH_SRC } from '../constants/src-regex.js';
 import { define } from '../define.js';
-import { createEmbedIframe } from '../helpers/dom.js';
-import { getVideoId } from '../helpers/url.js';
-import { removeNode } from '../utils/dom.js';
-import { loadScript } from '../utils/load-script.js';
-import { publicPromise, promisify } from '../utils/promise.js';
-import { createPlayPromise } from '../helpers/video.js';
-import { options } from '../options.js';
-export { options };
+import {
+  getVideoId,
+  createPlayPromise,
+  createEmbedIframe,
+} from '../helpers.js';
+import {
+  removeNode,
+  loadScript,
+  publicPromise,
+  promisify,
+} from '../utils.js';
 
 const EMBED_BASE = 'https://streamable.com/o';
 const API_URL = 'https://cdn.embed.ly/player-0.1.0.min.js';

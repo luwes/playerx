@@ -1,11 +1,8 @@
 import { canPlay } from './can-play.js';
-import { createResponsiveStyle } from './helpers/css.js';
+import { createResponsiveStyle } from './helpers.js';
 import { base } from './player-base.js';
 import * as Events from './constants/events.js';
-import { getStyle } from './utils/css.js';
-import { extend } from './utils/object.js';
-import { publicPromise } from './utils/promise.js';
-import { objectValues } from './utils/utils.js';
+import { getStyle, extend, publicPromise, objectValues } from './utils.js';
 
 const sheet = getStyle();
 sheet.firstChild.data += `

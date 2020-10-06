@@ -2,13 +2,13 @@
 
 import { wistia as MATCH_SRC } from '../constants/src-regex.js';
 import { define } from '../define.js';
-import { getVideoId } from '../helpers/url.js';
-import { loadScript } from '../utils/load-script.js';
-import { publicPromise } from '../utils/promise.js';
-import { createElement, removeNode } from '../utils/dom.js';
-import { createPlayPromise } from '../helpers/video.js';
-import { options } from '../options.js';
-export { options };
+import { getVideoId, createPlayPromise } from '../helpers.js';
+import {
+  createElement,
+  removeNode,
+  loadScript,
+  publicPromise,
+} from '../utils.js';
 
 const API_URL = 'https://fast.wistia.com/assets/external/E-v1.js';
 const API_GLOBAL = 'Wistia';

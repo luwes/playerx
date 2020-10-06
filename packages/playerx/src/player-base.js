@@ -1,8 +1,5 @@
-import { getName, setName } from './helpers/string.js';
-import { createTimeRanges } from './utils/time-ranges.js';
-import { isMethod, getProperty, getMethod } from './utils/utils.js';
-import { getPropertyDescriptor } from './utils/object.js';
-import { delay } from './utils/promise.js';
+import { getName, setName } from './helpers.js';
+import { createTimeRanges, isMethod, getProperty, getMethod, getPropertyDescriptor, delay } from './utils.js';
 
 export function base(element, player) {
   return {

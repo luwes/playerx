@@ -2,15 +2,15 @@
 
 import { vidyard as MATCH_SRC } from '../constants/src-regex.js';
 import { define } from '../define.js';
-import { getVideoId } from '../helpers/url.js';
-import { addCssRule } from '../utils/css.js';
-import { createElement } from '../utils/dom.js';
-import { loadScript } from '../utils/load-script.js';
-import { publicPromise, promisify } from '../utils/promise.js';
-import { clamp } from '../utils/utils.js';
-import { createPlayPromise } from '../helpers/video.js';
-import { options } from '../options.js';
-export { options };
+import { getVideoId, createPlayPromise } from '../helpers.js';
+import {
+  createElement,
+  addCssRule,
+  loadScript,
+  publicPromise,
+  promisify,
+  clamp,
+} from '../utils.js';
 
 const API_URL = 'https://play.vidyard.com/embed/v4.js';
 const API_GLOBAL = 'VidyardV4';
@@ -20,15 +20,8 @@ addCssRule(`.vidyard-player-container,.vidyard-player-container>div`, {
   position: 'absolute !important',
   height: '100% !important',
   width: '100% !important',
-  padding: '0 !important'
+  padding: '0 !important',
 });
-
-/**
- * Returns true if the source can be played by this player.
- * @param  {string} src
- * @return {boolean}
- */
-vidyard.canPlay = src => MATCH_SRC.test(src);
 
 export function vidyard(element) {
   let api;
@@ -40,7 +33,7 @@ export function vidyard(element) {
   function getOptions() {
     return {
       autoplay: element.playing || element.autoplay,
-      ...element.config.vidyard
+      ...element.config.vidyard,
     };
   }
 
@@ -56,10 +49,14 @@ export function vidyard(element) {
       'data-uuid': videoId,
       'data-v': '4',
       'data-type': 'inline',
-      style: 'display:none'
+      style: 'display:none',
     });
 
-    VidyardV4 = await loadScript(opts.apiUrl || API_URL, API_GLOBAL, API_GLOBAL_READY);
+    VidyardV4 = await loadScript(
+      opts.apiUrl || API_URL,
+      API_GLOBAL,
+      API_GLOBAL_READY
+    );
     const renderPromise = VidyardV4.api.renderPlayer(img);
 
     api = await renderPromise;
@@ -74,7 +71,7 @@ export function vidyard(element) {
 
   const eventAliases = {
     volumechange: 'volumeChange',
-    ended: 'playerComplete'
+    ended: 'playerComplete',
   };
 
   const unsupportedEvents = {
@@ -115,8 +112,7 @@ export function vidyard(element) {
     },
 
     get videoTitle() {
-      return api.metadata.chapters_attributes[0].video_attributes
-        .name;
+      return api.metadata.chapters_attributes[0].video_attributes.name;
     },
 
     ready() {
@@ -179,7 +175,7 @@ export function vidyard(element) {
 
     set playbackRate(value) {
       api.setPlaybackSpeed(value);
-    }
+    },
   };
 
   init();

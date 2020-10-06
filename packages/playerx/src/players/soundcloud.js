@@ -2,18 +2,21 @@
 
 import { soundcloud as MATCH_SRC } from '../constants/src-regex.js';
 import { define } from '../define.js';
-import { createEmbedIframe } from '../helpers/dom.js';
-import { getVideoId } from '../helpers/url.js';
-import { removeNode } from '../utils/dom.js';
-import { omit } from '../utils/object.js';
-import { loadScript } from '../utils/load-script.js';
-import { publicPromise, promisify } from '../utils/promise.js';
-import { serialize } from '../utils/url.js';
-import { clamp } from '../utils/utils.js';
-import { createTimeRanges } from '../utils/time-ranges.js';
-import { createPlayPromise } from '../helpers/video.js';
-import { options } from '../options.js';
-export { options };
+import {
+  getVideoId,
+  createPlayPromise,
+  createEmbedIframe,
+} from '../helpers.js';
+import {
+  omit,
+  removeNode,
+  loadScript,
+  publicPromise,
+  promisify,
+  clamp,
+  createTimeRanges,
+  serialize,
+} from '../utils.js';
 
 const EMBED_BASE = 'https://w.soundcloud.com/player';
 const API_URL = 'https://w.soundcloud.com/player/api.js';
@@ -44,7 +47,7 @@ export function soundcloud(element) {
     api = SC.Widget(iframe);
 
     loadedProgress = 0;
-    api.bind(Events.PLAY_PROGRESS, e => {
+    api.bind(Events.PLAY_PROGRESS, (e) => {
       loadedProgress = e.loadedProgress;
     });
 
@@ -53,7 +56,7 @@ export function soundcloud(element) {
       pause: Events.PAUSE,
       timeupdate: Events.PLAY_PROGRESS,
       ended: Events.FINISH,
-      error: Events.ERROR
+      error: Events.ERROR,
     };
 
     await promisify(api.bind, api)(Events.READY);
@@ -106,10 +109,13 @@ export function soundcloud(element) {
 
     async setSrc(src) {
       const loaded = publicPromise();
-      api.load(src, omit(['url'], {
-        ...getOptions(),
-        callback: loaded.resolve
-      }));
+      api.load(
+        src,
+        omit(['url'], {
+          ...getOptions(),
+          callback: loaded.resolve,
+        })
+      );
       return loaded;
     },
 
@@ -127,7 +133,7 @@ export function soundcloud(element) {
     },
 
     async getMuted() {
-      return await promisify(api.getVolume, api)() === 0;
+      return (await promisify(api.getVolume, api)()) === 0;
     },
 
     set volume(volume) {

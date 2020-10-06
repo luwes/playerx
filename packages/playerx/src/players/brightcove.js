@@ -2,13 +2,14 @@
 
 import { brightcove as MATCH_SRC } from '../constants/src-regex.js';
 import { define } from '../define.js';
-import { getVideoId } from '../helpers/url.js';
-import { createElement } from '../utils/dom.js';
-import { loadScript } from '../utils/load-script.js';
-import { publicPromise, promisify } from '../utils/promise.js';
-import { uniqueId } from '../utils/utils.js';
-import { options } from '../options.js';
-export { options };
+import { getVideoId } from '../helpers.js';
+import {
+  createElement,
+  loadScript,
+  publicPromise,
+  promisify,
+  uniqueId,
+} from '../utils.js';
 
 const API_GLOBAL = 'bc';
 

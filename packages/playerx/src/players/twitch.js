@@ -2,15 +2,20 @@
 
 import { twitch as MATCH_SRC } from '../constants/src-regex.js';
 import { define } from '../define.js';
-import { getVideoId } from '../helpers/url.js';
-import { loadScript } from '../utils/load-script.js';
-import { publicPromise, promisify, delay } from '../utils/promise.js';
-import { createTimeRanges } from '../utils/time-ranges.js';
-import { createPlayPromise } from '../helpers/video.js';
-import { createElement, removeNode } from '../utils/dom.js';
-import { uniqueId } from '../utils/utils.js';
-import { options } from '../options.js';
-export { options };
+import {
+  getVideoId,
+  createPlayPromise,
+} from '../helpers.js';
+import {
+  createElement,
+  removeNode,
+  loadScript,
+  publicPromise,
+  promisify,
+  uniqueId,
+  createTimeRanges,
+  delay,
+} from '../utils.js';
 
 const API_URL = 'https://player.twitch.tv/js/embed/v1.js';
 const API_GLOBAL = 'Twitch';

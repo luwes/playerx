@@ -3,15 +3,18 @@
 import { vimeo as MATCH_SRC } from '../constants/src-regex.js';
 import * as Events from '../constants/events.js';
 import { define } from '../define.js';
-import { createEmbedIframe } from '../helpers/dom.js';
-import { PlayerError } from '../helpers/error.js';
-import { getVideoId } from '../helpers/url.js';
-import { loadScript } from '../utils/load-script.js';
-import { publicPromise } from '../utils/promise.js';
-import { serialize, boolToBinary } from '../utils/url.js';
-import { createTimeRanges } from '../utils/time-ranges.js';
-import { options } from '../options.js';
-export { options };
+import {
+  getVideoId,
+  PlayerError,
+  createEmbedIframe,
+} from '../helpers.js';
+import {
+  boolToBinary,
+  serialize,
+  loadScript,
+  publicPromise,
+  createTimeRanges,
+} from '../utils.js';
 
 const EMBED_BASE = 'https://player.vimeo.com/video';
 const API_URL = 'https://player.vimeo.com/api/player.js';

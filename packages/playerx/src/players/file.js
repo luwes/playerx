@@ -3,11 +3,13 @@
 
 import { HLS_EXTENSIONS, DASH_EXTENSIONS } from '../constants/src-regex.js';
 import { define } from '../define.js';
-import { createElement, removeNode } from '../utils/dom.js';
-import { loadScript } from '../utils/load-script.js';
-import { publicPromise, promisify } from '../utils/promise.js';
-import { options } from '../options.js';
-export { options };
+import {
+  createElement,
+  removeNode,
+  loadScript,
+  publicPromise,
+  promisify,
+} from '../utils.js';
 
 const HLS_URL = 'https://cdn.jsdelivr.net/npm/hls.js@0.13.2/dist/hls.min.js';
 const HLS_GLOBAL = 'Hls';

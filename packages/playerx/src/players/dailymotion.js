@@ -2,15 +2,14 @@
 
 import { dailymotion as MATCH_SRC } from '../constants/src-regex.js';
 import { define } from '../define.js';
-import { allow } from '../helpers/dom.js';
-import { getVideoId } from '../helpers/url.js';
-import { createElement, removeNode } from '../utils/dom.js';
-import { loadScript } from '../utils/load-script.js';
-import { publicPromise } from '../utils/promise.js';
-import { createTimeRanges } from '../utils/time-ranges.js';
-import { createPlayPromise } from '../helpers/video.js';
-import { options } from '../options.js';
-export { options };
+import { allow, getVideoId, createPlayPromise } from '../helpers.js';
+import {
+  createElement,
+  removeNode,
+  loadScript,
+  publicPromise,
+  createTimeRanges,
+} from '../utils.js';
 
 const API_URL = 'https://api.dmcdn.net/all.js';
 const API_GLOBAL = 'DM';

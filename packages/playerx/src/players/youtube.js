@@ -2,16 +2,20 @@
 
 import { youtube as MATCH_SRC } from '../constants/src-regex.js';
 import { define } from '../define.js';
-import { createEmbedIframe } from '../helpers/dom.js';
-import { PlayerError } from '../helpers/error.js';
-import { getVideoId } from '../helpers/url.js';
-import { loadScript } from '../utils/load-script.js';
-import { publicPromise, delay } from '../utils/promise.js';
-import { serialize, boolToBinary } from '../utils/url.js';
-import { createTimeRanges } from '../utils/time-ranges.js';
-import { createPlayPromise } from '../helpers/video.js';
-import { options } from '../options.js';
-export { options };
+import {
+  getVideoId,
+  createPlayPromise,
+  createEmbedIframe,
+  PlayerError,
+} from '../helpers.js';
+import {
+  delay,
+  loadScript,
+  publicPromise,
+  boolToBinary,
+  serialize,
+  createTimeRanges,
+} from '../utils.js';
 
 const EMBED_BASE = 'https://www.youtube.com/embed';
 const API_URL = 'https://www.youtube.com/iframe_api';
