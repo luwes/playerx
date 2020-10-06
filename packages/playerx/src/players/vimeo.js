@@ -3,11 +3,7 @@
 import { vimeo as MATCH_SRC } from '../constants/src-regex.js';
 import * as Events from '../constants/events.js';
 import { define } from '../define.js';
-import {
-  getVideoId,
-  PlayerError,
-  createEmbedIframe,
-} from '../helpers.js';
+import { getVideoId, PlayerError, createEmbedIframe } from '../helpers.js';
 import {
   boolToBinary,
   serialize,
@@ -34,6 +30,11 @@ export function vimeo(element) {
       controls: element.controls,
       url: element.src,
       transparent: false,
+      autopause: false,
+      // byline: false,
+      // portrait: false,
+      // title: false,
+      // dnt: true,
       ...element.config.vimeo,
     };
   }

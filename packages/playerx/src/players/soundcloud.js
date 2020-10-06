@@ -33,6 +33,13 @@ export function soundcloud(element) {
     return {
       auto_play: element.playing || element.autoplay,
       url: element.src,
+      visual: true, // Undocumented, player fills iframe and looks better.
+      // buying: false,
+      // liking: false,
+      // download: false,
+      // sharing: false,
+      // show_comments: false,
+      // show_playcount: false,
       ...element.config.soundcloud,
     };
   }

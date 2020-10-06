@@ -21,6 +21,7 @@ export function brightcove(element) {
   function getOptions() {
     return {
       controls: element.controls,
+      // account: '',
       ...element.config.brightcove,
     };
   }

@@ -25,6 +25,8 @@ export function facebook(element) {
       autoplay: element.playing || element.autoplay,
       controls: element.controls,
       url: element.src,
+      // appId: '',
+      version: 'v3.2',
       ...element.config.facebook,
     };
   }

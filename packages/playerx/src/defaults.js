@@ -42,51 +42,7 @@ export const props = {
   videoTitle: undefined,      // custom property
 
   config: {
-    ...property({          // custom property
-      vimeo: {
-        autopause: false,
-        // byline: false,
-        // portrait: false,
-        // title: false,
-        // dnt: true,
-      },
-      youtube: {
-        showinfo: 0,
-        rel: 0,
-        iv_load_policy: 3,
-        modestbranding: 1,
-      },
-      soundcloud: {
-        visual: true, // Undocumented, player fills iframe and looks better.
-        // buying: false,
-        // liking: false,
-        // download: false,
-        // sharing: false,
-        // show_comments: false,
-        // show_playcount: false,
-      },
-      wistia: {
-        // videoFoam: false,
-        // silentAutoPlay: 'allow',
-        // newLook: false,
-        // playerColor: 'ff0000',
-      },
-      dailymotion: {
-        'queue-enable': false,
-        // 'ui-logo': false,
-      },
-      facebook: {
-        // appId: '',
-        version: 'v3.2',
-      },
-      jwplayer: {
-        // player: '', // Via https://content.jwplatform.com/libraries/{player_id}.js
-        // key: '',         // or https://ssl.p.jwpcdn.com/player/v/8.12.5/jwplayer.js
-      },
-      brightcove: {
-        // account: '',
-      }
-    }),
+    ...property({}),          // custom property
     fromAttribute: JSON.parse,
   }
 };

@@ -29,6 +29,10 @@ export function wistia(element) {
       endVideoBehavior: element.loop && 'loop',
       chromeless: !element.controls,
       playButton: element.controls,
+      // videoFoam: false,
+      // silentAutoPlay: 'allow',
+      // newLook: false,
+      // playerColor: 'ff0000',
       ...element.config.wistia,
     };
   }

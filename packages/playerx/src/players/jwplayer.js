@@ -28,13 +28,15 @@ export function jwplayer(element) {
       // The default value is different for each browser.
       // The spec advises it to be set to metadata.
       preload: element.preload || 'metadata',
+      // player: '', // Via https://content.jwplatform.com/libraries/{player_id}.js
+      // key: '',         // or https://ssl.p.jwpcdn.com/player/v/8.12.5/jwplayer.js
       ...element.config.jwplayer,
     };
   }
 
   async function getMedia(id) {
     const mediaUrl = `https://cdn.jwplayer.com/v2/media/${id}`;
-    return (await requestJson(mediaUrl));
+    return await requestJson(mediaUrl);
   }
 
   async function init() {
@@ -46,14 +48,14 @@ export function jwplayer(element) {
     div = createElement('div');
 
     const playerUrl = `https://content.jwplatform.com/libraries/${opts.player}.js`;
-    const scriptUrl = opts.key ? (opts.apiUrl || API_URL) : playerUrl;
+    const scriptUrl = opts.key ? opts.apiUrl || API_URL : playerUrl;
     const JW = await loadScript(scriptUrl, API_GLOBAL);
     const media = await getMedia(id);
     api = JW(div).setup({
       width: '100%',
       height: '100%',
       ...media,
-      ...opts
+      ...opts,
     });
 
     api.on('error', onError);
@@ -170,7 +172,7 @@ export function jwplayer(element) {
     },
 
     getBuffered() {
-      return createTimeRanges(0, api.getBuffer() / 100 * api.getDuration());
+      return createTimeRanges(0, (api.getBuffer() / 100) * api.getDuration());
     },
   };
 

@@ -37,6 +37,10 @@ export function youtube(element) {
       mute: element.muted,
       origin: location.origin,
       enablejsapi: 1,
+      showinfo: 0,
+      rel: 0,
+      iv_load_policy: 3,
+      modestbranding: 1,
       ...element.config.youtube,
     };
   }
@@ -53,8 +57,8 @@ export function youtube(element) {
     api = new YT.Player(iframe, {
       events: {
         onReady: ready.resolve,
-        onError
-      }
+        onError,
+      },
     });
 
     filterEventByData = {

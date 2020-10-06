@@ -28,6 +28,8 @@ export function dailymotion(element) {
       muted: element.muted,
       controls: element.controls,
       origin: location.origin,
+      'queue-enable': false,
+      // 'ui-logo': false,
       ...element.config.dailymotion,
     };
   }
@@ -37,7 +39,11 @@ export function dailymotion(element) {
     const video = getVideoId(MATCH_SRC, element.src);
     div = createElement('div');
 
-    const DM = await loadScript(params.apiUrl || API_URL, API_GLOBAL, API_GLOBAL_READY);
+    const DM = await loadScript(
+      params.apiUrl || API_URL,
+      API_GLOBAL,
+      API_GLOBAL_READY
+    );
     api = DM.player(div, {
       video,
       params,
@@ -45,7 +51,7 @@ export function dailymotion(element) {
       height: '100%',
       events: {
         apiready: ready.resolve,
-      }
+      },
     });
     api.allow = allow;
   }
