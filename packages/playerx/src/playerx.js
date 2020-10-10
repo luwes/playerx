@@ -9,14 +9,13 @@ import { options } from './options.js';
  */
 export const Playerx = define('player-x', x);
 
-async function x(element) {
+function x(element) {
   for (let key in options.players) {
     const playerConfig = options.players[key];
     if (playerConfig.canPlay(element.src)) {
       return getPlayer(playerConfig, element);
     }
   }
-
   // Fallback to file player.
   return getPlayer(options.players.file, element);
 }
