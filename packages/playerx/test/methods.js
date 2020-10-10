@@ -1,6 +1,6 @@
 import test from 'tape';
 import { Playerx } from '../src/index.js';
-import { coreMethodNames } from '../src/playerx-mixin.js';
+import { coreMethodNames } from '../src/playerx.js';
 
 const src = 'https://vimeo.com/357274789';
 
