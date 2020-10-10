@@ -9,10 +9,13 @@ export function define(name, create) {
     create
   });
 
-  CE.mixins.push(PlayerxMixin, LoadingMixin);
+  CE.mixins.push(PlayerxMixin);
 
   // Wait one tick to define the custom element for plugins to be added.
   Promise.resolve().then(() => {
+    // Loading mixin should be the last one that overrides `load()`.
+    CE.mixins.push(LoadingMixin);
+
     if (!customElements.get(name)) {
       customElements.define(name, CE);
     }
