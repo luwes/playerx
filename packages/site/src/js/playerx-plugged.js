@@ -1,5 +1,6 @@
 import '@playerx/preview';
 import * as playerx from 'playerx';
+import 'playerx/all';
 
 const { Playerx } = playerx;
 

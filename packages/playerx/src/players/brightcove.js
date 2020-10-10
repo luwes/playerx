@@ -1,7 +1,5 @@
 // https://support.brightcove.com/overview-player-api
 
-import { brightcove as MATCH_SRC } from '../constants/src-regex.js';
-import { define } from '../define.js';
 import { getVideoId } from '../helpers.js';
 import {
   createElement,
@@ -12,8 +10,10 @@ import {
 } from '../utils.js';
 
 const API_GLOBAL = 'bc';
+const MATCH_SRC = /brightcove\.com\/.*?videos\/(\d+)/;
+export const canPlay = (src) => MATCH_SRC.test(src);
 
-export function brightcove(element) {
+export function createPlayer(element) {
   let api;
   let div;
   let ready;
@@ -93,5 +93,3 @@ export function brightcove(element) {
 
   return methods;
 }
-
-export const Brightcove = define('plx-brightcove', brightcove);

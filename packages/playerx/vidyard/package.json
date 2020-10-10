@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "version": "0.0.1",
+  "name": "playerx/vidyard",
+  "module": "../esm/vidyard.js",
+  "main": "../umd/vidyard.js"
+}

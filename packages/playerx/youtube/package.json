@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "version": "0.0.1",
+  "name": "playerx/youtube",
+  "module": "../esm/youtube.js",
+  "main": "../umd/youtube.js"
+}

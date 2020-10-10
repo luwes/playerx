@@ -1,7 +1,5 @@
 // https://developers.google.com/youtube/iframe_api_reference
 
-import { youtube as MATCH_SRC } from '../constants/src-regex.js';
-import { define } from '../define.js';
 import {
   getVideoId,
   createPlayPromise,
@@ -21,8 +19,10 @@ const EMBED_BASE = 'https://www.youtube.com/embed';
 const API_URL = 'https://www.youtube.com/iframe_api';
 const API_GLOBAL = 'YT';
 const API_GLOBAL_READY = 'onYouTubeIframeAPIReady';
+const MATCH_SRC = /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})/;
+export const canPlay = (src) => MATCH_SRC.test(src);
 
-export function youtube(element) {
+export function createPlayer(element) {
   let api;
   let iframe;
   let ready;
@@ -234,5 +234,3 @@ export function youtube(element) {
 
   return methods;
 }
-
-export const YouTube = define('plx-youtube', youtube);

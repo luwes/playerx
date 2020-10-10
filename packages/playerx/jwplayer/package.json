@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "version": "0.0.1",
+  "name": "playerx/jwplayer",
+  "module": "../esm/jwplayer.js",
+  "main": "../umd/jwplayer.js"
+}

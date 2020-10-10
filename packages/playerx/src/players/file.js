@@ -1,8 +1,6 @@
 // https://github.com/video-dev/hls.js
 // https://github.com/Dash-Industry-Forum/dash.js
 
-import { HLS_EXTENSIONS, DASH_EXTENSIONS } from '../constants/src-regex.js';
-import { define } from '../define.js';
 import {
   createElement,
   removeNode,
@@ -15,6 +13,10 @@ const HLS_URL = 'https://cdn.jsdelivr.net/npm/hls.js@0.13.2/dist/hls.min.js';
 const HLS_GLOBAL = 'Hls';
 const DASH_URL = 'https://cdn.jsdelivr.net/npm/dashjs@3.0.3/dist/dash.all.min.js';
 const DASH_GLOBAL = 'dashjs';
+const AUDIO_EXTENSIONS = /\.(m4a|mp4a|mpga|mp2|mp2a|mp3|m2a|m3a|wav|weba|aac|oga|spx)($|\?)/i;
+const VIDEO_EXTENSIONS = /\.(mp4|og[gv]|webm|mov|m4v)($|\?)/i;
+const HLS_EXTENSIONS = /\.m3u8($|\?)/i;
+const DASH_EXTENSIONS = /\.mpd($|\?)/i;
 
 function shouldUseHLS(src) {
   return HLS_EXTENSIONS.test(src);
@@ -24,7 +26,32 @@ function shouldUseDash(src) {
   return DASH_EXTENSIONS.test(src);
 }
 
-export function file(element) {
+/**
+ * Returns true if a file source can be played.
+ * @param  {string} src
+ * @return {boolean}
+ */
+export const canPlay = (src) => {
+  if (Array.isArray(src)) {
+    for (const item of src) {
+      if (typeof item === 'string' && canPlay(item)) {
+        return true;
+      }
+      if (canPlay(item.src)) {
+        return true;
+      }
+    }
+    return false;
+  }
+  return (
+    AUDIO_EXTENSIONS.test(src) ||
+    VIDEO_EXTENSIONS.test(src) ||
+    HLS_EXTENSIONS.test(src) ||
+    DASH_EXTENSIONS.test(src)
+  );
+};
+
+export function createPlayer(element) {
   let video;
   let player = {};
   let hls;
@@ -171,5 +198,3 @@ export function file(element) {
 
   return methods;
 }
-
-export const File = define('plx-file', file);

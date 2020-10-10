@@ -1,7 +1,5 @@
 // https://dev.twitch.tv/docs/embed/video-and-clips
 
-import { twitch as MATCH_SRC } from '../constants/src-regex.js';
-import { define } from '../define.js';
 import {
   getVideoId,
   createPlayPromise,
@@ -19,8 +17,10 @@ import {
 
 const API_URL = 'https://player.twitch.tv/js/embed/v1.js';
 const API_GLOBAL = 'Twitch';
+const MATCH_SRC = /twitch\.tv\/videos\/(\d+)($|\?)/;
+export const canPlay = (src) => MATCH_SRC.test(src);
 
-export function twitch(element) {
+export function createPlayer(element) {
   let api;
   let div;
   let ready;
@@ -127,5 +127,3 @@ export function twitch(element) {
 
   return methods;
 }
-
-export const Twitch = define('plx-twitch', twitch);

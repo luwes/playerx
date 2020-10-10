@@ -1,4 +1,4 @@
-import { canPlay } from './can-play.js';
+import { options } from './options.js';
 import { createResponsiveStyle } from './helpers.js';
 import { base } from './player-base.js';
 import * as Events from './constants/events.js';
@@ -144,7 +144,7 @@ export const PlayerxMixin = (CE, { create }) => (element) => {
 
     element.fire(Events.LOADSRC);
 
-    if (player.api && canPlay[element.key](element.src)) {
+    if (player.api && options.players[element.key].canPlay(element.src)) {
       const prevLoad = element.load;
 
       // If `element.load` is called in the player, re-attach events.
@@ -162,13 +162,13 @@ export const PlayerxMixin = (CE, { create }) => (element) => {
       return;
     }
 
-    init();
+    await init();
     await afterLoad(true);
     element.fire(Events.LOADEDSRC);
     element.fire(Events.READY);
   }
 
-  function init() {
+  async function init() {
     if (player.api) {
       unload();
     }
@@ -177,7 +177,7 @@ export const PlayerxMixin = (CE, { create }) => (element) => {
     player = extend(
       player,
       base(element, player),
-      create(element),
+      await create(element),
       responsiveStyle
     );
     player.constructor = player.constructor || create;

@@ -1,7 +1,5 @@
 // https://wistia.com/support/developers/player-api
 
-import { wistia as MATCH_SRC } from '../constants/src-regex.js';
-import { define } from '../define.js';
 import { getVideoId, createPlayPromise } from '../helpers.js';
 import {
   createElement,
@@ -12,8 +10,10 @@ import {
 
 const API_URL = 'https://fast.wistia.com/assets/external/E-v1.js';
 const API_GLOBAL = 'Wistia';
+const MATCH_SRC = /(?:wistia\.com|wi\.st)\/(?:medias|embed)\/(.*)$/;
+export const canPlay = (src) => MATCH_SRC.test(src);
 
-export function wistia(element) {
+export function createPlayer(element) {
   let api;
   let div;
   let ready;
@@ -185,5 +185,3 @@ export function wistia(element) {
 
   return methods;
 }
-
-export const Vimeo = define('plx-wistia', wistia);

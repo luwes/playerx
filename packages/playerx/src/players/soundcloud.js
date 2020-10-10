@@ -1,7 +1,5 @@
 // https://developers.soundcloud.com/docs/api/html5-widget
 
-import { soundcloud as MATCH_SRC } from '../constants/src-regex.js';
-import { define } from '../define.js';
 import {
   getVideoId,
   createPlayPromise,
@@ -21,8 +19,10 @@ import {
 const EMBED_BASE = 'https://w.soundcloud.com/player';
 const API_URL = 'https://w.soundcloud.com/player/api.js';
 const API_GLOBAL = 'SC';
+const MATCH_SRC = /(?:soundcloud\.com|snd\.sc)\/(.+)$/;
+export const canPlay = (src) => MATCH_SRC.test(src);
 
-export function soundcloud(element) {
+export function createPlayer(element) {
   let api;
   let iframe;
   let ready = publicPromise();
@@ -172,5 +172,3 @@ export function soundcloud(element) {
 
   return methods;
 }
-
-export const SoundCloud = define('plx-soundcloud', soundcloud);

@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "version": "0.0.1",
+  "name": "playerx/brightcove",
+  "module": "../esm/brightcove.js",
+  "main": "../umd/brightcove.js"
+}

@@ -1,8 +1,6 @@
 // https://github.com/vimeo/player.js
 
-import { vimeo as MATCH_SRC } from '../constants/src-regex.js';
 import * as Events from '../constants/events.js';
-import { define } from '../define.js';
 import { getVideoId, PlayerError, createEmbedIframe } from '../helpers.js';
 import {
   boolToBinary,
@@ -15,8 +13,10 @@ import {
 const EMBED_BASE = 'https://player.vimeo.com/video';
 const API_URL = 'https://player.vimeo.com/api/player.js';
 const API_GLOBAL = 'Vimeo';
+const MATCH_SRC = /vimeo\.com\/(?:video\/)?(\d+)/;
+export const canPlay = (src) => MATCH_SRC.test(src);
 
-export function vimeo(element) {
+export function createPlayer(element) {
   let api;
   let iframe;
   let ready = publicPromise();
@@ -131,5 +131,3 @@ export function vimeo(element) {
 
   return methods;
 }
-
-export const Vimeo = define('plx-vimeo', vimeo);
