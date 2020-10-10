@@ -166,26 +166,28 @@ module.exports = function (config) {
         format: 'iife', // Helps prevent naming collisions.
         name: 'playerxTest', // Required for 'iife' format.
         sourcemap: automate ? false : 'inline', // Sensible for testing.
+        inlineDynamicImports: true,
       },
       preserveSymlinks: true,
       plugins: [
         alias({
           entries: {
             tape: 'tape-browser',
+            playerx: 'packages/playerx/src/index.js',
           },
         }),
         nodeResolve(),
         commonjs(),
+        babel({
+          babelHelpers: 'bundled',
+          inputSourceMap: false,
+          compact: false,
+        }),
         istanbul({
           include: 'packages/**/src/**/*.js',
           exclude: [
             'packages/playerx/src/constants/events.js',
           ],
-        }),
-        babel({
-          babelHelpers: 'bundled',
-          inputSourceMap: false,
-          compact: false,
         }),
       ].filter(Boolean),
       onwarn: (msg) => /eval/.test(msg) && void 0,

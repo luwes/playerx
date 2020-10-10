@@ -1,5 +1,7 @@
 import './_polyfills.js';
 
+import '../src/all.js';
+
 import './error.js';
 import './methods.js';
 import './helpers.js';
@@ -14,7 +16,7 @@ import './players/twitch.js';
 import './players/streamable.js';
 import './players/soundcloud.js';
 import './players/facebook.js';
-import './players/jwplayer.js';
+// import './players/jwplayer.js'; // need jw player developer license
 import './players/vidyard.js';
 import './players/file-dash.js';
 import './players/file-hls.js';

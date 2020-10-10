@@ -1,6 +1,6 @@
 import yaml from 'js-yaml';
 import test from 'tape';
-import { canPlay } from '../src/can-play.js';
+import { options } from '../src/options.js';
 
 let players;
 (async () => {
@@ -18,15 +18,17 @@ test(`canPlay`, async (t) => {
 
   for (const key in players) {
     players[key].clips.forEach(src => {
-      t.assert(canPlay[key](src), `can play ${src}`);
+      if (options.players[key]) {
+        t.assert(options.players[key].canPlay(src), `can play ${src}`);
+      }
     });
   }
 
-  t.assert(canPlay.file([{
+  t.assert(options.players.file.canPlay([{
     src: 'https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM/low.mp4'
   }]), 'can play file src in plain object');
 
-  t.assert(!canPlay.file([{
+  t.assert(!options.players.file.canPlay([{
     src: 'https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM/low'
   }]), 'can not play file without extension');
 

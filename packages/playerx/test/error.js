@@ -1,5 +1,5 @@
 import test from 'tape';
-import { PlayerError } from '../src/helpers/error.js';
+import { PlayerError } from '../src/helpers.js';
 
 test(`PlayerError`, async (t) => {
 

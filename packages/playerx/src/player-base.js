@@ -1,9 +1,15 @@
 import { getName, setName } from './helpers.js';
-import { createTimeRanges, isMethod, getProperty, getMethod, getPropertyDescriptor, delay } from './utils.js';
+import {
+  createTimeRanges,
+  isMethod,
+  getProperty,
+  getMethod,
+  getPropertyDescriptor,
+  delay,
+} from './utils.js';
 
 export function base(element, player) {
   return {
-
     /**
      * Set a player property, try player interface first, then internal api.
      * @param  {string} name

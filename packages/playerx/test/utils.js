@@ -1,9 +1,13 @@
 import test from 'tape';
-import { camelCase, kebabCase, startCase } from '../src/utils/string.js';
-import { createTimeRanges } from '../src/utils/time-ranges.js';
-import { omit } from '../src/utils/object.js';
-import { boolToBinary } from '../src/utils/url.js';
-import { loadScript } from '../src/utils/load-script.js';
+import {
+  camelCase,
+  kebabCase,
+  startCase,
+  createTimeRanges,
+  omit,
+  boolToBinary,
+  loadScript,
+} from '../src/utils.js';
 
 test(`kebabCase`, async (t) => {
   t.plan(1);

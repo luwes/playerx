@@ -1,7 +1,6 @@
 import test from 'tape';
 import { Playerx } from '../src/index.js';
-import { createPlayPromise } from '../src/helpers/video.js';
-import { getVideoId } from '../src/helpers/url.js';
+import { createPlayPromise, getVideoId } from '../src/helpers.js';
 
 test(`createPlayPromise`, async (t) => {
   t.plan(1);

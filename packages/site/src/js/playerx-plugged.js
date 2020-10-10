@@ -8,7 +8,6 @@ const defaultConfig = () => (player) => {
   Object.assign(player.config, {
     facebook: {
       appId: '197575574668798',
-      version: 'v3.2',
     },
     jwplayer: {
       player: 'IxzuqJ4M',
