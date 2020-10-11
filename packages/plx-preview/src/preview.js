@@ -1,21 +1,21 @@
-import { Element, property, addCssRule } from 'playerx';
+import { Element, property, utils } from 'playerx';
 import { createElement, findAncestor } from './utils/dom.js';
 import { getThumbnailDimensions } from './utils/image.js';
 import { requestJson } from './utils/request.js';
 
 const IMAGE_EXTENSIONS = /\.(jpe?g|gif|a?png|svg|webp)($|\?)/i;
 
-addCssRule('plx-preview', {
+utils.addCssRule('plx-preview', {
   display: 'block',
 });
 
-addCssRule('plx-preview img', {
+utils.addCssRule('plx-preview img', {
   position: 'relative',
   width: '100%',
   height: 'auto',
 });
 
-addCssRule('player-x:not([loading]) plx-preview', {
+utils.addCssRule('player-x:not([loading]) plx-preview', {
   opacity: 0,
   'pointer-events': 'none',
 });

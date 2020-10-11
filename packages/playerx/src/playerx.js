@@ -1,7 +1,6 @@
-import { Element, property, readonly, reflect } from 'swiss';
+import { property, readonly, reflect } from 'swiss';
 import * as Events from './constants/events.js';
 import { createResponsiveStyle, getName, setName } from './helpers.js';
-import { LoadingMixin } from './loading.js';
 import { options } from './options.js';
 import {
   getStyle,
@@ -76,7 +75,7 @@ const reflectProps = reflect({
   width: undefined,
 });
 
-const props = {
+export const props = {
   ...readonlyProps,
   ...reflectProps,
 
@@ -103,7 +102,7 @@ let listeners = [];
 /**
  * @type {(CE: Class, options: Object) => (element: Playerx) => Object}
  */
-const PlayerxMixin = (CE, { create }) => (element) => {
+export const PlayerxMixin = (CE, { create }) => (element) => {
   console.dir(element);
 
   let player = {};
@@ -168,8 +167,6 @@ const PlayerxMixin = (CE, { create }) => (element) => {
     }
     return element.cache(name);
   }
-
-  function connected() {}
 
   function disconnected() {
     unload();
@@ -492,7 +489,6 @@ const PlayerxMixin = (CE, { create }) => (element) => {
     fire,
     load,
     unload,
-    connected,
     disconnected,
     getProp,
     setProp,
@@ -611,52 +607,4 @@ function base(element, player) {
       return createTimeRanges();
     },
   };
-}
-
-/**
- * Playerx, plays almost everything.
- * @type {Playerx}
- */
-export const Playerx = define('player-x', x);
-
-export function define(name, create) {
-  const CE = Element({
-    props,
-    create,
-  });
-
-  CE.mixins.push(PlayerxMixin);
-
-  // Wait one tick to define the custom element for plugins to be added.
-  Promise.resolve().then(() => {
-    // Loading mixin should be the last one that overrides `load()`.
-    CE.mixins.push(LoadingMixin);
-
-    if (!customElements.get(name)) {
-      customElements.define(name, CE);
-    }
-  });
-
-  return CE;
-}
-
-function x(element) {
-  for (let key in options.players) {
-    const playerConfig = options.players[key];
-    if (playerConfig.canPlay(element.src)) {
-      return getPlayer(playerConfig, element);
-    }
-  }
-  // Fallback to file player.
-  return getPlayer(options.players.file, element);
-}
-
-async function getPlayer(playerConfig, element) {
-  const createPlayer = playerConfig.lazyPlayer
-    ? (await playerConfig.lazyPlayer()).createPlayer
-    : playerConfig;
-
-  const player = createPlayer(element);
-  player.constructor = createPlayer;
-  return player;
 }

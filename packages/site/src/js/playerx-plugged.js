@@ -27,7 +27,7 @@ const lazyLoader = (url, globalName, options) => (CE) => (player) => {
       if (!initiated) {
         initiated = true;
 
-        let plugin = await playerx.loadScript(url, globalName);
+        let plugin = await playerx.utils.loadScript(url, globalName);
         if (plugin && typeof plugin !== 'function') {
           plugin = plugin[Object.keys(plugin)[0]];
         }
