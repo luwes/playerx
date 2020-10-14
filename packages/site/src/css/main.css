@@ -1,6 +1,8 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+/*! purgecss start ignore */
 @import "inter.css";
 @import "base.css";
 @import "prism-ghcolors.css";
@@ -8,3 +10,4 @@
 @import "home.css";
 @import "demo.css";
 @import "player.css";
+/*! purgecss end ignore */

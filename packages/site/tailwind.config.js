@@ -22,6 +22,12 @@ const aquamarine = {
 };
 
 module.exports = {
+  purge: {
+    enabled: process.env.NODE_ENV === 'prod',
+    mode: 'layers',
+    layers: ['base', 'components', 'utilities'],
+    content: ['./src/**/*.{html,njk,md,js}']
+  },
   plugins: [
     ui,
   ],
