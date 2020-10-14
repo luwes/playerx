@@ -1,7 +1,7 @@
 # <a href="https://github.com/playerxo/playerx"><img src="https://playerx.io/images/playerx-logo.svg?sanitize=true" height="36" alt="playerx" /></a>
 
 [![Version](https://img.shields.io/npm/v/playerx.svg?color=success&style=flat-square)](https://www.npmjs.com/package/playerx)
-![Badge size](https://img.badgesize.io/https://unpkg.com/playerx/module/playerx.min.js?compression=gzip&label=gzip&style=flat-square)
+![Badge size](https://img.badgesize.io/https://unpkg.com/playerx/esm/playerx.min.js?compression=gzip&label=gzip&style=flat-square)
 [![codecov](https://img.shields.io/codecov/c/github/playerxo/playerx.svg?style=flat-square&color=success)](https://codecov.io/gh/playerxo/playerx)
 
 **npm**: `npm i playerx`  
