@@ -2,13 +2,14 @@
  * Copyright (c) 2020, Wesley Luyten, @luwes
  * @see LICENSE
  */
-import { Element } from 'swiss';
+import { Element } from './element.js';
 import { LoadingMixin } from './loading.js';
 import { options } from './options.js';
 import { PlayerxMixin, props } from './playerx.js';
 import { addCssRule, getStyle, loadScript } from './utils.js';
 
-export * from 'swiss';
+export * from './element.js';
+export * from './script.js';
 export * as Events from './constants/events.js';
 export * as VideoEvents from './constants/video-events.js';
 export { version } from './constants/version.js';

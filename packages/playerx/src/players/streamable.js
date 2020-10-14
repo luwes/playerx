@@ -1,5 +1,6 @@
 // https://github.com/embedly/player.js
 
+import { streamable as MATCH_SRC } from '../constants/src-regex.js';
 import {
   getVideoId,
   createPlayPromise,
@@ -15,8 +16,6 @@ import {
 const EMBED_BASE = 'https://streamable.com/o';
 const API_URL = 'https://cdn.embed.ly/player-0.1.0.min.js';
 const API_GLOBAL = 'playerjs';
-const MATCH_SRC = /streamable\.com\/(\w+)$/;
-export const canPlay = (src) => MATCH_SRC.test(src);
 
 export function createPlayer(element) {
   let api;

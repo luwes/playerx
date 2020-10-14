@@ -1,5 +1,6 @@
 // https://wistia.com/support/developers/player-api
 
+import { wistia as MATCH_SRC } from '../constants/src-regex.js';
 import { getVideoId, createPlayPromise } from '../helpers.js';
 import {
   createElement,
@@ -10,8 +11,6 @@ import {
 
 const API_URL = 'https://fast.wistia.com/assets/external/E-v1.js';
 const API_GLOBAL = 'Wistia';
-const MATCH_SRC = /(?:wistia\.com|wi\.st)\/(?:medias|embed)\/(.*)$/;
-export const canPlay = (src) => MATCH_SRC.test(src);
 
 export function createPlayer(element) {
   let api;

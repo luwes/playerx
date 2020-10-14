@@ -1,12 +1,10 @@
-import './_polyfills.js';
-
-import '../src/all.js';
-
 import './error.js';
 import './methods.js';
 import './helpers.js';
 import './can-play.js';
 import './utils.js';
+
+import '../src/all.js';
 
 // Run the buggy players first
 import './players/youtube.js';

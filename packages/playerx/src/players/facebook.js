@@ -1,5 +1,6 @@
 // https://developers.facebook.com/docs/plugins/embedded-video-player/api/
 
+import { facebook as MATCH_SRC } from '../constants/src-regex.js';
 import { getVideoId, createPlayPromise } from '../helpers.js';
 import {
   createElement,
@@ -12,8 +13,6 @@ import {
 const API_URL = 'https://connect.facebook.net/en_US/sdk.js';
 const API_GLOBAL = 'FB';
 const API_GLOBAL_READY = 'fbAsyncInit';
-const MATCH_SRC = /facebook\.com\/.*videos\/(\d+)/;
-export const canPlay = (src) => MATCH_SRC.test(src);
 
 export function createPlayer(element) {
   let api;

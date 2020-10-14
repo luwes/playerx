@@ -12,11 +12,13 @@ const production = !process.env.ROLLUP_WATCH;
 let bundles = [
   ...createBundles('src/index.js', 'playerx', 'playerx'),
   ...createBundles('src/all.js', 'all', 'plxAll'),
+  // ...createBundles('src/all.js', 'lazy', 'playerx', [], false),
 ];
 
 const players = fs.readdirSync('src/players');
 players.forEach((player) => {
   player = path.basename(player, '.js');
+
   const globalName = `plx${player[0].toUpperCase()}${player.slice(1)}`;
   bundles = [
     ...bundles,
@@ -24,20 +26,26 @@ players.forEach((player) => {
       virtual({
         entry: `
 import { options } from 'playerx';
-import { canPlay } from './src/players/${player}.js';
+import { ${player} } from './src/canplay.js';
 options.players.${player} = {
-  canPlay,
+  canPlay: ${player},
   lazyPlayer: () => import('./src/players/${player}.js'),
 };
-        `
-      })
+        `,
+      }),
     ]),
   ];
 });
 
 export default bundles.filter(Boolean);
 
-function createBundles(input, outputName, globalName, plugins = []) {
+function createBundles(
+  input,
+  outputName,
+  globalName,
+  plugins = [],
+  inlineDynamicImports = true
+) {
   const config = {
     input,
     watch: {
@@ -48,15 +56,20 @@ function createBundles(input, outputName, globalName, plugins = []) {
       sourcemap: true,
       file: `esm/${outputName}.js`,
       globals: { playerx: 'playerx' },
-      inlineDynamicImports: true, // set to true for now
-      strict:   false, // Remove `use strict;`
-      interop:  false, // Remove `r=r&&r.hasOwnProperty("default")?r.default:r;`
-      freeze:   false, // Remove `Object.freeze()`
-      esModule: false, // Remove `esModule` property
+      inlineDynamicImports,
     },
     external: ['playerx'],
     plugins: [...plugins, bundleSize(), sourcemaps(), nodeResolve()],
   };
+
+  if (inlineDynamicImports === false) {
+    delete config.output.file;
+    config.output.dir = 'esm';
+    config.output.entryFileNames = 'lazy.js';
+    config.output.chunkFileNames = (chunkInfo) => {
+      return `lazy-${chunkInfo.name}.js`;
+    };
+  }
 
   return [
     config,
@@ -69,7 +82,7 @@ function createBundles(input, outputName, globalName, plugins = []) {
       },
       plugins: [...config.plugins, pluginTerser()],
     },
-    production && {
+    {
       ...config,
       output: {
         ...config.output,
@@ -84,8 +97,8 @@ function createBundles(input, outputName, globalName, plugins = []) {
           inputSourceMap: false,
           compact: false,
         }),
-        pluginTerser(),
-      ],
+        production && pluginTerser(),
+      ].filter(Boolean),
     },
   ];
 }

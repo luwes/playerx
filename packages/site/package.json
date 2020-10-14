@@ -17,21 +17,22 @@
   ],
   "scripts": {
     "build": "cross-env NODE_ENV=prod run-s css:prod js:prod eleventy",
-    "dev": "cross-env NODE_ENV=dev run-p css:dev js:dev serve",
+    "dev": "cross-env NODE_ENV=dev run-p css:dev js:dev serve cdn:dev",
     "js:dev": "rollup -wc --silent",
     "js:prod": "rollup -c --silent",
     "css:prod": "postcss src/css/main.css -o public/css/playerx-dev.css",
     "css:dev": "postcss src/css/main.css -o public/css/playerx-dev.css -w",
     "lint": "eslint src/js",
     "serve": "eleventy --serve",
+    "cdn:dev": "serve '../'",
     "eleventy": "eleventy"
   },
   "dependencies": {
+    "@playerx/mux": "0.0.1",
+    "@playerx/preview": "0.0.1",
     "@tailwindcss/ui": "^0.5.0",
     "disco": "1.0.2",
     "playerx": "0.0.12",
-    "@playerx/mux": "0.0.1",
-    "@playerx/preview": "0.0.1",
     "sinuous": "0.27.9",
     "tailwindcss": "1.8.10"
   },
@@ -64,6 +65,7 @@
     "rollup": "^2.26.5",
     "rollup-plugin-size": "^0.2.2",
     "rollup-plugin-sourcemaps": "^0.6.2",
-    "rollup-plugin-terser": "^5.3.0"
+    "rollup-plugin-terser": "^5.3.0",
+    "serve": "^11.3.2"
   }
 }

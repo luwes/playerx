@@ -58,7 +58,7 @@ export function removeNode(node) {
 }
 
 export function loadScript(src, globalName, readyFnName) {
-  if (self[globalName]) {
+  if (globalName && self[globalName]) {
     return Promise.resolve(self[globalName]);
   }
 
@@ -289,4 +289,9 @@ let idCounter = 0;
 export function uniqueId(prefix) {
   let id = ++idCounter;
   return `${prefix}${id}`;
+}
+
+export function findAncestor(el, sel) {
+  while ((el = el.parentElement) && !el.matches(sel));
+  return el;
 }

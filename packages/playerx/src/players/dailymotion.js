@@ -1,5 +1,6 @@
 // https://developer.dailymotion.com/player/
 
+import { dailymotion as MATCH_SRC } from '../constants/src-regex.js';
 import { allow, getVideoId, createPlayPromise } from '../helpers.js';
 import {
   createElement,
@@ -12,8 +13,6 @@ import {
 const API_URL = 'https://api.dmcdn.net/all.js';
 const API_GLOBAL = 'DM';
 const API_GLOBAL_READY = 'dmAsyncInit';
-const MATCH_SRC = /(?:(?:dailymotion\.com(?:\/embed)?\/video)|dai\.ly)\/(\w+)$/;
-export const canPlay = (src) => MATCH_SRC.test(src);
 
 export function createPlayer(element) {
   let api;

@@ -1,5 +1,6 @@
 // https://knowledge.vidyard.com/hc/en-us/articles/360019034753
 
+import { vidyard as MATCH_SRC } from '../constants/src-regex.js';
 import { getVideoId, createPlayPromise } from '../helpers.js';
 import {
   createElement,
@@ -20,9 +21,6 @@ addCssRule(`.vidyard-player-container,.vidyard-player-container>div`, {
   width: '100% !important',
   padding: '0 !important',
 });
-
-const MATCH_SRC = /vidyard\..*?\/(?:share|watch)\/(\w+)/;
-export const canPlay = (src) => MATCH_SRC.test(src);
 
 export function createPlayer(element) {
   let api;

@@ -55,7 +55,7 @@ export default [
       terserPlugin,
     ]
   },
-  production && {
+  {
     ...config,
     output: {
       ...config.output,
@@ -70,7 +70,7 @@ export default [
         inputSourceMap: false,
         compact: false,
       }),
-      terserPlugin,
-    ]
+      production && terserPlugin,
+    ].filter(Boolean),
   },
 ].filter(Boolean);

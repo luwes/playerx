@@ -141,11 +141,8 @@ module.exports = function (config) {
 
     files: [
       'https://polyfill.io/v3/polyfill.min.js?features=Array.from%2CURLSearchParams%2CCustomEvent%2Cfetch%2CPromise',
-      {
-        pattern: 'https://unpkg.com/@webcomponents/custom-elements',
-        type: 'js',
-      },
-      'https://unpkg.com/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js',
+      'https://unpkg.com/@webcomponents/custom-elements@1.4.2/custom-elements.min.js',
+      'https://unpkg.com/@webcomponents/webcomponentsjs@2.4.4/custom-elements-es5-adapter.js',
       {
         pattern: 'packages/site/src/_data/dev/players.yaml',
         included: false,

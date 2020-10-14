@@ -48,31 +48,11 @@ export default [
   config,
   {
     ...config,
-    input: 'src/js/playerx-plugged.js',
-    output: {
-      ...config.output,
-      file: 'public/js/playerx-plugged.js',
-      name: 'playerx',
-    },
-  },
-  {
-    ...config,
     input: 'src/js/site.js',
     output: {
       ...config.output,
       file: 'public/js/site.js',
       name: 'site',
     },
-  },
-  {
-    ...config,
-    input: 'src/js/mux.js',
-    output: {
-      ...config.output,
-      file: 'public/js/mux.js',
-      name: 'muxLazy',
-      globals: { 'playerx': 'playerx' },
-    },
-    external: ['playerx'],
   },
 ];

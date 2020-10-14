@@ -1,41 +1,40 @@
 import { options } from 'playerx';
+import * as canPlay from './canplay.js';
 
-import { canPlay as canPlayBrightcove } from './players/brightcove.js';
-import { canPlay as canPlayDailymotion } from './players/dailymotion.js';
-import { canPlay as canPlayFacebook } from './players/facebook.js';
-import { canPlay as canPlaySoundcloud } from './players/soundcloud.js';
-import { canPlay as canPlayStreamable } from './players/streamable.js';
-import { canPlay as canPlayTwitch } from './players/twitch.js';
-import { canPlay as canPlayVidyard } from './players/vidyard.js';
+export * from 'playerx';
 
 // See options.js for the default enabled players.
 Object.assign(options.players, {
   brightcove: {
-    canPlay: canPlayBrightcove,
+    canPlay: canPlay.brightcove,
     lazyPlayer: () => import('./players/brightcove.js'),
   },
   dailymotion: {
-    canPlay: canPlayDailymotion,
+    canPlay: canPlay.dailymotion,
     lazyPlayer: () => import('./players/dailymotion.js'),
   },
   facebook: {
-    canPlay: canPlayFacebook,
+    canPlay: canPlay.facebook,
     lazyPlayer: () => import('./players/facebook.js'),
   },
+  jwplayer: {
+    canPlay: canPlay.jwplayer,
+    lazyPlayer: () => import('./players/jwplayer.js'),
+  },
   soundcloud: {
-    canPlay: canPlaySoundcloud,
+    canPlay: canPlay.soundcloud,
     lazyPlayer: () => import('./players/soundcloud.js'),
   },
   streamable: {
-    canPlay: canPlayStreamable,
+    canPlay: canPlay.streamable,
     lazyPlayer: () => import('./players/streamable.js'),
   },
   twitch: {
-    canPlay: canPlayTwitch,
+    canPlay: canPlay.twitch,
     lazyPlayer: () => import('./players/twitch.js'),
   },
   vidyard: {
-    canPlay: canPlayVidyard,
+    canPlay: canPlay.vidyard,
     lazyPlayer: () => import('./players/vidyard.js'),
   },
 });

@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "version": "0.0.1",
+  "name": "playerx/lazy",
+  "module": "../esm/lazy.js",
+  "main": "../umd/lazy.js"
+}

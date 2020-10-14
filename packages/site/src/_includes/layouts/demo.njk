@@ -1,22 +1,8 @@
-{% extends "layouts/root.njk" %}
+{% extends "layouts/base.njk" %}
 
 {% block head %}
-  <link rel="stylesheet" href="/css/playerx-dev.css">
-{% endblock %}
+  {{ super() }}
 
-{% block main %}
-  {% include "header.njk" %}
-
-  {% block content %}
-  {% endblock %}
-
-  {% include "footer.njk" %}
-{% endblock %}
-
-{% block foot %}
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=Object.fromEntries%2CElement.prototype.classList%2CURLSearchParams%2CElement.prototype.matches"></script>
-  <script src="//unpkg.com/playerx/dist/polyfills.js"></script>
-  <script src="/js/playerx-plugged.js"></script>
-  <script src="/js/playerx-demo.js"></script>
-  <script src="/js/site.js"></script>
+  <script defer src="{% getCdnUrl 'playerx/all' %}"></script>
+  <script defer src="/js/playerx-demo.js"></script>
 {% endblock %}

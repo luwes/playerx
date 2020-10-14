@@ -1,5 +1,6 @@
 // https://developer.jwplayer.com/jwplayer/docs/jw8-javascript-api-reference
 
+import { jwplayer as MATCH_SRC } from '../constants/src-regex.js';
 import { getVideoId, createPlayPromise, PlayerError } from '../helpers.js';
 import {
   createElement,
@@ -13,8 +14,6 @@ import {
 
 const API_URL = 'https://ssl.p.jwpcdn.com/player/v/8.12.5/jwplayer.js';
 const API_GLOBAL = 'jwplayer';
-const MATCH_SRC = /jwplayer\.com\/players\/(\w+)(?:-(\w+))?/;
-export const canPlay = (src) => MATCH_SRC.test(src);
 
 export function createPlayer(element) {
   let api;

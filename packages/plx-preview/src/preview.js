@@ -1,5 +1,5 @@
-import { Element, property, utils } from 'playerx';
-import { createElement, findAncestor } from './utils/dom.js';
+import { Element, utils } from 'playerx';
+import { createElement } from './utils/dom.js';
 import { getThumbnailDimensions } from './utils/image.js';
 import { requestJson } from './utils/request.js';
 
@@ -20,35 +20,25 @@ utils.addCssRule('player-x:not([loading]) plx-preview', {
   'pointer-events': 'none',
 });
 
-export const PlxPreviewProps = {
-  player: {
-    get: (el) => {
-      if (el.hasAttribute('player')) {
-        return document.querySelector(`#${el.hasAttribute('player')}`);
-      }
-      return findAncestor(el, 'player-x');
-    },
-  },
-  oembedurl: property('https://api.playerx.io/oembed'),
-  title: property(),
-  loading: property(),
+export const props = {
+  ...Element.reflect({
+    oembedurl: 'https://api.playerx.io/oembed',
+    loading: undefined,
+    title: undefined,
+  }),
   src: {
     get: (el, src) => src,
     set: (el, src, oldSrc) => {
-      setSrc(el, src, oldSrc);
+      if (src !== oldSrc) {
+        el.load();
+      }
       return src;
     },
     reflect: true,
   },
 };
 
-async function setSrc(el, src, oldSrc) {
-  if (src !== oldSrc) {
-    el.load();
-  }
-}
-
-export const PlxPreviewMixin = () => (el) => {
+export const setup = () => (el) => {
 
   async function load() {
     await Promise.resolve();
@@ -125,8 +115,10 @@ export const PlxPreviewMixin = () => (el) => {
 };
 
 export const PlxPreview = Element({
-  props: PlxPreviewProps,
-  setup: PlxPreviewMixin,
+  props,
+  setup,
 });
 
-customElements.define('plx-preview', PlxPreview);
+if (!customElements.get('plx-preview')) {
+  customElements.define('plx-preview', PlxPreview);
+}

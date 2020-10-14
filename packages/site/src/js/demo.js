@@ -2,7 +2,13 @@
 import { observable, computed } from 'sinuous/observable';
 import { dhtml, hydrate as hy } from 'sinuous/hydrate';
 import { onconnected, ondisconnected } from './logger.js';
-import { toHHMMSS, round, computedValue, qs, prettyQuality } from './utils/utils.js';
+import {
+  toHHMMSS,
+  round,
+  computedValue,
+  qs,
+  prettyQuality,
+} from './utils/utils.js';
 import { getParam } from './utils/url.js';
 
 const query = `[data-player="${selectPlayer}"][data-clip="${selectClip}"]`;
@@ -36,8 +42,21 @@ const videoHeight = observable();
 const quality = computed(() => prettyQuality(videoHeight()));
 const unsupportsPlaybackRate = observable(true);
 const unsupportsControls = observable(true);
+const playsinline = true;
 
 setSrc(getParam('src', defaults.src));
+
+const config = {
+  facebook: {
+    appId: '197575574668798',
+  },
+  jwplayer: {
+    player: 'IxzuqJ4M',
+  },
+  brightcove: {
+    account: '1752604059001',
+  },
+};
 
 const props = {
   src,
@@ -48,7 +67,9 @@ const props = {
   loop,
   controls,
   preload,
+  playsinline,
   volume,
+  config,
   onconnected,
   ondisconnected,
   onpause: () => playing(false),
@@ -86,10 +107,11 @@ const props = {
 /** @type Playerx */
 let player;
 player = hy(dhtml`
-  ${() => showing() && (player = dhtml`
+  ${() =>
+    showing() &&
+    (player = dhtml`
     <player-x ...${props}>
       <plx-media></plx-media>
-      <plx-preview src=${src} />
     <//>
   `)}
 `);
@@ -103,7 +125,8 @@ onconnected({ target: player });
 
 hy(dhtml`
   <div class="sources" onclick=${(e) => setSrc(e.target.dataset.src)}>
-    ${[...Array(30)].map(() => dhtml`
+    ${[...Array(30)].map(
+      () => dhtml`
       <div>
         <b />
         <button class="btn src-btn${darkOnSelect}" />
@@ -111,7 +134,8 @@ hy(dhtml`
         <button class="btn src-btn${darkOnSelect}" />
         <button class="btn src-btn${darkOnSelect}" />
       </div>
-    `)}
+    `
+    )}
   </div>
 `);
 
@@ -133,7 +157,9 @@ function setSrc(dataSrc) {
 }
 
 function darkOnSelect() {
-  return [].concat(src()).join(',') === this.el.dataset.src ? ' btn-active' : '';
+  return [].concat(src()).join(',') === this.el.dataset.src
+    ? ' btn-active'
+    : '';
 }
 
 hy(dhtml`
@@ -158,22 +184,25 @@ function remove() {
 
 hy(dhtml`
   <div id="controls-2">
-    <button onclick=${() => player.set('playbackRate', 0.5)} disabled=${unsupportsPlaybackRate} />
-    <button onclick=${() => player.set('playbackRate', 1)} disabled=${unsupportsPlaybackRate} />
-    <button onclick=${() => player.set('playbackRate', 2)} disabled=${unsupportsPlaybackRate} />
+    <button onclick=${() =>
+      player.set('playbackRate', 0.5)} disabled=${unsupportsPlaybackRate} />
+    <button onclick=${() =>
+      player.set('playbackRate', 1)} disabled=${unsupportsPlaybackRate} />
+    <button onclick=${() =>
+      player.set('playbackRate', 2)} disabled=${unsupportsPlaybackRate} />
   </div>
 `);
 
 hy(dhtml`
   <input id="current-time-range"
-    value=${() => (currentTimeValue() / duration()) || 0}
-    oninput=${e => currentTime(e.target.value * duration())} />
+    value=${() => currentTimeValue() / duration() || 0}
+    oninput=${(e) => currentTime(e.target.value * duration())} />
 `);
 
 hy(dhtml`
   <input id="volume-range"
     value=${() => volumeValue() || 0}
-    oninput=${e => volume(e.target.value)} />
+    oninput=${(e) => volume(e.target.value)} />
 `);
 
 hy(dhtml`
@@ -189,27 +218,22 @@ hy(dhtml`
 `);
 
 hy(dhtml`
-  <input id="autoplay" oninput=${e => autoplay(e.target.checked)} checked=${autoplay} />
+  <input id="autoplay" oninput=${(e) =>
+    autoplay(e.target.checked)} checked=${autoplay} />
 `);
 
 hy(dhtml`
-  <input id="muted" oninput=${e => muted(e.target.checked)} checked=${mutedValue} />
+  <input id="muted" oninput=${(e) =>
+    muted(e.target.checked)} checked=${mutedValue} />
 `);
 
 hy(dhtml`
-  <input id="loop" oninput=${e => loop(e.target.checked)} checked=${loop} />
+  <input id="loop" oninput=${(e) => loop(e.target.checked)} checked=${loop} />
 `);
 
 hy(dhtml`
-  <input id="controls" disabled=${unsupportsControls} oninput=${e =>
-    controls(e.target.checked)} checked=${controls} />
+  <input id="controls" disabled=${unsupportsControls} oninput=${(e) =>
+  controls(e.target.checked)} checked=${controls} />
 `);
 
-export {
-  defaults,
-  autoplay,
-  muted,
-  controls,
-  loop,
-  src,
-};
+export { defaults, autoplay, muted, controls, loop, src };

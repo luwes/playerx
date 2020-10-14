@@ -1,29 +1,21 @@
-import { canPlay as canPlayFile } from './players/file.js';
-import { canPlay as canPlayVimeo } from './players/vimeo.js';
-import { canPlay as canPlayYoutube } from './players/youtube.js';
-import { canPlay as canPlayJwplayer } from './players/jwplayer.js';
-import { canPlay as canPlayWistia } from './players/wistia.js';
+import * as canPlay from './canplay.js';
 
 export const options = {
   players: {
     file: {
-      canPlay: canPlayFile,
+      canPlay: canPlay.file,
       lazyPlayer: () => import('./players/file.js'),
     },
     vimeo: {
-      canPlay: canPlayVimeo,
+      canPlay: canPlay.vimeo,
       lazyPlayer: () => import('./players/vimeo.js'),
     },
     youtube: {
-      canPlay: canPlayYoutube,
+      canPlay: canPlay.youtube,
       lazyPlayer: () => import('./players/youtube.js'),
     },
-    jwplayer: {
-      canPlay: canPlayJwplayer,
-      lazyPlayer: () => import('./players/jwplayer.js'),
-    },
     wistia: {
-      canPlay: canPlayWistia,
+      canPlay: canPlay.wistia,
       lazyPlayer: () => import('./players/wistia.js'),
     },
   },

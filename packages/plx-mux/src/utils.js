@@ -29,6 +29,23 @@ export function camelCase(name) {
   return name.replace(/[-_]([a-z])/g, ($0, $1) => $1.toUpperCase());
 }
 
+export function snakeCase(name) {
+  return name.replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase();
+}
+
+export function camelToSnakeKeys(obj) {
+  let newObj = {};
+  for (let key in obj) {
+    newObj[snakeCase(key)] = obj[key];
+  }
+  return newObj;
+}
+
+export function findAncestor(el, sel) {
+  while ((el = el.parentElement) && !el.matches(sel));
+  return el;
+}
+
 /**
  * A utility to create Promises with convenient public resolve and reject methods.
  * @return {Promise}

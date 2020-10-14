@@ -1,11 +1,18 @@
 // https://docs.mux.com/docs/javascript-building-a-custom-integration
 
 import muxData from 'mux-embed';
-import { VideoEvents, version } from 'playerx';
+import { Element, VideoEvents, version } from 'playerx';
 import { findSrcFile } from './helpers.js';
-import { uniqueId, camelCase, publicPromise, getMimeType } from './utils.js';
+import {
+  uniqueId,
+  camelCase,
+  publicPromise,
+  getMimeType,
+  camelToSnakeKeys,
+} from './utils.js';
 
-export const mux = (options) => () => (player) => {
+const mux = () => (el) => {
+  const player = el.player;
   let currentPlayer = player.name;
   let playerId;
   let initTime;
@@ -15,7 +22,7 @@ export const mux = (options) => () => (player) => {
   player.addEventListener('loadedsrc', onloadedsrc);
   player.addEventListener('ready', onready);
 
-  Object.keys(VideoEvents).forEach(key => {
+  Object.keys(VideoEvents).forEach((key) => {
     const event = VideoEvents[key];
     player.addEventListener(event, async () => {
       await init;
@@ -45,7 +52,7 @@ export const mux = (options) => () => (player) => {
         debug: true,
         minimumRebufferDuration: 350,
         data: {
-          ...options,
+          ...camelToSnakeKeys(el.dataset),
           player_init_time: initTime,
           player_name: 'playerx',
           player_version: version,
@@ -83,12 +90,14 @@ export const mux = (options) => () => (player) => {
     const videoData = {};
     videoData.video_duration = (await player.get('duration')) * 1000;
 
-    await Promise.all(keys.map(async key => {
-      const prop = `video_${key}`;
-      videoData[prop] = await player.get(camelCase(prop));
-    }));
+    await Promise.all(
+      keys.map(async (key) => {
+        const prop = `video_${key}`;
+        videoData[prop] = await player.get(camelCase(prop));
+      })
+    );
 
-    Object.keys(videoData).forEach(prop => {
+    Object.keys(videoData).forEach((prop) => {
       if (videoData[prop] == null) {
         // console.warn(`${prop} video data missing!`);
         delete videoData[prop];
@@ -130,10 +139,10 @@ export const mux = (options) => () => (player) => {
 
       // Optional properties - if you have them, send them, but if not, no big deal
       video_poster_url: player.poster, // Return the URL of the poster image used
-      player_language_code: player.lang || document.documentElement.lang // Return the language code (e.g. `en`, `en-us`)
+      player_language_code: player.lang || document.documentElement.lang, // Return the language code (e.g. `en`, `en-us`)
     };
 
-    Object.keys(stateData).forEach(prop => {
+    Object.keys(stateData).forEach((prop) => {
       if (typeof stateData[prop] !== 'boolean' && !stateData[prop]) {
         // console.warn(`${prop} video data missing!`);
         delete stateData[prop];
@@ -143,3 +152,11 @@ export const mux = (options) => () => (player) => {
     return stateData;
   }
 };
+
+export const PlxMux = Element({
+  setup: mux,
+});
+
+if (!customElements.get('plx-mux')) {
+  customElements.define('plx-mux', PlxMux);
+}
