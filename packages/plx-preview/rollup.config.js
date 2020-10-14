@@ -41,18 +41,6 @@ const config = {
 
 export default [
   config,
-  production && {
-    ...config,
-    output: {
-      ...config.output,
-      file: 'esm/preview.min.js',
-      format: 'es'
-    },
-    plugins: [
-      ...config.plugins,
-      terserPlugin,
-    ]
-  },
   {
     ...config,
     output: {

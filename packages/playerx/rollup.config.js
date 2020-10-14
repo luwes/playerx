@@ -73,15 +73,6 @@ function createBundles(
 
   return [
     config,
-    production && {
-      ...config,
-      output: {
-        ...config.output,
-        file: `esm/${outputName}.min.js`,
-        format: 'es',
-      },
-      plugins: [...config.plugins, pluginTerser()],
-    },
     {
       ...config,
       output: {
