@@ -97,7 +97,6 @@ function createBundles(
 /** @type {() => Plugin} */
 function pluginTerser() {
   return terser({
-    sourcemap: true,
     warnings: true,
     compress: {
       passes: 2,
