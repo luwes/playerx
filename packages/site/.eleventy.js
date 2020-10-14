@@ -55,7 +55,10 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.addShortcode('getCdnUrl', function (name) {
     if (env === 'prod') {
-      if (name.startsWith('playerx')) {
+      if (name.startsWith('playerx/')) {
+        name = name.replace('playerx/', '');
+        return `https://unpkg.com/playerx/umd/${name}`;
+      } else if (name.startsWith('playerx')) {
         return `https://unpkg.com/${name}`;
       } else {
         return `https://unpkg.com/@playerx/${name}`;
