@@ -15,11 +15,6 @@
   "workspaces": [
     "packages/*"
   ],
-  "prettier": {
-    "tabWidth": 2,
-    "singleQuote": true,
-    "semi": true
-  },
   "scripts": {
     "build": "run-s build:*",
     "build:js": "run-s build:js:*",
@@ -39,6 +34,34 @@
     "docs": "run-p docs:*",
     "docs:playerx": "yarn workspace playerx docs",
     "bench": "yarn workspace bench start"
+  },
+  "prettier": {
+    "tabWidth": 2,
+    "singleQuote": true,
+    "semi": true
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "es6": true,
+      "node": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:import/warnings"
+    ],
+    "parser": "@babel/eslint-parser",
+    "parserOptions": {
+      "ecmaVersion": 2019,
+      "sourceType": "module"
+    },
+    "rules": {
+      "semi": "error",
+      "no-shadow": "error"
+    },
+    "ignorePatterns": [
+      "packages/site/src/js/ga.js"
+    ]
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
