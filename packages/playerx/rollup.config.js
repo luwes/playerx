@@ -53,8 +53,8 @@ function createBundles(
     },
     output: {
       format: 'es',
-      sourcemap: true,
-      file: `esm/${outputName}.js`,
+      sourcemap: production,
+      file: `dist/${outputName}.js`,
       globals: { playerx: 'playerx' },
       inlineDynamicImports,
     },
@@ -64,7 +64,7 @@ function createBundles(
 
   if (inlineDynamicImports === false) {
     delete config.output.file;
-    config.output.dir = 'esm';
+    config.output.dir = 'dist';
     config.output.entryFileNames = 'lazy.js';
     config.output.chunkFileNames = (chunkInfo) => {
       return `lazy-${chunkInfo.name}.js`;
@@ -73,12 +73,21 @@ function createBundles(
 
   return [
     config,
+    production && {
+      ...config,
+      output: {
+        ...config.output,
+        file: `dist/${outputName}.min.js`,
+      },
+      plugins: [...config.plugins, pluginTerser()],
+    },
     {
       ...config,
       output: {
         ...config.output,
-        file: `umd/${outputName}.js`,
         format: 'umd',
+        sourcemap: true,
+        file: `dist/${outputName}.umd.js`,
         name: globalName,
       },
       plugins: [

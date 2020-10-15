@@ -1,7 +1,0 @@
-{
-  "private": true,
-  "version": "0.0.1",
-  "name": "playerx/vimeo",
-  "module": "../esm/vimeo.js",
-  "main": "../umd/vimeo.js"
-}

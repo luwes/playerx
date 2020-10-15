@@ -1,7 +1,0 @@
-{
-  "private": true,
-  "version": "0.0.1",
-  "name": "playerx/dailymotion",
-  "module": "../esm/dailymotion.js",
-  "main": "../umd/dailymotion.js"
-}

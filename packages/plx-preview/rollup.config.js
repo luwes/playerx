@@ -6,46 +6,38 @@ import sourcemaps from 'rollup-plugin-sourcemaps';
 
 const production = !process.env.ROLLUP_WATCH;
 
-const terserPlugin = terser({
-  warnings: true,
-  compress: {
-    passes: 2,
-    drop_console: production,
-  },
-  mangle: {
-    properties: {
-      regex: /^_\w/
-    }
-  }
-});
-
 const config = {
   input: 'src/preview.js',
   watch: {
-    clearScreen: false
+    clearScreen: false,
   },
   output: {
     format: 'es',
-    sourcemap: true,
-    file: 'esm/preview.js',
-    globals: { 'playerx': 'playerx' },
+    sourcemap: production,
+    file: 'dist/preview.js',
+    globals: { playerx: 'playerx' },
   },
   external: ['playerx'],
-  plugins: [
-    bundleSize(),
-    sourcemaps(),
-    nodeResolve(),
-  ]
+  plugins: [bundleSize(), sourcemaps(), nodeResolve()],
 };
 
 export default [
   config,
+  production && {
+    ...config,
+    output: {
+      ...config.output,
+      file: `dist/preview.min.js`,
+    },
+    plugins: [...config.plugins, pluginTerser()],
+  },
   {
     ...config,
     output: {
       ...config.output,
-      file: 'umd/preview.js',
       format: 'umd',
+      sourcemap: true,
+      file: 'dist/preview.umd.js',
       name: 'plxPreview',
     },
     plugins: [
@@ -56,7 +48,24 @@ export default [
         inputSourceMap: false,
         compact: false,
       }),
-      production && terserPlugin,
+      production && pluginTerser(),
     ].filter(Boolean),
   },
 ].filter(Boolean);
+
+/** @type {() => Plugin} */
+function pluginTerser() {
+  return terser({
+    warnings: true,
+    compress: {
+      passes: 2,
+      drop_console: production,
+      sequences: false, // caused an issue with Babel where sequence order was wrong
+    },
+    mangle: {
+      properties: {
+        regex: /^_\w/,
+      },
+    },
+  });
+}

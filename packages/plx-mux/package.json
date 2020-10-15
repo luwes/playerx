@@ -10,12 +10,11 @@
   "repository": "playerxo/playerx",
   "license": "SEE LICENSE IN LICENSE",
   "author": "Wesley Luyten <me@wesleyluyten.com> (https://wesleyluyten.com)",
-  "main": "umd/mux.js",
-  "module": "esm/mux.js",
+  "main": "dist/mux.umd.js",
+  "module": "dist/mux.js",
   "files": [
-    "esm",
-    "umd",
-    "src"
+    "src",
+    "dist"
   ],
   "scripts": {
     "build": "rollup -c --silent",

@@ -10,12 +10,11 @@
   "repository": "playerxo/playerx",
   "license": "SEE LICENSE IN LICENSE",
   "author": "Wesley Luyten <me@wesleyluyten.com> (https://wesleyluyten.com)",
-  "main": "umd/preview.js",
-  "module": "esm/preview.js",
+  "main": "dist/preview.umd.js",
+  "module": "dist/preview.js",
   "files": [
-    "esm",
-    "umd",
-    "src"
+    "src",
+    "dist"
   ],
   "scripts": {
     "build": "rollup -c --silent",

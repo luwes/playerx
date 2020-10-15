@@ -1,7 +1,0 @@
-{
-  "private": true,
-  "version": "0.0.1",
-  "name": "playerx/wistia",
-  "module": "../esm/wistia.js",
-  "main": "../umd/wistia.js"
-}

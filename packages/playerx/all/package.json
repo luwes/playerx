@@ -1,7 +1,0 @@
-{
-  "private": true,
-  "version": "0.0.1",
-  "name": "playerx/all",
-  "module": "../esm/all.js",
-  "main": "../umd/all.js"
-}

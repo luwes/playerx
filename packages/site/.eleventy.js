@@ -54,22 +54,26 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addTransform('htmlmin', require('./src/utils/minify-html.js'));
 
   eleventyConfig.addShortcode('getCdnUrl', function (name) {
+    let prefix = '';
     if (env === 'prod') {
-      if (name.startsWith('playerx/')) {
-        name = name.replace('playerx/', '');
-        return `https://unpkg.com/playerx/umd/${name}`;
-      } else if (name.startsWith('playerx')) {
-        return `https://unpkg.com/${name}`;
-      } else {
-        return `https://unpkg.com/@playerx/${name}`;
+      const version = require('./package.json').dependencies[name] || 'latest';
+
+      if (name[0] === '@') {
+        prefix = '@playerx/';
+        name = name.replace('@playerx/', '');
       }
+
+      const [pkg, mod] = name.split('/');
+      return `https://unpkg.com/${prefix}${pkg}@${version}/dist/${mod || pkg}.umd.js`;
+
     } else {
-      name = name.startsWith('playerx') ? name : `plx-${name}`;
-      const modulePath = path.relative(
-        path.resolve('../'),
-        require.resolve(`../${name}`)
-      );
-      return `http://localhost:5000/${modulePath}`;
+      if (name[0] === '@') {
+        prefix = 'plx-';
+        name = name.replace('@playerx/', '');
+      }
+
+      let [pkg, mod] = name.split('/');
+      return `http://localhost:5000/${prefix}${pkg}/dist/${mod || pkg}.umd.js`;
     }
   });
 

@@ -1,7 +1,0 @@
-{
-  "private": true,
-  "version": "0.0.1",
-  "name": "playerx/facebook",
-  "module": "../esm/facebook.js",
-  "main": "../umd/facebook.js"
-}

@@ -3,7 +3,11 @@
   "version": "0.0.1",
   "description": "Playerx polyfills",
   "license": "SEE LICENSE IN LICENSE",
-  "main": "index.js",
+  "main": "dist/polyfills.umd.js",
+  "files": [
+    "src",
+    "dist"
+  ],
   "scripts": {
     "lint": "eslint ."
   },
