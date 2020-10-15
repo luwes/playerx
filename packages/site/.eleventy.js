@@ -56,7 +56,9 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addShortcode('getCdnUrl', function (name) {
     let prefix = '';
     if (env === 'prod') {
-      const version = require('./package.json').dependencies[name] || 'latest';
+      const deps = require('./package.json').dependencies;
+      const stripSubmod = name.replace(/\/.*$/, '');
+      const version = deps[name] || deps[stripSubmod] || 'latest';
 
       if (name[0] === '@') {
         prefix = '@playerx/';
@@ -72,7 +74,7 @@ module.exports = function (eleventyConfig) {
         name = name.replace('@playerx/', '');
       }
 
-      let [pkg, mod] = name.split('/');
+      const [pkg, mod] = name.split('/');
       return `http://localhost:5000/${prefix}${pkg}/dist/${mod || pkg}.umd.js`;
     }
   });
