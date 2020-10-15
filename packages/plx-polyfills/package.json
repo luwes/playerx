@@ -1,6 +1,6 @@
 {
   "name": "@playerx/polyfills",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Playerx polyfills",
   "license": "SEE LICENSE IN LICENSE",
   "main": "dist/polyfills.umd.js",
@@ -9,7 +9,7 @@
     "dist"
   ],
   "scripts": {
-    "lint": "eslint ."
+    "lint": "eslint dist"
   },
   "devDependencies": {
     "@webcomponents/custom-elements": "^1.4.2",

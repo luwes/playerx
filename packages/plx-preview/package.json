@@ -19,7 +19,8 @@
   "scripts": {
     "build": "rollup -c --silent",
     "dev": "rollup -wc --silent",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "prepublishOnly": "yarn lint && yarn build"
   },
   "peerDependencies": {
     "playerx": ">=0.0.1"
