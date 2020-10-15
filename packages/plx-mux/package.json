@@ -1,6 +1,6 @@
 {
   "name": "@playerx/mux",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Playerx MUX",
   "keywords": [],
   "homepage": "https://github.com/playerxo/playerx#readme",
@@ -19,7 +19,8 @@
   "scripts": {
     "build": "rollup -c --silent",
     "dev": "rollup -wc --silent",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "prepublishOnly": "yarn lint && yarn build"
   },
   "peerDependencies": {
     "playerx": ">=0.0.1"
