@@ -15,3 +15,6 @@ parserOptions:
 rules:
   semi: error
   no-shadow: error
+
+ignorePatterns:
+  - packages/site/src/js/ga.js
