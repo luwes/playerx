@@ -28,11 +28,11 @@
     "eleventy": "eleventy"
   },
   "dependencies": {
-    "@playerx/mux": "0.0.1",
-    "@playerx/preview": "0.0.1",
+    "@playerx/mux": "0.0.2",
+    "@playerx/preview": "0.0.2",
     "@tailwindcss/ui": "^0.6.2",
     "disco": "1.0.2",
-    "playerx": "0.1.1",
+    "playerx": "0.1.2",
     "sinuous": "0.27.10",
     "tailwindcss": "1.9.1"
   },
