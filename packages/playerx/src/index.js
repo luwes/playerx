@@ -4,8 +4,7 @@
  */
 import { Element } from './element.js';
 import { LoadingMixin } from './loading.js';
-import { options } from './options.js';
-import { PlayerxMixin, props } from './playerx.js';
+import { PlayerxMixin, props, getCurrentPlayerConfig } from './playerx.js';
 import { addCssRule, getStyle, loadScript } from './utils.js';
 
 export * from './element.js';
@@ -44,18 +43,8 @@ function define(name, create) {
   return CE;
 }
 
-function findPlayer(element) {
-  for (let key in options.players) {
-    const playerConfig = options.players[key];
-    if (playerConfig.canPlay(element.src)) {
-      return getPlayer(playerConfig, element);
-    }
-  }
-  // Fallback to file player.
-  return getPlayer(options.players.file, element);
-}
-
-async function getPlayer(playerConfig, element) {
+async function findPlayer(element) {
+  const playerConfig = getCurrentPlayerConfig(element.src);
   const createPlayer = playerConfig.lazyPlayer
     ? (await playerConfig.lazyPlayer()).createPlayer
     : playerConfig;

@@ -1,3 +1,6 @@
+import { getCurrentPlayerConfig } from './playerx.js';
+import { createElement } from './utils.js';
+
 export const LoadingMixin = (CE) => {
   CE.defineProp('loading', {
     get: (el, val) => val,
@@ -27,6 +30,8 @@ export const LoadingMixin = (CE) => {
     }
 
     function newLoad() {
+      preconnect();
+
       if (observer) {
         observer.unobserve(element);
       }
@@ -55,6 +60,19 @@ export const LoadingMixin = (CE) => {
         element.load = newLoad;
       } catch (error) {
         //...
+      }
+    }
+
+    function preconnect() {
+      const playerConfig = getCurrentPlayerConfig(element.src);
+      if (playerConfig.preconnect) {
+        playerConfig.preconnect.forEach((href) => {
+          document.head.appendChild(createElement('link', {
+            href,
+            rel: 'preconnect',
+            crossorigin: '',
+          }));
+        });
       }
     }
 

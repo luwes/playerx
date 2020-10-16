@@ -608,3 +608,14 @@ function base(element, player) {
     },
   };
 }
+
+export function getCurrentPlayerConfig(src) {
+  for (let key in options.players) {
+    const playerConfig = options.players[key];
+    if (playerConfig.canPlay(src)) {
+      return playerConfig;
+    }
+  }
+  // Fallback to file player.
+  return options.players.file;
+}
