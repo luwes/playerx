@@ -96,6 +96,8 @@ module.exports = function (config) {
       terminal: true,
     },
 
+    browserDisconnectTimeout: 10000, // default 2000
+    browserDisconnectTolerance: 1, // default 0
     browserNoActivityTimeout: 60 * 60 * 1000,
 
     // Especially on services like SauceLabs and Browserstack, it makes sense only to launch a limited amount of browsers at once, and only start more when those have finished. Using this configuration, you can specify how many browsers should be running at once at any given point in time.
