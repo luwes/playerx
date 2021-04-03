@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@playerx/mux": "0.0.2",
-    "@playerx/polyfills": "0.0.2",
+    "@playerx/polyfills": "0.0.3",
     "@playerx/preview": "0.0.3",
     "@playerx/controls": "0.0.1",
     "@tailwindcss/ui": "^0.6.2",
