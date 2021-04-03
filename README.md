@@ -1,4 +1,4 @@
-# <a href="https://github.com/playerxo/playerx"><img src="https://playerx.io/images/playerx-logo.svg?sanitize=true" height="36" alt="playerx" /></a>
+# <a href="https://github.com/playerxo/playerx"><img src="https://dev.playerx.io/images/playerx-logo.svg?sanitize=true" height="36" alt="playerx" /></a>
 
 [![Version](https://img.shields.io/npm/v/playerx.svg?color=success&style=flat-square)](https://www.npmjs.com/package/playerx)
 ![Badge size](https://img.badgesize.io/https://unpkg.com/playerx/dist/playerx.min.js?compression=gzip&label=gzip&style=flat-square)
