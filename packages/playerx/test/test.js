@@ -7,13 +7,13 @@ import './utils.js';
 import '../src/all.js';
 
 // Run the buggy players first
+import './players/facebook.js';
 import './players/youtube.js';
 import './players/wistia.js';
 import './players/dailymotion.js';
 import './players/twitch.js';
 import './players/streamable.js';
 import './players/soundcloud.js';
-import './players/facebook.js';
 // import './players/jwplayer.js'; // need jw player developer license
 import './players/vidyard.js';
 import './players/file-dash.js';
