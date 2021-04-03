@@ -1,6 +1,6 @@
 {
   "name": "@playerx/polyfills",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Playerx polyfills",
   "license": "SEE LICENSE IN LICENSE",
   "main": "dist/polyfills.umd.js",
