@@ -34,7 +34,6 @@ export function createPlayer(element) {
       playsinline: element.playsinline,
       controls: element.controls,
       muted: element.muted,
-      parent: location.hostname,
       ...element.config.twitch,
     };
   }

@@ -6,7 +6,8 @@ const duration = 45;
 const tests = {
   basic: {
     browsers: {
-      ie: false,
+      firefox: false,
+      ie: false
     },
   },
   volume: false,
