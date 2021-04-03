@@ -5,7 +5,7 @@
 import { Element } from './element.js';
 import { LoadingMixin } from './loading.js';
 import { PlayerxMixin, props, getCurrentPlayerConfig } from './playerx.js';
-import { addCssRule, getStyle, loadScript } from './utils.js';
+import { addCssRule, deleteCssRule, getStyle, loadScript } from './utils.js';
 
 export * from './element.js';
 export * from './script.js';
@@ -56,6 +56,7 @@ async function findPlayer(element) {
 
 export const utils = {
   addCssRule,
+  deleteCssRule,
   getStyle,
   loadScript,
 };

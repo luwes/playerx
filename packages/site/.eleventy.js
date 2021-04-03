@@ -19,7 +19,7 @@ module.exports = function (eleventyConfig) {
       baseDir: './public',
       middleware: [compress()],
     },
-    files: ['public/css', 'public/js'],
+    files: ['public/css', 'public/js', '../**/dist/*.js'],
   });
 
   eleventyConfig.addPlugin(eleventyNavigationPlugin);
@@ -75,7 +75,7 @@ module.exports = function (eleventyConfig) {
       }
 
       const [pkg, mod] = name.split('/');
-      return `http://localhost:5000/${prefix}${pkg}/dist/${mod || pkg}.umd.js`;
+      return `http://localhost:8080/${prefix}${pkg}/dist/${mod || pkg}.umd.js`;
     }
   });
 

@@ -1,5 +1,4 @@
 import nodeResolve from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
 import babel from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 import bundleSize from 'rollup-plugin-size';
@@ -7,10 +6,10 @@ import sourcemaps from 'rollup-plugin-sourcemaps';
 
 const production = !process.env.ROLLUP_WATCH;
 
-const name = 'mux';
+const name = 'controls';
 
 const config = {
-  input: `src/${name}.js`,
+  input: `src/index.js`,
   watch: {
     clearScreen: false,
   },
@@ -21,7 +20,7 @@ const config = {
     globals: { playerx: 'playerx' },
   },
   external: ['playerx'],
-  plugins: [bundleSize(), sourcemaps(), commonjs(), nodeResolve()],
+  plugins: [bundleSize(), sourcemaps(), nodeResolve()],
 };
 
 export default [
@@ -41,16 +40,16 @@ export default [
       format: 'umd',
       sourcemap: true,
       file: `dist/${name}.umd.js`,
-      name: 'plxMux',
+      name: 'plxPreview',
     },
     plugins: [
       ...config.plugins,
-      production &&
-        babel({
-          babelHelpers: 'bundled',
-          inputSourceMap: false,
-          compact: false,
-        }),
+      babel({
+        babelHelpers: 'bundled',
+        include: '**/*',
+        inputSourceMap: false,
+        compact: false,
+      }),
       production && pluginTerser(),
     ].filter(Boolean),
   },

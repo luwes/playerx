@@ -1,10 +1,12 @@
-import { Element } from './element.js';
+import { define } from './element.js';
 import { loadScript } from './utils.js';
 
-const props = Element.reflect({
-  loading: undefined,
-  src: undefined,
-});
+const props = {
+  reflect: {
+    loading: undefined,
+    src: undefined,
+  }
+};
 
 const setup = () => (el) => {
   const player = el.player;
@@ -24,11 +26,7 @@ const setup = () => (el) => {
   });
 };
 
-export const PlxScript = Element({
+export const PlxScript = define('plx-script', {
   props,
   setup,
 });
-
-if (!customElements.get('plx-script')) {
-  customElements.define('plx-script', PlxScript);
-}

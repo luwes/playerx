@@ -1,31 +1,33 @@
-import { Element, utils } from 'playerx';
+import { define, css } from 'playerx';
 import { createElement } from './utils/dom.js';
 import { getThumbnailDimensions } from './utils/image.js';
 import { requestJson } from './utils/request.js';
 
 const IMAGE_EXTENSIONS = /\.(jpe?g|gif|a?png|svg|webp)($|\?)/i;
 
-utils.addCssRule('plx-preview', {
-  display: 'block',
-});
+const styles = (selector) => css`
+  ${selector} {
+    display: block;
+  }
 
-utils.addCssRule('plx-preview img', {
-  position: 'relative',
-  width: '100%',
-  height: 'auto',
-});
+  ${selector} img {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
 
-utils.addCssRule('player-x:not([loading]) plx-preview', {
-  opacity: 0,
-  'pointer-events': 'none',
-});
+  player-x:not([loading]) ${selector} {
+    opacity: 0;
+    pointer-events: none;
+  }
+`;
 
 export const props = {
-  ...Element.reflect({
+  reflect: {
     oembedurl: 'https://api.playerx.io/oembed',
     loading: undefined,
     title: undefined,
-  }),
+  },
   src: {
     get: (el, src) => src,
     set: (el, src, oldSrc) => {
@@ -114,11 +116,8 @@ export const setup = () => (el) => {
   };
 };
 
-export const PlxPreview = Element({
+export const PlxPreview = define('plx-preview', {
+  styles,
   props,
   setup,
 });
-
-if (!customElements.get('plx-preview')) {
-  customElements.define('plx-preview', PlxPreview);
-}

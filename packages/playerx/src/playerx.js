@@ -18,9 +18,10 @@ import {
 const sheet = getStyle();
 sheet.firstChild.data += `
   player-x {
-    display: block;
+    display: flex;
+    align-items: flex-end;
     position: relative;
-    width: 100%
+    width: 100%;
   }
   player-x::before {
     content: "";
@@ -188,6 +189,8 @@ export const PlayerxMixin = (CE, { create }) => (element) => {
   }
 
   async function load() {
+    if (!element.src) return;
+
     clearAllTimeouts();
 
     apiReady = publicPromise();

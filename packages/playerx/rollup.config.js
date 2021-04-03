@@ -15,27 +15,29 @@ let bundles = [
   // ...createBundles('src/all.js', 'lazy', 'playerx', [], false),
 ];
 
-const players = fs.readdirSync('src/players');
-players.forEach((player) => {
-  player = path.basename(player, '.js');
+if (production) {
+  const players = fs.readdirSync('src/players');
+  players.forEach((player) => {
+    player = path.basename(player, '.js');
 
-  const globalName = `plx${player[0].toUpperCase()}${player.slice(1)}`;
-  bundles = [
-    ...bundles,
-    ...createBundles('entry', player, globalName, [
-      virtual({
-        entry: `
-import { options } from 'playerx';
-import { ${player} } from './src/canplay.js';
-options.players.${player} = {
-  canPlay: ${player},
-  lazyPlayer: () => import('./src/players/${player}.js'),
-};
-        `,
-      }),
-    ]),
-  ];
-});
+    const globalName = `plx${player[0].toUpperCase()}${player.slice(1)}`;
+    bundles = [
+      ...bundles,
+      ...createBundles('entry', player, globalName, [
+        virtual({
+          entry: `
+  import { options } from 'playerx';
+  import { ${player} } from './src/canplay.js';
+  options.players.${player} = {
+    canPlay: ${player},
+    lazyPlayer: () => import('./src/players/${player}.js'),
+  };
+          `,
+        }),
+      ]),
+    ];
+  });
+}
 
 export default bundles.filter(Boolean);
 

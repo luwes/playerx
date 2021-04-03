@@ -6,15 +6,17 @@ import sourcemaps from 'rollup-plugin-sourcemaps';
 
 const production = !process.env.ROLLUP_WATCH;
 
+const name = 'preview';
+
 const config = {
-  input: 'src/preview.js',
+  input: `src/${name}.js`,
   watch: {
     clearScreen: false,
   },
   output: {
     format: 'es',
     sourcemap: production,
-    file: 'dist/preview.js',
+    file: `dist/${name}.js`,
     globals: { playerx: 'playerx' },
   },
   external: ['playerx'],
@@ -27,7 +29,7 @@ export default [
     ...config,
     output: {
       ...config.output,
-      file: `dist/preview.min.js`,
+      file: `dist/${name}.min.js`,
     },
     plugins: [...config.plugins, pluginTerser()],
   },
@@ -37,7 +39,7 @@ export default [
       ...config.output,
       format: 'umd',
       sourcemap: true,
-      file: 'dist/preview.umd.js',
+      file: `dist/${name}.umd.js`,
       name: 'plxPreview',
     },
     plugins: [

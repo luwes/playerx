@@ -1,7 +1,8 @@
-let style;
-export function getStyle() {
+
+export function getStyle(target = document.head) {
+  let style = target.querySelector('style');
   if (!style) {
-    style = document.head.appendChild(createElement('style'));
+    style = target.insertBefore(createElement('style'), target.firstChild);
     style.innerHTML = ' ';
   }
   return style;
