@@ -13,9 +13,15 @@ export const LoadingMixin = (CE) => {
     let observer;
     let loadCalled;
 
-    element.onclick = onclick;
+    element.addEventListener('click', onclick);
 
-    function onclick() {
+    function onclick(e) {
+      // If this is a click in the media ignore it.
+      const media = element.querySelector('plx-media');
+      if (media && media.contains(e.target)) {
+        return;
+      }
+
       if (element.loading) {
         if (element.loading === 'user') {
           element.load();
