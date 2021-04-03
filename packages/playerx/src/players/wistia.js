@@ -147,8 +147,9 @@ export function createPlayer(element) {
       api.unbind(eventAliases[eventName] || eventName, callback);
     },
 
-    set src(src) {
-      element.load();
+    setSrc() {
+      // Must return promise here to await ready state.
+      return element.load();
 
       // `api.replaceWith` works but does strange things with resizing ;(
       // api.replaceWith(getVideoId(MATCH_SRC, src), getOptions());

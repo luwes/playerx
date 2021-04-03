@@ -135,7 +135,8 @@ export function createPlayer(element) {
     },
 
     setSrc() {
-      element.load();
+      // Must return promise here to await ready state.
+      return element.load();
     },
 
     set currentTime(seconds) {

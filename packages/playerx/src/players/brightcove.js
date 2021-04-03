@@ -7,7 +7,6 @@ import {
   loadScript,
   publicPromise,
   promisify,
-  uniqueId,
 } from '../utils.js';
 
 const API_GLOBAL = 'bc';
@@ -30,10 +29,8 @@ export function createPlayer(element) {
 
     const opts = getOptions();
     const videoId = getVideoId(MATCH_SRC, element.src);
-    const id = uniqueId('bc');
 
     div = createElement('video-js', {
-      id,
       controls: opts.controls ? '' : null,
       'data-video-id': videoId,
       style: 'width:100%;height:100%',
@@ -41,7 +38,7 @@ export function createPlayer(element) {
 
     const API_URL = `https://players.brightcove.net/${opts.account}/default_default/index.min.js`;
     const BC = await loadScript(opts.apiUrl || API_URL, API_GLOBAL);
-    api = BC(id);
+    api = BC(div);
     api.autoplay(element.playing || element.autoplay);
 
     await promisify(api.ready, api)();
@@ -84,7 +81,8 @@ export function createPlayer(element) {
     },
 
     setSrc() {
-      element.load();
+      // Must return promise here to await ready state.
+      return element.load();
     },
   };
 

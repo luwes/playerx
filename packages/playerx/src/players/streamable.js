@@ -102,8 +102,9 @@ export function createPlayer(element) {
       api.off(eventAliases[eventName] || eventName, callback);
     },
 
-    set src(value) {
-      element.load();
+    setSrc() {
+      // Must return promise here to await ready state.
+      return element.load();
     },
 
     async getPaused() {

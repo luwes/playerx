@@ -186,8 +186,9 @@ export function createPlayer(element) {
       );
     },
 
-    set src(src) {
-      element.load();
+    setSrc() {
+      // Must return promise here to await ready state.
+      return element.load();
 
       // `api.cueVideoById` works but `api.getDuration()` is never updated ;(
       // api.cueVideoById(getVideoId(MATCH_SRC, element.src));
