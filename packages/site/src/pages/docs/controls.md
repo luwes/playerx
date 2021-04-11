@@ -4,9 +4,8 @@ title: "Playerx - Controls"
 eleventyNavigation:
   key: <plx-controls>
   parent: Elements
-  order: 2
+  order: 3
 tags:
-  - docs
 layout: layouts/docs.njk
 ---
 

@@ -122,9 +122,6 @@ export interface Playerx extends HTMLElement {
    */
   src: string;
 
-  videoId: string;
-  videoTitle: string;
-
   /**
    * Is a double indicating the audio volume, from 0.0 (silent) to 1.0 (loudest).
    */
@@ -135,6 +132,13 @@ export interface Playerx extends HTMLElement {
    * the width of the display area, in CSS pixels.
    */
   width: string;
+
+  /**
+   * A URLSearchParams instance to store serializable video metadata that
+   * can be set via an attribute. Takes the same init argument as URLSearchParams
+   * but stringified.
+   */
+  meta: URLSearchParams;
 
   /**
    * Begins playback of the media.

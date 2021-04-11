@@ -84,12 +84,20 @@ export const props = {
   playbackRate: 1,
   volume: 1,
 
-  videoId: undefined, // custom property
-  videoTitle: undefined, // custom property
-
   config: {
     ...property({}), // custom property
     fromAttribute: JSON.parse,
+  },
+
+  meta: {
+    ...property(new URLSearchParams()), // custom property
+    fromAttribute: (val) => {
+      let init = val;
+      try {
+        init = JSON.parse(val);
+      } catch (err) { /**/ }
+      return new URLSearchParams(init);
+    },
   },
 };
 
@@ -250,6 +258,14 @@ export const PlayerxMixin = (CE, { create }) => (element) => {
 
   async function afterLoad(initEvents) {
     await player.ready();
+
+    if (!player.meta.get('video_id')) {
+      player.meta.set('video_id', await player.get('videoId'));
+    }
+
+    if (!player.meta.get('video_title')) {
+      player.meta.set('video_title', await player.get('videoTitle'));
+    }
 
     await player.set('volume', element.cache('volume'));
     await player.set('muted', element.cache('muted'));
@@ -513,48 +529,10 @@ export const PlayerxMixin = (CE, { create }) => (element) => {
 
 function base(element, player) {
   return {
-    /**
-     * Set a player property, try player interface first, then internal api.
-     * @param  {string} name
-     * @param {*} value
-     * @return {*}
-     */
-    set(name, value) {
-      if (name == null) return;
+    ...flexApi(player, 'api'),
 
-      let descriptor = getPropertyDescriptor(player, name);
-      if (descriptor && descriptor.set) return (player[name] = value);
-
-      const method = setName(name);
-      if (isMethod(player, method)) return player[method](value);
-
-      if (!player.api) return;
-
-      descriptor = getPropertyDescriptor(player.api, name);
-      if (descriptor && descriptor.set) return (player.api[name] = value);
-
-      if (isMethod(player.api, name)) return player.api[name](value);
-      if (isMethod(player.api, method)) return player.api[method](value);
-    },
-
-    /**
-     * Get a player property, try player interface first, then internal api.
-     * @param  {string} name
-     * @return {*}
-     */
-    get(name) {
-      if (name == null) return;
-
-      let result;
-      const method = getName(name);
-      if ((result = getProperty(player, name)) !== undefined) return result;
-      if ((result = getMethod(player, method)) !== undefined) return result;
-
-      if (!player.api) return;
-
-      if ((result = getProperty(player.api, name)) !== undefined) return result;
-      if ((result = getMethod(player.api, name)) !== undefined) return result;
-      if ((result = getMethod(player.api, method)) !== undefined) return result;
+    get meta() {
+      return element.meta;
     },
 
     unsupported: {},
@@ -608,6 +586,54 @@ function base(element, player) {
 
     getBuffered() {
       return createTimeRanges();
+    },
+  };
+}
+
+export function flexApi(instance, api) {
+  return {
+    /**
+     * Set a instance property, try instance interface first, then internal api.
+     * @param  {string} name
+     * @param {*} value
+     * @return {*}
+     */
+    set(name, value) {
+      if (name == null) return;
+
+      let descriptor = getPropertyDescriptor(instance, name);
+      if (descriptor && descriptor.set) return (instance[name] = value);
+
+      const method = setName(name);
+      if (isMethod(instance, method)) return instance[method](value);
+
+      if (!instance[api]) return;
+
+      descriptor = getPropertyDescriptor(instance[api], name);
+      if (descriptor && descriptor.set) return (instance[api][name] = value);
+
+      if (isMethod(instance[api], name)) return instance[api][name](value);
+      if (isMethod(instance[api], method)) return instance[api][method](value);
+    },
+
+    /**
+     * Get a instance property, try instance interface first, then internal api.
+     * @param  {string} name
+     * @return {*}
+     */
+    get(name) {
+      if (name == null) return;
+
+      let result;
+      const method = getName(name);
+      if ((result = getProperty(instance, name)) !== undefined) return result;
+      if ((result = getMethod(instance, method)) !== undefined) return result;
+
+      if (!instance[api]) return;
+
+      if ((result = getProperty(instance[api], name)) !== undefined) return result;
+      if ((result = getMethod(instance[api], name)) !== undefined) return result;
+      if ((result = getMethod(instance[api], method)) !== undefined) return result;
     },
   };
 }

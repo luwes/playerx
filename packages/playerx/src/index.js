@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, Wesley Luyten, @luwes
+ * Copyright (c) 2021, Wesley Luyten, @luwes
  * @see LICENSE
  */
 import { Element } from './element.js';

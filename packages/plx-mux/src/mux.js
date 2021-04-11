@@ -1,11 +1,10 @@
 // https://docs.mux.com/docs/javascript-building-a-custom-integration
-
+import pkg from '../package.json';
 import muxData from 'mux-embed';
-import { Element, VideoEvents, version } from 'playerx';
+import { define, VideoEvents, version } from 'playerx';
 import { findSrcFile } from './helpers.js';
 import {
   uniqueId,
-  camelCase,
   publicPromise,
   getMimeType,
   camelToSnakeKeys,
@@ -45,11 +44,11 @@ const mux = () => (el) => {
 
   async function onloadedsrc() {
     if (currentPlayer === player.name) {
-      emit(playerId, 'videochange', await getVideoData());
+      emit(playerId, 'videochange', await getConfigurableMetadata());
     } else {
       playerId = uniqueId('player');
       muxData.init(playerId, {
-        debug: true,
+        debug: el.debug,
         minimumRebufferDuration: 350,
         data: {
           ...camelToSnakeKeys(el.dataset),
@@ -59,9 +58,9 @@ const mux = () => (el) => {
           player_software_name: player.key,
           player_software_version: player.version,
           player_mux_plugin_name: 'playerx-mux',
-          player_mux_plugin_version: '0.0.1',
+          player_mux_plugin_version: pkg.version,
           page_type: player.querySelectorAll('iframe').length && 'iframe',
-          ...(await getVideoData()),
+          ...(await getConfigurableMetadata()),
         },
         getPlayheadTime,
         getStateData,
@@ -72,30 +71,37 @@ const mux = () => (el) => {
     init.resolve();
   }
 
-  async function getVideoData() {
+  async function getConfigurableMetadata() {
     const keys = [
-      'id',
-      'title',
-      'series',
-      'variant_name',
-      'variant_id',
-      'language_code',
-      'content_type',
-      'stream_type',
-      'producer',
-      'encoding_variant',
-      'cdn',
+      'experiment_name',
+      'page_type',
+      'sub_property_id',
+      'video_cdn',
+      'video_content_type',
+      'video_encoding_variant',
+      'video_id',
+      'video_language_code',
+      'video_producer',
+      'video_series',
+      'video_stream_type',
+      'video_title',
+      'video_variant_id',
+      'video_variant_name',
+      'view_session_id',
+      'viewer_user_id'
     ];
 
     const videoData = {};
-    videoData.video_duration = (await player.get('duration')) * 1000;
+    videoData.video_duration = (await player.get('duration')) * 1000; // in milliseconds
 
-    await Promise.all(
-      keys.map(async (key) => {
-        const prop = `video_${key}`;
-        videoData[prop] = await player.get(camelCase(prop));
-      })
-    );
+    const metadata = await player.get('meta');
+    keys.forEach((key) => {
+      const videoLessKey = key.replace('video_', '');
+      // Give priority to keys without `video_` prefix.
+      videoData[key] = metadata.get(videoLessKey);
+      if (videoData[key] != null) return;
+      videoData[key] = metadata.get(key);
+    });
 
     Object.keys(videoData).forEach((prop) => {
       if (videoData[prop] == null) {
@@ -153,10 +159,11 @@ const mux = () => (el) => {
   }
 };
 
-export const PlxMux = Element({
+export const PlxMux = define('plx-mux', {
   setup: mux,
+  props: {
+    reflect: {
+      debug: false
+    }
+  }
 });
-
-if (!customElements.get('plx-mux')) {
-  customElements.define('plx-mux', PlxMux);
-}
