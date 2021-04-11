@@ -6995,10 +6995,10 @@ mute-stream@0.0.8:
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.8.tgz#1630c42b2251ff81e2a283de96a5497ea92e5e0d"
   integrity sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==
 
-mux-embed@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/mux-embed/-/mux-embed-4.0.0.tgz#7eec12990e458cb17146a64d5c09e56ce9cf44d3"
-  integrity sha512-Z1FrEExJWxi74B3KiPUvZjThmj09kJvmmlgzeePCT6LBi8oYNKQXbML4igHg2F/PP9bXRGtu4LQnsGuHOU2J4Q==
+mux-embed@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/mux-embed/-/mux-embed-4.0.1.tgz#9de433035f01ae625b4483360fa0be08b72635d8"
+  integrity sha512-EWdOeK1cBwRIE/Qz++ycTH+L2i5T7BFDT1k9mpnvYvf2DdkwoCoN86vRv38GyB25QKn1d1IGaR93cn2/hlcChw==
 
 nanoid@^3.1.12:
   version "3.1.12"
@@ -9351,10 +9351,10 @@ simple-swizzle@^0.2.2:
   dependencies:
     is-arrayish "^0.3.1"
 
-sinuous@0.27.11:
-  version "0.27.11"
-  resolved "https://registry.yarnpkg.com/sinuous/-/sinuous-0.27.11.tgz#85f8f0b18607ca8e2205ccfda61f5dde34806643"
-  integrity sha512-2UzzlJfyhsCcpZOvh7uFzL4e/1EaFFy6d0FTaqJm1zImktl9WixAnNOwUpptnLKMA0jMKXEsD+3/HQpWuxz7mg==
+sinuous@0.27.12:
+  version "0.27.12"
+  resolved "https://registry.yarnpkg.com/sinuous/-/sinuous-0.27.12.tgz#5fa7ce7188f88b1b372f81951c85112c6d5d8b2d"
+  integrity sha512-7Qboh4xJh/d23/PsH4SAhXkChH9jSJBzxUfABm45Qv/LP4n5rxMVqa6S32s4kMswK7HyblHANukWVTwLjH9F3Q==
 
 size-plugin-core@^0.0.7:
   version "0.0.7"

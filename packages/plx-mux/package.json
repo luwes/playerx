@@ -26,7 +26,7 @@
     "playerx": ">=0.0.1"
   },
   "dependencies": {
-    "mux-embed": "^4.0.0"
+    "mux-embed": "^4.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.1",
