@@ -24,7 +24,7 @@ Playerx's uniform video API easily pipes the video data over to MUX no matter wh
 </div>
 
 ```html
-<player-x src="https://vimeo.chttps://www.youtube.com/watch?v=BK1JIjLPwaA" controls>
+<player-x src="https://www.youtube.com/watch?v=BK1JIjLPwaA" controls>
   <plx-script loading="player" src="{% getCdnUrl '@playerx/mux' %}"></plx-script>
   <plx-mux debug data-env-key="ilc02s65tkrc2mk69b7q2qdkf" data-video-content-type="clip"></plx-mux>
 </player-x>
