@@ -37,7 +37,7 @@ module.exports = function (eleventyConfig) {
   });
 
   eleventyConfig.addDataExtension('yaml', (contents) =>
-    yaml.safeLoad(contents)
+    yaml.load(contents)
   );
 
   // Layout aliases can make templates more portable

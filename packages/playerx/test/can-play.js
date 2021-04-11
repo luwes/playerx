@@ -8,7 +8,7 @@ let players;
   try {
     const response = await fetch('./base/packages/site/src/_data/dev/players.yaml');
     const text = await response.text();
-    players = yaml.safeLoad(text);
+    players = yaml.load(text);
   } catch (e) {
     console.warn(e);
   }
