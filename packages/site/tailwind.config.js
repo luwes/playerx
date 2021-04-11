@@ -1,12 +1,6 @@
 const ui = require('@tailwindcss/ui');
 const { variants } = require('tailwindcss/defaultConfig');
 const { fontFamily } = require('tailwindcss/defaultTheme');
-const hexRgb = require('hex-rgb');
-
-function rgba(hex, alpha) {
-  const { red, green, blue } = hexRgb(hex);
-  return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
-}
 
 const aquamarine = {
   50: '#E9FCF7',
@@ -22,12 +16,6 @@ const aquamarine = {
 };
 
 module.exports = {
-  future: {
-    removeDeprecatedGapUtilities: true,
-    purgeLayersByDefault: true,
-    defaultLineHeights: true,
-    standardFontWeights: true,
-  },
   purge: {
     enabled: process.env.NODE_ENV === 'prod',
     mode: 'layers',
@@ -42,6 +30,12 @@ module.exports = {
     cursor: [...variants.cursor, 'disabled'],
   },
   theme: {
+    screens: {
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+    },
     extend: {
       fontFamily: {
         sans: ['Inter var', ...fontFamily.sans],
@@ -50,9 +44,6 @@ module.exports = {
       },
       colors: {
         aquamarine
-      },
-      boxShadow: {
-        'outline-aquamarine': `0 0 0 3px ${rgba(aquamarine[400], 0.45)}`,
       },
       width: {
         '1/9': '11.111111111%',

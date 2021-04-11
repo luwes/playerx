@@ -78,7 +78,7 @@
     @apply text-sm;
     @apply px-1;
     @apply leading-none;
-    @apply whitespace-no-wrap;
+    @apply whitespace-nowrap;
     @apply text-cool-gray-600;
     @apply font-mono;
     @apply align-baseline;
@@ -182,7 +182,7 @@
   }
 
   > ul:not(.list-none) {
-    @apply pl-0 list-none;
+    @apply pl-0;
     li {
       @apply relative pl-5;
       &::before {

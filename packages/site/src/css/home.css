@@ -19,7 +19,7 @@
 }
 
 .buy-button:focus {
-  @apply outline-none shadow-outline-aquamarine border-aquamarine-700;
+  @apply outline-none ring-aquamarine-300 border-aquamarine-700;
 }
 
 .cell {
