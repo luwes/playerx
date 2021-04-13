@@ -16,7 +16,7 @@ The `<plx-mux>` element makes it a breeze to start using <a href="https://mux.co
 
 Playerx's uniform video API easily pipes the video data over to MUX no matter which player is running; YouTube, Vimeo, Facebook, Vidyard, HTML5, it doesn't matter.
 
-<div class="w-4/5 relative bg-black">
+<div class="md:w-4/5 relative bg-black">
   <player-x src="https://www.youtube.com/watch?v=BK1JIjLPwaA" controls>
     <plx-script loading="player" src="{% getCdnUrl '@playerx/mux' %}"></plx-script>
     <plx-mux debug data-env-key="ilc02s65tkrc2mk69b7q2qdkf" data-video-content-type="clip"></plx-mux>

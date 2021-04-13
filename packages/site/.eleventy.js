@@ -75,7 +75,7 @@ module.exports = function (eleventyConfig) {
       }
 
       const [pkg, mod] = name.split('/');
-      return `http://localhost:8080/${prefix}${pkg}/dist/${mod || pkg}.umd.js`;
+      return `http://dev.playerx.test:8080/${prefix}${pkg}/dist/${mod || pkg}.umd.js`;
     }
   });
 

@@ -13,7 +13,7 @@ layout: layouts/docs.njk
 
 The `<plx-controls>` element 
 
-<div class="w-4/5 relative bg-black">
+<div class="md:w-4/5 relative bg-black">
   <player-x loading="user" controls autoplay>
     <plx-media></plx-media>
     <plx-controls>

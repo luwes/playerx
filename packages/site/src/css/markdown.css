@@ -237,9 +237,7 @@
     th {
       @apply text-sm font-semibold text-gray-700 p-2 bg-gray-100;
     }
-    td:nth-child(1)  {
-      white-space: nowrap;
-    }
+
     td {
       @apply p-2 border-t border-gray-200 text-sm;
       code {

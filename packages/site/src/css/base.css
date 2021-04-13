@@ -33,6 +33,10 @@ input[type="range"] {
   height: 32px;
 }
 
+.menu {
+  @apply mb-8;
+}
+
 .menu-label {
   @apply text-gray-600 text-xs uppercase tracking-widest
 }
