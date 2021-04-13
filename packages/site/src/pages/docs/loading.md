@@ -19,7 +19,7 @@ The `loading` attribute can be configured to delay the loading of the provided m
 As the `user` attribute value implies the loading is done by the user. By manually calling the `load()` method on the playerx instance the resource is loaded. In this example after the user clicks the preview the Vimeo player is loaded.
 
 <div class="md:w-4/5 relative bg-black">
-  <player-x loading="user" src="https://vimeo.com/357274789" controls autoplay>
+  <player-x loading="user" src="https://vimeo.com/357274789" controls muted autoplay playsinline>
     <plx-media></plx-media>
     <div class="plx-preview bg-yellow-300 w-full h-full absolute">
       <button class="plx-playbtn hover:bg-green-500"></button>
@@ -28,7 +28,7 @@ As the `user` attribute value implies the loading is done by the user. By manual
 </div>
 
 ```html
-<player-x loading="user" src="https://vimeo.com/357274789" controls autoplay>
+<player-x loading="user" src="https://vimeo.com/357274789" controls muted autoplay playsinline>
   <plx-media></plx-media>
   <div class="plx-preview">
     <button class="plx-playbtn"></button>
