@@ -16,8 +16,7 @@ const styles = (selector) => css`
     height: auto;
   }
 
-  player-x:not([loading]) ${selector} {
-    opacity: 0;
+  ${selector}[hidden] {
     pointer-events: none;
   }
 `;
@@ -26,7 +25,7 @@ export const props = {
   reflect: {
     oembedurl: 'https://api.playerx.io/oembed',
     loading: undefined,
-    title: undefined,
+    title: undefined
   },
   src: {
     get: (el, src) => src,
@@ -41,6 +40,12 @@ export const props = {
 };
 
 export const setup = () => (el) => {
+
+  el.addEventListener('click', onclick);
+
+  function onclick() {
+    el.hidden = true;
+  }
 
   async function load() {
     await Promise.resolve();
