@@ -30,6 +30,9 @@ function define(name, create) {
 
   CE.mixins.push(PlayerxMixin);
 
+  const event = new CustomEvent('plx-define', { detail: { CE } });
+  window.dispatchEvent(event);
+
   // Wait one tick to define the custom element for plugins to be added.
   Promise.resolve().then(() => {
     // Loading mixin should be the last one that overrides `load()`.
