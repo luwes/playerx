@@ -62,6 +62,13 @@ dailymotion:
     - https://www.dailymotion.com/video/x7sgasm
     - https://www.dailymotion.com/video/x7ux420
 
+apivideo:
+  name: api.video
+  clips:
+    - https://go.api.video/videos/vi5QeuxAULFduY5cCPvLZYU6
+    - https://go.api.video/videos/vi6Oyllx2Y7fgl0VQdExac9M
+    - https://go.api.video/videos/vi6Fw37saUS3Tgk6lHHsMSGg
+
 streamable:
   name: Streamable
   clips:

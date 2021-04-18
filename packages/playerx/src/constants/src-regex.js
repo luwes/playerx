@@ -14,3 +14,4 @@ export const vidyard = /vidyard\..*?\/(?:share|watch)\/(\w+)/;
 export const vimeo = /vimeo\.com\/(?:video\/)?(\d+)/;
 export const wistia = /(?:wistia\.com|wi\.st)\/(?:medias|embed)\/(.*)$/;
 export const youtube = /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})/;
+export const apivideo = /api\.video\/(?:videos\/)?(\w+)/;

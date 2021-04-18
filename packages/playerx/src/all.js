@@ -5,6 +5,10 @@ export * from 'playerx';
 
 // See options.js for the default enabled players.
 Object.assign(options.players, {
+  apivideo: {
+    canPlay: canPlay.apivideo,
+    lazyPlayer: () => import('./players/apivideo.js'),
+  },
   brightcove: {
     canPlay: canPlay.brightcove,
     lazyPlayer: () => import('./players/brightcove.js'),

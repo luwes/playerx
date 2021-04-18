@@ -40,3 +40,4 @@ export const vidyard = (src) => MATCH_SRC.vidyard.test(src);
 export const vimeo = (src) => MATCH_SRC.vimeo.test(src);
 export const wistia = (src) => MATCH_SRC.wistia.test(src);
 export const youtube = (src) => MATCH_SRC.youtube.test(src);
+export const apivideo = (src) => MATCH_SRC.apivideo.test(src);
