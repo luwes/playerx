@@ -52,6 +52,7 @@
     "babel-plugin-transform-async-to-promises": "^0.8.15",
     "compression": "^1.7.4",
     "cssnano": "^5.0.0",
+    "dotenv": "^8.2.0",
     "eslint": "^7.24.0",
     "eslint-plugin-fp": "^2.3.0",
     "eslint-plugin-import": "^2.22.1",

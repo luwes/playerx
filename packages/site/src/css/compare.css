@@ -1,0 +1,19 @@
+
+.compare-grid {
+  overflow-x: auto;
+  grid-template-columns:
+    minmax(380px, 1fr)
+    minmax(200px, 1fr)
+    minmax(200px, 1fr)
+    minmax(200px, 1fr)
+    minmax(200px, 1fr)
+    minmax(200px, 1fr)
+    minmax(200px, 1fr)
+    minmax(200px, 1fr)
+    minmax(200px, 1fr)
+    minmax(200px, 1fr);
+}
+
+.grid-cell {
+  @apply flex-grow w-full border-b px-5 py-4;
+}

@@ -1,0 +1,88 @@
+rows:
+  - title: Overall Viewer Experience
+    field: viewer_experience_score
+    description: >-
+      Overall Viewer Experience is a high-level score from 0 to 100 that
+      measures the QoE (Quality of Experience).
+  - title: Video Startup Time
+    field: video_startup_time
+    description: >-
+      Video Startup Time measures the time that the viewer waits for the video
+      to play after the page is loaded and the player is ready.
+  - title: Player Startup Time
+    field: player_startup_time
+    description: >-
+      Player Startup Time measures the time from when the player is first
+      initialized in the page to when it is ready to receive further
+      instructions.
+  - title: Smoothness Score
+    field: smoothness_score
+    description: >-
+      Smoothness Score measures the amount of rebuffering a viewer sees when
+      watching video. A higher Smoothness Score means the viewer experiences
+      less rebuffering, while a lower score means a viewer sees more
+      rebuffering.
+players:
+  - key: vimeo
+    name: Vimeo
+    url: https://vimeo.com
+    viewer_experience_score: 0.9700926248167382
+    video_startup_time: 49
+    player_startup_time: 1012.03515625
+    smoothness_score: 0.9346989874468475
+  - key: youtube
+    name: YouTube
+    url: https://www.youtube.com
+    viewer_experience_score: 0.8933554634501591
+    video_startup_time: 0
+    player_startup_time: 2053.22265625
+    smoothness_score: 0.7698137061680782
+  - key: wistia
+    name: Wistia
+    url: https://wistia.com
+    viewer_experience_score: 0.8326316354826959
+    video_startup_time: 1764
+    player_startup_time: 3562.59765625
+    smoothness_score: 0.760413185219995
+  - key: jwplayer
+    name: JW Player
+    url: https://www.jwplayer.com
+    viewer_experience_score: 0.8353833758735218
+    video_startup_time: 81
+    player_startup_time: 3004.41015625
+    smoothness_score: 0.6529764730299381
+  - key: brightcove
+    name: Brightcove
+    url: https://www.brightcove.com
+    viewer_experience_score: 0.8804611191726018
+    video_startup_time: 81
+    player_startup_time: 3025
+    smoothness_score: 0.7554391085545397
+  - key: dailymotion
+    name: Dailymotion
+    url: https://www.dailymotion.com
+    viewer_experience_score: 0.8813322294663282
+    video_startup_time: 121
+    player_startup_time: 2815.62890625
+    smoothness_score: 0.725009609337556
+  - key: streamable
+    name: Streamable
+    url: https://streamable.com
+    viewer_experience_score: 0.828792675223413
+    video_startup_time: 16
+    player_startup_time: 996.19140625
+    smoothness_score: 0.7140719390201777
+  - key: facebook
+    name: Facebook
+    url: https://www.facebook.com
+    viewer_experience_score: 0.8521587602427748
+    video_startup_time: 121
+    player_startup_time: 3929.72265625
+    smoothness_score: 0.7629788857503016
+  - key: vidyard
+    name: Vidyard
+    url: https://www.vidyard.com
+    viewer_experience_score: 0.812990719191689
+    video_startup_time: 100
+    player_startup_time: 3422.25
+    smoothness_score: 0.6953139461848018
