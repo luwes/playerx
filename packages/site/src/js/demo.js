@@ -8,6 +8,7 @@ import {
   computedValue,
   qs,
   prettyQuality,
+  tryJSONParse,
 } from './utils/utils.js';
 import { getParam } from './utils/url.js';
 
@@ -152,12 +153,12 @@ function setSrc(dataSrc) {
   buffered(0);
   videoHeight(0);
   if (dataSrc) {
-    src(dataSrc.indexOf(',') !== -1 ? dataSrc.split(',') : dataSrc);
+    src(tryJSONParse(dataSrc));
   }
 }
 
 function darkOnSelect() {
-  return [].concat(src()).join(',') === this.el.dataset.src
+  return src() === tryJSONParse(this.el.dataset.src)
     ? ' btn-active'
     : '';
 }

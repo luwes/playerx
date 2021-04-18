@@ -86,7 +86,8 @@
                       class="btn src-btn src-{{ player.name | slug }}-{{ loop.index }}"
                       data-player="{{ player.name | slug }}"
                       data-clip="{{ loop.index }}"
-                      data-src="{{ clip }}"
+                      data-src="{{ clip | dump }}"
+                      title="{{ clip }}"
                     >
                       Clip {{ loop.index }}
                     </button>

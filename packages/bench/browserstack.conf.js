@@ -43,7 +43,8 @@ exports.config = {
     'players/brightcove.js',
     'players/dailymotion.js',
     'players/facebook.js',
-    'players/file.js',
+    'players/hlsjs.js',
+    'players/dashjs.js',
     'players/jw-player.js',
     // 'players/soundcloud.js',  // less useful to test compared to video players
     'players/streamable.js',

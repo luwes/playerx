@@ -1,34 +1,12 @@
-// https://github.com/video-dev/hls.js
-// https://github.com/Dash-Industry-Forum/dash.js
 
 import {
   createElement,
   removeNode,
-  loadScript,
   publicPromise,
-  promisify,
 } from '../utils.js';
-
-const HLS_URL = 'https://cdn.jsdelivr.net/npm/hls.js@0.13.2/dist/hls.min.js';
-const HLS_GLOBAL = 'Hls';
-const DASH_URL = 'https://cdn.jsdelivr.net/npm/dashjs@3.0.3/dist/dash.all.min.js';
-const DASH_GLOBAL = 'dashjs';
-const HLS_EXTENSIONS = /\.m3u8($|\?)/i;
-const DASH_EXTENSIONS = /\.mpd($|\?)/i;
-
-function shouldUseHLS(src) {
-  return HLS_EXTENSIONS.test(src);
-}
-
-function shouldUseDash(src) {
-  return DASH_EXTENSIONS.test(src);
-}
 
 export function createPlayer(element) {
   let video;
-  let player = {};
-  let hls;
-  let dash;
   let ready;
 
   function getOptions() {
@@ -41,7 +19,7 @@ export function createPlayer(element) {
       // The spec advises it to be set to metadata.
       preload: element.preload || 'metadata',
       src: element.src,
-      ...element.config.file,
+      ...element.config.html,
     };
   }
 
@@ -54,40 +32,11 @@ export function createPlayer(element) {
   }
 
   async function load(opts) {
-    const { src, autoplay } = opts;
+    const { src } = opts;
     delete opts.src;
 
     reset();
     Object.assign(video, opts);
-
-    if (shouldUseHLS(src)) {
-      const Hls = await loadScript(opts.hlsUrl || HLS_URL, HLS_GLOBAL);
-      if (Hls.isSupported()) {
-        hls = new Hls();
-        hls.attachMedia(video);
-        hls.on(Hls.Events.ERROR, () => element.fire('error'));
-        hls.loadSource(src);
-        player = {
-          name: 'hls.js',
-          version: Hls.version,
-        };
-        return;
-      }
-    }
-
-    if (shouldUseDash(src)) {
-      const Dash = await loadScript(opts.dashUrl || DASH_URL, DASH_GLOBAL);
-      dash = Dash.MediaPlayer().create();
-      dash.on('error', () => element.fire('error'));
-      const sourceInit = promisify(dash.on, dash)('sourceInitialized');
-      dash.initialize(video, src, autoplay);
-      player = {
-        name: 'dash.js',
-        version: dash.getVersion(),
-      };
-      await sourceInit;
-      return;
-    }
 
     if (Array.isArray(src)) {
       let sources = src;
@@ -99,32 +48,17 @@ export function createPlayer(element) {
     } else {
       video.src = src;
     }
-
-    player = {
-      name: 'html',
-      version: '5',
-    };
   }
 
   function reset() {
-    if (dash) {
-      dash.reset();
-      dash = null;
-    }
-
-    if (hls) {
-      hls.destroy();
-      hls = null;
-    }
-
     video.removeAttribute('src');
     video.innerHTML = '';
   }
 
   const methods = {
-    get key() { return 'file'; },
-    get name() { return player.name || ''; },
-    get version() { return player.version || ''; },
+    get key() { return 'html'; },
+    get name() { return 'html'; },
+    get version() { return '5'; },
 
     get element() {
       return video;

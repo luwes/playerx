@@ -1,9 +1,7 @@
 import * as MATCH_SRC from './constants/src-regex.js';
 import {
   AUDIO_EXTENSIONS,
-  VIDEO_EXTENSIONS,
-  HLS_EXTENSIONS,
-  DASH_EXTENSIONS,
+  VIDEO_EXTENSIONS
 } from './constants/src-regex.js';
 
 /**
@@ -11,13 +9,13 @@ import {
  * @param  {string} src
  * @return {boolean}
  */
-export const file = (src) => {
+export const html = (src) => {
   if (Array.isArray(src)) {
     for (const item of src) {
-      if (typeof item === 'string' && file(item)) {
+      if (typeof item === 'string' && html(item)) {
         return true;
       }
-      if (file(item.src)) {
+      if (html(item.src)) {
         return true;
       }
     }
@@ -25,12 +23,12 @@ export const file = (src) => {
   }
   return (
     AUDIO_EXTENSIONS.test(src) ||
-    VIDEO_EXTENSIONS.test(src) ||
-    HLS_EXTENSIONS.test(src) ||
-    DASH_EXTENSIONS.test(src)
+    VIDEO_EXTENSIONS.test(src)
   );
 };
 
+export const hlsjs = (src) => MATCH_SRC.HLS_EXTENSIONS.test(src);
+export const dashjs = (src) => MATCH_SRC.DASH_EXTENSIONS.test(src);
 export const brightcove = (src) => MATCH_SRC.brightcove.test(src);
 export const dailymotion = (src) => MATCH_SRC.dailymotion.test(src);
 export const facebook = (src) => MATCH_SRC.facebook.test(src);

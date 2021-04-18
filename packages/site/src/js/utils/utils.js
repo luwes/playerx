@@ -49,3 +49,10 @@ export function prettyQuality(height) {
   if (height >= 1440) return '2K';
   return `${height}p`;
 }
+
+export function tryJSONParse(input) {
+  try {
+    input = JSON.parse(input);
+  } catch (err) {/**/}
+  return input;
+}

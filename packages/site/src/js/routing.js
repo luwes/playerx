@@ -5,7 +5,7 @@ import { qs } from './utils/utils.js';
 
 on([autoplay, muted, loop, controls, src], () => {
 
-  const btn = qs(`[data-src="${src()}"]`);
+  const btn = qs(`[data-src='${JSON.stringify(src())}']`);
   const options = {
     ...getParams(),
     autoplay,

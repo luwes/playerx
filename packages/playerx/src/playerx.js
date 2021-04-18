@@ -645,6 +645,6 @@ export function getCurrentPlayerConfig(src) {
       return playerConfig;
     }
   }
-  // Fallback to file player.
-  return options.players.file;
+  // Fallback to html player.
+  return options.players.html;
 }

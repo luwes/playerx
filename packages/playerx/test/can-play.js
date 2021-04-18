@@ -24,11 +24,11 @@ test(`canPlay`, async (t) => {
     });
   }
 
-  t.assert(options.players.file.canPlay([{
+  t.assert(options.players.html.canPlay([{
     src: 'https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM/low.mp4'
   }]), 'can play file src in plain object');
 
-  t.assert(!options.players.file.canPlay([{
+  t.assert(!options.players.html.canPlay([{
     src: 'https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM/low'
   }]), 'can not play file without extension');
 

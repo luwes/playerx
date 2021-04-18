@@ -15,9 +15,9 @@ import './players/streamable.js';
 import './players/soundcloud.js';
 // import './players/jwplayer.js'; // need jw player developer license
 import './players/vidyard.js';
-import './players/file-dash.js';
-import './players/file-hls.js';
-import './players/file-progressive.js';
+import './players/dashjs.js';
+import './players/hlsjs.js';
+import './players/html.js';
 import './players/brightcove.js';
 import './players/vimeo.js';
 // Facebook player is not removed properly, test this one last.

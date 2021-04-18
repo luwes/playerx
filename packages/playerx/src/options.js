@@ -3,9 +3,17 @@ import * as preconnect from './preconnect.js';
 
 export const options = {
   players: {
-    file: {
-      canPlay: canPlay.file,
-      lazyPlayer: () => import('./players/file.js'),
+    html: {
+      canPlay: canPlay.html,
+      lazyPlayer: () => import('./players/html.js'),
+    },
+    hlsjs: {
+      canPlay: canPlay.hlsjs,
+      lazyPlayer: () => import('./players/hlsjs.js'),
+    },
+    dashjs: {
+      canPlay: canPlay.dashjs,
+      lazyPlayer: () => import('./players/dashjs.js'),
     },
     vimeo: {
       canPlay: canPlay.vimeo,

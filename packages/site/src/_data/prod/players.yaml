@@ -1,13 +1,24 @@
-file:
-  name: File
+html:
+  name: HTML
   clips:
-    - https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM.m3u8
-    - https://dash.akamaized.net/envivio/EnvivioDash3/manifest.mpd
-    - https://stream.mux.com/KHdaCPpki1o4PUCMWfAXFbrHy2gBosxdxZISdvFJGLQ.m3u8
     -
       - https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM/low.mp4
       - https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM/medium.mp4
       - https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM/high.mp4
+
+dashjs:
+  name: dash.js
+  clips:
+    - https://65vod-adaptive.akamaized.net/exp=2482774255~acl=%2F680befac-de71-4a0d-a9fa-4036695333c8%2F%2A~hmac=ab3da00c114fce450c5673cfad9574647772778f518e46c58b9210c37cd54083/680befac-de71-4a0d-a9fa-4036695333c8/sep/video/007a89dc,51ae83f1,67d5d9c0,e9eb72f5,ed737100,d5b9a68c,6e0c0f7b/master.mpd?base64_init=1&ext=.mpd
+    - https://dash.akamaized.net/envivio/EnvivioDash3/manifest.mpd
+    - "http://amssamples.streaming.mediaservices.windows.net/634cd01c-6822-4630-8444-8dd6279f94c6/CaminandesLlamaDrama4K.ism/manifest(format=mpd-time-csf)?ext=.mpd"
+
+hlsjs:
+  name: hls.js
+  clips:
+    - https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM.m3u8
+    - https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8
+    - https://stream.mux.com/KHdaCPpki1o4PUCMWfAXFbrHy2gBosxdxZISdvFJGLQ.m3u8
 
 vimeo:
   name: Vimeo
