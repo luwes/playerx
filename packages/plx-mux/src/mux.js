@@ -92,7 +92,11 @@ const mux = () => (el) => {
     ];
 
     const videoData = {};
-    videoData.video_duration = (await player.get('duration')) * 1000; // in milliseconds
+
+    const duration = await player.get('duration');
+    if (duration > 0) {
+      videoData.video_duration = duration * 1000; // in milliseconds
+    }
 
     const metadata = await player.get('meta');
     keys.forEach((key) => {

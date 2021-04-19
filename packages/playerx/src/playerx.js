@@ -261,11 +261,13 @@ export const PlayerxMixin = (CE, { create }) => (element) => {
     await player.ready();
 
     if (!player.meta.get('video_id')) {
-      player.meta.set('video_id', await player.get('videoId'));
+      const videoId = await player.get('videoId');
+      if (videoId) player.meta.set('video_id', videoId);
     }
 
     if (!player.meta.get('video_title')) {
-      player.meta.set('video_title', await player.get('videoTitle'));
+      const videoTitle = await player.get('videoTitle');
+      if (videoTitle) player.meta.set('video_title', videoTitle);
     }
 
     await player.set('volume', element.cache('volume'));
