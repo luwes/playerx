@@ -7,23 +7,21 @@ const options = {
   projectName: 'Playerx Benchmark',
   debug: true,
   consoleLogs: 'verbose',
-};
-
-const commonCapabilities = {
-  browserName: 'Chrome',
-  acceptSslCerts: true,
-  'browserstack.use_w3c': true,
-  'browserstack.local': true,
-  'bstack:options': {
-    ...options,
-  },
-  chromeOptions: {
+  chrome: {
     args: [
       '--ignore-certificate-errors',
       '--disable-web-security',
       '--autoplay-policy=no-user-gesture-required'
     ]
-  }
+  },
+};
+
+const commonCapabilities = {
+  browserName: 'Chrome',
+  acceptInsecureCerts: true,
+  'bstack:options': {
+    ...options,
+  },
 };
 
 exports.config = {
@@ -59,7 +57,7 @@ exports.config = {
 
   // Adds temporary script file name as title
   beforeSession: function (config, capabilities, specs) {
-    capabilities.name = (specs && specs[0].split('/').pop()) || undefined;
+    // capabilities.name = (specs && specs[0].split('/').pop()) || undefined;
   },
 
   maxInstances: 4,
