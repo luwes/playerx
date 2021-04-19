@@ -19,6 +19,9 @@ module.exports = function(player) {
 
       let url = `https://dev.playerx.io/demo/${player}/`;
       if (argv.clip) url += `${argv.clip}/`;
+      if (process.env.EXPERIMENT_NAME) {
+        url += `?experiment=${process.env.EXPERIMENT_NAME}`;
+      }
 
       if (argv.saucenetwork) {
         // @see https://webdriver.io/docs/api/saucelabs.html#parameters-1

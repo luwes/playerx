@@ -113,6 +113,8 @@ player = hy(dhtml`
     (player = dhtml`
     <player-x ...${props}>
       <plx-media></plx-media>
+      <plx-script></plx-script>
+      <plx-mux data-experiment-name="${getParam('experiment')}"></plx-mux>
     <//>
   `)}
 `);
