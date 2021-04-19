@@ -1,1 +1,1 @@
-require('../index.js')('dashjs');
+require('../index.js')('dash.js');

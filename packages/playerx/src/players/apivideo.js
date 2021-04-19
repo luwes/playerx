@@ -43,6 +43,7 @@ export function createPlayer(element) {
   }
 
   async function init() {
+    const mediaAdded = promisify(element.addEventListener, element)('media');
     const opts = getOptions();
     const videoId = getVideoId(MATCH_SRC, element.src);
     const src = `${EMBED_BASE}/${videoId}#${serialize(opts)}`;
@@ -50,13 +51,16 @@ export function createPlayer(element) {
     iframe = createEmbedIframe({ src, id });
 
     const PlayerSdk = await loadScript(opts.apiUrl || API_URL, API_GLOBAL);
+    await mediaAdded;
     api = new PlayerSdk(`#${id}`);
-
     await promisify(api.addEventListener, api)('ready');
     ready.resolve();
   }
 
   const customEvents = {
+  };
+
+  const eventAliases = {
   };
 
   const unsupported = {
@@ -96,13 +100,13 @@ export function createPlayer(element) {
 
     on(eventName, callback) {
       if (eventName in customEvents) return;
-      api.addEventListener(eventName, callback);
+      api.addEventListener(eventAliases[eventName] || eventName, callback);
     },
 
     off(eventName, callback) {
       if (eventName in customEvents) return;
       if (api.removeEventListener) {
-        api.removeEventListener(eventName, callback);
+        api.removeEventListener(eventAliases[eventName] || eventName, callback);
       }
     },
 

@@ -28,7 +28,7 @@ exports.config = {
     'players/facebook.js',
     'players/hlsjs.js',
     'players/dashjs.js',
-    'players/jw-player.js',
+    'players/apivideo.js',
     // 'players/soundcloud.js',  // less useful to test compared to video players
     'players/streamable.js',
     'players/twitch.js',
@@ -36,6 +36,7 @@ exports.config = {
     'players/vimeo.js',
     'players/wistia.js',
     'players/youtube.js',
+    'players/jw-player.js',
   ],
   exclude: [],
 

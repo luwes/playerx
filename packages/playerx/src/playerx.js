@@ -254,6 +254,7 @@ export const PlayerxMixin = (CE, { create }) => (element) => {
     }
     media.textContent = '';
     media.appendChild(player.element);
+    element.fire('media');
   }
 
   async function afterLoad(initEvents) {

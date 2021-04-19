@@ -1,1 +1,1 @@
-require('../index.js')('hlsjs');
+require('../index.js')('hls.js');
