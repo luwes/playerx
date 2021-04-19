@@ -18,12 +18,12 @@
     p-queue "^6.6.2"
     short-hash "^1.0.0"
 
-"@11ty/eleventy-navigation@^0.1.6":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@11ty/eleventy-navigation/-/eleventy-navigation-0.1.6.tgz#26c1880494b99dd961efa51bdf866485a0adddde"
-  integrity sha512-ZGZebFEEDiJoS7BvxxiWrKdsCodNkqCsQ7S75IIvaPynHvojqcCVtS4uZk54K+LC+YqL5+T716TlsMG6Mc2p0g==
+"@11ty/eleventy-navigation@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@11ty/eleventy-navigation/-/eleventy-navigation-0.2.0.tgz#fd610a4a3d52934b54832be5268dddf4b2fd22f4"
+  integrity sha512-mkFoNpL32FosMTuZwxcY3KXVVYLRt7zBqVWP9X+0GMufnRNGpLZd+BYwD0vmYHLAxz1ol/RLlL2Hmkgp/YJ4TQ==
   dependencies:
-    dependency-graph "^0.8.1"
+    dependency-graph "^0.11.0"
 
 "@11ty/eleventy-plugin-syntaxhighlight@^3.1.0":
   version "3.1.0"
@@ -1335,10 +1335,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.11.8.tgz#fe2012f2355e4ce08bca44aeb3abbb21cf88d33f"
   integrity sha512-KPcKqKm5UKDkaYPTuXSx8wEP7vE9GnuaXIZKijwRYcePpZFDVuy2a57LarFKiORbHOuTOOwYzxVxcUzsh2P2Pw==
 
-"@types/node@^14.14.37":
-  version "14.14.37"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.37.tgz#a3dd8da4eb84a996c36e331df98d82abd76b516e"
-  integrity sha512-XYmBiy+ohOR4Lh5jE379fV2IU+6Jn4g5qASinhitfyO71b/sCo6MKsMLF5tc7Zf2CE8hViVQyYSobJNke8OvUw==
+"@types/node@^14.14.41":
+  version "14.14.41"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.41.tgz#d0b939d94c1d7bd53d04824af45f1139b8c45615"
+  integrity sha512-dueRKfaJL4RTtSa7bWeTK1M+VH+Gns73oCgzvYfHZywRCoPSd8EkXBL0mZ9unPTveBn+D9phZBaxuzpwjWkW0g==
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
@@ -3483,11 +3483,6 @@ dependency-graph@^0.11.0:
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/dependency-graph/-/dependency-graph-0.11.0.tgz#ac0ce7ed68a54da22165a85e97a01d53f5eb2e27"
   integrity sha512-JeMq7fEshyepOWDfcfHK06N3MhyPhz++vtqWhMT5O9A3K42rdsEDpfdVqjaqaAhsw6a+ZqeDvQVtD0hFHQWrzg==
-
-dependency-graph@^0.8.1:
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/dependency-graph/-/dependency-graph-0.8.1.tgz#9b8cae3aa2c7bd95ccb3347a09a2d1047a6c3c5a"
-  integrity sha512-g213uqF8fyk40W8SBjm079n3CZB4qSpCrA2ye1fLGzH/4HEgB6tzuW2CbLE7leb4t45/6h44Ud59Su1/ROTfqw==
 
 dependency-graph@^0.9.0:
   version "0.9.0"
@@ -5997,10 +5992,10 @@ js-yaml@3.14.0, js-yaml@^3.11.0, js-yaml@^3.13.1:
     argparse "^1.0.7"
     esprima "^4.0.0"
 
-js-yaml@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-4.0.0.tgz#f426bc0ff4b4051926cd588c71113183409a121f"
-  integrity sha512-pqon0s+4ScYUvX30wxQi3PogGFAlUyH0awepWvwkj4jD4v+ova3RiYw8bmA6x2rDrEaj8i/oWKoRxpVNW+Re8Q==
+js-yaml@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-4.1.0.tgz#c1fb65f8f5017901cdd2c951864ba18458a10602"
+  integrity sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==
   dependencies:
     argparse "^2.0.1"
 
@@ -8854,10 +8849,10 @@ rollup-pluginutils@^2.0.1:
   dependencies:
     estree-walker "^0.6.1"
 
-rollup@^2.45.1:
-  version "2.45.1"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.45.1.tgz#eae2b94dc2088b4e0a3b7197a5a1ee0bdd589d5c"
-  integrity sha512-vPD+JoDj3CY8k6m1bLcAFttXMe78P4CMxoau0iLVS60+S9kLsv2379xaGy4NgYWu+h2WTlucpoLPAoUoixFBag==
+rollup@^2.45.2:
+  version "2.45.2"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.45.2.tgz#8fb85917c9f35605720e92328f3ccbfba6f78b48"
+  integrity sha512-kRRU7wXzFHUzBIv0GfoFFIN3m9oteY4uAsKllIpQDId5cfnkWF2J130l+27dzDju0E6MScKiV0ZM5Bw8m4blYQ==
   optionalDependencies:
     fsevents "~2.3.1"
 
