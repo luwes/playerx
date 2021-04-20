@@ -26,63 +26,56 @@ players:
   - key: vimeo
     name: Vimeo
     url: https://vimeo.com
-    viewer_experience_score: 0.9676013000366591
+    viewer_experience_score: 0.9822320271940792
     video_startup_time: 64
-    player_startup_time: 1008.0625
-    smoothness_score: 0.9291386508096218
+    player_startup_time: 918.84765625
+    smoothness_score: 0.9632852463161244
   - key: youtube
     name: YouTube
     url: https://www.youtube.com
-    viewer_experience_score: 0.892455196072892
+    viewer_experience_score: 0.8899058454176959
     video_startup_time: 0
-    player_startup_time: 2053.22265625
-    smoothness_score: 0.7690198605108742
+    player_startup_time: 2047.5625
+    smoothness_score: 0.7755966852692997
   - key: wistia
     name: Wistia
     url: https://wistia.com
-    viewer_experience_score: 0.8341177644460006
+    viewer_experience_score: 0.8186950403101304
     video_startup_time: 1764
-    player_startup_time: 3562.59765625
-    smoothness_score: 0.7629419479420008
-  - key: jwplayer
-    name: JW Player
-    url: https://www.jwplayer.com
-    viewer_experience_score: 0.834620666174945
-    video_startup_time: 81
-    player_startup_time: 3011.265625
-    smoothness_score: 0.6514339088884509
+    player_startup_time: 3660.25
+    smoothness_score: 0.7296230679049212
   - key: brightcove
     name: Brightcove
     url: https://www.brightcove.com
-    viewer_experience_score: 0.8811337382945553
-    video_startup_time: 100
-    player_startup_time: 3025
-    smoothness_score: 0.7573149790218955
+    viewer_experience_score: 0.8751526685322032
+    video_startup_time: 81
+    player_startup_time: 2983.890625
+    smoothness_score: 0.7570189693394829
   - key: dailymotion
     name: Dailymotion
     url: https://www.dailymotion.com
-    viewer_experience_score: 0.8821265137656618
-    video_startup_time: 121
-    player_startup_time: 2828.91015625
-    smoothness_score: 0.7265705159067778
+    viewer_experience_score: 0.8857764741953682
+    video_startup_time: 144
+    player_startup_time: 3256.12890625
+    smoothness_score: 0.7387414048699772
   - key: streamable
     name: Streamable
     url: https://streamable.com
-    viewer_experience_score: 0.826832448903191
+    viewer_experience_score: 0.793903277200811
     video_startup_time: 16
-    player_startup_time: 1000.140625
-    smoothness_score: 0.710777426648361
+    player_startup_time: 941.72265625
+    smoothness_score: 0.6552512049674988
   - key: facebook
     name: Facebook
     url: https://www.facebook.com
-    viewer_experience_score: 0.8529021983394528
-    video_startup_time: 121
-    player_startup_time: 3984.765625
-    smoothness_score: 0.7640142366720406
+    viewer_experience_score: 0.9033501148223877
+    video_startup_time: 49
+    player_startup_time: 3736.265625
+    smoothness_score: 0.8455812118270181
   - key: vidyard
     name: Vidyard
     url: https://www.vidyard.com
-    viewer_experience_score: 0.812793014981554
-    video_startup_time: 100
-    player_startup_time: 3436.890625
-    smoothness_score: 0.695260224977337
+    viewer_experience_score: 0.8191636625458213
+    video_startup_time: 144
+    player_startup_time: 3547.69140625
+    smoothness_score: 0.7065165831762201
