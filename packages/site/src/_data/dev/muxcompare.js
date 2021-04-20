@@ -36,7 +36,10 @@ function fetchMetric(name, url) {
 
     const metrics = response.data.data;
     for (let player of doc.players) {
-      player[name] = metrics.find((obj) => obj.field === player.key).value;
+      const metric = metrics.find((obj) => obj.field === player.key);
+      if (metric) {
+        player[name] = metric.value;
+      }
     }
 
     if (input !== yaml.dump(doc)) {

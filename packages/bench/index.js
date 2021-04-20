@@ -19,8 +19,8 @@ module.exports = function(player) {
 
       let url = `https://dev.playerx.io/demo/${player}/`;
       if (argv.clip) url += `${argv.clip}/`;
-      if (process.env.EXPERIMENT_NAME) {
-        url += `?experiment=${process.env.EXPERIMENT_NAME}`;
+      if (process.env.MUX_ENV) {
+        url += `?muxenv=${process.env.MUX_ENV}`;
       }
 
       if (argv.saucenetwork) {
