@@ -1,10 +1,23 @@
-html:
-  name: HTML
+vimeo:
+  name: Vimeo
   clips:
-    -
-      - https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM/low.mp4
-      - https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM/medium.mp4
-      - https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM/high.mp4
+    - https://vimeo.com/357274789
+    - https://vimeo.com/327204597
+    - https://vimeo.com/436880965
+
+youtube:
+  name: YouTube
+  clips:
+    - https://www.youtube.com/watch?v=BK1JIjLPwaA
+    - https://www.youtube.com/watch?v=ssdng3QeFnA
+    - https://www.youtube.com/watch?v=zD6nk5byNGE
+
+dailymotion:
+  name: Dailymotion
+  clips:
+    - https://www.dailymotion.com/video/x7sgamf
+    - https://www.dailymotion.com/video/x7sgasm
+    - https://www.dailymotion.com/video/x7ux420
 
 dashjs:
   name: dash.js
@@ -20,19 +33,19 @@ hlsjs:
     - https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8
     - https://stream.mux.com/KHdaCPpki1o4PUCMWfAXFbrHy2gBosxdxZISdvFJGLQ.m3u8
 
-vimeo:
-  name: Vimeo
+jwplayer:
+  name: JW Player
   clips:
-    - https://vimeo.com/357274789
-    - https://vimeo.com/327204597
-    - https://vimeo.com/436880965
+    - https://cdn.jwplayer.com/players/Fpw44kH6-IxzuqJ4M.js
+    - https://cdn.jwplayer.com/players/si1Oby4N-IxzuqJ4M.js
+    - https://cdn.jwplayer.com/players/Cc7f9uNQ-IxzuqJ4M.js
 
-youtube:
-  name: YouTube
+apivideo:
+  name: api.video
   clips:
-    - https://www.youtube.com/watch?v=BK1JIjLPwaA
-    - https://www.youtube.com/watch?v=ssdng3QeFnA
-    - https://www.youtube.com/watch?v=zD6nk5byNGE
+    - https://go.api.video/videos/vi6gomWTHO9vMNz9PlC44qUj
+    - https://go.api.video/videos/vi2xRj3mUz967QRSESwmwveX
+    - https://go.api.video/videos/viM0Q6S2LqkdI8D7RqTDsBG
 
 wistia:
   name: Wistia
@@ -41,12 +54,12 @@ wistia:
     - https://wesleyluyten.wistia.com/medias/oj8d7cwhbn
     - https://wesleyluyten.wistia.com/medias/1ekn652fs5
 
-jwplayer:
-  name: JW Player
+vidyard:
+  name: Vidyard
   clips:
-    - https://cdn.jwplayer.com/players/Fpw44kH6-IxzuqJ4M.js
-    - https://cdn.jwplayer.com/players/si1Oby4N-IxzuqJ4M.js
-    - https://cdn.jwplayer.com/players/Cc7f9uNQ-IxzuqJ4M.js
+    - https://share.vidyard.com/watch/TYY9iSji3mJuFqp2oj4FoL?
+    - https://share.vidyard.com/watch/B4uvxTbjqshXVHf5fXX3po?
+    - https://share.vidyard.com/watch/Xm2qXrsFL1vFHHHFMdf1UN?
 
 brightcove:
   name: Brightcove
@@ -54,20 +67,6 @@ brightcove:
     - https://studio.brightcove.com/products/videocloud/media/videos/4883184247001
     - https://studio.brightcove.com/products/videocloud/media/videos/6057428475001
     - https://studio.brightcove.com/products/videocloud/media/videos/5686632036001
-
-dailymotion:
-  name: Dailymotion
-  clips:
-    - https://www.dailymotion.com/video/x7sgamf
-    - https://www.dailymotion.com/video/x7sgasm
-    - https://www.dailymotion.com/video/x7ux420
-
-apivideo:
-  name: api.video
-  clips:
-    - https://go.api.video/videos/vi6gomWTHO9vMNz9PlC44qUj
-    - https://go.api.video/videos/vi2xRj3mUz967QRSESwmwveX
-    - https://go.api.video/videos/viM0Q6S2LqkdI8D7RqTDsBG
 
 streamable:
   name: Streamable
@@ -83,13 +82,6 @@ facebook:
     - https://www.facebook.com/facebook/videos/10153231379946729/
     - https://www.facebook.com/wesleyluyten/videos/10222360036487458
 
-vidyard:
-  name: Vidyard
-  clips:
-    - https://share.vidyard.com/watch/TYY9iSji3mJuFqp2oj4FoL?
-    - https://share.vidyard.com/watch/B4uvxTbjqshXVHf5fXX3po?
-    - https://share.vidyard.com/watch/Xm2qXrsFL1vFHHHFMdf1UN?
-
 twitch:
   name: Twitch
   clips:
@@ -102,3 +94,11 @@ soundcloud:
   clips:
     - https://soundcloud.com/areckoner/winter-fingers
     - https://soundcloud.com/husky-rescue/11-the-good-man
+
+html:
+  name: HTML
+  clips:
+    -
+      - https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM/low.mp4
+      - https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM/medium.mp4
+      - https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM/high.mp4
