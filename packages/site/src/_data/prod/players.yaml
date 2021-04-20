@@ -65,9 +65,9 @@ dailymotion:
 apivideo:
   name: api.video
   clips:
-    - https://go.api.video/videos/vi5QeuxAULFduY5cCPvLZYU6
-    - https://go.api.video/videos/vi6Oyllx2Y7fgl0VQdExac9M
-    - https://go.api.video/videos/vi6Fw37saUS3Tgk6lHHsMSGg
+    - https://go.api.video/videos/vi6gomWTHO9vMNz9PlC44qUj
+    - https://go.api.video/videos/vi2xRj3mUz967QRSESwmwveX
+    - https://go.api.video/videos/viM0Q6S2LqkdI8D7RqTDsBG
 
 streamable:
   name: Streamable
