@@ -36,7 +36,7 @@ exports.config = {
     'players/vimeo.js',
     'players/wistia.js',
     'players/youtube.js',
-    // 'players/jw-player.js', // disable jw player until API works
+    'players/jw-player.js', // disable jw player until API works
   ],
   exclude: [],
 

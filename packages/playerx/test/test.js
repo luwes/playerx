@@ -13,7 +13,7 @@ import './players/dailymotion.js';
 // import './players/twitch.js'; // too buggy, timeouts on play test
 import './players/streamable.js';
 import './players/soundcloud.js';
-// import './players/jwplayer.js'; // need jw player developer license
+import './players/jwplayer.js'; // need jw player developer license
 import './players/vidyard.js';
 import './players/dashjs.js';
 import './players/hlsjs.js';
