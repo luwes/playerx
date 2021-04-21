@@ -260,14 +260,14 @@ export const PlayerxMixin = (CE, { create }) => (element) => {
   async function afterLoad(initEvents) {
     await player.ready();
 
-    if (!player.meta.get('video_id')) {
+    if (!element.meta.get('video_id')) {
       const videoId = await player.get('videoId');
-      if (videoId) player.meta.set('video_id', videoId);
+      if (videoId) element.meta.set('video_id', videoId);
     }
 
-    if (!player.meta.get('video_title')) {
+    if (!element.meta.get('video_title')) {
       const videoTitle = await player.get('videoTitle');
-      if (videoTitle) player.meta.set('video_title', videoTitle);
+      if (videoTitle) element.meta.set('video_title', videoTitle);
     }
 
     await player.set('volume', element.cache('volume'));
@@ -534,10 +534,6 @@ function base(element, player) {
   return {
     ...flexApi(player, 'api'),
 
-    get meta() {
-      return element.meta;
-    },
-
     unsupported: {},
     supports(method) {
       return !(method in player.unsupported);
@@ -577,6 +573,10 @@ function base(element, player) {
       if (element.paused && playing) {
         return player.play();
       }
+    },
+
+    getMeta() {
+      return element.cache('meta');
     },
 
     getEnded() {
