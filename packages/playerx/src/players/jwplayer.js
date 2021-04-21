@@ -42,14 +42,13 @@ export function createPlayer(element) {
     ready = publicPromise();
 
     const opts = getOptions();
-    const id = getVideoId(MATCH_SRC, element.src);
-
     div = createElement('div');
 
     const playerUrl = `https://content.jwplatform.com/libraries/${opts.player}.js`;
     const scriptUrl = opts.key ? opts.apiUrl || API_URL : playerUrl;
     const JW = await loadScript(scriptUrl, API_GLOBAL);
-    const media = await getMedia(id);
+    const id = getVideoId(MATCH_SRC, element.src);
+    const media = id ? await getMedia(id) : { file: element.src };
     api = JW(div).setup({
       width: '100%',
       height: '100%',

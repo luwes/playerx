@@ -642,6 +642,11 @@ export function flexApi(instance, api) {
 }
 
 export function getCurrentPlayerConfig(src) {
+  const playerParam = new URLSearchParams(src.split('?')[1]).get('player');
+  if (options.players[playerParam]) {
+    return options.players[playerParam];
+  }
+
   for (let key in options.players) {
     const playerConfig = options.players[key];
     if (playerConfig.canPlay(src)) {
