@@ -1,7 +1,7 @@
 // https://developers.facebook.com/docs/plugins/embedded-video-player/api/
 
 import { facebook as MATCH_SRC } from '../constants/src-regex.js';
-import { getVideoId, createPlayPromise } from '../helpers.js';
+import { getVideoId, createPlayPromise, allow } from '../helpers.js';
 import {
   createElement,
   removeNode,
@@ -54,6 +54,7 @@ export function createPlayer(element) {
 
     FB.Event.subscribe('xfbml.ready', msg => {
       if (msg.type === 'video' && msg.id === id) {
+        div.querySelector('iframe').allow = allow;
         api = msg.instance;
         ready.resolve();
       }
