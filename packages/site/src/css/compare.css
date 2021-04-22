@@ -3,16 +3,9 @@
   overflow-x: auto;
   grid-template-columns:
     minmax(380px, 1fr)
-    minmax(200px, 1fr)
-    minmax(200px, 1fr)
-    minmax(200px, 1fr)
-    minmax(200px, 1fr)
-    minmax(200px, 1fr)
-    minmax(200px, 1fr)
-    minmax(200px, 1fr)
-    minmax(200px, 1fr);
+    repeat(var(--cols), minmax(200px, 1fr));
 }
 
 .grid-cell {
-  @apply flex-grow w-full border-b px-5 py-4;
+  @apply border-b px-5 py-4;
 }
