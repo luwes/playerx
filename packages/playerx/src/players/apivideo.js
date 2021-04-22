@@ -10,7 +10,7 @@ import {
 } from '../utils.js';
 
 const EMBED_BASE = 'https://embed.api.video/vod';
-const API_URL = 'https://unpkg.com/@api.video/player-sdk@1.2.5/dist/index.js';
+const API_URL = 'https://unpkg.com/@api.video/player-sdk@1.2.6/dist/index.js';
 const API_GLOBAL = 'PlayerSdk';
 
 /**
@@ -54,6 +54,13 @@ export function createPlayer(element) {
     await mediaAdded;
     api = new PlayerSdk(`#${id}`);
     await promisify(api.addEventListener, api)('ready');
+
+    api.addEventListener('qualitychange', ({ resolution }) => {
+      element.setCache('videoWidth', resolution.width);
+      element.setCache('videoHeight', resolution.height);
+      element.fire('resize');
+    });
+
     ready.resolve();
   }
 
@@ -64,7 +71,6 @@ export function createPlayer(element) {
   };
 
   const unsupported = {
-    playbackRate: undefined,
   };
 
   const methods = {
@@ -115,7 +121,7 @@ export function createPlayer(element) {
     },
 
     setControls() {
-      return api.loadConfig(getOptions());
+      return element.cache('controls') ? api.showControls() : api.hideControls();
     },
 
     set muted(muted) {
