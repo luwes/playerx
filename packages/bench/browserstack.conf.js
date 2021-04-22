@@ -31,7 +31,6 @@ exports.config = {
     ['browserstack', {
       browserstackLocal: true,
       opts: {
-
       }
     }]
   ],
@@ -55,11 +54,6 @@ exports.config = {
   ],
   exclude: [],
 
-  // Adds temporary script file name as title
-  beforeSession: function (config, capabilities, specs) {
-    // capabilities.name = (specs && specs[0].split('/').pop()) || undefined;
-  },
-
   maxInstances: 4,
 
   capabilities: [
@@ -70,7 +64,7 @@ exports.config = {
     //     osVersion: '13',
     //     deviceName: 'iPad 7th',
     //     realMobile: 'true',
-    //     geoLocation: 'JP',
+    //     // geoLocation: 'JP',
     //     networkProfile: '4g-lte-lossy',
     //   },
     // },
@@ -84,8 +78,8 @@ exports.config = {
         osVersion: '8.0',
         deviceName: 'Google Pixel 2',
         realMobile: 'true',
-        geoLocation: 'BR',
         networkProfile: '3.5g-hspa-good',
+        // geoLocation: 'BR', // sad :( The browserstack.geoLocation=BR capability was ignored for this session. IP Geolocation feature has moved out of Beta and is now only available with Enterprise plans. We recommend you to stop using this capability or upgrade to an Enterprise plan, contact us for more details
       },
     },
   ],
