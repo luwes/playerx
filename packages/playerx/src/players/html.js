@@ -56,9 +56,8 @@ export function createPlayer(element) {
   }
 
   const methods = {
-    get key() { return 'html'; },
-    get name() { return 'html'; },
-    get version() { return '5'; },
+    name: 'html',
+    version: '5',
 
     get element() {
       return video;
