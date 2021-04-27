@@ -23,73 +23,13 @@ rows:
       less rebuffering, while a lower score means a viewer sees more
       rebuffering.
 players:
-  - key: vimeo
-    name: Vimeo
-    url: https://vimeo.com
-    viewer_experience_score: 0.9774079185979375
-    video_startup_time: 49
-    player_startup_time: 992.25
-    smoothness_score: 0.951644355452942
-  - key: youtube
-    name: YouTube
-    url: https://www.youtube.com
-    viewer_experience_score: 0.8994096909515589
-    video_startup_time: 0
-    player_startup_time: 2064.56640625
-    smoothness_score: 0.7766940473118644
-  - key: jwplayer
-    name: JW Player
-    url: https://www.jwplayer.com/
-    viewer_experience_score: 0.8399313426854318
-    video_startup_time: 49
-    player_startup_time: 3018.12890625
-    smoothness_score: 0.65991900573697
-  - key: apivideo
-    name: api.video
-    url: https://api.video
-    viewer_experience_score: 0.9768035875167698
-    video_startup_time: 49
-    player_startup_time: 2970.25
-    smoothness_score: 0.968186905462062
-  - key: wistia
-    name: Wistia
-    url: https://wistia.com
-    viewer_experience_score: 0.8332457310494745
-    video_startup_time: 1764
-    player_startup_time: 3547.69140625
-    smoothness_score: 0.7646989647284556
-  - key: brightcove
-    name: Brightcove
-    url: https://www.brightcove.com
-    viewer_experience_score: 0.8746032554815716
-    video_startup_time: 81
-    player_startup_time: 3018.12890625
-    smoothness_score: 0.7410080401582013
-  - key: dailymotion
-    name: Dailymotion
-    url: https://www.dailymotion.com
-    viewer_experience_score: 0.882974720376683
-    video_startup_time: 121
-    player_startup_time: 2736.59765625
-    smoothness_score: 0.7279207128004765
-  - key: streamable
-    name: Streamable
-    url: https://streamable.com
-    viewer_experience_score: 0.8373511992539877
-    video_startup_time: 16
-    player_startup_time: 964.87890625
-    smoothness_score: 0.7284175462527962
-  - key: facebook
-    name: Facebook
-    url: https://www.facebook.com
-    viewer_experience_score: 0.8646767261432625
-    video_startup_time: 121
-    player_startup_time: 4112.015625
-    smoothness_score: 0.7841697847634032
-  - key: vidyard
-    name: Vidyard
-    url: https://www.vidyard.com
-    viewer_experience_score: 0.8160045429890258
-    video_startup_time: 64
-    player_startup_time: 3473.62890625
-    smoothness_score: 0.6990779742656514
+  apivideo: true
+  vimeo: true
+  youtube: true
+  dailymotion: true
+  brightcove: true
+  facebook: true
+  streamable: true
+  wistia: true
+  jwplayer: true
+  vidyard: true

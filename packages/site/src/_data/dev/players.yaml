@@ -1,104 +1,163 @@
-vimeo:
-  name: Vimeo
-  clips:
-    - https://vimeo.com/357274789
-    - https://vimeo.com/327204597
-    - https://vimeo.com/436880965
-
-youtube:
-  name: YouTube
-  clips:
-    - https://www.youtube.com/watch?v=BK1JIjLPwaA
-    - https://www.youtube.com/watch?v=ssdng3QeFnA
-    - https://www.youtube.com/watch?v=zD6nk5byNGE
-
-dailymotion:
-  name: Dailymotion
-  clips:
-    - https://www.dailymotion.com/video/x7sgamf
-    - https://www.dailymotion.com/video/x7sgasm
-    - https://www.dailymotion.com/video/x7ux420
-
-dashjs:
-  name: dash.js
-  clips:
-    - https://65vod-adaptive.akamaized.net/exp=2482774255~acl=%2F680befac-de71-4a0d-a9fa-4036695333c8%2F%2A~hmac=ab3da00c114fce450c5673cfad9574647772778f518e46c58b9210c37cd54083/680befac-de71-4a0d-a9fa-4036695333c8/sep/video/007a89dc,51ae83f1,67d5d9c0,e9eb72f5,ed737100,d5b9a68c,6e0c0f7b/master.mpd?base64_init=1&ext=.mpd
-    - https://dash.akamaized.net/envivio/EnvivioDash3/manifest.mpd
-    - https://amssamples.streaming.mediaservices.windows.net/634cd01c-6822-4630-8444-8dd6279f94c6/CaminandesLlamaDrama4K.ism/manifest(format=mpd-time-csf)?ext=.mpd
-
-hlsjs:
-  name: hls.js
-  clips:
-    - https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM.m3u8
-    - https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8
-    - https://stream.mux.com/KHdaCPpki1o4PUCMWfAXFbrHy2gBosxdxZISdvFJGLQ.m3u8
-
-jwplayer:
-  name: JW Player
-  clips:
-    - https://cdn.jwplayer.com/players/Fpw44kH6-IxzuqJ4M.js
-    - https://cdn.jwplayer.com/players/hAETCxXu-Pd4r8gwe.js
-    - https://cdn.jwplayer.com/players/Cc7f9uNQ-IxzuqJ4M.js
-
-apivideo:
+- key: apivideo
   name: api.video
+  url: https://api.video
   clips:
     - https://go.api.video/videos/vi6gomWTHO9vMNz9PlC44qUj
     - https://go.api.video/videos/vi2xRj3mUz967QRSESwmwveX
     - https://go.api.video/videos/viM0Q6S2LqkdI8D7RqTDsBG
-
-wistia:
-  name: Wistia
+  viewer_experience_score: 0.9849814214576078
+  video_startup_time: 16
+  player_startup_time: 2909.25390625
+  smoothness_score: 0.9742315521120075
+- key: vimeo
+  name: Vimeo
+  url: https://vimeo.com
   clips:
-    - https://wesleyluyten.wistia.com/medias/dgzftn5ctz
-    - https://wesleyluyten.wistia.com/medias/oj8d7cwhbn
-    - https://wesleyluyten.wistia.com/medias/1ekn652fs5
-
-vidyard:
-  name: Vidyard
+    - https://vimeo.com/357274789
+    - https://vimeo.com/327204597
+    - https://vimeo.com/436880965
+  viewer_experience_score: 0.9675304882228375
+  video_startup_time: 49
+  player_startup_time: 1084.87890625
+  smoothness_score: 0.927295420826836
+- key: youtube
+  name: YouTube
+  url: https://www.youtube.com
   clips:
-    - https://share.vidyard.com/watch/TYY9iSji3mJuFqp2oj4FoL?
-    - https://share.vidyard.com/watch/B4uvxTbjqshXVHf5fXX3po?
-    - https://share.vidyard.com/watch/Xm2qXrsFL1vFHHHFMdf1UN?
-
-brightcove:
+    - https://www.youtube.com/watch?v=BK1JIjLPwaA
+    - https://www.youtube.com/watch?v=ssdng3QeFnA
+    - https://www.youtube.com/watch?v=zD6nk5byNGE
+  viewer_experience_score: 0.9024196194059868
+  video_startup_time: 0
+  player_startup_time: 2064.56640625
+  smoothness_score: 0.7825441485636622
+- key: dailymotion
+  name: Dailymotion
+  url: https://www.dailymotion.com
+  clips:
+    - https://www.dailymotion.com/video/x7sgamf
+    - https://www.dailymotion.com/video/x7sgasm
+    - https://www.dailymotion.com/video/x7ux420
+  viewer_experience_score: 0.8793427148549595
+  video_startup_time: 121
+  player_startup_time: 2802.37890625
+  smoothness_score: 0.7184574251362295
+- key: brightcove
   name: Brightcove
+  url: https://www.brightcove.com
   clips:
-    - https://studio.brightcove.com/products/videocloud/media/videos/4883184247001
-    - https://studio.brightcove.com/products/videocloud/media/videos/6057428475001
-    - https://studio.brightcove.com/products/videocloud/media/videos/5686632036001
-
-streamable:
-  name: Streamable
+    - >-
+      https://studio.brightcove.com/products/videocloud/media/videos/4883184247001
+    - >-
+      https://studio.brightcove.com/products/videocloud/media/videos/6057428475001
+    - >-
+      https://studio.brightcove.com/products/videocloud/media/videos/5686632036001
+  viewer_experience_score: 0.8760537888998348
+  video_startup_time: 81
+  player_startup_time: 3025
+  smoothness_score: 0.7439597104749982
+- key: hlsjs
+  name: hls.js
+  url: https://github.com/video-dev/hls.js
   clips:
-    - https://streamable.com/aizxh
-    - https://streamable.com/wjzpkr
-    - https://streamable.com/zzhdlp
-
-facebook:
+    - https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM.m3u8
+    - >-
+      https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8
+    - https://stream.mux.com/KHdaCPpki1o4PUCMWfAXFbrHy2gBosxdxZISdvFJGLQ.m3u8
+  video_startup_time: 100
+  viewer_experience_score: 0.8757644899857572
+  player_startup_time: 1273.59765625
+  smoothness_score: 0.7071591123312746
+- key: facebook
   name: Facebook
+  url: https://www.facebook.com
   clips:
     - https://www.facebook.com/wesleyluyten/videos/10220940465559072
     - https://www.facebook.com/facebook/videos/10153231379946729/
     - https://www.facebook.com/wesleyluyten/videos/10222360036487458
-
-twitch:
+  viewer_experience_score: 0.8686711719828151
+  video_startup_time: 144
+  player_startup_time: 3945.41015625
+  smoothness_score: 0.7916482895059891
+- key: streamable
+  name: Streamable
+  url: https://streamable.com
+  clips:
+    - https://streamable.com/aizxh
+    - https://streamable.com/wjzpkr
+    - https://streamable.com/zzhdlp
+  viewer_experience_score: 0.842270285840463
+  video_startup_time: 16
+  player_startup_time: 980.47265625
+  smoothness_score: 0.7366058250064872
+- key: dashjs
+  name: dash.js
+  url: https://github.com/Dash-Industry-Forum/dash.js
+  clips:
+    - >-
+      https://65vod-adaptive.akamaized.net/exp=2482774255~acl=%2F680befac-de71-4a0d-a9fa-4036695333c8%2F%2A~hmac=ab3da00c114fce450c5673cfad9574647772778f518e46c58b9210c37cd54083/680befac-de71-4a0d-a9fa-4036695333c8/sep/video/007a89dc,51ae83f1,67d5d9c0,e9eb72f5,ed737100,d5b9a68c,6e0c0f7b/master.mpd?base64_init=1&ext=.mpd
+    - https://dash.akamaized.net/envivio/EnvivioDash3/manifest.mpd
+    - >-
+      https://amssamples.streaming.mediaservices.windows.net/634cd01c-6822-4630-8444-8dd6279f94c6/CaminandesLlamaDrama4K.ism/manifest(format=mpd-time-csf)?ext=.mpd
+  video_startup_time: 64
+  viewer_experience_score: 0.8417028357238228
+  player_startup_time: 2401
+  smoothness_score: 0.624834599225542
+- key: wistia
+  name: Wistia
+  url: https://wistia.com
+  clips:
+    - https://wesleyluyten.wistia.com/medias/dgzftn5ctz
+    - https://wesleyluyten.wistia.com/medias/oj8d7cwhbn
+    - https://wesleyluyten.wistia.com/medias/1ekn652fs5
+  viewer_experience_score: 0.8361320754050126
+  video_startup_time: 1764
+  player_startup_time: 3600
+  smoothness_score: 0.7725434630060575
+- key: jwplayer
+  name: JW Player
+  url: https://www.jwplayer.com/
+  clips:
+    - https://cdn.jwplayer.com/players/Fpw44kH6-IxzuqJ4M.js
+    - https://cdn.jwplayer.com/players/hAETCxXu-Pd4r8gwe.js
+    - https://cdn.jwplayer.com/players/Cc7f9uNQ-IxzuqJ4M.js
+  viewer_experience_score: 0.8343041660673807
+  video_startup_time: 81
+  player_startup_time: 3052.5625
+  smoothness_score: 0.6494577280587115
+- key: vidyard
+  name: Vidyard
+  url: https://www.vidyard.com
+  clips:
+    - https://share.vidyard.com/watch/TYY9iSji3mJuFqp2oj4FoL?
+    - https://share.vidyard.com/watch/B4uvxTbjqshXVHf5fXX3po?
+    - https://share.vidyard.com/watch/Xm2qXrsFL1vFHHHFMdf1UN?
+  viewer_experience_score: 0.8201772892366633
+  video_startup_time: 64
+  player_startup_time: 3466.265625
+  smoothness_score: 0.7062573489882433
+- key: twitch
   name: Twitch
+  url: https://www.twitch.tv
   clips:
     - https://www.twitch.tv/videos/566280744
     - https://www.twitch.tv/videos/49499968
     - https://www.twitch.tv/videos/675696011
-
-soundcloud:
+  video_startup_time: 16
+  viewer_experience_score: 0.4262628140097315
+  player_startup_time: 3682.97265625
+  smoothness_score: 0.03805308537346057
+- key: soundcloud
   name: SoundCloud
   clips:
     - https://soundcloud.com/areckoner/winter-fingers
     - https://soundcloud.com/husky-rescue/11-the-good-man
-
-html:
+- key: html
   name: HTML
   clips:
-    -
-      - https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM/low.mp4
-      - https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM/medium.mp4
-      - https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM/high.mp4
+    - - >-
+        https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM/low.mp4
+      - >-
+        https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM/medium.mp4
+      - >-
+        https://stream.mux.com/LvkSQ3bpRjLS9sCIzJlpccO9TW6dP3At00ypl6SXKrgM/high.mp4

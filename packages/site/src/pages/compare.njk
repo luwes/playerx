@@ -22,15 +22,18 @@ tags:
 
   <div class="flex flex-col flex-grow">
 
-    <div class="compare-grid md:grid flex-grow border-t" style="--cols: {{ compare.players.length }}">
+    <div class="compare-grid md:grid flex-grow border-t" style="--cols: {{ compare.players | length }}">
       <div class="grid-cell">
         <h3 class="text-2xl">Compare players</h3>
+        <p class="text-sm">Based on this <a class="underline" href="https://github.com/playerxo/playerx/tree/master/packages/bench" target="_blank">bench</a> measured with MUX data.</p>
       </div>
-      {%- for player in compare.players | sort(true, false, 'viewer_experience_score') -%}
-        <div class="grid-cell lg:border-l">
-          <h3 class="text-xl">{{ player.name }}</h3>
-          <a class="text-xs block text-blue-500 underline hover:text-blue-700" href="{{ player.url }}">{{ player.url }}</a>
-        </div>
+      {%- for player in players | sort(true, false, 'viewer_experience_score') -%}
+        {% if compare.players[player.key] %}
+          <div class="grid-cell lg:border-l">
+            <h3 class="text-xl">{{ player.name }}</h3>
+            <a class="text-xs block text-blue-500 underline hover:text-blue-700" href="{{ player.url }}">{{ player.url }}</a>
+          </div>
+        {% endif %}
       {%- endfor -%}
 
       {%- for row in compare.rows -%}
@@ -45,26 +48,28 @@ tags:
           </h4>
         </div>
 
-        {%- for player in compare.players | sort(true, false, 'viewer_experience_score') -%}
-          <div class="grid-cell lg:border-l flex flex-col items-center justify-center">
-            {% if row.field == 'viewer_experience_score' %}
-              <span class="text-2xl leading-none tracking-tight font-bold text-gray-900">
-                {{ (player.viewer_experience_score * 100) | round }}
-              </span>
-            {% elif row.field == 'video_startup_time' %}
-              <span class="text-sm leading-none tracking-tight text-gray-900">
-                {{ (player.video_startup_time / 1000) | round(2) }}s
-              </span>
-            {% elif row.field == 'player_startup_time' %}
-              <span class="text-sm leading-none tracking-tight text-gray-900">
-                {{ (player.player_startup_time / 1000) | round(2) }}s
-              </span>
-            {% elif row.field == 'smoothness_score' %}
-              <span class="text-sm leading-none tracking-tight text-gray-900">
-                {{ (player.smoothness_score * 100) | round }}
-              </span>
-            {% endif %}
-          </div>
+        {%- for player in players | sort(true, false, 'viewer_experience_score') -%}
+          {% if compare.players[player.key] %}
+            <div class="grid-cell lg:border-l flex flex-col items-center justify-center">
+              {% if row.field == 'viewer_experience_score' %}
+                <span class="text-2xl leading-none tracking-tight font-bold text-gray-900">
+                  {{ (player.viewer_experience_score * 100) | round }}
+                </span>
+              {% elif row.field == 'video_startup_time' %}
+                <span class="text-sm leading-none tracking-tight text-gray-900">
+                  {{ (player.video_startup_time / 1000) | round(2) }}s
+                </span>
+              {% elif row.field == 'player_startup_time' %}
+                <span class="text-sm leading-none tracking-tight text-gray-900">
+                  {{ (player.player_startup_time / 1000) | round(2) }}s
+                </span>
+              {% elif row.field == 'smoothness_score' %}
+                <span class="text-sm leading-none tracking-tight text-gray-900">
+                  {{ (player.smoothness_score * 100) | round }}
+                </span>
+              {% endif %}
+            </div>
+          {% endif %}
         {%- endfor -%}
       {%- endfor -%}
 
