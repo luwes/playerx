@@ -22,6 +22,10 @@ rows:
       watching video. A higher Smoothness Score means the viewer experiences
       less rebuffering, while a lower score means a viewer sees more
       rebuffering.
+  - title: Rebuffer Percentage
+    field: rebuffer_percentage
+    description: >-
+      Rebuffer Percentage measures the volume of rebuffering that is occurring across the platform.
 players:
   apivideo: true
   vimeo: true

@@ -1,1 +1,1 @@
-module.exports = require('../prod/muxify.js');
+module.exports = require('../muxify.js');

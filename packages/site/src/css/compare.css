@@ -3,7 +3,7 @@
   overflow-x: auto;
   grid-template-columns:
     minmax(380px, 1fr)
-    repeat(var(--cols), minmax(200px, 1fr));
+    repeat(var(--cols), minmax(250px, 1fr));
 }
 
 .grid-cell {
