@@ -1,11 +1,18 @@
 require('dotenv').config();
+const pkg = require('../playerx/package.json');
 
 const commonCapabilities = {
   browserName: 'Chrome',
   browserVersion: 'latest',
   platformName: 'Windows 10',
   'sauce:options': {
-      extendedDebugging: true
+      extendedDebugging: true,
+      build: 'Playback ' +
+        (process.env.GITHUB_RUN_NUMBER || process.env.TRAVIS_BUILD_NUMBER || 0),
+      public: 'public restricted',
+      'custom-data': {
+        release: pkg.version
+      }
   }
 };
 
@@ -25,18 +32,18 @@ exports.config = {
   specs: [
     'players/brightcove.js',
     'players/dailymotion.js',
-    'players/facebook.js',
     'players/hlsjs.js',
     'players/dashjs.js',
     'players/apivideo.js',
-    // 'players/soundcloud.js',  // less useful to test compared to video players
     'players/streamable.js',
     'players/twitch.js',
     'players/vidyard.js',
     'players/vimeo.js',
     'players/wistia.js',
     'players/youtube.js',
-    'players/jw-player.js', // disable jw player until API works
+    'players/jw-player.js',
+    'players/facebook.js',       // facebook doesn't autoplay always
+    // 'players/soundcloud.js',  // less useful to test compared to video players
   ],
   exclude: [],
 

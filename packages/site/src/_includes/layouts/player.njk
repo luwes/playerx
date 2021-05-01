@@ -13,9 +13,8 @@
   <plx-mux data-env-key="ilc02s65tkrc2mk69b7q2qdkf" debug></plx-mux>
 </player-x>
 <script>
-  var urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get('muxenv')) {
-    document.querySelector('plx-mux').dataset.envKey = urlParams.get('muxenv');
+  if (window.MUX_ENV) {
+    document.querySelector('plx-mux').dataset.envKey = window.MUX_ENV
   }
 </script>
 {% endblock %}

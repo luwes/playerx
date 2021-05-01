@@ -39,18 +39,18 @@ exports.config = {
   specs: [
     'players/brightcove.js',
     'players/dailymotion.js',
-    'players/facebook.js',
     'players/hlsjs.js',
     'players/dashjs.js',
     'players/apivideo.js',
-    // 'players/soundcloud.js',  // less useful to test compared to video players
     'players/streamable.js',
     'players/twitch.js',
     'players/vidyard.js',
     'players/vimeo.js',
     'players/wistia.js',
     'players/youtube.js',
-    'players/jw-player.js', // disable jw player until API works
+    'players/jw-player.js',
+    'players/facebook.js',       // facebook doesn't autoplay always
+    // 'players/soundcloud.js',  // less useful to test compared to video players
   ],
   exclude: [],
 

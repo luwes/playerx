@@ -19,9 +19,6 @@ module.exports = function(player) {
 
       let url = `https://dev.playerx.io/demo/${player}/`;
       if (argv.clip) url += `${argv.clip}/`;
-      if (process.env.MUX_ENV) {
-        url += `?muxenv=${process.env.MUX_ENV}`;
-      }
 
       if (argv.saucenetwork) {
         // @see https://webdriver.io/docs/api/saucelabs.html#parameters-1
@@ -31,6 +28,12 @@ module.exports = function(player) {
 
       browser.url(url);
       expect(browser).toHaveTitle('Playerx - API Demo');
+
+      if (process.env.MUX_ENV) {
+        browser.execute(function(env) {
+          window.MUX_ENV = env;
+        }, process.env.MUX_ENV);
+      }
 
       browser.setTimeout({ script: 30000 });
 

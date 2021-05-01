@@ -114,7 +114,7 @@ player = hy(dhtml`
     <player-x ...${props}>
       <plx-media></plx-media>
       <plx-script></plx-script>
-      <plx-mux data-env-key="${getParam('muxenv', 'ilc02s65tkrc2mk69b7q2qdkf')}"></plx-mux>
+      <plx-mux data-env-key="${window.MUX_ENV || 'ilc02s65tkrc2mk69b7q2qdkf'}"></plx-mux>
     <//>
   `)}
 `);
