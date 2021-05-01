@@ -91,7 +91,7 @@ export function testPlayer(options, cb) {
     try {
       await Promise.race([
         player.play(),
-        delay(2000), // Wistia doesn't resolve promise on Safari CI
+        // delay(2000), // Wistia doesn't resolve promise on Safari CI
       ]);
     } catch (error) {
       console.warn(error);
@@ -193,7 +193,9 @@ function tearDown(ctx) {
   // Some players throw postMessage errors on removal.
   if (ctx.tests.remove === false) {
     ctx.container.style.visibility = 'hidden';
-    ctx.container.style.height = '1px';
+    ctx.container.style.overflow = 'hidden';
+    ctx.container.style.width = '0';
+    ctx.container.style.height = '0';
   } else {
     removeNode(ctx.container);
   }

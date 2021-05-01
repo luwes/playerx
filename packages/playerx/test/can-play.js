@@ -6,7 +6,7 @@ let players;
 (async () => {
   // Get document, or throw exception on error
   try {
-    const response = await fetch('./base/packages/site/src/_data/dev/players.yaml');
+    const response = await fetch('./base/packages/site/src/_data/players.yaml');
     const text = await response.text();
     players = yaml.load(text);
   } catch (e) {

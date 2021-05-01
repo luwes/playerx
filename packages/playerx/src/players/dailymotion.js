@@ -133,6 +133,11 @@ export function createPlayer(element) {
       return element.cache('src');
     },
 
+    get loop() {
+      // api.loop doesn't return a correct value.
+      return element.cache('loop');
+    },
+
     get muted() {
       return element.cache('muted');
     },

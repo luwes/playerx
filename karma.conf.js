@@ -148,7 +148,7 @@ module.exports = function (config) {
       'https://unpkg.com/@webcomponents/custom-elements@1.4.2/custom-elements.min.js',
       'https://unpkg.com/@webcomponents/webcomponentsjs@2.4.4/custom-elements-es5-adapter.js',
       {
-        pattern: 'packages/site/src/_data/dev/players.yaml',
+        pattern: 'packages/site/src/_data/players.yaml',
         included: false,
         served: true,
       },
