@@ -14,6 +14,8 @@ const tests = {
       ...defaultBrowsers(true),
       // Streamable had issues with play/pause states in Firefox
       firefox: false,
+      // Streamable had issues with resetting timeline in Safari
+      safari: false,
     },
   },
   remove: false,
