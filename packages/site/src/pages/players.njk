@@ -1,0 +1,26 @@
+---js
+{
+  title: "Playerx",
+  layout: "layouts/player.njk",
+  tags: [""],
+  pagination: {
+    data: "players",
+    size: 1,
+    alias: "player",
+    before: function(data) {
+      const pages = [];
+      data.forEach(entry => {
+        entry.clips.forEach((src, i) => {
+          pages.push({
+            ...entry,
+            src: src,
+            clipIndex: i
+          })
+        })
+      });
+      return pages;
+    }
+  },
+  permalink: "/players/{{ player.name | slug }}/{% if player.clipIndex > 0 %}{{ player.clipIndex + 1 }}/{% endif %}"
+}
+---

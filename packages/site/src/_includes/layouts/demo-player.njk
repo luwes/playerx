@@ -1,0 +1,109 @@
+{% extends "layouts/demo.njk" %}
+
+{% block content %}
+<main class="flex-grow">
+  <div class="container mx-auto overflow-hidden">
+    <div class="flex flex-wrap mb-4 px-6 xl:px-12 -mx-4">
+      <div class="w-full lg:w-6/12 px-4">
+        <div id="player-container" class="player bg-black">
+          <player-x>
+            <plx-media></plx-media>
+            <plx-script loading="player" src="{% getCdnUrl '@playerx/mux' %}"></plx-script>
+            <plx-mux data-env-key="ilc02s65tkrc2mk69b7q2qdkf" debug></plx-mux>
+          </player-x>
+        </div>
+        <div class="controls mt-4">
+          <div class="flex flex-wrap">
+            <div id="controls-1" class="w-10/12 sm:w-1/2">
+              <button class="btn play-pause">Play</button>
+              <button class="btn stop">Stop</button>
+              <button class="btn remove">Remove</button>
+            </div>
+            <div class="sm:w-1/6 sm:order-last">
+              <input id="volume-range" title="Volume" class="transform -rotate-90 self-center appearance-none bg-cool-gray-400 w-8 h-2 rounded-lg" type="range" min="0" max="1" step="any" value="1">
+            </div>
+            <div id="controls-2" class="my-4 sm:mt-0 w-full sm:w-1/3">
+              <button class="btn rate-0.5 disabled:opacity-50 disabled:cursor-not-allowed">0.5x</button>
+              <button class="btn rate-1 disabled:opacity-50 disabled:cursor-not-allowed">1x</button>
+              <button class="btn rate-2 disabled:opacity-50 disabled:cursor-not-allowed">2x</button>
+            </div>
+          </div>
+          <div class="block mb-4 flex">
+            <input id="current-time-range" class="flex-grow self-center appearance-none bg-cool-gray-400 h-2 rounded-lg" type="range" min="0" max="1" step="any" value="0">
+          </div>
+        </div>
+        <div id="logger" class="logger border border-cool-gray-300 h-48 overflow-y-auto font-mono text-xs leading-loose"></div>
+      </div>
+      <div class="w-full lg:w-6/12 px-4 pt-6 lg:pt-0">
+
+        <div class="flex flex-wrap">
+          <div class="w-full md:w-4/12 px-4">
+            <div class="state">
+              <div class="state-values">
+                <b class="inline-block w-7/12 text-right pr-3">paused</b><i class="inline-block w-5/12"></i>
+                <b class="inline-block w-7/12 text-right pr-3">volume</b><i class="inline-block w-5/12"></i>
+                <b class="inline-block w-7/12 text-right pr-3">buffered</b><i class="inline-block w-5/12"></i>
+                <b class="inline-block w-7/12 text-right pr-3">duration</b><i class="inline-block w-5/12"></i>
+                <b class="inline-block w-7/12 text-right pr-3">time</b><i class="inline-block w-5/12"></i>
+                <b class="inline-block w-7/12 text-right pr-3">ended</b><i class="inline-block w-5/12"></i>
+                <b class="inline-block w-7/12 text-right pr-3">quality</b><i class="inline-block w-5/12"></i>
+              </div>
+              <label class="block">
+                <span class="inline-block w-7/12 text-right pr-3 font-bold">autoplay</span>
+                <input id="autoplay" type="checkbox">
+              </label>
+              <label class="block">
+                <span class="inline-block w-7/12 text-right pr-3 font-bold">muted</span>
+                <input id="muted" type="checkbox">
+              </label>
+              <label class="block">
+                <span class="inline-block w-7/12 text-right pr-3 font-bold">loop</span>
+                <input id="loop" type="checkbox">
+              </label>
+              <label class="block">
+                <span class="inline-block w-7/12 text-right pr-3 font-bold">controls</span>
+                <input id="controls" class="disabled:opacity-50 disabled:cursor-not-allowed" type="checkbox">
+              </label>
+            </div>
+          </div>
+          <div class="w-full md:w-8/12 px-4">
+
+            <div class="relative mb-6 ml-6">
+              <input id="inputsrc" class="transition-colors duration-100 ease-in-out focus:outline-0 border border-transparent focus:bg-white focus:border-cool-gray-300 placeholder-cool-gray-600 rounded-lg bg-cool-gray-200 py-1 pr-4 pl-10 block w-full appearance-none" type="text" placeholder="Enter new source url">
+              <div class="pointer-events-none absolute top-2 left-0 pl-4">
+                <svg class="icon icon-file fill-current pointer-events-none text-cool-gray-600 w-4 h-4">
+                  <use xlink:href="/images/symbol-defs.svg#icon-file"></use>
+                </svg>
+              </div>
+            </div>
+
+            <div class="sources">
+              {%- for player in players -%}
+                <div class="mb-3">
+                  <b class="inline-block w-4/12 text-right pr-3">{{ player.name }}</b>
+                  {%- for clip in player.clips -%}
+                    <button
+                      class="btn src-btn src-{{ player.name | slug }}-{{ loop.index }}"
+                      data-player="{{ player.name | slug }}"
+                      data-clip="{{ loop.index }}"
+                      data-src="{{ clip | dump }}"
+                      title="{{ clip }}"
+                    >
+                      Clip {{ loop.index }}
+                    </button>
+                  {%- endfor -%}
+                </div>
+              {%- endfor -%}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+  var selectPlayer = '{{ player.name | slug }}';
+  var selectClip = String({{ player.clipIndex }} + 1 || 1);
+</script>
+{% endblock %}
