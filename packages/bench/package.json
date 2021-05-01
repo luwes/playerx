@@ -5,8 +5,8 @@
   "license": "MIT",
   "scripts": {
     "start": "run-p bench:*",
-    "bench:browserstack": "wdio browserstack.conf.js --seek",
-    "bench:saucelabs": "wdio saucelabs.conf.js --clip 3 --saucenetwork 'Good 3G'"
+    "bench:browserstack": "wdio browserstack.conf.js",
+    "bench:saucelabs": "wdio saucelabs.conf.js"
   },
   "dependencies": {
     "@wdio/browserstack-service": "^7.4.6",

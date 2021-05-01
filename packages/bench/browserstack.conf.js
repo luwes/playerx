@@ -23,6 +23,9 @@ const commonCapabilities = {
   'bstack:options': {
     ...options,
   },
+  'plx:options': {
+    seek: true
+  },
 };
 
 exports.config = {

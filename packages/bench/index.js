@@ -1,33 +1,27 @@
 const assert = require('assert');
-const minimist = require('minimist');
-
-const argv = minimist(process.argv.slice(2), {
-  default: {
-    seek: false,
-    clip: null,
-    saucenetwork: null
-  },
-});
 
 module.exports = function(player) {
+  const plxo = browser.capabilities['plx:options'] || {};
 
-  describe(`Playback${argv.saucenetwork ? ` (${argv.saucenetwork})` : ''}: ${player}`, function() {
+  describe(`Playback${plxo.saucenetwork ? ` (${plxo.saucenetwork})` : ''}: ${player}`, function() {
 
     it(`plays the test video`, function() {
       // Specify this test to only retry up to 2 times
       this.retries(2);
 
-      let url = `https://dev.playerx.io/demo/${player}/`;
-      if (argv.clip) url += `${argv.clip}/`;
+      let url = `https://dev.playerx.io/${plxo.page || 'demo'}/${player}/`;
+      if (plxo.clip > 1) {
+        url += `${plxo.clip}/`;
+      }
 
-      if (argv.saucenetwork) {
+      if (plxo.saucenetwork) {
         // @see https://webdriver.io/docs/api/saucelabs.html#parameters-1
         // network condition to set (e.g. 'online', 'offline', 'GPRS', 'Regular 2G', 'Good 2G', 'Regular 3G', 'Good 3G', 'Regular 4G', 'DSL', 'Wifi')
-        browser.throttleNetwork(argv.saucenetwork);
+        browser.throttleNetwork(plxo.saucenetwork);
       }
 
       browser.url(url);
-      expect(browser).toHaveTitle('Playerx - API Demo');
+      expect(browser).toHaveTitleContaining('Playerx');
 
       if (process.env.MUX_ENV) {
         browser.execute(function(env) {
@@ -62,7 +56,7 @@ module.exports = function(player) {
         }, 1000);
       }));
 
-      if (argv.seek) {
+      if (plxo.seek) {
         console.warn(`Seeking 10s from the end for ${player}`);
         assert(browser.executeAsync(async function(done) {
           setTimeout(() => {

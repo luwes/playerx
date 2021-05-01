@@ -1,21 +1,27 @@
 require('dotenv').config();
 const pkg = require('../playerx/package.json');
 
+const sauceOptions = {
+  extendedDebugging: true,
+  build: 'Playback ' +
+    (process.env.GITHUB_RUN_NUMBER || process.env.TRAVIS_BUILD_NUMBER || 0),
+  public: 'public restricted',
+  'custom-data': {
+    release: pkg.version
+  },
+};
+
 const commonCapabilities = {
   browserName: 'Chrome',
   browserVersion: 'latest',
   platformName: 'Windows 10',
   acceptInsecureCerts: true,
   pageLoadStrategy: 'eager', // makes browser.url() resolve on DOMContentLoaded
-  'sauce:options': {
-      extendedDebugging: true,
-      build: 'Playback ' +
-        (process.env.GITHUB_RUN_NUMBER || process.env.TRAVIS_BUILD_NUMBER || 0),
-      public: 'public restricted',
-      'custom-data': {
-        release: pkg.version
-      }
-  }
+  'sauce:options': sauceOptions,
+  'plx:options': {
+    clip: 3,
+    saucenetwork: 'Good 3G'
+  },
 };
 
 exports.config = {
@@ -54,6 +60,16 @@ exports.config = {
   capabilities: [
     {
       ...commonCapabilities,
+    },
+    {
+      ...commonCapabilities,
+      'sauce:options': {
+        ...sauceOptions,
+        screenResolution: '1600x1200',
+      },
+      'plx:options': {
+        page: 'players',
+      },
     },
   ],
 
