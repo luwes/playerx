@@ -32,6 +32,7 @@ module.exports = function(player) {
       if (process.env.MUX_ENV) {
         browser.execute(function(env) {
           window.MUX_ENV = env;
+          document.querySelector('plx-mux').dataset.envKey = env;
         }, process.env.MUX_ENV);
       }
 

@@ -19,6 +19,7 @@ const options = {
 const commonCapabilities = {
   browserName: 'Chrome',
   acceptInsecureCerts: true,
+  pageLoadStrategy: 'eager', // makes browser.url() resolve on DOMContentLoaded
   'bstack:options': {
     ...options,
   },

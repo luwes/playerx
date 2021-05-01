@@ -5,6 +5,8 @@ const commonCapabilities = {
   browserName: 'Chrome',
   browserVersion: 'latest',
   platformName: 'Windows 10',
+  acceptInsecureCerts: true,
+  pageLoadStrategy: 'eager', // makes browser.url() resolve on DOMContentLoaded
   'sauce:options': {
       extendedDebugging: true,
       build: 'Playback ' +
