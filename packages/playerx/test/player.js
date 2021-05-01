@@ -91,7 +91,9 @@ export function testPlayer(options, cb) {
     try {
       await Promise.race([
         player.play(),
-        // delay(2000), // Wistia doesn't resolve promise on Safari CI
+        // Wistia doesn't resolve promise on Safari CI
+        // Removed delay because it was too short for Vimeo and failed assert below
+        // delay(2000),
       ]);
     } catch (error) {
       console.warn(error);
