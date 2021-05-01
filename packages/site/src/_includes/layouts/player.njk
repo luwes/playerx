@@ -4,11 +4,11 @@
   <style>body{margin:0;}</style>
   <script src="{% getCdnUrl '@playerx/polyfills' %}"></script>
   <script defer src="{% getCdnUrl 'playerx' %}"></script>
+  <script defer src="{% getCdnUrl 'playerx/all' %}"></script>
 {% endblock %}
 
 {% block main %}
-<player-x src="{{ player.src }}" controls>
-  <plx-media></plx-media>
+<player-x src="{{ player.src }}" controls config='{"facebook":{"appId":"197575574668798"},"jwplayer":{"player":"IxzuqJ4M"},"brightcove":{"account":"1752604059001"}}'>
   <plx-script loading="player" src="{% getCdnUrl '@playerx/mux' %}"></plx-script>
   <plx-mux data-env-key="ilc02s65tkrc2mk69b7q2qdkf" debug></plx-mux>
 </player-x>

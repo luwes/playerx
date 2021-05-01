@@ -1,8 +1,10 @@
 ---js
 {
-  title: "Playerx",
+  eleventyComputed: {
+    title: "Playerx - {{ player.name }}",
+  },
   layout: "layouts/player.njk",
-  tags: [""],
+  tags: ["player"],
   pagination: {
     data: "players",
     size: 1,
