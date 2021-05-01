@@ -7,6 +7,7 @@ import './utils.js';
 import '../src/all.js';
 
 // Run the buggy players first
+import './players/facebook.js';
 import './players/youtube.js';
 import './players/wistia.js';
 import './players/dailymotion.js';
@@ -20,5 +21,3 @@ import './players/hlsjs.js';
 import './players/html.js';
 import './players/brightcove.js';
 import './players/vimeo.js';
-// Facebook player is not removed properly, test this one last.
-import './players/facebook.js';

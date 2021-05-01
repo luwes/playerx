@@ -74,6 +74,8 @@ module.exports = function (config) {
     customLaunchers: automate ? sauceLabsLaunchers : localLaunchers,
 
     sauceLabs: {
+      extendedDebugging: true,
+      public: 'public restricted',
       build:
         'CI #' +
         process.env.TRAVIS_BUILD_NUMBER +
