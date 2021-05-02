@@ -108,13 +108,14 @@ const props = {
 /** @type Playerx */
 let player;
 player = hy(dhtml`
-  ${() =>
-    showing() &&
-    (player = dhtml`
+  ${() => showing() && (player = dhtml`
     <player-x ...${props}>
       <plx-media></plx-media>
-      <plx-script></plx-script>
-      <plx-mux data-env-key="${window.MUX_ENV || 'ilc02s65tkrc2mk69b7q2qdkf'}"></plx-mux>
+      <plx-script src="${player?.children?.[1].src}"></plx-script>
+      <plx-mux
+        data-env-key="${window.MUX_ENV || player?.children?.[2]?.dataset.envKey}"
+        debug="${player?.children?.[2]?.debug}"
+      ></plx-mux>
     <//>
   `)}
 `);
