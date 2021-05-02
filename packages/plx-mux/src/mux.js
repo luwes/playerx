@@ -10,7 +10,13 @@ import {
   camelToSnakeKeys,
 } from './utils.js';
 
-const mux = () => (el) => {
+const props = {
+  reflect: {
+    debug: false,
+  },
+};
+
+function mux(el) {
   const player = el.player;
   let currentPlayer = player.name;
   let playerId;
@@ -88,7 +94,7 @@ const mux = () => (el) => {
       'video_variant_id',
       'video_variant_name',
       'view_session_id',
-      'viewer_user_id'
+      'viewer_user_id',
     ];
 
     const videoData = {};
@@ -161,13 +167,25 @@ const mux = () => (el) => {
 
     return stateData;
   }
+}
+
+const setup = () => (el) => {
+  let isInit;
+  connected();
+
+  function connected() {
+    if (!isInit && el.player) {
+      isInit = true;
+      mux(el);
+    }
+  }
+
+  return {
+    connected,
+  };
 };
 
 export const PlxMux = define('plx-mux', {
-  setup: mux,
-  props: {
-    reflect: {
-      debug: false
-    }
-  }
+  setup,
+  props,
 });
