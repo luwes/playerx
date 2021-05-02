@@ -18,7 +18,8 @@ export function addCssRule(selector, props = {}) {
 
 export function deleteCssRule(rule) {
   const sheet = getStyle().sheet;
-  sheet.deleteRule(cssRuleIndex(rule));
+  const index = cssRuleIndex(rule);
+  if (index >= 0) sheet.deleteRule(index);
 }
 
 export function cssRuleIndex(rule) {
