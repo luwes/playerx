@@ -33,7 +33,11 @@ export const Element = (def, Base) => {
   return CE;
 };
 
-const StylesMixin = ({ base }, { styles, name }) => (el) => {
+const StylesMixin = ({ base }, { styles, name }) => async (el) => {
+  // Await 1 tick here preventing this CustomElement error:
+  // Uncaught DOMException: Failed to construct 'CustomElement': The result "must not have children"
+  await Promise.resolve();
+
   const sheet = getStyle(el);
   if (styles) {
     const selector = base.extends ? `${base.extends}[is="${name}"]` : name;
