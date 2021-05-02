@@ -209,7 +209,7 @@ export const PlayerxMixin = (CE, { create }) => (element) => {
 
     element.fire(Events.LOADSRC);
 
-    if (player.api && options.players[element.key].canPlay(element.src)) {
+    if (canPlayerLoadSource()) {
       const prevLoad = element.load;
 
       // If `element.load` is called in the player, re-attach events.
@@ -231,6 +231,14 @@ export const PlayerxMixin = (CE, { create }) => (element) => {
     await afterLoad(true);
     element.fire(Events.LOADEDSRC);
     element.fire(Events.READY);
+  }
+
+  function canPlayerLoadSource() {
+    const playerParam = getSrcParam(element.src, 'player');
+    if (playerParam && playerParam !== element.key) {
+      return false;
+    }
+    return player.api && options.players[element.key].canPlay(element.src);
   }
 
   async function init() {
@@ -641,9 +649,13 @@ export function flexApi(instance, api) {
   };
 }
 
-export function getCurrentPlayerConfig(src) {
+function getSrcParam(src, key) {
   const url = Array.isArray(src) ? src[0] : src;
-  const playerParam = new URLSearchParams(url.split('?')[1]).get('player');
+  return url && new URLSearchParams(url.split('?')[1]).get(key);
+}
+
+export function getCurrentPlayerConfig(src) {
+  const playerParam = getSrcParam(src, 'player');
   if (options.players[playerParam]) {
     return options.players[playerParam];
   }
