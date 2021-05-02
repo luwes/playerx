@@ -47,7 +47,7 @@ export function createPlayer(element) {
 
     const Hls = await loadScript(opts.hlsUrl || HLS_URL, HLS_GLOBAL);
     if (Hls.isSupported()) {
-      hls = new Hls();
+      hls = new Hls(element.config.hlsjs);
       hls.attachMedia(video);
       hls.on(Hls.Events.ERROR, () => element.fire('error'));
       hls.loadSource(src);
