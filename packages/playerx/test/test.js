@@ -21,3 +21,4 @@ import './players/hlsjs.js';
 import './players/html.js';
 import './players/brightcove.js';
 import './players/vimeo.js';
+import './players/videojs.js';

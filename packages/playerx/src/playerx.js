@@ -268,6 +268,20 @@ export const PlayerxMixin = (CE, { create }) => (element) => {
   async function afterLoad(initEvents) {
     await player.ready();
 
+    // Set volume before muted, some players (Vimeo) turn off muted if volume is set.
+    await playerSet('volume');
+
+    await Promise.all([
+      playerSet('muted'),
+
+      // The default value of preload is different for each browser.
+      // The spec advises it to be set to metadata.
+      player.set('preload', element.cache('preload') || 'metadata'),
+
+      playerSet('playsinline'),
+      playerSet('loop'),
+    ]);
+
     if (!element.meta.get('video_id')) {
       const videoId = await player.get('videoId');
       if (videoId) element.meta.set('video_id', videoId);
@@ -277,10 +291,6 @@ export const PlayerxMixin = (CE, { create }) => (element) => {
       const videoTitle = await player.get('videoTitle');
       if (videoTitle) element.meta.set('video_title', videoTitle);
     }
-
-    await player.set('volume', element.cache('volume'));
-    await player.set('muted', element.cache('muted'));
-    await player.set('loop', element.cache('loop'));
 
     if (initEvents) attachEvents();
 

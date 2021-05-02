@@ -15,3 +15,6 @@ export const vimeo = /vimeo\.com\/(?:video\/)?(\d+)/;
 export const wistia = /(?:wistia\.com|wi\.st)\/(?:medias|embed)\/(.*)$/;
 export const youtube = /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})/;
 export const apivideo = /api\.video\/(?:videos\/)?(\w+)/;
+
+// Selected manually via setting the `player` url param on the src.
+export const videojs = /\?player=videojs/;
