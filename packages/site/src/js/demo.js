@@ -113,7 +113,7 @@ player = hy(dhtml`
       <plx-media></plx-media>
       <plx-script src="${player?.children?.[1].src}"></plx-script>
       <plx-mux
-        data-env-key="${window.MUX_ENV || player?.children?.[2]?.dataset.envKey}"
+        data-env-key="${getParam('muxenv', player?.children?.[2]?.dataset.envKey)}"
         debug="${player?.children?.[2]?.debug}"
       ></plx-mux>
     <//>

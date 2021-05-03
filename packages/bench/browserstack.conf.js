@@ -7,6 +7,7 @@ const options = {
   projectName: 'Playerx Benchmark',
   debug: true,
   consoleLogs: 'verbose',
+  networkLogs: 'true',
   chrome: {
     args: [
       '--ignore-certificate-errors',
@@ -20,7 +21,7 @@ const commonCapabilities = {
   browserName: 'Chrome',
   acceptInsecureCerts: true,
   // https://www.selenium.dev/documentation/en/webdriver/page_loading_strategy/
-  pageLoadStrategy: 'none', // makes browser.url() resolve on DOMContentLoaded
+  pageLoadStrategy: 'eager', // makes browser.url() resolve on DOMContentLoaded
   'bstack:options': {
     ...options,
   },

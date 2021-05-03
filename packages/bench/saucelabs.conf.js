@@ -17,7 +17,7 @@ const commonCapabilities = {
   platformName: 'Windows 10',
   acceptInsecureCerts: true,
   // https://www.selenium.dev/documentation/en/webdriver/page_loading_strategy/
-  pageLoadStrategy: 'none', // makes browser.url() resolve on DOMContentLoaded
+  pageLoadStrategy: 'eager', // makes browser.url() resolve on DOMContentLoaded
   'sauce:options': sauceOptions,
   'plx:options': {
     clip: 3,

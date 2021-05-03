@@ -13,6 +13,10 @@ module.exports = function(player) {
       if (plxo.clip > 1) {
         url += `${plxo.clip}/`;
       }
+      if (process.env.MUX_ENV) {
+        url += `?dennis=ahahahyoudidntsaythemagicwordahahahyoudidntsaythemagicwordahahahyoudidntsaythemagicwordahahahyoudidntsaythemagicwordahahahyoudidntsaythemagicwordahahahyoudidntsaythemagicwordahahahyoudidntsaythemagicwordahahahyoudidntsaythemagicwordahahahyoudidntsaythemagicwordahahahyoudidntsaythemagic`;
+        url += `&muxenv=${process.env.MUX_ENV}`;
+      }
 
       if (plxo.saucenetwork) {
         // @see https://webdriver.io/docs/api/saucelabs.html#parameters-1
@@ -23,29 +27,7 @@ module.exports = function(player) {
       browser.url(url);
       browser.setTimeout({ script: 30000 });
 
-      if (process.env.MUX_ENV) {
-        browser.execute(function(env) {
-          window.MUX_ENV = env;
-        }, process.env.MUX_ENV);
-
-        browser.$('plx-mux').waitForExist({ timeout: 5000 });
-        browser.execute(function(env) {
-          document.querySelector('plx-mux').dataset.envKey = env;
-        }, process.env.MUX_ENV);
-      }
-
       expect(browser).toHaveTitleContaining('Playerx');
-
-      browser.waitUntil(function() {
-        const state = browser.execute(function() {
-          return document.readyState;
-        });
-        // https://developer.mozilla.org/en-US/docs/Web/API/Document/readyState
-        return state === 'complete';
-      }, {
-        timeout: 20000, // 20secs
-        timeoutMsg: 'Oops! Check your internet connection'
-      });
 
       console.warn(`Wait ready for ${player}`);
       assert(browser.executeAsync(async function(done) {
