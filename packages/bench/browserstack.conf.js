@@ -19,7 +19,8 @@ const options = {
 const commonCapabilities = {
   browserName: 'Chrome',
   acceptInsecureCerts: true,
-  pageLoadStrategy: 'eager', // makes browser.url() resolve on DOMContentLoaded
+  // https://www.selenium.dev/documentation/en/webdriver/page_loading_strategy/
+  pageLoadStrategy: 'none', // makes browser.url() resolve on DOMContentLoaded
   'bstack:options': {
     ...options,
   },
