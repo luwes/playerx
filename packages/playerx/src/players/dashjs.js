@@ -20,12 +20,7 @@ export function createPlayer(element) {
   function getOptions() {
     return {
       autoplay: element.playing || element.autoplay,
-      loop: element.loop,
-      playsinline: element.playsinline,
       controls: element.controls,
-      // The default value is different for each browser.
-      // The spec advises it to be set to metadata.
-      preload: element.preload || 'metadata',
       src: element.src,
       ...element.config.dashjs,
     };
@@ -66,8 +61,8 @@ export function createPlayer(element) {
   }
 
   const methods = {
-    get key() { return 'dashjs'; },
-    get name() { return 'dash.js'; },
+    key: 'dashjs',
+    name: 'dash.js',
     get version() { return player.version || ''; },
 
     get element() {

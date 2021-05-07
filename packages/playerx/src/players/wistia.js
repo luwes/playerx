@@ -20,10 +20,6 @@ export function createPlayer(element) {
   function getOptions() {
     return {
       autoPlay: element.playing || element.autoplay,
-      muted: element.muted,
-      // The default value is different for each browser.
-      // The spec advises it to be set to metadata.
-      preload: element.preload || 'metadata',
       playsinline: element.playsinline,
       endVideoBehavior: element.loop && 'loop',
       chromeless: !element.controls,

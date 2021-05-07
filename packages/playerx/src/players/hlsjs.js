@@ -19,12 +19,7 @@ export function createPlayer(element) {
   function getOptions() {
     return {
       autoplay: element.playing || element.autoplay,
-      loop: element.loop,
-      playsinline: element.playsinline,
       controls: element.controls,
-      // The default value is different for each browser.
-      // The spec advises it to be set to metadata.
-      preload: element.preload || 'metadata',
       src: element.src,
       ...element.config.hlsjs,
     };
@@ -69,8 +64,8 @@ export function createPlayer(element) {
   }
 
   const methods = {
-    get key() { return 'hlsjs'; },
-    get name() { return 'hls.js'; },
+    key: 'hlsjs',
+    name: 'hls.js',
     get version() { return player.version || ''; },
 
     get element() {

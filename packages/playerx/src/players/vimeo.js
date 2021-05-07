@@ -23,9 +23,6 @@ export function createPlayer(element) {
   function getOptions() {
     return {
       autoplay: element.playing || element.autoplay,
-      muted: element.muted,
-      loop: element.loop,
-      playsinline: element.playsinline,
       controls: element.controls,
       url: element.src,
       transparent: false,

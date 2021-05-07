@@ -64,20 +64,10 @@ export function createPlayer(element) {
     ready.resolve();
   }
 
-  const customEvents = {
-  };
-
-  const eventAliases = {
-  };
-
-  const unsupported = {
-  };
-
   const methods = {
     name: 'api.video',
     key: 'apivideo',
     version: '1.x.x',
-    unsupported,
 
     get element() {
       return iframe;
@@ -105,14 +95,12 @@ export function createPlayer(element) {
     },
 
     on(eventName, callback) {
-      if (eventName in customEvents) return;
-      api.addEventListener(eventAliases[eventName] || eventName, callback);
+      api.addEventListener(eventName, callback);
     },
 
     off(eventName, callback) {
-      if (eventName in customEvents) return;
       if (api.removeEventListener) {
-        api.removeEventListener(eventAliases[eventName] || eventName, callback);
+        api.removeEventListener(eventName, callback);
       }
     },
 
