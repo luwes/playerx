@@ -7,7 +7,6 @@ import {
   extend,
   publicPromise,
   objectValues,
-  createTimeRanges,
   isMethod,
   getProperty,
   getMethod,
