@@ -25,6 +25,10 @@ Object.assign(options.players, {
     canPlay: canPlay.jwplayer,
     lazyPlayer: () => import('./players/jwplayer.js'),
   },
+  shakaplayer: {
+    canPlay: canPlay.shakaplayer,
+    lazyPlayer: () => import('./players/shakaplayer.js'),
+  },
   soundcloud: {
     canPlay: canPlay.soundcloud,
     lazyPlayer: () => import('./players/soundcloud.js'),

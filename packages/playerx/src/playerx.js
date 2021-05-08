@@ -550,24 +550,16 @@ export const PlayerxMixin = (CE, { create }) => (element) => {
 
 function base(element, player) {
   return {
-    ...flexApi(player, 'api'),
+    ...flexApi(player),
 
     unsupported: {},
     supports(method) {
       return !(method in player.unsupported);
     },
 
-    remove() {
-      return player.api && player.api.remove();
-    },
-
-    play() {
-      return player.api && player.api.play();
-    },
-
-    pause() {
-      return player.api && player.api.pause();
-    },
+    remove: flexMethod(player, 'remove'),
+    play: flexMethod(player, 'play'),
+    pause: flexMethod(player, 'pause'),
 
     async stop() {
       await player.pause();
@@ -604,14 +596,17 @@ function base(element, player) {
     getKey() {
       return player.name && player.name.toLowerCase();
     },
-
-    getBuffered() {
-      return createTimeRanges();
-    },
   };
 }
 
-export function flexApi(instance, api) {
+function flexMethod(player, name) {
+  return function() {
+    if (player.api && player.api[name]) return player.api[name]();
+    if (player.element && player.element[name]) return player.element[name]();
+  };
+}
+
+export function flexApi(instance) {
   return {
     /**
      * Set a instance property, try instance interface first, then internal api.
@@ -628,13 +623,19 @@ export function flexApi(instance, api) {
       const method = setName(name);
       if (isMethod(instance, method)) return instance[method](value);
 
-      if (!instance[api]) return;
+      if (instance.api) {
+        descriptor = getPropertyDescriptor(instance.api, name);
+        if (descriptor && descriptor.set) return (instance.api[name] = value);
 
-      descriptor = getPropertyDescriptor(instance[api], name);
-      if (descriptor && descriptor.set) return (instance[api][name] = value);
+        if (isMethod(instance.api, name)) return instance.api[name](value);
+        if (isMethod(instance.api, method)) return instance.api[method](value);
+      }
 
-      if (isMethod(instance[api], name)) return instance[api][name](value);
-      if (isMethod(instance[api], method)) return instance[api][method](value);
+      // In case the element is a native <video> element.
+      if (instance.element && instance.element.play) {
+        descriptor = getPropertyDescriptor(instance.element, name);
+        if (descriptor && descriptor.set) return (instance.element[name] = value);
+      }
     },
 
     /**
@@ -650,11 +651,16 @@ export function flexApi(instance, api) {
       if ((result = getProperty(instance, name)) !== undefined) return result;
       if ((result = getMethod(instance, method)) !== undefined) return result;
 
-      if (!instance[api]) return;
+      if (instance.api) {
+        if ((result = getProperty(instance.api, name)) !== undefined) return result;
+        if ((result = getMethod(instance.api, name)) !== undefined) return result;
+        if ((result = getMethod(instance.api, method)) !== undefined) return result;
+      }
 
-      if ((result = getProperty(instance[api], name)) !== undefined) return result;
-      if ((result = getMethod(instance[api], name)) !== undefined) return result;
-      if ((result = getMethod(instance[api], method)) !== undefined) return result;
+      if (instance.element && instance.element.play) {
+        // In case the element is a native <video> element.
+        if ((result = getProperty(instance.element, name)) !== undefined) return result;
+      }
     },
   };
 }
