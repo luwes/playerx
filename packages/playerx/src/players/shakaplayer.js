@@ -70,12 +70,12 @@ export function createPlayer(element) {
       return ready;
     },
 
-    on(eventName, callback) {
-      api.addEventListener(eventName, callback);
+    on(eventName, callback, options) {
+      video.addEventListener(eventName, callback, options);
     },
 
-    off(eventName, callback) {
-      api.removeEventListener(eventName, callback);
+    off(eventName, callback, options) {
+      video.removeEventListener(eventName, callback, options);
     },
 
     remove() {

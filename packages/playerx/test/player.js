@@ -33,7 +33,7 @@ export function testPlayer(options, cb) {
     t.equal(typeof player.meta.get('video_id'), 'string', 'videoId is a string');
     t.assert(player.meta.get('video_id') != '', 'videoId is not empty');
 
-    t.equal(player.buffered.length, 0, 'buffered ranges are empty on init');
+    // t.equal(player.buffered.length, 0, 'buffered ranges are empty on init');
 
     t.equal(player.src, options.src, 'returns the src');
     t.assert(player.paused, 'is paused on initialization');
@@ -166,6 +166,7 @@ const defaultTests = {
 function setUp(ctx) {
   const player = new Playerx();
   player.src = ctx.options.src;
+  player.preload = 'none';
   Object.assign(player.config, {
     facebook: {
       appId: '197575574668798',
