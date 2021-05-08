@@ -81,10 +81,6 @@ export function createPlayer(element) {
     remove() {
       api.destroy();
     },
-
-    stop() {
-      api.unload();
-    },
   };
 
   init();
