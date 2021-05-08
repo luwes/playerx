@@ -12,8 +12,8 @@ const HLS_GLOBAL = 'Hls';
 
 export function createPlayer(element) {
   let video;
-  let player = {};
-  let hls;
+  let Hls;
+  let api;
   let ready;
 
   function getOptions() {
@@ -40,23 +40,19 @@ export function createPlayer(element) {
     reset();
     Object.assign(video, opts);
 
-    const Hls = await loadScript(opts.hlsUrl || HLS_URL, HLS_GLOBAL);
+    Hls = await loadScript(opts.hlsUrl || HLS_URL, HLS_GLOBAL);
     if (Hls.isSupported()) {
-      hls = new Hls(element.config.hlsjs);
-      hls.attachMedia(video);
-      hls.on(Hls.Events.ERROR, () => element.fire('error'));
-      hls.loadSource(src);
-      player = {
-        version: Hls.version,
-      };
-      return;
+      api = new Hls(element.config.hlsjs);
+      api.attachMedia(video);
+      api.on(Hls.Events.ERROR, () => element.fire('error'));
+      api.loadSource(src);
     }
   }
 
   function reset() {
-    if (hls) {
-      hls.destroy();
-      hls = null;
+    if (api) {
+      api.destroy();
+      api = null;
     }
 
     video.removeAttribute('src');
@@ -66,14 +62,14 @@ export function createPlayer(element) {
   const methods = {
     key: 'hlsjs',
     name: 'hls.js',
-    get version() { return player.version || ''; },
+    get version() { return Hls.version || ''; },
 
     get element() {
       return video;
     },
 
     get api() {
-      return video;
+      return api;
     },
 
     get videoId() {

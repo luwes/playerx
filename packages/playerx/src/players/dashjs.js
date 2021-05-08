@@ -13,8 +13,7 @@ const DASH_GLOBAL = 'dashjs';
 
 export function createPlayer(element) {
   let video;
-  let player = {};
-  let dash;
+  let api;
   let ready;
 
   function getOptions() {
@@ -42,18 +41,15 @@ export function createPlayer(element) {
     Object.assign(video, opts);
 
     const Dash = await loadScript(opts.dashUrl || DASH_URL, DASH_GLOBAL);
-    dash = Dash.MediaPlayer().create();
-    dash.on('error', () => element.fire('error'));
-    dash.initialize(video, src, autoplay);
-    player = {
-      version: dash.getVersion(),
-    };
+    api = Dash.MediaPlayer().create();
+    api.on('error', () => element.fire('error'));
+    api.initialize(video, src, autoplay);
   }
 
   function reset() {
-    if (dash) {
-      dash.reset();
-      dash = null;
+    if (api) {
+      api.reset();
+      api = null;
     }
 
     video.removeAttribute('src');
@@ -63,14 +59,14 @@ export function createPlayer(element) {
   const methods = {
     key: 'dashjs',
     name: 'dash.js',
-    get version() { return player.version || ''; },
+    get version() { return api.getVersion() || ''; },
 
     get element() {
       return video;
     },
 
     get api() {
-      return video;
+      return api;
     },
 
     get videoId() {
