@@ -2,6 +2,11 @@
 export interface Playerx extends HTMLElement {
 
   /**
+   * Access to the internal API of the currently loaded media.
+   */
+  readonly api: Object;
+
+  /**
    * Returns a `TimeRanges` object that indicates the ranges of the media source
    * that the browser has buffered (if any) at the moment the buffered property
    * is accessed.

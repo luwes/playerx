@@ -57,6 +57,7 @@ Be sure to read the [license](/LICENSE.md) terms. In most cases Playerx is free 
 
 Prop | Description | Default
 ---- | ----------- | -------
+`api` | Access to the internal API of the currently loaded media.
 `aspectRatio` | Is a `Number` that can set the preferred aspect ratio for the player. | `undefined`
 `autoplay` | A `Boolean` that reflects the autoplay HTML attribute, indicating whether playback should automatically begin as soon as enough media is available to do so without interruption. | `false`
 `buffered` <sub><sup>Read only</sup></sub> | Returns a `TimeRanges` object that indicates the ranges of the media source that the browser has buffered (if any) at the moment the buffered property is accessed. | `undefined`
