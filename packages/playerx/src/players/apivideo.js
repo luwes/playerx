@@ -89,11 +89,6 @@ export function createPlayer(element) {
       return api.destroy();
     },
 
-    async stop() {
-      await api.pause();
-      return api.setCurrentTime(0);
-    },
-
     on(eventName, callback) {
       api.addEventListener(eventName, callback);
     },

@@ -160,14 +160,6 @@ export function createPlayer(element) {
       return api.pauseVideo();
     },
 
-    async stop() {
-      element.pause();
-      element.currentTime = 0;
-      await delay(60); // add small delay for async call completion
-
-      api.stopVideo();
-    },
-
     on(eventName, callback) {
       const listener = ({ data }) => {
         let eventId = filterEventByData[eventName];

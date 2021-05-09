@@ -128,11 +128,6 @@ export function testPlayer(options, cb) {
       skip,
     });
 
-    await player.stop();
-    await delay(120); // add some more delay for slow CI, fix for Streamable
-    t.assert(player.paused, 'is paused after player.stop()', { skip });
-    t.equal(Math.floor(player.currentTime), 0, 'timeline is reset', { skip });
-
     t.equal(
       Math.round(player.duration),
       options.duration,

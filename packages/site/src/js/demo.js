@@ -175,15 +175,9 @@ hy(dhtml`
     <button onclick=${() => playing(!playing())}>
       ${() => (playing() ? 'Pause' : 'Play')}
     </button>
-    <button onclick=${stop} />
     <button onclick=${remove} />
   </div>
 `);
-
-function stop() {
-  playing(false);
-  player.stop();
-}
 
 function remove() {
   playing(false);

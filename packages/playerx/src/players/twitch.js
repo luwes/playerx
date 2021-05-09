@@ -89,12 +89,6 @@ export function createPlayer(element) {
       return createPlayPromise(element);
     },
 
-    async stop() {
-      await element.pause();
-      api.seek(0);
-      await delay(60); // add small delay for async call completion
-    },
-
     on(eventName, callback) {
       api.addEventListener(eventName, callback);
     },

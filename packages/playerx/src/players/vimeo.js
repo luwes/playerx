@@ -95,11 +95,6 @@ export function createPlayer(element) {
       return api.destroy();
     },
 
-    async stop() {
-      await api.setCurrentTime(0);
-      return api.unload();
-    },
-
     on(eventName, callback) {
       if (eventName in customEvents) return;
       api.on(eventName, callback);

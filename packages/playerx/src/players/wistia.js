@@ -124,10 +124,6 @@ export function createPlayer(element) {
       return api.state() !== 'playing';
     },
 
-    stop() {
-      api.rebuild();
-    },
-
     remove() {
       api.remove();
       removeNode(div);

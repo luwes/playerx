@@ -81,11 +81,6 @@ export function createPlayer(element) {
       api.dispose();
     },
 
-    stop() {
-      api.pause();
-      api.currentTime(0);
-    },
-
     setSrc() {
       // Must return promise here to await ready state.
       return element.load();

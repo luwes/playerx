@@ -104,11 +104,6 @@ export function createPlayer(element) {
       return createPlayPromise(element);
     },
 
-    stop() {
-      api.seek(0);
-      api.pause();
-    },
-
     on(eventName, callback) {
       (callback._listeners || (callback._listeners = {}))[eventName] =
         api.subscribe(eventAliases[eventName] || eventName, callback);

@@ -100,7 +100,7 @@ export const props = {
   },
 };
 
-export const coreMethodNames = ['play', 'pause', 'stop', 'get'];
+export const coreMethodNames = ['play', 'pause', 'get'];
 
 const events = objectValues(Events);
 let listeners = [];
@@ -559,13 +559,6 @@ function base(element, player) {
     remove: flexMethod(player, 'remove'),
     play: flexMethod(player, 'play'),
     pause: flexMethod(player, 'pause'),
-
-    async stop() {
-      await player.pause();
-      await delay(130); // add small delay for async call completion
-      await player.set('currentTime', 0);
-      await delay(130); // add small delay for async call completion
-    },
 
     on(eventName, callback) {
       player.api.on(eventName, callback);

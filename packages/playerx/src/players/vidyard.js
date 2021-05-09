@@ -128,10 +128,6 @@ export function createPlayer(element) {
       return createPlayPromise(element);
     },
 
-    stop() {
-      return api.resetPlayer();
-    },
-
     on(eventName, callback) {
       if (eventName in unsupportedEvents) return;
       api.on(eventAliases[eventName] || eventName, callback);
