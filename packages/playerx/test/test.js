@@ -23,3 +23,4 @@ import './players/brightcove.js';
 import './players/vimeo.js';
 import './players/videojs.js';
 import './players/shakaplayer.js';
+import './players/theoplayer.js';
