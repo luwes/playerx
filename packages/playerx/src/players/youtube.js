@@ -8,7 +8,6 @@ import {
   PlayerError,
 } from '../helpers.js';
 import {
-  delay,
   loadScript,
   publicPromise,
   boolToBinary,

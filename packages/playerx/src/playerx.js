@@ -11,7 +11,6 @@ import {
   getProperty,
   getMethod,
   getPropertyDescriptor,
-  delay,
 } from './utils.js';
 
 const sheet = getStyle();
