@@ -46,7 +46,6 @@ exports.config = {
     'players/videojs.js',
     'players/apivideo.js',
     'players/streamable.js',
-    'players/twitch.js',
     'players/vidyard.js',
     'players/vimeo.js',
     'players/wistia.js',
@@ -56,6 +55,7 @@ exports.config = {
     'players/theoplayer.js',
     'players/facebook.js',       // facebook doesn't autoplay always
     // 'players/soundcloud.js',  // less useful to test compared to video players
+    // 'players/twitch.js',      // twitch VOD is not good
   ],
   exclude: [],
 
