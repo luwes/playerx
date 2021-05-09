@@ -196,7 +196,7 @@ export const PlayerxMixin = (CE, { create }) => (element) => {
   }
 
   async function load() {
-    if (!element.src) return;
+    if (!element.cache('src')) return;
 
     clearAllTimeouts();
 
@@ -233,11 +233,11 @@ export const PlayerxMixin = (CE, { create }) => (element) => {
   }
 
   function canPlayerLoadSource() {
-    const playerParam = getSrcParam(element.src, 'player');
+    const playerParam = getSrcParam(element.cache('src'), 'player');
     if (playerParam && playerParam !== element.key) {
       return false;
     }
-    return player.api && options.players[element.key].canPlay(element.src);
+    return player.api && options.players[element.key].canPlay(element.cache('src'));
   }
 
   async function init() {
@@ -293,8 +293,8 @@ export const PlayerxMixin = (CE, { create }) => (element) => {
 
     if (initEvents) attachEvents();
 
-    // autoplay = autoplay || playing;
-    // if (autoplay) player.play();
+    // const autoplay = element.cache('autoplay') || element.cache('playing');
+    // await player.set('autoplay', autoplay);
 
     apiReady.resolve();
 
@@ -582,6 +582,10 @@ function base(element, player) {
       if (element.paused && playing) {
         return player.play();
       }
+    },
+
+    getSrc() {
+      return element.cache('src');
     },
 
     getMeta() {

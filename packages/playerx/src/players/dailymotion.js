@@ -129,10 +129,6 @@ export function createPlayer(element) {
       api.load(getOptions());
     },
 
-    getSrc() {
-      return element.cache('src');
-    },
-
     get loop() {
       // api.loop doesn't return a correct value.
       return element.cache('loop');

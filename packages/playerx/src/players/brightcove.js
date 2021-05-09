@@ -61,10 +61,6 @@ export function createPlayer(element) {
       return getVideoId(MATCH_SRC, element.src);
     },
 
-    get src() {
-      return element.cache('src');
-    },
-
     ready() {
       return ready;
     },

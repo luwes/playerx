@@ -4,6 +4,7 @@ import {
   createElement,
   loadScript,
   publicPromise,
+  getFileName,
 } from '../utils.js';
 
 const API_GLOBAL = 'shaka';
@@ -13,6 +14,7 @@ export function createPlayer(element) {
   let api;
   let video;
   let ready;
+  let shaka;
 
   function getOptions() {
     return {
@@ -33,7 +35,7 @@ export function createPlayer(element) {
     Object.assign(video, opts);
 
     const API_URL = `https://cdn.jsdelivr.net/npm/shaka-player@${version}/dist/shaka-player.compiled.js`;
-    const shaka = await loadScript(opts.apiUrl || API_URL, API_GLOBAL);
+    shaka = await loadScript(opts.apiUrl || API_URL, API_GLOBAL);
     api = new shaka.Player(video);
     await api.load(src);
 
@@ -43,7 +45,7 @@ export function createPlayer(element) {
   const methods = {
     name: 'Shaka Player',
     key: 'shakaplayer',
-    version,
+    get version() { return shaka.Player.version || ''; },
 
     get element() {
       return video;
@@ -54,11 +56,7 @@ export function createPlayer(element) {
     },
 
     get videoId() {
-      return (video.currentSrc || video.src).split('/').pop();
-    },
-
-    get src() {
-      return element.cache('src');
+      return getFileName(video.currentSrc || video.src);
     },
 
     setSrc(src) {

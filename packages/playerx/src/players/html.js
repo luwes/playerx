@@ -3,6 +3,7 @@ import {
   createElement,
   removeNode,
   publicPromise,
+  getFileName,
 } from '../utils.js';
 
 export function createPlayer(element) {
@@ -63,7 +64,7 @@ export function createPlayer(element) {
     },
 
     get videoId() {
-      return (video.currentSrc || video.src).split('/').pop();
+      return getFileName(video.currentSrc || video.src);
     },
 
     ready() {
@@ -81,10 +82,6 @@ export function createPlayer(element) {
 
     off(eventName, callback) {
       video.removeEventListener(eventName, callback);
-    },
-
-    getSrc() {
-      return element.cache('src');
     },
 
     async setSrc() {

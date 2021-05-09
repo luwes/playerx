@@ -297,3 +297,7 @@ export function findAncestor(el, sel) {
   while ((el = el.parentElement) && !el.matches(sel));
   return el;
 }
+
+export function getFileName(path) {
+  return path.split('/').pop().split('?')[0];
+}

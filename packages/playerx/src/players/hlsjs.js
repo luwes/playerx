@@ -5,6 +5,7 @@ import {
   removeNode,
   loadScript,
   publicPromise,
+  getFileName,
 } from '../utils.js';
 
 const HLS_URL = 'https://cdn.jsdelivr.net/npm/hls.js@0.13.2/dist/hls.min.js';
@@ -73,7 +74,7 @@ export function createPlayer(element) {
     },
 
     get videoId() {
-      return (video.currentSrc || video.src).split('/').pop();
+      return getFileName(video.currentSrc || video.src);
     },
 
     ready() {
@@ -91,10 +92,6 @@ export function createPlayer(element) {
 
     off(eventName, callback) {
       video.removeEventListener(eventName, callback);
-    },
-
-    getSrc() {
-      return element.cache('src');
     },
 
     async setSrc() {

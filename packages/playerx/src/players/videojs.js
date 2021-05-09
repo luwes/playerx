@@ -6,6 +6,7 @@ import {
   publicPromise,
   promisify,
   uniqueId,
+  getFileName,
 } from '../utils.js';
 
 const API_GLOBAL = 'videojs';
@@ -15,6 +16,7 @@ export function createPlayer(element) {
   let api;
   let div;
   let ready;
+  let videojs;
 
   function getOptions() {
     return {
@@ -47,7 +49,7 @@ export function createPlayer(element) {
     }));
 
     const API_URL = `https://cdn.jsdelivr.net/npm/video.js@${version}/dist/video.min.js`;
-    const videojs = await loadScript(opts.apiUrl || API_URL, API_GLOBAL);
+    videojs = await loadScript(opts.apiUrl || API_URL, API_GLOBAL);
     api = videojs(div);
 
     await promisify(api.ready, api)();
@@ -57,7 +59,7 @@ export function createPlayer(element) {
   const methods = {
     name: 'video.js',
     key: 'videojs',
-    version,
+    get version() { return videojs.VERSION || ''; },
 
     get element() {
       return div;
@@ -68,11 +70,7 @@ export function createPlayer(element) {
     },
 
     get videoId() {
-      return (api.currentSrc() || api.src()).split('/').pop();
-    },
-
-    get src() {
-      return element.cache('src');
+      return getFileName(api.currentSrc() || api.src());
     },
 
     ready() {

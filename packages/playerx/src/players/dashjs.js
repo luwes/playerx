@@ -6,6 +6,7 @@ import {
   removeNode,
   loadScript,
   publicPromise,
+  getFileName,
 } from '../utils.js';
 
 const DASH_URL = 'https://cdn.jsdelivr.net/npm/dashjs@3.2.2/dist/dash.all.min.js';
@@ -70,7 +71,7 @@ export function createPlayer(element) {
     },
 
     get videoId() {
-      return (video.currentSrc || video.src).split('/').pop();
+      return getFileName(video.currentSrc || video.src);
     },
 
     ready() {
@@ -88,10 +89,6 @@ export function createPlayer(element) {
 
     off(eventName, callback) {
       video.removeEventListener(eventName, callback);
-    },
-
-    getSrc() {
-      return element.cache('src');
     },
 
     async setSrc() {
