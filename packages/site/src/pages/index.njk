@@ -40,8 +40,18 @@ title: "Playerx for Developers"
     </div>
 
     <div class="lg:w-1/2">
-      <div class="px-4 sm:px-6 lg:px-6 mb-24">
-        <player-x src="https://vimeo.com/357274789" controls config='{"vimeo":{"title":false,"byline":false,"portrait":false}}'></player-x>
+      <div class="px-4 sm:px-6 lg:px-6 mb-24 relative">
+
+        <pre class="plx-code opacity-80 absolute -left-6 -top-12 right-20 bottom-12 flex min-h-full text-xs md:text-sm overflow-hidden md:rounded-xl flex" style="background:#282a36">
+          <div aria-hidden="true" class="hidden md:block text-white font-extralight text-opacity-50 flex-none py-4 pr-4 text-right select-none" style="width:50px">1</div>
+          <div class="highlight-dark highlight-clear pt-4 pb-4 flex-auto relative block text-white overflow-auto">
+            {%- highlight "html" -%}
+              <player-x src="https://vimeo.com/357274789" controls></player-x>
+            {%- endhighlight -%}
+          </div>
+        </pre>
+
+        <player-x class="bg-black shadow-lg" src="https://vimeo.com/357274789" controls config='{"vimeo":{"title":false,"byline":false,"portrait":false}}'></player-x>
       </div>
     </div>
   </div>

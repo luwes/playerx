@@ -5,6 +5,7 @@
 /*! purgecss start ignore */
 @import "inter.css";
 @import "base.css";
+@import "prism-dracula.css";
 @import "prism-ghcolors.css";
 @import "markdown.css";
 @import "home.css";

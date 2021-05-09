@@ -35,7 +35,7 @@
     "disco": "1.0.2",
     "playerx": "0.6.0",
     "sinuous": "0.27.12",
-    "tailwindcss": "2.1.1"
+    "tailwindcss": "2.1.2"
   },
   "devDependencies": {
     "@11ty/eleventy": "^0.12.1",
@@ -51,7 +51,7 @@
     "autoprefixer": "^10.2.5",
     "babel-plugin-transform-async-to-promises": "^0.8.15",
     "compression": "^1.7.4",
-    "cssnano": "^5.0.1",
+    "cssnano": "^5.0.2",
     "dotenv": "^8.2.0",
     "eslint": "^7.24.0",
     "eslint-plugin-fp": "^2.3.0",
@@ -59,7 +59,7 @@
     "html-minifier": "^4.0.0",
     "js-yaml": "^4.1.0",
     "luxon": "^1.26.0",
-    "postcss": "^8.2.10",
+    "postcss": "^8.2.14",
     "postcss-cli": "^8.3.1",
     "postcss-import": "^14.0.1",
     "postcss-nested": "^5.0.5",
