@@ -244,22 +244,29 @@ export const PlayerxMixin = (CE, { create }) => (element) => {
       unload();
     }
 
-    player = {};
-    player = extend(
-      player,
-      base(element, player),
-      await create(element),
-      responsiveStyle
-    );
-    player.constructor = player.constructor || create;
-
     let media = element.querySelector('plx-media');
     if (!media) {
       media = document.createElement('plx-media');
       element.insertBefore(media, element.firstChild);
     }
-    media.textContent = '';
-    media.appendChild(player.element);
+
+    const mediaContent = media.children[0];
+
+    player = {};
+    player = extend(
+      player,
+      base(element, player),
+      await create(element, mediaContent),
+      responsiveStyle
+    );
+    player.constructor = player.constructor || create;
+
+    // Don't clear to allow progressive enhancement.
+    if (mediaContent !== player.element) {
+      media.textContent = '';
+      media.appendChild(player.element);
+    }
+
     element.fire('media');
   }
 

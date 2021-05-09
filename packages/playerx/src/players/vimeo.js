@@ -15,9 +15,9 @@ const EMBED_BASE = 'https://player.vimeo.com/video';
 const API_URL = 'https://player.vimeo.com/api/player.js';
 const API_GLOBAL = 'Vimeo';
 
-export function createPlayer(element) {
+export function createPlayer(element, mediaContent) {
   let api;
-  let iframe;
+  let iframe = mediaContent;
   let ready = publicPromise();
 
   function getOptions() {
@@ -39,7 +39,10 @@ export function createPlayer(element) {
     const opts = getOptions();
     const videoId = getVideoId(MATCH_SRC, element.src);
     const src = `${EMBED_BASE}/${videoId}?${serialize(boolToBinary(opts))}`;
-    iframe = createEmbedIframe({ src });
+    // Allow progressive enhancement
+    if (!mediaContent || !mediaContent.src.includes(`${EMBED_BASE}/${videoId}`)) {
+      iframe = createEmbedIframe({ src });
+    }
 
     const Vimeo = await loadScript(opts.apiUrl || API_URL, API_GLOBAL);
     api = new Vimeo.Player(iframe);

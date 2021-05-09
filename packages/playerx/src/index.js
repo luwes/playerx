@@ -46,13 +46,13 @@ function define(name, create) {
   return CE;
 }
 
-async function findPlayer(element) {
+async function findPlayer(element, ...args) {
   const playerConfig = getCurrentPlayerConfig(element.src);
   const createPlayer = playerConfig.lazyPlayer
     ? (await playerConfig.lazyPlayer()).createPlayer
     : playerConfig;
 
-  const player = createPlayer(element);
+  const player = createPlayer(element, ...args);
   player.constructor = createPlayer;
   return player;
 }

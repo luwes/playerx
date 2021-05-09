@@ -20,9 +20,9 @@ const API_URL = 'https://www.youtube.com/iframe_api';
 const API_GLOBAL = 'YT';
 const API_GLOBAL_READY = 'onYouTubeIframeAPIReady';
 
-export function createPlayer(element) {
+export function createPlayer(element, mediaContent) {
   let api;
-  let iframe;
+  let iframe = mediaContent;
   let ready;
   let filterEventByData;
   let YT;
@@ -49,7 +49,10 @@ export function createPlayer(element) {
     const opts = getOptions();
     const videoId = getVideoId(MATCH_SRC, element.src);
     const src = `${EMBED_BASE}/${videoId}?${serialize(boolToBinary(opts))}`;
-    iframe = createEmbedIframe({ src });
+    // Allow progressive enhancement
+    if (!mediaContent || !mediaContent.src.includes(`${EMBED_BASE}/${videoId}`)) {
+      iframe = createEmbedIframe({ src });
+    }
 
     YT = await loadScript(opts.apiUrl || API_URL, API_GLOBAL, API_GLOBAL_READY);
     api = new YT.Player(iframe, {
