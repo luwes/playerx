@@ -37,6 +37,7 @@ export const jwplayer = (src) => MATCH_SRC.jwplayer.test(src);
 export const shakaplayer = (src) => MATCH_SRC.shakaplayer.test(src);
 export const soundcloud = (src) => MATCH_SRC.soundcloud.test(src);
 export const streamable = (src) => MATCH_SRC.streamable.test(src);
+export const theoplayer = (src) => MATCH_SRC.theoplayer.test(src);
 export const twitch = (src) => MATCH_SRC.twitch.test(src);
 export const videojs = (src) => MATCH_SRC.videojs.test(src);
 export const vidyard = (src) => MATCH_SRC.vidyard.test(src);

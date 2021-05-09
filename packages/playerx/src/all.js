@@ -41,6 +41,10 @@ Object.assign(options.players, {
     canPlay: canPlay.twitch,
     lazyPlayer: () => import('./players/twitch.js'),
   },
+  theoplayer: {
+    canPlay: canPlay.theoplayer,
+    lazyPlayer: () => import('./players/theoplayer.js'),
+  },
   videojs: {
     canPlay: canPlay.videojs,
     lazyPlayer: () => import('./players/videojs.js'),

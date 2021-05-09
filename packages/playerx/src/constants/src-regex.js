@@ -18,4 +18,5 @@ export const apivideo = /api\.video\/(?:videos\/)?(\w+)/;
 
 // Selected manually via setting the `player` url param on the src.
 export const videojs = /\?player=videojs/;
-export const shakaplayer = /\?player=shaka/;
+export const shakaplayer = /\?player=shakaplayer/;
+export const theoplayer = /\?player=theoplayer/;
