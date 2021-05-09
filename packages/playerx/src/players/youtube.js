@@ -124,7 +124,7 @@ export function createPlayer(element) {
     },
 
     get videoWidth() {
-      let value = heightMap[api.getPlaybackQuality()];
+      let value = heightMap[api && api.getPlaybackQuality()];
       const ratio = element.clientHeight / element.clientWidth;
       if (ratio < 1) {
         value /= ratio;
@@ -133,7 +133,7 @@ export function createPlayer(element) {
     },
 
     get videoHeight() {
-      let value = heightMap[api.getPlaybackQuality()];
+      let value = heightMap[api && api.getPlaybackQuality()];
       const ratio = element.clientHeight / element.clientWidth;
       if (ratio > 1) {
         value *= ratio;
