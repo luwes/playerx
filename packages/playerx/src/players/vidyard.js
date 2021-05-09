@@ -147,8 +147,7 @@ export function createPlayer(element) {
     },
 
     get duration() {
-      return api.metadata.chapters_attributes[0].video_attributes
-        .length_in_seconds;
+      return api && api.metadata.chapters_attributes[0].video_attributes.length_in_seconds;
     },
 
     set currentTime(seconds) {
