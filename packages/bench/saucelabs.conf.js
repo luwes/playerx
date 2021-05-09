@@ -43,6 +43,7 @@ exports.config = {
     'players/dailymotion.js',
     'players/hlsjs.js',
     'players/dashjs.js',
+    'players/videojs.js',
     'players/apivideo.js',
     'players/streamable.js',
     'players/twitch.js',
@@ -50,7 +51,9 @@ exports.config = {
     'players/vimeo.js',
     'players/wistia.js',
     'players/youtube.js',
-    'players/jw-player.js',
+    'players/jwplayer.js',
+    'players/shakaplayer.js',
+    'players/theoplayer.js',
     'players/facebook.js',       // facebook doesn't autoplay always
     // 'players/soundcloud.js',  // less useful to test compared to video players
   ],
