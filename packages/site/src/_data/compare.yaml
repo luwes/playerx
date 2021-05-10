@@ -37,3 +37,4 @@ players:
   wistia: true
   jwplayer: true
   vidyard: true
+  videojs: true

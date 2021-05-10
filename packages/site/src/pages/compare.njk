@@ -32,7 +32,13 @@ tags:
           <div class="grid-cell lg:border-l flex items-start">
             <img class="w-4 h-4 mr-2 mt-2" src="{{ player.favicon }}" alt="{{ player.name }} favicon">
             <div>
-              <h3 class="text-xl leading-tight mt-1">{{ player.name }}</h3>
+              <h3 class="text-xl leading-tight mt-1">
+                {% if player.compare_name %}
+                  {{ player.compare_name }}
+                {% else %}
+                  {{ player.name }}
+                {% endif %}
+              </h3>
               <a class="text-xs block text-blue-500 underline hover:text-blue-700" href="{{ player.url }}">{{ player.url }}</a>
             </div>
           </div>
