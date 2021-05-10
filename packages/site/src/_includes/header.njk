@@ -17,7 +17,6 @@
 
           {%- set navPages = collections.main | eleventyNavigation -%}
           {%- for parent in navPages -%}
-
             <div id="menu-item-{{ parent.key | lower }}" class="relative inline-block text-left">
               <a id="menu-link-{{ parent.key | lower }}" href="{% if parent.url %}{{ parent.url }}{% else %}#{% endif %}" class="inline-flex justify-center w-full rounded-md px-4 py-1 bg-white leading-5 text-gray-700 hover:text-gray-500 active:text-gray-800 transition ease-in-out duration-150"{% if parent.children | length %} aria-haspopup="true"{% endif %}>
                 {{- parent.key -}}
@@ -56,7 +55,15 @@
         </div>
         <div id="navbar-end" class="lg:flex lg:flex-row lg:items-center mt-2 py-1 lg:mt-0">
           <div class="block py-1 lg:inline-block lg:mt-0 text-gray-700 hover:text-gray-900">
-            <a class="inline-block align-middle" href="{{ site.githubUrl }}" target="_blank">
+            {%- set navPages = collections.navEnd | eleventyNavigation -%}
+            {%- for parent in navPages -%}
+              <div id="menu-item-{{ parent.key | lower }}" class="relative inline-block text-left">
+                <a id="menu-link-{{ parent.key | lower }}" href="{% if parent.url %}{{ parent.url }}{% else %}#{% endif %}" class="inline-flex justify-center w-full rounded-md px-4 py-1 bg-white leading-5 text-gray-700 hover:text-gray-500 active:text-gray-800 transition ease-in-out duration-150"{% if parent.children | length %} aria-haspopup="true"{% endif %}>
+                  {{- parent.key -}}
+                </a>
+              </div>
+            {%- endfor -%}
+            <a class="inline-block align-middle -mt-0.5" href="{{ site.githubUrl }}" target="_blank">
               <svg class="icon icon-github w-6 h-6 fill-current">
                 <use xlink:href="/images/symbol-defs.svg#icon-github"></use>
               </svg>
