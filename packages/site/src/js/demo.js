@@ -151,9 +151,8 @@ hy(dhtml`
   <input id=inputsrc onkeydown=${(e) => {
     if (e.target.value && e.keyCode == 13) {
       setSrc(e.target.value);
-      e.target.value = '';
     }
-  }} />
+  }} value=${src} />
 `);
 
 function setSrc(dataSrc) {
