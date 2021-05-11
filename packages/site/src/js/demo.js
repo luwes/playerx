@@ -148,11 +148,11 @@ hy(dhtml`
 `);
 
 hy(dhtml`
-  <input id=inputsrc onkeydown=${(e) => {
+  <input id=inputsrc value="${src}" onkeydown=${(e) => {
     if (e.target.value && e.keyCode == 13) {
       setSrc(e.target.value);
     }
-  }} value=${src} />
+  }} />
 `);
 
 function setSrc(dataSrc) {

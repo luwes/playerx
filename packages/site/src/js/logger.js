@@ -61,5 +61,8 @@ function log(e) {
   if (prevLogs.length > 100) prevLogs.shift();
   logs([...prevLogs, e]);
 
-  logger.scrollTop = logger.scrollHeight;
+  const isScrolledToEnd = logger.scrollTop >= logger.scrollHeight - logger.offsetHeight - 25;
+  if (isScrolledToEnd) {
+    logger.scrollTop = logger.scrollHeight;
+  }
 }
