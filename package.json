@@ -1,5 +1,5 @@
 {
-  "name": "playerx-project",
+  "name": "playerx",
   "version": "0.0.0",
   "private": true,
   "description": "Playerx",
@@ -16,15 +16,15 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "run-s 'build:*'",
-    "build:js": "run-s 'build:js:*'",
+    "build": "run-s build:*",
+    "build:js": "run-s build:js:*",
     "build:js:player": "yarn workspace playerx build",
     "build:js:preview": "yarn workspace @playerx/preview build",
     "build:js:controls": "yarn workspace @playerx/controls build",
     "build:js:mux": "yarn workspace @playerx/mux build",
     "build:demo": "yarn workspace site build",
     "coverage": "codecov",
-    "dev": "cross-env NODE_ENV=dev run-p 'dev:*'",
+    "dev": "cross-env NODE_ENV=dev run-p dev:*",
     "dev:cdn": "http-server ./packages -g -s",
     "dev:demo": "yarn workspace site dev",
     "dev:player": "yarn workspace playerx dev",
@@ -34,7 +34,7 @@
     "serve": "yarn workspace site serve",
     "lint": "eslint packages/*/src",
     "test": "cross-env COVERAGE=true karma start",
-    "docs": "run-p 'docs:*'",
+    "docs": "run-p docs:*",
     "docs:playerx": "yarn workspace playerx docs",
     "bench": "yarn workspace bench start"
   },
