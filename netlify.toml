@@ -4,7 +4,7 @@
   command = "yarn build"
 
 [build.environment]
-  YARN_VERSION = "1.12.3"
+  YARN_VERSION = "2.4.1"
 
 [[redirects]]
   from = "/*"
