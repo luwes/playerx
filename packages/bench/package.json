@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "run-p bench:*",
+    "start": "run-p 'bench:*'",
     "bench:browserstack": "wdio browserstack.conf.js",
     "bench:saucelabs": "wdio saucelabs.conf.js"
   },
