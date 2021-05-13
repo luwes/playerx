@@ -40,7 +40,7 @@ export default [
       format: 'umd',
       sourcemap: true,
       file: `dist/${name}.umd.js`,
-      name: 'plxPreview',
+      name: `plx${name}`,
     },
     plugins: [
       ...config.plugins,
