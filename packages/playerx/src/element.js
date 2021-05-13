@@ -40,10 +40,10 @@ const StylesMixin = ({ base }, { styles, name }) => async (el) => {
 
   const sheet = getStyle(el);
   if (styles) {
-    const selector = base.extends ? `${base.extends}[is="${name}"]` : name;
+    const selector = base && base.extends ? `${base.extends}[is="${name}"]` : name;
     sheet.firstChild.data += styles(
       selector,
-      base.styles ? base.styles(selector) : undefined
+      base && base.styles ? base.styles(selector) : undefined
     );
   }
 };
