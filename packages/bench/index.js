@@ -37,6 +37,17 @@ module.exports = function(player) {
       }));
 
       console.warn(`Starting playback for ${player}`);
+
+      if (player === 'facebook' && plxo.os === 'android') {
+        // switch in the video iframe
+        const fbiframe = browser.$('iframe');
+        browser.switchToFrame(fbiframe);
+        // find the facebook play button and click it
+        const playBtn = browser.$('div[data-sigil="m-video-play-button playInlineVideo"]');
+        playBtn.click();
+        browser.switchToParentFrame();
+      }
+
       assert(browser.executeAsync(async function(done) {
         const plx = document.querySelector('player-x');
 

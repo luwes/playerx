@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const options = {
+const bstackOptions = {
   buildName:
     'Playback ' +
     (process.env.GITHUB_RUN_NUMBER || process.env.TRAVIS_BUILD_NUMBER || 0),
@@ -17,17 +17,17 @@ const options = {
   },
 };
 
+const plxOptions = {
+  seek: true,
+};
+
 const commonCapabilities = {
   browserName: 'Chrome',
   acceptInsecureCerts: true,
   // https://www.selenium.dev/documentation/en/webdriver/page_loading_strategy/
   pageLoadStrategy: 'eager', // makes browser.url() resolve on DOMContentLoaded
-  'bstack:options': {
-    ...options,
-  },
-  'plx:options': {
-    seek: true
-  },
+  'bstack:options': bstackOptions,
+  'plx:options': plxOptions,
 };
 
 exports.config = {
@@ -69,7 +69,7 @@ exports.config = {
     // {
     //   ...commonCapabilities,
     //   'bstack:options': {
-    //     ...options,
+    //     ...bstackOptions,
     //     osVersion: '13',
     //     deviceName: 'iPad 7th',
     //     realMobile: 'true',
@@ -83,13 +83,17 @@ exports.config = {
     {
       ...commonCapabilities,
       'bstack:options': {
-        ...options,
+        ...bstackOptions,
         osVersion: '8.0',
         deviceName: 'Google Pixel 2',
         realMobile: 'true',
         networkProfile: '3.5g-hspa-good',
         // geoLocation: 'BR', // sad :( The browserstack.geoLocation=BR capability was ignored for this session. IP Geolocation feature has moved out of Beta and is now only available with Enterprise plans. We recommend you to stop using this capability or upgrade to an Enterprise plan, contact us for more details
       },
+      'plx:options': {
+        ...plxOptions,
+        os: 'android'
+      }
     },
   ],
 
