@@ -25,7 +25,7 @@
     "prepublishOnly": "(cd ../.. && yarn lint && yarn build:js)"
   },
   "dependencies": {
-    "swiss": "^2.1.0"
+    "swiss": "^2.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.13.16",

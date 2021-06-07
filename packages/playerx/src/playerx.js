@@ -82,13 +82,28 @@ export const props = {
   playbackRate: 1,
   volume: 1,
 
-  config: {
-    ...property({}), // custom property
-    fromAttribute: JSON.parse,
+  config: { // custom property
+    ...property(),
+    get: (host, val, cache) => {
+      if (val === undefined) {
+        val = cache.config = getInlineJSON(host).config || {};
+      }
+      return val;
+    },
+    fromAttribute: function (val) {
+      const attr = JSON.parse(val);
+      return attr;
+    },
   },
 
-  meta: {
-    ...property(new URLSearchParams()), // custom property
+  meta: { // custom property
+    ...property(),
+    get: (host, val, cache) => {
+      if (val === undefined) {
+        val = (cache.meta = new URLSearchParams());
+      }
+      return val;
+    },
     fromAttribute: (val) => {
       let init = val;
       try {
@@ -98,6 +113,11 @@ export const props = {
     },
   },
 };
+
+function getInlineJSON(host) {
+  const script = host.querySelectorAll(`script[type$="json"]`)[0];
+  return (script && JSON.parse(script.textContent)) || {};
+}
 
 export const coreMethodNames = ['play', 'pause', 'get'];
 
