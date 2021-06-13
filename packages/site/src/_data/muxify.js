@@ -49,8 +49,8 @@ function fetchMetric(name, url) {
 
     players.sort((a, b) => b.viewer_experience_score - a.viewer_experience_score);
 
-    if (input !== yaml.dump(players)) {
-      fs.writeFileSync(`${__dirname}/players.yaml`, yaml.dump(players));
+    if (input !== yaml.dump(players, { lineWidth: -1 })) {
+      fs.writeFileSync(`${__dirname}/players.yaml`, yaml.dump(players, { lineWidth: -1 }));
     } else {
       console.log('No changes in players.yaml');
     }
