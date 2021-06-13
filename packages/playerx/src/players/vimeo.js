@@ -40,7 +40,7 @@ export function createPlayer(element, mediaContent) {
     const videoId = getVideoId(MATCH_SRC, element.src);
     const src = `${EMBED_BASE}/${videoId}?${serialize(boolToBinary(opts))}`;
     // Allow progressive enhancement
-    if (!mediaContent || !mediaContent.src.includes(`${EMBED_BASE}/${videoId}`)) {
+    if (!mediaContent || !mediaContent.src || !mediaContent.src.includes(`${EMBED_BASE}/${videoId}`)) {
       iframe = createEmbedIframe({ src });
     }
 
