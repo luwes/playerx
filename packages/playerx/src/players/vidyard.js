@@ -1,7 +1,7 @@
 // https://knowledge.vidyard.com/hc/en-us/articles/360019034753
 
 import { vidyard as MATCH_SRC } from '../constants/src-regex.js';
-import { getVideoId, createPlayPromise } from '../helpers.js';
+import { getMetaId, createPlayPromise } from '../helpers.js';
 import {
   createElement,
   addCssRule,
@@ -40,12 +40,12 @@ export function createPlayer(element) {
     ready = publicPromise();
 
     const opts = getOptions();
-    const videoId = getVideoId(MATCH_SRC, element.src);
+    const metaId = getMetaId(MATCH_SRC, element.src);
 
     img = createElement('img', {
       class: 'vidyard-player-embed',
-      src: `https://play.vidyard.com/${videoId}.jpg`,
-      'data-uuid': videoId,
+      src: `https://play.vidyard.com/${metaId}.jpg`,
+      'data-uuid': metaId,
       'data-v': '4',
       'data-type': 'inline',
       style: 'display:none',
@@ -93,10 +93,16 @@ export function createPlayer(element) {
     controls: undefined,
   };
 
+  const meta = {
+    get identifier() { return getMetaId(MATCH_SRC, element.src); },
+    get name() { return api.metadata.chapters_attributes[0].video_attributes.name; },
+  };
+
   const methods = {
     name: 'Vidyard',
     version: '1.x.x',
     unsupported,
+    meta,
 
     get element() {
       return img;
@@ -104,14 +110,6 @@ export function createPlayer(element) {
 
     get api() {
       return api;
-    },
-
-    get videoId() {
-      return getVideoId(MATCH_SRC, element.src);
-    },
-
-    get videoTitle() {
-      return api.metadata.chapters_attributes[0].video_attributes.name;
     },
 
     ready() {

@@ -35,7 +35,7 @@ export function setName(name) {
   return prefixName('set', name);
 }
 
-export function getVideoId(matchUrl, src) {
+export function getMetaId(matchUrl, src) {
   let match;
   return (match = src.match(matchUrl)) && match[1];
 }

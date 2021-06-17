@@ -51,9 +51,14 @@ export function createPlayer(element) {
     video.innerHTML = '';
   }
 
+  const meta = {
+    get identifier() { return getFileName(video.currentSrc || video.src); },
+  };
+
   const methods = {
     name: 'html',
     version: '5',
+    meta,
 
     get element() {
       return video;
@@ -61,10 +66,6 @@ export function createPlayer(element) {
 
     get api() {
       return video;
-    },
-
-    get videoId() {
-      return getFileName(video.currentSrc || video.src);
     },
 
     ready() {

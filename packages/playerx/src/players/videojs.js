@@ -56,9 +56,15 @@ export function createPlayer(element) {
     ready.resolve();
   }
 
+  const meta = {
+    get identifier() { return getFileName(api.currentSrc() || api.src()); },
+  };
+
   const methods = {
     name: 'video.js',
     key: 'videojs',
+    meta,
+
     get version() { return videojs.VERSION || ''; },
 
     get element() {
@@ -67,10 +73,6 @@ export function createPlayer(element) {
 
     get api() {
       return api;
-    },
-
-    get videoId() {
-      return getFileName(api.currentSrc() || api.src());
     },
 
     ready() {

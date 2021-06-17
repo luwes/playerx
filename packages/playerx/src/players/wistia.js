@@ -1,7 +1,7 @@
 // https://wistia.com/support/developers/player-api
 
 import { wistia as MATCH_SRC } from '../constants/src-regex.js';
-import { getVideoId, createPlayPromise } from '../helpers.js';
+import { getMetaId, createPlayPromise } from '../helpers.js';
 import {
   createElement,
   removeNode,
@@ -36,7 +36,7 @@ export function createPlayer(element) {
     ready = publicPromise();
 
     const opts = getOptions();
-    const id = getVideoId(MATCH_SRC, element.src);
+    const id = getMetaId(MATCH_SRC, element.src);
 
     div = createElement('div', {
       class: `wistia_embed wistia_async_${id}`,
@@ -77,9 +77,15 @@ export function createPlayer(element) {
     durationchange: undefined,
   };
 
+  const meta = {
+    get identifier() { return api.hashedId(); },
+    get name() { return api.name(); },
+  };
+
   const methods = {
     name: 'Wistia',
     version: '1.x.x',
+    meta,
 
     get element() {
       return div;
@@ -87,14 +93,6 @@ export function createPlayer(element) {
 
     get api() {
       return api;
-    },
-
-    get videoId() {
-      return api.hashedId();
-    },
-
-    get videoTitle() {
-      return api.name();
     },
 
     get videoWidth() {
@@ -144,7 +142,7 @@ export function createPlayer(element) {
       return element.load();
 
       // `api.replaceWith` works but does strange things with resizing ;(
-      // api.replaceWith(getVideoId(MATCH_SRC, src), getOptions());
+      // api.replaceWith(getMetaId(MATCH_SRC, src), getOptions());
     },
 
     set currentTime(seconds) {

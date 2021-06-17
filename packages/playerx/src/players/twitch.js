@@ -2,7 +2,7 @@
 
 import { twitch as MATCH_SRC } from '../constants/src-regex.js';
 import {
-  getVideoId,
+  getMetaId,
   createPlayPromise,
 } from '../helpers.js';
 import {
@@ -25,7 +25,7 @@ export function createPlayer(element) {
 
   function getOptions() {
     return {
-      video: getVideoId(MATCH_SRC, element.src),
+      video: getMetaId(MATCH_SRC, element.src),
       height: '100%',
       width: '100%',
       autoplay: element.playing || element.autoplay,
@@ -56,10 +56,15 @@ export function createPlayer(element) {
     playbackRate: undefined,
   };
 
+  const meta = {
+    get identifier() { return getMetaId(MATCH_SRC, element.src); },
+  };
+
   const methods = {
     name: 'Twitch',
     version: '1.x.x',
     unsupported,
+    meta,
 
     get element() {
       return div;
@@ -67,10 +72,6 @@ export function createPlayer(element) {
 
     get api() {
       return api;
-    },
-
-    get videoId() {
-      return getVideoId(MATCH_SRC, element.src);
     },
 
     ready() {
@@ -97,7 +98,7 @@ export function createPlayer(element) {
     },
 
     set src(value) {
-      api.setVideo('v' + getVideoId(MATCH_SRC, element.src));
+      api.setVideo('v' + getMetaId(MATCH_SRC, element.src));
     },
 
     set controls(value) {

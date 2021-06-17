@@ -30,8 +30,8 @@ export function testPlayer(options, cb) {
 
     t.equal(typeof player.api, 'object', 'internal `api` getter is an object');
 
-    t.equal(typeof player.meta.get('video_id'), 'string', 'videoId is a string');
-    t.assert(player.meta.get('video_id') != '', 'videoId is not empty');
+    t.equal(typeof player.meta.identifier, 'string', 'identifier is a string');
+    t.assert(player.meta.identifier != '', 'videoId is not empty');
 
     // t.equal(player.buffered.length, 0, 'buffered ranges are empty on init');
 

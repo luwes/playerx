@@ -1,7 +1,7 @@
 // https://developer.dailymotion.com/player/
 
 import { dailymotion as MATCH_SRC } from '../constants/src-regex.js';
-import { allow, getVideoId, createPlayPromise } from '../helpers.js';
+import { allow, getMetaId, createPlayPromise } from '../helpers.js';
 import {
   createElement,
   removeNode,
@@ -21,7 +21,7 @@ export function createPlayer(element) {
 
   function getOptions() {
     return {
-      video: getVideoId(MATCH_SRC, element.src),
+      video: getMetaId(MATCH_SRC, element.src),
       autoplay: element.playing || element.autoplay,
       loop: element.loop,
       muted: element.muted,
@@ -35,7 +35,7 @@ export function createPlayer(element) {
 
   async function init() {
     const params = getOptions();
-    const video = getVideoId(MATCH_SRC, element.src);
+    const video = getMetaId(MATCH_SRC, element.src);
     div = createElement('div');
 
     const DM = await loadScript(
@@ -63,10 +63,16 @@ export function createPlayer(element) {
     playbackRate: undefined,
   };
 
+  const meta = {
+    get identifier() { return api.video.videoId; },
+    get name() { return new URLSearchParams(`t=${api.video.title}`).get('t'); },
+  };
+
   const methods = {
     name: 'Dailymotion',
     version: '1.x.x',
     unsupported,
+    meta,
 
     get element() {
       return div;
@@ -74,14 +80,6 @@ export function createPlayer(element) {
 
     get api() {
       return api;
-    },
-
-    get videoId() {
-      return api.video.videoId;
-    },
-
-    get videoTitle() {
-      return new URLSearchParams(`t=${api.video.title}`).get('t');
     },
 
     get videoWidth() {

@@ -1,4 +1,3 @@
-// https://github.com/video-dev/hls.js
 // https://github.com/Dash-Industry-Forum/dash.js
 
 import {
@@ -57,9 +56,15 @@ export function createPlayer(element) {
     video.innerHTML = '';
   }
 
+  const meta = {
+    get identifier() { return getFileName(api.getSource()); },
+  };
+
   const methods = {
     key: 'dashjs',
     name: 'dash.js',
+    meta,
+
     get version() { return api.getVersion() || ''; },
 
     get element() {
@@ -68,10 +73,6 @@ export function createPlayer(element) {
 
     get api() {
       return api;
-    },
-
-    get videoId() {
-      return getFileName(video.currentSrc || video.src);
     },
 
     ready() {

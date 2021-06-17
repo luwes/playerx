@@ -45,16 +45,14 @@ See the <a href="https://docs.mux.com/guides/data/make-your-data-actionable-with
 
 ## Alternative for metadata
 
-Playerx has a `meta` property that can be populated with metadata that will be read by the MUX add-on. The `meta` property is an instance of `URLSearchParams` and can be set the same way in JS. 
+Playerx has a `meta` property that can be populated with metadata that will be read by the MUX add-on. The `meta` property is a plain object and can be set the same way in JS. 
 
-The `meta` property can also be set in HTML via an attribute, this value is first `JSON.parse`'d if needed and then passed to the `URLSearchParams` constructor. There are 3 valid init types.
+For some video platforms like Vimeo, YouTube, Wistia, etc. the `video_id` and `video_title` will be automatically populated but can be overridden by setting your own.
+
+The `meta` property can also be set in HTML via an attribute.
 
 ```html
-<player-x meta="video_title=Travis+Scott&video_content_type=clip"></player-x>
-
 <player-x meta='{"video_title": "Travis Scott", "video_content_type": "clip"}'></player-x>
-
-<player-x meta='[["video_title", "Travis Scott"], ["video_content_type", "clip"]]'></player-x>
 ```
 
 

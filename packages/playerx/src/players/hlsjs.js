@@ -60,9 +60,15 @@ export function createPlayer(element) {
     video.innerHTML = '';
   }
 
+  const meta = {
+    get identifier() { return getFileName(video.currentSrc || video.src); },
+  };
+
   const methods = {
     key: 'hlsjs',
     name: 'hls.js',
+    meta,
+
     get version() { return Hls.version || ''; },
 
     get element() {
@@ -71,10 +77,6 @@ export function createPlayer(element) {
 
     get api() {
       return api;
-    },
-
-    get videoId() {
-      return getFileName(video.currentSrc || video.src);
     },
 
     ready() {

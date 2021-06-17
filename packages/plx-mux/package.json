@@ -12,6 +12,7 @@
   "author": "Wesley Luyten <me@wesleyluyten.com> (https://wesleyluyten.com)",
   "main": "dist/mux.umd.js",
   "module": "dist/mux.js",
+  "types": "src/index.d.ts",
   "files": [
     "src",
     "dist"

@@ -1,7 +1,7 @@
 // https://docs.api.video/docs/video-player-sdk
 
 import { apivideo as MATCH_SRC } from '../constants/src-regex.js';
-import { getVideoId, createEmbedIframe } from '../helpers.js';
+import { getMetaId, createEmbedIframe } from '../helpers.js';
 import {
   loadScript,
   publicPromise,
@@ -37,7 +37,7 @@ export function createPlayer(element) {
       loop: element.loop,
       hideControls: !element.controls,
       'hide-controls': !element.controls,
-      id: getVideoId(MATCH_SRC, element.src),
+      id: getMetaId(MATCH_SRC, element.src),
       ...element.config.apivideo,
     };
   }
@@ -45,8 +45,8 @@ export function createPlayer(element) {
   async function init() {
     const mediaAdded = promisify(element.addEventListener, element)('media');
     const opts = getOptions();
-    const videoId = getVideoId(MATCH_SRC, element.src);
-    const src = `${EMBED_BASE}/${videoId}#${serialize(opts)}`;
+    const metaId = getMetaId(MATCH_SRC, element.src);
+    const src = `${EMBED_BASE}/${metaId}#${serialize(opts)}`;
     const id = uniqueId('av');
     iframe = createEmbedIframe({ src, id });
 
@@ -64,10 +64,15 @@ export function createPlayer(element) {
     ready.resolve();
   }
 
+  const meta = {
+    get identifier() { return getMetaId(MATCH_SRC, element.src); },
+  };
+
   const methods = {
     name: 'api.video',
     key: 'apivideo',
     version: '1.x.x',
+    meta,
 
     get element() {
       return iframe;
@@ -75,10 +80,6 @@ export function createPlayer(element) {
 
     get api() {
       return api;
-    },
-
-    get videoId() {
-      return getVideoId(MATCH_SRC, element.src);
     },
 
     ready() {

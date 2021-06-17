@@ -120,15 +120,23 @@ export const extend = createCompleteAssign({
   writeable: false
 });
 
+export const defaults = createCompleteAssign({
+  enumerable: true,
+  configurable: true,
+  writeable: false,
+}, true);
+
 /**
  * Create a complete assign function with custom descriptors.
  * @param  {Object} options - The custom descriptor options.
+ * @param  {Boolean} preventOverride - Don't override existing props.
  * @return {Function}
  */
-export function createCompleteAssign(options) {
+export function createCompleteAssign(options, preventOverride) {
   return (target, ...sources) => {
     sources.forEach(source => {
       Object.keys(source || {}).forEach(prop => {
+        if (preventOverride && target[prop] !== undefined) return;
         const descriptor = Object.getOwnPropertyDescriptor(source, prop);
         Object.defineProperty(target, prop, assign(descriptor, options));
       });

@@ -52,9 +52,15 @@ export function createPlayer(element) {
     ready.resolve();
   }
 
+  const meta = {
+    get identifier() { return getFileName(api.currentSrc || api.src); },
+  };
+
   const methods = {
     name: 'Theo Player',
     key: 'theoplayer',
+    meta,
+
     get version() { return THEOplayer.version || ''; },
 
     get element() {
@@ -63,10 +69,6 @@ export function createPlayer(element) {
 
     get api() {
       return api;
-    },
-
-    get videoId() {
-      return getFileName(api.currentSrc || api.src);
     },
 
     ready() {

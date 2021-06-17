@@ -2,7 +2,7 @@
 
 import { youtube as MATCH_SRC } from '../constants/src-regex.js';
 import {
-  getVideoId,
+  getMetaId,
   createPlayPromise,
   createEmbedIframe,
   PlayerError,
@@ -47,10 +47,10 @@ export function createPlayer(element, mediaContent) {
     ready = publicPromise();
 
     const opts = getOptions();
-    const videoId = getVideoId(MATCH_SRC, element.src);
-    const src = `${EMBED_BASE}/${videoId}?${serialize(boolToBinary(opts))}`;
+    const metaId = getMetaId(MATCH_SRC, element.src);
+    const src = `${EMBED_BASE}/${metaId}?${serialize(boolToBinary(opts))}`;
     // Allow progressive enhancement
-    if (!mediaContent || !mediaContent.src || !mediaContent.src.includes(`${EMBED_BASE}/${videoId}`)) {
+    if (!mediaContent || !mediaContent.src || !mediaContent.src.includes(`${EMBED_BASE}/${metaId}`)) {
       iframe = createEmbedIframe({ src });
     }
 
@@ -106,9 +106,15 @@ export function createPlayer(element, mediaContent) {
     highres: 2160,
   };
 
+  const meta = {
+    get identifier() { return getMetaId(MATCH_SRC, element.src); },
+    get name() { return api.getVideoData().title; },
+  };
+
   const methods = {
     name: 'YouTube',
     version: '1.x.x',
+    meta,
 
     get element() {
       return iframe;
@@ -116,14 +122,6 @@ export function createPlayer(element, mediaContent) {
 
     get api() {
       return api;
-    },
-
-    get videoId() {
-      return getVideoId(MATCH_SRC, element.src);
-    },
-
-    get videoTitle() {
-      return api.getVideoData().title;
     },
 
     get videoWidth() {
@@ -185,7 +183,7 @@ export function createPlayer(element, mediaContent) {
       return element.load();
 
       // `api.cueVideoById` works but `api.getDuration()` is never updated ;(
-      // api.cueVideoById(getVideoId(MATCH_SRC, element.src));
+      // api.cueVideoById(getMetaId(MATCH_SRC, element.src));
     },
 
     set controls(value) {

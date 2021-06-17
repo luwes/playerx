@@ -1,7 +1,7 @@
 // https://developers.facebook.com/docs/plugins/embedded-video-player/api/
 
 import { facebook as MATCH_SRC } from '../constants/src-regex.js';
-import { getVideoId, createPlayPromise, allow } from '../helpers.js';
+import { getMetaId, createPlayPromise, allow } from '../helpers.js';
 import {
   createElement,
   removeNode,
@@ -73,10 +73,15 @@ export function createPlayer(element) {
     playbackRate: undefined,
   };
 
+  const meta = {
+    get identifier() { return getMetaId(MATCH_SRC, element.src); },
+  };
+
   const methods = {
     name: 'Facebook',
     version: '1.x.x',
     unsupported,
+    meta,
 
     get element() {
       return div;
@@ -84,10 +89,6 @@ export function createPlayer(element) {
 
     get api() {
       return api;
-    },
-
-    get videoId() {
-      return getVideoId(MATCH_SRC, element.src);
     },
 
     ready() {

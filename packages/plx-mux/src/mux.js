@@ -8,6 +8,7 @@ import {
   publicPromise,
   getMimeType,
   camelToSnakeKeys,
+  camelCase,
 } from './utils.js';
 
 const props = {
@@ -16,6 +17,11 @@ const props = {
   },
 };
 
+/** @typedef { import('./index').PlxMux } PlxMux */
+
+/**
+ * @type {(el: PlxMux) => void}
+ */
 function mux(el) {
   const player = el.player;
   let currentPlayer = player.name;
@@ -49,15 +55,19 @@ function mux(el) {
   }
 
   async function onloadedsrc() {
+    await player.ready();
+
     if (currentPlayer === player.name) {
-      emit(playerId, 'videochange', await getConfigurableMetadata());
+      emit(playerId, 'videochange', {
+        ...(await getConfigurableMetadata()),
+        ...camelToSnakeKeys(el.dataset),
+      });
     } else {
       playerId = uniqueId('player');
       muxData.init(playerId, {
         debug: el.debug,
         minimumRebufferDuration: 350,
         data: {
-          ...camelToSnakeKeys(el.dataset),
           player_init_time: initTime,
           player_name: 'playerx',
           player_version: version,
@@ -67,6 +77,7 @@ function mux(el) {
           player_mux_plugin_version: pkg.version,
           page_type: player.querySelectorAll('iframe').length && 'iframe',
           ...(await getConfigurableMetadata()),
+          ...camelToSnakeKeys(el.dataset),
         },
         getPlayheadTime,
         getStateData,
@@ -105,12 +116,14 @@ function mux(el) {
     }
 
     const metadata = await player.get('meta');
+    videoData.video_title = metadata.name;
+    videoData.video_id = metadata.identifier;
+
     keys.forEach((key) => {
-      const videoLessKey = key.replace('video_', '');
-      // Give priority to keys without `video_` prefix.
-      videoData[key] = metadata.get(videoLessKey);
       if (videoData[key] != null) return;
-      videoData[key] = metadata.get(key);
+      videoData[key] = metadata[key];
+      if (videoData[key] != null) return;
+      videoData[key] = metadata[camelCase(key)];
     });
 
     Object.keys(videoData).forEach((prop) => {

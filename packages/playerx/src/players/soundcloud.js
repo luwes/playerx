@@ -2,7 +2,7 @@
 
 import { soundcloud as MATCH_SRC } from '../constants/src-regex.js';
 import {
-  getVideoId,
+  getMetaId,
   createPlayPromise,
   createEmbedIframe,
 } from '../helpers.js';
@@ -74,10 +74,15 @@ export function createPlayer(element) {
     controls: undefined,
   };
 
+  const meta = {
+    get identifier() { return getMetaId(MATCH_SRC, element.src); },
+  };
+
   const methods = {
     name: 'SoundCloud',
     version: '1.x.x',
     unsupported,
+    meta,
 
     get element() {
       return iframe;
@@ -85,10 +90,6 @@ export function createPlayer(element) {
 
     get api() {
       return api;
-    },
-
-    get videoId() {
-      return getVideoId(MATCH_SRC, element.src);
     },
 
     ready() {

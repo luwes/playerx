@@ -1,10 +1,12 @@
 import { property, readonly, reflect } from 'swiss';
 import * as Events from './constants/events.js';
+import { css } from './element.js';
 import { createResponsiveStyle, getName, setName } from './helpers.js';
 import { options } from './options.js';
 import {
   getStyle,
   extend,
+  defaults,
   publicPromise,
   objectValues,
   isMethod,
@@ -14,7 +16,7 @@ import {
 } from './utils.js';
 
 const sheet = getStyle();
-sheet.firstChild.data += `
+sheet.firstChild.data += css`
   player-x {
     display: flex;
     align-items: flex-end;
@@ -82,42 +84,14 @@ export const props = {
   playbackRate: 1,
   volume: 1,
 
-  config: { // custom property
-    ...property(),
-    get: (host, val, cache) => {
-      if (val === undefined) {
-        val = cache.config = getInlineJSON(host).config || {};
-      }
-      return val;
-    },
-    fromAttribute: function (val) {
-      const attr = JSON.parse(val);
-      return attr;
-    },
-  },
+  config: property(undefined, { // custom property
+    fromAttribute: (val) => JSON.parse(val),
+  }),
 
-  meta: { // custom property
-    ...property(),
-    get: (host, val, cache) => {
-      if (val === undefined) {
-        val = (cache.meta = new URLSearchParams());
-      }
-      return val;
-    },
-    fromAttribute: (val) => {
-      let init = val;
-      try {
-        init = JSON.parse(val);
-      } catch (err) { /**/ }
-      return new URLSearchParams(init);
-    },
-  },
+  meta: property(undefined, { // custom property
+    fromAttribute: (val) => JSON.parse(val),
+  }),
 };
-
-function getInlineJSON(host) {
-  const script = host.querySelectorAll(`script[type$="json"]`)[0];
-  return (script && JSON.parse(script.textContent)) || {};
-}
 
 export const coreMethodNames = ['play', 'pause', 'get'];
 
@@ -132,9 +106,21 @@ let listeners = [];
 export const PlayerxMixin = (CE, { create }) => (element) => {
   console.dir(element);
 
+  element.config = getInlineJSON(element).config || {};
+  element.meta = getInlineJSON(element).meta || {};
+
+  // Shortcuts to native DOM event listener methods.
+  element.on = element.addEventListener;
+  element.off = element.removeEventListener;
+
+  // Store original getProp because it's overridden.
+  // This method is used to get data directly from the property cache.
+  element.cache = element.getProp;
+  element.setCache = element.setProp;
+
   let player = {};
   let responsiveStyle = createResponsiveStyle(element);
-  extend(player, base(element, player), responsiveStyle);
+  extend(player, base(element, player), responsiveStyle, override(element, player));
 
   let { volume, muted, currentTime, duration } = element;
   let elementReady = publicPromise();
@@ -150,14 +136,6 @@ export const PlayerxMixin = (CE, { create }) => (element) => {
   let hasDurationEvent;
   let playFired;
 
-  // Shortcuts to native DOM event listener methods.
-  element.on = element.addEventListener;
-  element.off = element.removeEventListener;
-
-  // Store original getProp because it's overridden.
-  // This method is used to get data directly from the property cache.
-  element.cache = element.getProp;
-  element.setCache = element.setProp;
 
   async function setProp(name, value, oldValue) {
     element.setCache(name, value);
@@ -273,11 +251,12 @@ export const PlayerxMixin = (CE, { create }) => (element) => {
     const mediaContent = media.children[0];
 
     player = {};
-    player = extend(
+    extend(
       player,
       base(element, player),
       await create(element, mediaContent),
-      responsiveStyle
+      responsiveStyle,
+      override(element, player),
     );
     player.constructor = player.constructor || create;
 
@@ -306,16 +285,6 @@ export const PlayerxMixin = (CE, { create }) => (element) => {
       playerSet('playsinline'),
       playerSet('loop'),
     ]);
-
-    if (!element.meta.get('video_id')) {
-      const videoId = await player.get('videoId');
-      if (videoId) element.meta.set('video_id', videoId);
-    }
-
-    if (!element.meta.get('video_title')) {
-      const videoTitle = await player.get('videoTitle');
-      if (videoTitle) element.meta.set('video_title', videoTitle);
-    }
 
     if (initEvents) attachEvents();
 
@@ -573,6 +542,11 @@ export const PlayerxMixin = (CE, { create }) => (element) => {
   return methods;
 };
 
+function getInlineJSON(host) {
+  const script = host.querySelectorAll(`script[type$="json"]`)[0];
+  return (script && JSON.parse(script.textContent)) || {};
+}
+
 function base(element, player) {
   return {
     ...flexApi(player),
@@ -607,10 +581,6 @@ function base(element, player) {
       return element.cache('src');
     },
 
-    getMeta() {
-      return element.cache('meta');
-    },
-
     getEnded() {
       return element.currentTime > 0 && element.currentTime == element.duration;
     },
@@ -619,6 +589,16 @@ function base(element, player) {
       return player.name && player.name.toLowerCase();
     },
   };
+}
+
+function override(element, player) {
+  const metadata = {};
+  const _override = {
+    get meta() {
+      return defaults(metadata, element.cache('meta'), player.meta);
+    },
+  };
+  return { _override };
 }
 
 function flexMethod(player, name) {
@@ -654,6 +634,8 @@ export function flexApi(instance) {
       }
 
       // In case the element is a native <video> element.
+      // Needed for Shaka player, hls.js, dash.js where there are 2 API interfaces;
+      // The video element and one specific API interface.
       if (instance.element && instance.element.play) {
         descriptor = getPropertyDescriptor(instance.element, name);
         if (descriptor && descriptor.set) return (instance.element[name] = value);
@@ -669,6 +651,8 @@ export function flexApi(instance) {
       if (name == null) return;
 
       let result;
+      if ((result = getProperty(instance._override, name)) !== undefined) return result;
+
       const method = getName(name);
       if ((result = getProperty(instance, name)) !== undefined) return result;
       if ((result = getMethod(instance, method)) !== undefined) return result;
@@ -679,8 +663,10 @@ export function flexApi(instance) {
         if ((result = getMethod(instance.api, method)) !== undefined) return result;
       }
 
+      // In case the element is a native <video> element.
+      // Needed for Shaka player, hls.js, dash.js where there are 2 API interfaces;
+      // The video element and one specific API interface.
       if (instance.element && instance.element.play) {
-        // In case the element is a native <video> element.
         if ((result = getProperty(instance.element, name)) !== undefined) return result;
       }
     },

@@ -1,7 +1,7 @@
 // https://developer.jwplayer.com/jwplayer/docs/jw8-javascript-api-reference
 
 import { jwplayer as MATCH_SRC } from '../constants/src-regex.js';
-import { getVideoId, createPlayPromise, PlayerError } from '../helpers.js';
+import { getMetaId, createPlayPromise, PlayerError } from '../helpers.js';
 import {
   createElement,
   removeNode,
@@ -47,7 +47,7 @@ export function createPlayer(element) {
     const playerUrl = `https://content.jwplatform.com/libraries/${opts.player}.js`;
     const scriptUrl = opts.key ? opts.apiUrl || API_URL : playerUrl;
     const JW = await loadScript(scriptUrl, API_GLOBAL);
-    const id = getVideoId(MATCH_SRC, element.src);
+    const id = getMetaId(MATCH_SRC, element.src);
     const media = id ? await getMedia(id) : { file: element.src };
     api = JW(div).setup({
       width: '100%',
@@ -78,9 +78,15 @@ export function createPlayer(element) {
     ready: undefined,
   };
 
+  const meta = {
+    get identifier() { return getMetaId(MATCH_SRC, element.src); },
+    get name() { return api.getPlaylistItem().title; },
+  };
+
   const methods = {
     name: 'JWPlayer',
     version: '8.x.x',
+    meta,
 
     get element() {
       return div;
@@ -88,14 +94,6 @@ export function createPlayer(element) {
 
     get api() {
       return api;
-    },
-
-    get videoId() {
-      return getVideoId(MATCH_SRC, element.src);
-    },
-
-    get videoTitle() {
-      return api.getPlaylistItem().title;
     },
 
     get videoWidth() {

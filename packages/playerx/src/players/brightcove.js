@@ -1,7 +1,7 @@
 // https://support.brightcove.com/overview-player-api
 
 import { brightcove as MATCH_SRC } from '../constants/src-regex.js';
-import { getVideoId } from '../helpers.js';
+import { getMetaId } from '../helpers.js';
 import {
   createElement,
   loadScript,
@@ -28,11 +28,11 @@ export function createPlayer(element) {
     ready = publicPromise();
 
     const opts = getOptions();
-    const videoId = getVideoId(MATCH_SRC, element.src);
+    const metaId = getMetaId(MATCH_SRC, element.src);
 
     div = createElement('video-js', {
       controls: opts.controls ? '' : null,
-      'data-video-id': videoId,
+      'data-video-id': metaId,
       style: 'width:100%;height:100%',
     });
 
@@ -45,9 +45,14 @@ export function createPlayer(element) {
     ready.resolve();
   }
 
+  const meta = {
+    get identifier() { return getMetaId(MATCH_SRC, element.src); },
+  };
+
   const methods = {
     name: 'Brightcove',
     version: '1.x.x',
+    meta,
 
     get element() {
       return div;
@@ -55,10 +60,6 @@ export function createPlayer(element) {
 
     get api() {
       return api;
-    },
-
-    get videoId() {
-      return getVideoId(MATCH_SRC, element.src);
     },
 
     ready() {

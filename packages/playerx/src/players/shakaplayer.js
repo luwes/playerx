@@ -42,9 +42,15 @@ export function createPlayer(element) {
     ready.resolve();
   }
 
+  const meta = {
+    get identifier() { return getFileName(video.currentSrc || video.src); },
+  };
+
   const methods = {
     name: 'Shaka Player',
     key: 'shakaplayer',
+    meta,
+
     get version() { return shaka.Player.version || ''; },
 
     get element() {
@@ -53,10 +59,6 @@ export function createPlayer(element) {
 
     get api() {
       return api;
-    },
-
-    get videoId() {
-      return getFileName(video.currentSrc || video.src);
     },
 
     setSrc(src) {

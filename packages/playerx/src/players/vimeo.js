@@ -2,7 +2,7 @@
 
 import { vimeo as MATCH_SRC } from '../constants/src-regex.js';
 import * as Events from '../constants/events.js';
-import { getVideoId, PlayerError, createEmbedIframe } from '../helpers.js';
+import { getMetaId, PlayerError, createEmbedIframe } from '../helpers.js';
 import {
   boolToBinary,
   serialize,
@@ -19,6 +19,7 @@ export function createPlayer(element, mediaContent) {
   let api;
   let iframe = mediaContent;
   let ready = publicPromise();
+  let metadata = {};
 
   function getOptions() {
     return {
@@ -37,10 +38,10 @@ export function createPlayer(element, mediaContent) {
 
   async function init() {
     const opts = getOptions();
-    const videoId = getVideoId(MATCH_SRC, element.src);
-    const src = `${EMBED_BASE}/${videoId}?${serialize(boolToBinary(opts))}`;
+    const metaId = getMetaId(MATCH_SRC, element.src);
+    const src = `${EMBED_BASE}/${metaId}?${serialize(boolToBinary(opts))}`;
     // Allow progressive enhancement
-    if (!mediaContent || !mediaContent.src || !mediaContent.src.includes(`${EMBED_BASE}/${videoId}`)) {
+    if (!mediaContent || !mediaContent.src || !mediaContent.src.includes(`${EMBED_BASE}/${metaId}`)) {
       iframe = createEmbedIframe({ src });
     }
 
@@ -57,26 +58,35 @@ export function createPlayer(element, mediaContent) {
 
     // Vimeo's thumb outro loads new clips directly in the player
     // Update src attribute and fire load src events for metrics, etc.
-    api.on('loaded', ({ id }) => {
-      const vidId = getVideoId(MATCH_SRC, element.src);
+    api.on('loaded', async ({ id }) => {
+      metadata.identifier = await api.getVideoId();
+      metadata.name = await api.getVideoTitle();
+
+      const vidId = getMetaId(MATCH_SRC, element.src);
       if (String(id) !== vidId) {
         element.setCache('src', `https://vimeo.com/${id}`);
         element.fire(Events.LOADSRC);
         element.fire(Events.LOADEDSRC);
       }
-    });
 
-    await api.ready();
-    ready.resolve();
+      await api.ready();
+      ready.resolve();
+    });
   }
 
   const customEvents = {
     loaded: undefined,
   };
 
+  const meta = {
+    get identifier() { return metadata.identifier; },
+    get name() { return metadata.name; },
+  };
+
   const methods = {
     name: 'Vimeo',
     version: '3.x.x',
+    meta,
 
     get element() {
       return iframe;
@@ -84,10 +94,6 @@ export function createPlayer(element, mediaContent) {
 
     get api() {
       return api;
-    },
-
-    get videoId() {
-      return getVideoId(MATCH_SRC, element.src);
     },
 
     ready() {
