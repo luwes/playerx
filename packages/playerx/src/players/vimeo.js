@@ -59,7 +59,7 @@ export function createPlayer(element, mediaContent) {
     // Vimeo's thumb outro loads new clips directly in the player
     // Update src attribute and fire load src events for metrics, etc.
     api.on('loaded', async ({ id }) => {
-      metadata.identifier = await api.getVideoId();
+      metadata.identifier = `${await api.getVideoId()}`;
       metadata.name = await api.getVideoTitle();
 
       const vidId = getMetaId(MATCH_SRC, element.src);
