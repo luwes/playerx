@@ -1,5 +1,6 @@
 // https://github.com/Dash-Industry-Forum/dash.js
 
+import { createPlayPromise } from '../helpers.js';
 import {
   createElement,
   removeNode,
@@ -77,6 +78,12 @@ export function createPlayer(element) {
 
     ready() {
       return ready;
+    },
+
+    play() {
+      // dash.js api.play doesn't return a play promise.
+      api.play();
+      return createPlayPromise(element);
     },
 
     remove() {
