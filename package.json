@@ -89,7 +89,7 @@
     "karma-chrome-launcher": "^3.0.0",
     "karma-coverage": "^2.0.3",
     "karma-rollup-preprocessor": "^7.0.3",
-    "karma-sauce-launcher": "^4.1.5",
+    "karma-sauce-launcher": "^4.3.6",
     "karma-tap": "^4.2.0",
     "karma-tap-pretty-reporter": "^4.2.0",
     "minimist": "^1.2.5",
