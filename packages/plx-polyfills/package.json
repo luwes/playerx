@@ -13,8 +13,8 @@
   },
   "devDependencies": {
     "@webcomponents/custom-elements": "^1.4.3",
-    "eslint": "^7.24.0",
+    "eslint": "^7.29.0",
     "eslint-plugin-fp": "^2.3.0",
-    "eslint-plugin-import": "^2.22.1"
+    "eslint-plugin-import": "^2.23.4"
   }
 }
