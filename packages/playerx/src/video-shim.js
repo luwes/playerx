@@ -18,7 +18,6 @@ export function createVideoShim(element) {
   let playFired;
   let { volume, muted, currentTime, duration } = element;
 
-
   function unload() {
     clearAllTimeouts();
     apiReady = publicPromise();
@@ -32,7 +31,7 @@ export function createVideoShim(element) {
     clearTimeout(resizeTimeout);
   }
 
-  function update() {
+  function updateProps() {
     apiReady.resolve();
 
     return Promise.all([
@@ -115,7 +114,9 @@ export function createVideoShim(element) {
             Events.RESIZE,
           ].indexOf(event) === -1
       )
-      .forEach((event) => listeners.push([event, element.fire.bind(null, event)]));
+      .forEach((event) =>
+        listeners.push([event, element.fire.bind(null, event)])
+      );
 
     listeners.forEach(([event, listener]) => player.on(event, listener));
   }
@@ -252,7 +253,7 @@ export function createVideoShim(element) {
 
   return {
     unload,
-    update,
+    updateProps,
     ready,
     attachEvents,
     detachEvents,

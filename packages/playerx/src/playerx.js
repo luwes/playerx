@@ -24,25 +24,26 @@ sheet.firstChild.data += css`
     width: 100%;
   }
   player-x::before {
-    content: "";
+    content: '';
     margin-left: -1px;
     width: 1px;
     height: 0;
     float: left;
-    padding-top: 56.25%
+    padding-top: 56.25%;
   }
   player-x::after {
-    content: "";
+    content: '';
     display: table;
-    clear: both
+    clear: both;
   }
-  player-x plx-media,player-x plx-media>* {
+  player-x plx-media,
+  player-x plx-media > * {
     display: block;
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%
+    height: 100%;
   }
 `;
 
@@ -84,17 +85,18 @@ export const props = {
   playbackRate: 1,
   volume: 1,
 
-  config: property(undefined, { // custom property
+  config: property(undefined, {
+    // custom property
     fromAttribute: (val) => JSON.parse(val),
   }),
 
-  meta: property(undefined, { // custom property
+  meta: property(undefined, {
+    // custom property
     fromAttribute: (val) => JSON.parse(val),
   }),
 };
 
 export const coreMethodNames = ['play', 'pause', 'get'];
-
 
 /** @typedef { import('./index').Playerx } Playerx */
 
@@ -118,11 +120,15 @@ export const PlayerxMixin = (CE, { create }) => (element) => {
 
   let player = {};
   let responsiveStyle = createResponsiveStyle(element);
-  extend(player, base(element, player), responsiveStyle, override(element, player));
+  extend(
+    player,
+    base(element, player),
+    responsiveStyle,
+    override(element, player)
+  );
 
   let elementReady = publicPromise();
   let videoShim = createVideoShim(element);
-
 
   async function setProp(name, value, oldValue) {
     element.setCache(name, value);
@@ -213,7 +219,9 @@ export const PlayerxMixin = (CE, { create }) => (element) => {
     if (playerParam && playerParam !== element.key) {
       return false;
     }
-    return player.api && options.players[element.key].canPlay(element.cache('src'));
+    return (
+      player.api && options.players[element.key].canPlay(element.cache('src'))
+    );
   }
 
   async function init() {
@@ -235,7 +243,7 @@ export const PlayerxMixin = (CE, { create }) => (element) => {
       base(element, player),
       await create(element, mediaContent),
       responsiveStyle,
-      override(element, player),
+      override(element, player)
     );
     player.constructor = player.constructor || create;
 
@@ -270,7 +278,7 @@ export const PlayerxMixin = (CE, { create }) => (element) => {
     // const autoplay = element.cache('autoplay') || element.cache('playing');
     // await player.set('autoplay', autoplay);
 
-    await videoShim.update();
+    await videoShim.updateProps();
     elementReady.resolve();
   }
 
@@ -370,7 +378,7 @@ function override(element, player) {
 }
 
 function flexMethod(player, name) {
-  return function() {
+  return function () {
     if (player.api && player.api[name]) return player.api[name]();
     if (player.element && player.element[name]) return player.element[name]();
   };
@@ -406,7 +414,8 @@ export function flexApi(instance) {
       // The video element and one specific API interface.
       if (instance.element && instance.element.play) {
         descriptor = getPropertyDescriptor(instance.element, name);
-        if (descriptor && descriptor.set) return (instance.element[name] = value);
+        if (descriptor && descriptor.set)
+          return (instance.element[name] = value);
       }
     },
 
@@ -419,23 +428,28 @@ export function flexApi(instance) {
       if (name == null) return;
 
       let result;
-      if ((result = getProperty(instance._override, name)) !== undefined) return result;
+      if ((result = getProperty(instance._override, name)) !== undefined)
+        return result;
 
       const method = getName(name);
       if ((result = getProperty(instance, name)) !== undefined) return result;
       if ((result = getMethod(instance, method)) !== undefined) return result;
 
       if (instance.api) {
-        if ((result = getProperty(instance.api, name)) !== undefined) return result;
-        if ((result = getMethod(instance.api, name)) !== undefined) return result;
-        if ((result = getMethod(instance.api, method)) !== undefined) return result;
+        if ((result = getProperty(instance.api, name)) !== undefined)
+          return result;
+        if ((result = getMethod(instance.api, name)) !== undefined)
+          return result;
+        if ((result = getMethod(instance.api, method)) !== undefined)
+          return result;
       }
 
       // In case the element is a native <video> element.
       // Needed for Shaka player, hls.js, dash.js where there are 2 API interfaces;
       // The video element and one specific API interface.
       if (instance.element && instance.element.play) {
-        if ((result = getProperty(instance.element, name)) !== undefined) return result;
+        if ((result = getProperty(instance.element, name)) !== undefined)
+          return result;
       }
     },
   };
