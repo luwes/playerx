@@ -1374,7 +1374,7 @@
   resolved "https://registry.yarnpkg.com/@ungap/promise-all-settled/-/promise-all-settled-1.1.2.tgz#aa58042711d6e3275dd37dc597e5d31e8c290a44"
   integrity sha512-sL/cEvJWAnClXw0wHk85/2L0G6Sj8UB0Ctc1TEMbKSsmpRosqhwj9gWgFRZSrBr2f9tiXISwNhCPmlfqUqyb9Q==
 
-"@wdio/browserstack-service@^7.7.3":
+"@wdio/browserstack-service@^7.4.6":
   version "7.7.3"
   resolved "https://registry.yarnpkg.com/@wdio/browserstack-service/-/browserstack-service-7.7.3.tgz#536d4b05d7671b84aac2b4818e6c739cffc0ed73"
   integrity sha512-lTVbAI8IRwyzr1qWErK7rc6w0EhJL8u/9RfZ2Iz/hdJYQgCAFG1RTMowTGG8hQvCAS7pUwkgm2ud9u3TznCblA==
@@ -1385,7 +1385,7 @@
     got "^11.0.2"
     webdriverio "7.7.3"
 
-"@wdio/cli@^7.7.3":
+"@wdio/cli@^7.4.6":
   version "7.7.3"
   resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-7.7.3.tgz#ba307c623d715753e55f2d24a4c7d171923808e1"
   integrity sha512-n7XvIoruXlGQGt2dl4dLm/J6he2Int7BOe3gnTxRTddjcqXZ8bv7qvYvNvfXzEg/vVzmUyMW2dQfzpNVoyx/dQ==
@@ -1436,7 +1436,7 @@
     deepmerge "^4.0.0"
     glob "^7.1.2"
 
-"@wdio/local-runner@^7.7.3":
+"@wdio/local-runner@^7.4.6":
   version "7.7.3"
   resolved "https://registry.yarnpkg.com/@wdio/local-runner/-/local-runner-7.7.3.tgz#8c3e953a45f9cedad3483f89c5c8c897a32f9e48"
   integrity sha512-TM1Xd8ioc4TpZwmRStDdk7m6IVOPAEsoyKoqffuRN2pZmrj4jswmvj6qys06ErrVCGWA4skyTYZjhMZf0+V0Zg==
@@ -1470,7 +1470,7 @@
     loglevel-plugin-prefix "^0.8.4"
     strip-ansi "^6.0.0"
 
-"@wdio/mocha-framework@^7.7.3":
+"@wdio/mocha-framework@^7.4.6":
   version "7.7.3"
   resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-7.7.3.tgz#fe71777603688dd77d1ee82df047a5458c0ac653"
   integrity sha512-0G9q3z6kuqFJxavm/pZNvO0bhRrZQuPbWf38vQGrbHEP15i8LNI1dDg1R73vb0y1jIbZDSIiuQsQQ6keGWND+w==
@@ -1520,7 +1520,7 @@
     webdriver "7.7.3"
     webdriverio "7.7.3"
 
-"@wdio/sauce-service@^7.7.3":
+"@wdio/sauce-service@^7.4.6":
   version "7.7.3"
   resolved "https://registry.yarnpkg.com/@wdio/sauce-service/-/sauce-service-7.7.3.tgz#dc0a938b7f8006d74e2e051de6d32c8e94dde8d7"
   integrity sha512-jaAk9I2HhYnIcwkZ24X4TTW6FS+QWHfWHNmP4Gjsh1YOCITbe+n7+dWze48YEVoUPKFj1+whU4ptKUiN1+pE8g==
@@ -1531,7 +1531,7 @@
     saucelabs "^5.0.3"
     webdriverio "7.7.3"
 
-"@wdio/sync@^7.7.3":
+"@wdio/sync@^7.4.6":
   version "7.7.3"
   resolved "https://registry.yarnpkg.com/@wdio/sync/-/sync-7.7.3.tgz#3c07e5609d47d84149b27e563471e15e41298678"
   integrity sha512-LsI9rvxup6mlMuRCDBrjh674bQt4Rnpzf/xa2obhn3GZL97teSwF5ZaTTeF+cs+MPylqwbHiY7iK+roaubqECw==
@@ -6079,7 +6079,7 @@ karma-rollup-preprocessor@^7.0.3:
     chokidar "^3.3.1"
     debounce "^1.2.0"
 
-karma-sauce-launcher@^4.1.5:
+karma-sauce-launcher@^4.3.6:
   version "4.3.6"
   resolved "https://registry.yarnpkg.com/karma-sauce-launcher/-/karma-sauce-launcher-4.3.6.tgz#274f999ce5a3bc76577a438839cb0dbbf2746a48"
   integrity sha512-Ej62q4mUPFktyAm8g0g8J5qhwEkXwdHrwtiV4pZjKNHNnSs+4qgDyzs3VkpOy3AmNTsTqQXUN/lpiy0tZpDJZQ==
@@ -10217,7 +10217,7 @@ webdriver@7.7.3:
     got "^11.0.2"
     lodash.merge "^4.6.1"
 
-webdriverio@7.7.3, webdriverio@^7.7.3:
+webdriverio@7.7.3, webdriverio@^7.4.6:
   version "7.7.3"
   resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-7.7.3.tgz#a2904f1dc58e230ed8d2420c61ea2712757b7065"
   integrity sha512-3m18Ax0dKHBT7lMueUNEgYDHMRVodXokmAq/yAH+SqHFUbHdPrHOFK3d/snFZe41f6LHrLLzebVE7rvI4Zr1AA==
