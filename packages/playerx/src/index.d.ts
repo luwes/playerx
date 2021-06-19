@@ -1,3 +1,4 @@
+import { VideoObject, AudioObject } from 'schema-dts';
 
 export interface Playerx extends HTMLElement {
 
@@ -139,11 +140,11 @@ export interface Playerx extends HTMLElement {
   width: string;
 
   /**
-   * A URLSearchParams instance to store serializable video metadata that
-   * can be set via an attribute. Takes the same init argument as URLSearchParams
-   * but stringified.
+   * An object that can be used to set metadata for the loaded content.
+   * @see https://schema.org/VideoObject
+   * @see https://schema.org/AudioObject
    */
-  meta: URLSearchParams;
+  meta: VideoObject | AudioObject;
 
   /**
    * Begins playback of the media.
