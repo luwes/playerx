@@ -27,7 +27,7 @@ var sauceLabsLaunchers = {
     base: 'SauceLabs',
     browserName: 'firefox',
     browserVersion: 'latest',
-    platformName: 'Windows 10',
+    platformName: 'macOS 11.00',
   },
   sl_safari: {
     base: 'SauceLabs',
