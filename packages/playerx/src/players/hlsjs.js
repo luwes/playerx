@@ -45,7 +45,6 @@ export function createPlayer(element) {
     if (Hls.isSupported()) {
       api = new Hls(element.config.hlsjs);
       api.attachMedia(video);
-      api.on(Hls.Events.ERROR, () => element.fire('error'));
       api.loadSource(src);
     }
   }

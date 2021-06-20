@@ -10,7 +10,10 @@ observe('player-x');
 
 const eventData = {
   loadsrc: (player) => player.src,
-  error: (player) => player.error.message || player.error.code,
+  error: ({ error }) => {
+    console.error(error);
+    return error && (error.message || error.code || error);
+  },
   volumechange: (player) => `${round(player.volume, 2)}`,
   durationchange: (player) => `${round(player.duration, 2)}s`,
   ratechange: (player) => `${round(player.playbackRate, 1)}`,
