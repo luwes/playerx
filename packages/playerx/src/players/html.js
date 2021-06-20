@@ -19,15 +19,14 @@ export function createPlayer(element) {
     };
   }
 
-  async function init() {
+  function init() {
     ready = publicPromise();
     video = createElement('video');
-
-    await load(getOptions());
+    load(getOptions());
     ready.resolve();
   }
 
-  async function load(opts) {
+  function load(opts) {
     const { src } = opts;
     delete opts.src;
 
@@ -87,8 +86,7 @@ export function createPlayer(element) {
 
     async setSrc() {
       ready = publicPromise();
-
-      await load(getOptions());
+      load(getOptions());
       ready.resolve();
     },
   };
