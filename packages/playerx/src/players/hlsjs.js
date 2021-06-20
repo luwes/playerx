@@ -8,7 +8,7 @@ import {
   getFileName,
 } from '../utils.js';
 
-const HLS_URL = 'https://cdn.jsdelivr.net/npm/hls.js@0.13.2/dist/hls.min.js';
+const HLS_URL = 'https://cdn.jsdelivr.net/npm/hls.js@1.0.7/dist/hls.min.js';
 const HLS_GLOBAL = 'Hls';
 
 export function createPlayer(element) {
