@@ -11,6 +11,8 @@ const tests = {
       safari: false,
     },
   },
+  // dash.js seems less accurate shows 2s into the clip instead of 3s or 4s
+  playbackRate: false,
 };
 
 testPlayer({ src, duration, tests });

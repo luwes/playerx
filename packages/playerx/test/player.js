@@ -113,7 +113,7 @@ export function testPlayer(options, cb) {
         String(Math.round(player.currentTime)),
         /[34]/,
         'is about 3s in',
-        { skip }
+        { skip: skip || !isTestEnabled('playbackRate', tests) }
       );
       player.playbackRate = 1;
     }
@@ -149,13 +149,16 @@ export const defaultBrowsers = (enabled = true) => ({
 });
 
 const defaultTests = {
+  play: false,
   basic: {
     browsers: { ...defaultBrowsers(true) },
   },
   volume: {
     browsers: { ...defaultBrowsers(true) },
   },
-  play: false,
+  playbackRate: {
+    browsers: { ...defaultBrowsers(true) },
+  }
 };
 
 function setUp(ctx) {

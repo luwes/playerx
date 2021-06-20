@@ -43,8 +43,8 @@ export function createPlayer(element) {
 
     const Dash = await loadScript(opts.dashUrl || DASH_URL, DASH_GLOBAL);
     api = Dash.MediaPlayer().create();
-    api.on('error', () => element.fire('error'));
     api.initialize(video, src, autoplay);
+    api.on('error', () => element.fire('error'));
   }
 
   function reset() {
