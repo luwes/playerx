@@ -79,6 +79,7 @@
     "babel-plugin-transform-async-to-promises": "^0.8.15",
     "codecov": "3.8.0",
     "cross-env": "^7.0.3",
+    "dotenv": "^10.0.0",
     "eslint": "^7.29.0",
     "eslint-plugin-fp": "^2.3.0",
     "eslint-plugin-import": "^2.23.4",

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const path = require('path');
 const alias = require('@rollup/plugin-alias');
 const { default: nodeResolve } = require('@rollup/plugin-node-resolve');
@@ -14,12 +15,19 @@ var coverage = String(process.env.COVERAGE) === 'true',
     /^(0|false|undefined)$/gi
   ),
   masterBranch = String(process.env.TRAVIS_BRANCH).match(/^master$/gi),
-  automate = ci && !pullRequest && masterBranch;
+  automate = (ci && !pullRequest && masterBranch) || argv.automate;
 
 var sauceLabsLaunchers = {
   sl_chrome: {
     base: 'SauceLabs',
     browserName: 'chrome',
+    browserVersion: '79',
+    platformName: 'Windows 10',
+    acceptInsecureCerts: true,
+  },
+  sl_edge: {
+    base: 'SauceLabs',
+    browserName: 'MicrosoftEdge',
     browserVersion: '79',
     platformName: 'Windows 10',
     acceptInsecureCerts: true,
@@ -34,16 +42,10 @@ var sauceLabsLaunchers = {
   sl_safari: {
     base: 'SauceLabs',
     browserName: 'safari',
-    browserVersion: '13.0',
+    browserVersion: '12.1',
     platformName: 'macOS 10.13',
   },
-  sl_edge: {
-    base: 'SauceLabs',
-    browserName: 'MicrosoftEdge',
-    browserVersion: '79',
-    platformName: 'Windows 10',
-    acceptInsecureCerts: true,
-  },
+
   // sl_ie_11: {
   //   base: 'SauceLabs',
   //   browserName: 'internet explorer',
