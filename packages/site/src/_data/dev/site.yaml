@@ -1,4 +1,5 @@
 
 url: http://dev.playerx.test
 apiUrl: http://api.playerx.test:1337
+oEmbedUrl: http://api.playerx.test:8787
 githubUrl: https://github.com/playerxo/playerx
