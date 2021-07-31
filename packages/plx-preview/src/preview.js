@@ -66,7 +66,7 @@ export const setup = () => (el) => {
     try {
       if (!IMAGE_EXTENSIONS.test(el.src)) {
 
-        let url = `${el.oembedurl}?url=${el.src}`;
+        let url = `${el.oembedurl}?url=${encodeURIComponent(el.src)}`;
         if (width) url += `&maxwidth=${width}`;
         if (height) url += `&maxheight=${height}`;
 
