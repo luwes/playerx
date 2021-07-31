@@ -4,7 +4,11 @@ export function requestJson(url) {
     req.open('GET', url);
     req.send();
     req.onload = function () {
-      resolve(req.status === 200 && JSON.parse(req.responseText));
+      if (req.status >= 200 && req.status < 400 ) {
+        resolve(JSON.parse(req.responseText));
+        return;
+      }
+      reject(new Error(req.statusText));
     };
     req.onerror = reject;
   });

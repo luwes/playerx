@@ -50,8 +50,14 @@ async function schema(el) {
     )}`;
 
     const { data } = el;
-    const oEmbedData = await requestJson(url);
-    Object.assign(data, oEmbedToSchema(oEmbedData));
+    let oEmbedData = {};
+
+    try {
+      oEmbedData = await requestJson(url);
+      Object.assign(data, oEmbedToSchema(oEmbedData));
+    } catch (error) {
+      console.error(error);
+    }
 
     if (data.duration != null && !(data.duration+'').includes('P')) {
       data.duration = secondsToISOString(data.duration);
