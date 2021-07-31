@@ -30,7 +30,7 @@ function define(name, create) {
 
   CE.mixins.push(PlayerxMixin);
 
-  const event = new CustomEvent('plx-define', { detail: { CE } });
+  const event = new CustomEvent('define', { detail: { CE } });
   window.dispatchEvent(event);
 
   // Wait one tick to define the custom element for plugins to be added.
