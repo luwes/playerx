@@ -1,6 +1,8 @@
 const path = require('path');
 const yaml = require('js-yaml');
-var compress = require('compression');
+const compress = require('compression');
+const { DateTime } = require('luxon');
+const pluginRss = require("@11ty/eleventy-plugin-rss");
 const eleventyNavigationPlugin = require('@11ty/eleventy-navigation');
 const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 
@@ -22,6 +24,7 @@ module.exports = function (eleventyConfig) {
     files: ['public/css', 'public/js', '../**/dist/*.js'],
   });
 
+  eleventyConfig.addPlugin(pluginRss);
   eleventyConfig.addPlugin(eleventyNavigationPlugin);
   eleventyConfig.addPlugin(syntaxHighlight, {
     // Change which syntax highlighters are installed
@@ -44,6 +47,15 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addLayoutAlias('default', 'layouts/base.njk');
 
   // Add some utility filters
+  eleventyConfig.addFilter("readableDate", dateObj => {
+    return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toFormat("dd LLL yyyy");
+  });
+
+  // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-date-string
+  eleventyConfig.addFilter('htmlDateString', (dateObj) => {
+    return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toFormat('yyyy-LL-dd');
+  });
+
   eleventyConfig.addFilter('squash', require('./src/utils/filters/squash.js'));
   eleventyConfig.addFilter(
     'dateDisplay',
