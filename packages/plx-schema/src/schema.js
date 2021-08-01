@@ -25,6 +25,16 @@ export const props = {
     value: false,
     set: (host, val) => val,
   },
+  src: {
+    get: (el, src) => src,
+    set: (el, src, oldSrc) => {
+      if (src !== oldSrc) {
+        el.load();
+      }
+      return src;
+    },
+    reflect: true,
+  },
   data: null
 };
 
@@ -33,12 +43,9 @@ export const props = {
 /**
  * @type {(el: PlxSchema) => void}
  */
-async function schema(el) {
+function schema(el) {
   const linkedData = getInlineJSON(el);
   el.data = { ...linkedData };
-
-  el.player.addEventListener('loadsrc', onloadsrc);
-  el.player.addEventListener('loadedsrc', onloadedsrc);
 
   function onloadsrc() {
     el.data = { ...linkedData };
@@ -80,6 +87,11 @@ async function schema(el) {
 
     renderLinkedData(el, oEmbedData);
   }
+
+  return {
+    onloadsrc,
+    onloadedsrc,
+  };
 }
 
 function getInlineJSON(host) {
@@ -130,17 +142,34 @@ function renderLinkedData(el, oEmbedData) {
  */
 const setup = () => (el) => {
   let isInit;
+  let api;
   connected();
 
   function connected() {
-    if (!isInit && el.player) {
+    if (!isInit && (el.player || el.src)) {
       isInit = true;
-      schema(el);
+      api = schema(el);
+
+      if (el.player) {
+        el.player.addEventListener('loadsrc', api.onloadsrc);
+        el.player.addEventListener('loadedsrc', api.onloadedsrc);
+      }
     }
+  }
+
+  async function load() {
+    // Wait one tick so the `el.src` property is set.
+    await Promise.resolve();
+    // Init schema if it was not yet done.
+    connected();
+
+    await api.onloadsrc();
+    await api.onloadedsrc();
   }
 
   return {
     connected,
+    load,
   };
 };
 
