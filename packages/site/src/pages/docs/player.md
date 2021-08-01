@@ -1,6 +1,6 @@
 ---
-permalink: docs/player/
-title: "Playerx - Player element"
+permalink: docs/playerx/
+title: "Playerx - Playerx element"
 eleventyNavigation:
   key: <player-x>
   parent: Elements
@@ -10,7 +10,7 @@ tags:
 layout: layouts/docs.njk
 ---
 
-# Player Element
+# Playerx Element
 
 The `<player-x>` element embeds any media player in the document and provides a **uniform API** to allow you to control those video and audio players programmatically. The `Playerx` API mimics the <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement" target="_blank">`HTMLMediaElement`</a> API as closely as possible.
 
