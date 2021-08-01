@@ -13,7 +13,7 @@
 - **Uniform player API** across player platforms. Mimics the `HTMLMediaElement` API when possible.
 - **UI framework independent**, intentionally uses no specific framework to have great interop across the board and keep the bundle size in check.
 - **Responsive** out of the box and easy attributes to maintain a specific aspect-ratio. 
-- **Extensible** with powerful add-ons like custom previews, analytics, custom skins, etc.
+- **Extensible** with powerful add-ons like [custom previews](https://dev.playerx.io/docs/preview/), [analytics](https://dev.playerx.io/docs/mux/), [SEO](https://dev.playerx.io/docs/schema/), custom skins, etc.
 
 
 ## Usage ([Codesandbox](https://codesandbox.io/s/hello-playerx-22ku4))
