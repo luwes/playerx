@@ -17,13 +17,13 @@ The `<plx-preview>` element embeds a preview image or video. It's often used wit
 <div class="md:w-4/5 relative bg-black">
   <player-x loading="user" src="https://vimeo.com/357274789" controls autoplay>
     <plx-media></plx-media>
-    <plx-preview src="https://vimeo.com/357274789" oembedurl="{{ site.oEmbedUrl }}/oembed"></plx-preview>
+    <plx-preview oembedurl="{{ site.oEmbedUrl }}/oembed"></plx-preview>
   </player-x>
 </div>
 
 ```html
 <player-x loading="user" src="https://vimeo.com/357274789" controls autoplay>
   <plx-media></plx-media>
-  <plx-preview src="https://vimeo.com/357274789"></plx-preview>
+  <plx-preview></plx-preview>
 </player-x>
 ```
