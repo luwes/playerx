@@ -17,7 +17,7 @@ The `<plx-preview>` element embeds a preview image or video. It's often used wit
 <div class="md:w-4/5 relative bg-black">
   <player-x loading="user" src="https://vimeo.com/357274789" controls autoplay>
     <plx-media></plx-media>
-    <plx-preview oembedurl="{{ site.oEmbedUrl }}/oembed"></plx-preview>
+    <plx-preview onclick="this.hidden = true" oembedurl="{{ site.oEmbedUrl }}/oembed"></plx-preview>
   </player-x>
 </div>
 

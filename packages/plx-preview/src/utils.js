@@ -1,3 +1,27 @@
+export function findAncestor(el, sel) {
+  while ((el = el.parentElement) && !el.matches(sel));
+  return el;
+}
+
+export function createElement(tag, attrs = {}, ...children) {
+  const el = document.createElement(tag);
+  Object.keys(attrs).forEach(name =>
+    attrs[name] != null && el.setAttribute(name, attrs[name]));
+  children.forEach(child => el.appendChild(child));
+  return el;
+}
+
+/**
+ * Remove a child node from its parent if attached. This is a workaround for
+ * IE11 which doesn't support `Element.prototype.remove()`. Using this function
+ * is smaller than including a dedicated polyfill.
+ * @param {Node} node The node to remove
+ */
+export function removeNode(node) {
+  let parentNode = node.parentNode;
+  if (parentNode) parentNode.removeChild(node);
+}
+
 /**
  * Get the thumbnail dimensions to use for a given player size.
  *
@@ -28,4 +52,16 @@ export function getThumbnailDimensions({ width, height }) {
     width: roundedWidth,
     height: roundedHeight,
   };
+}
+
+export function requestJson(url) {
+  return new Promise((resolve, reject) => {
+    const req = new XMLHttpRequest();
+    req.open('GET', url);
+    req.send();
+    req.onload = function() {
+      resolve(JSON.parse(req.responseText));
+    };
+    req.onerror = reject;
+  });
 }

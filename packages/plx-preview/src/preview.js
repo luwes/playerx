@@ -1,12 +1,18 @@
-import { define, css } from 'playerx';
-import { createElement } from './utils/dom.js';
-import { getThumbnailDimensions } from './utils/image.js';
-import { requestJson } from './utils/request.js';
+import { define, mixins } from 'swiss/element';
+import { StylesMixin, css } from 'swiss/styles';
+import {
+  getThumbnailDimensions,
+  requestJson,
+  findAncestor,
+  createElement,
+} from './utils.js';
+
+mixins.push(StylesMixin);
 
 const IMAGE_EXTENSIONS = /\.(jpe?g|gif|a?png|svg|webp)($|\?)/i;
 
 const styles = (selector) => css`
-  player-x plx-preview {
+  player-x ${selector} {
     display: block;
     position: absolute;
     top: 0;
@@ -30,30 +36,40 @@ const styles = (selector) => css`
   }
 `;
 
-export const props = {
-  reflect: {
-    oembedurl: 'https://api.playerx.io/oembed',
-    loading: undefined,
-    title: undefined
+export const props = (el) => ({
+  get player() {
+    if (el.hasAttribute('player')) {
+      return document.querySelector(`#${el.hasAttribute('player')}`);
+    }
+    return findAncestor(el, 'player-x');
   },
-  src: {
-    get: (el, src) => src,
-    set: (el, src, oldSrc) => {
-      if (src !== oldSrc) {
-        el.load();
-      }
-      return src;
-    },
-    reflect: true,
+  get oembedurl() {
+    return el.getAttribute('oembedurl') || 'https://api.playerx.io/oembed';
   },
-};
+  set oembedurl(url) {
+    el.setAttribute('oembedurl', url);
+  },
+  get loading() {
+    return el.getAttribute('loading');
+  },
+  set loading(loading) {
+    el.setAttribute('loading', loading);
+  },
+  get title() {
+    return el.getAttribute('title');
+  },
+  set title(title) {
+    el.setAttribute('title', title);
+  },
+  get src() {
+    return el.getAttribute('src');
+  },
+  set src(src) {
+    el.setAttribute('src', src);
+  },
+});
 
 function preview(el) {
-  el.addEventListener('click', onclick);
-
-  function onclick() {
-    el.hidden = true;
-  }
 
   async function load() {
     let { width, height } = el.getBoundingClientRect();
@@ -72,7 +88,6 @@ function preview(el) {
 
     try {
       if (!IMAGE_EXTENSIONS.test(src)) {
-
         let url = `${el.oembedurl}?url=${encodeURIComponent(src)}`;
         if (width) url += `&maxwidth=${width}`;
         if (height) url += `&maxheight=${height}`;
@@ -81,7 +96,6 @@ function preview(el) {
       }
 
       await addThumbnail(data);
-
     } catch (error) {
       //...
     }
@@ -91,7 +105,7 @@ function preview(el) {
     let pic = el.querySelector('picture,img');
     if (pic) return;
 
-    const sources = (thumbnails || []).map(t => {
+    const sources = (thumbnails || []).map((t) => {
       return createElement('source', {
         srcset: t.url,
         type: t.type,
@@ -133,18 +147,30 @@ const setup = () => (el) => {
   let api;
 
   async function connected() {
-    if (!isInit && (el.player || el.src)) {
+    if (shouldInit()) {
       isInit = true;
       api = preview(el);
       await api.load();
     }
   }
 
+  function shouldInit() {
+    return !isInit && ((el.player && el.player.src) || el.src);
+  }
+
+  function attributeChanged(name) {
+    if (name === 'src') {
+      load();
+    }
+  }
+
   async function load() {
-    // Wait one tick so the `el.src` property is set.
-    await Promise.resolve();
     // Init preview if it was not yet done.
-    await connected();
+    if (shouldInit()) {
+      await connected();
+      return;
+    }
+    await api.load();
   }
 
   function unload() {
@@ -152,7 +178,9 @@ const setup = () => (el) => {
   }
 
   return {
+    ...props(el),
     connected,
+    attributeChanged,
     load,
     unload,
   };
