@@ -10,20 +10,20 @@ dist/
 module/
 umd/
 esm/
-/packages/site/public/
-/packages/site/public/index.html
-/packages/site/public/brightcove/
-/packages/site/public/dailymotion/
-/packages/site/public/facebook/
-/packages/site/public/jw-player/
-/packages/site/public/soundcloud/
-/packages/site/public/streamable/
-/packages/site/public/twitch/
-/packages/site/public/vidyard/
-/packages/site/public/vimeo/
-/packages/site/public/wistia/
-/packages/site/public/youtube/
-/packages/bench/.env
+/site/public/
+/site/public/index.html
+/site/public/brightcove/
+/site/public/dailymotion/
+/site/public/facebook/
+/site/public/jw-player/
+/site/public/soundcloud/
+/site/public/streamable/
+/site/public/twitch/
+/site/public/vidyard/
+/site/public/vimeo/
+/site/public/wistia/
+/site/public/youtube/
+/bench/.env
 
 # Local Netlify folder
 .netlify

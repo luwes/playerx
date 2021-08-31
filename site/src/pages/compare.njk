@@ -1,0 +1,93 @@
+---
+permalink: compare/
+title: "Playerx - Compare platforms"
+menu: Compare
+eleventyNavigation:
+  key: Compare
+  order: 3
+tags:
+  - main
+---
+
+{% extends "layouts/base.njk" %}
+
+{% block head %}
+  {{ super() }}
+
+  <link rel="stylesheet" href="https://unpkg.com/microtip@0.2.2/microtip.css">
+{% endblock %}
+
+{% block content %}
+<main class="relative overflow-hidden flex-grow flex flex-col ">
+
+  <div class="flex flex-col flex-grow">
+
+    <div class="compare-grid md:grid flex-grow border-t" style="--cols: {{ compare.players | length }}">
+      <div class="grid-cell">
+        <h3 class="text-2xl">Compare platforms</h3>
+        <p class="text-xs ml-0.5">Based on this <a class="underline" href="https://github.com/playerxo/playerx/tree/master/bench" target="_blank">bench</a> measured with MUX data.</p>
+      </div>
+      {%- for player in players | sort(true, false, 'viewer_experience_score') -%}
+        {% if compare.players[player.key] %}
+          <div class="grid-cell lg:border-l flex items-start">
+            <img class="w-4 h-4 mr-2 mt-2" src="{{ player.favicon }}" alt="{{ player.name }} favicon">
+            <div>
+              <h3 class="text-xl leading-tight mt-1">
+                {% if player.compare_name %}
+                  {{ player.compare_name }}
+                {% else %}
+                  {{ player.name }}
+                {% endif %}
+              </h3>
+              <a class="text-xs block text-blue-500 underline hover:text-blue-700" href="{{ player.url }}">{{ player.url }}</a>
+            </div>
+          </div>
+        {% endif %}
+      {%- endfor -%}
+
+      {%- for row in compare.rows -%}
+        <div class="grid-cell">
+          <h4 class="">
+            <span>{{ row.title }}</span>
+            <button class="leading-snug align-middle" aria-label="{{ row.description }}" data-microtip-position="bottom" data-microtip-size="medium" role="tooltip">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 stroke-current text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </button>
+          </h4>
+        </div>
+
+        {%- for player in players | sort(true, false, 'viewer_experience_score') -%}
+          {% if compare.players[player.key] %}
+            <div class="grid-cell lg:border-l flex flex-col items-center justify-center">
+              {% if row.field == 'viewer_experience_score' %}
+                <span class="text-2xl leading-none tracking-tight font-bold text-gray-900">
+                  {{ (player.viewer_experience_score * 100) | round }}
+                </span>
+              {% elif row.field == 'video_startup_time' %}
+                <span class="text-sm leading-none tracking-tight text-gray-900">
+                  {{ (player.video_startup_time / 1000) | round(2) }}s
+                </span>
+              {% elif row.field == 'player_startup_time' %}
+                <span class="text-sm leading-none tracking-tight text-gray-900">
+                  {{ (player.player_startup_time / 1000) | round(2) }}s
+                </span>
+              {% elif row.field == 'smoothness_score' %}
+                <span class="text-sm leading-none tracking-tight text-gray-900">
+                  {{ (player.smoothness_score * 100) | round }}
+                </span>
+              {% elif row.field == 'rebuffer_percentage' %}
+                <span class="text-sm leading-none tracking-tight text-gray-900">
+                  {{ (player.rebuffer_percentage * 100) | round }}%
+                </span>
+              {% endif %}
+            </div>
+          {% endif %}
+        {%- endfor -%}
+      {%- endfor -%}
+
+    </div>
+
+  </div>
+</main>
+{% endblock %}

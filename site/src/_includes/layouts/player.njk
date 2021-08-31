@@ -1,0 +1,21 @@
+{% extends "layouts/root.njk" %}
+
+{% block head %}
+  <style>body{margin:0;}</style>
+  <script src="{% getCdnUrl 'polyfills' %}"></script>
+  <script defer src="{% getCdnUrl 'playerx' %}"></script>
+  <script defer src="{% getCdnUrl 'playerx/all' %}"></script>
+{% endblock %}
+
+{% block main %}
+<player-x src="{{ player.src }}" controls muted config="{{ playerconfig }}">
+  <plx-script loading="player" src="{% getCdnUrl 'mux' %}"></plx-script>
+  <plx-mux data-env-key="ilc02s65tkrc2mk69b7q2qdkf" debug></plx-mux>
+</player-x>
+<script>
+  var urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('muxenv')) {
+    document.querySelector('plx-mux').dataset.envKey = urlParams.get('muxenv');
+  }
+</script>
+{% endblock %}

@@ -157,18 +157,18 @@ module.exports = function (config) {
       'https://unpkg.com/@webcomponents/custom-elements@1.4.2/custom-elements.min.js',
       'https://unpkg.com/@webcomponents/webcomponentsjs@2.4.4/custom-elements-es5-adapter.js',
       {
-        pattern: 'packages/site/src/_data/players.yaml',
+        pattern: 'site/src/_data/players.yaml',
         included: false,
         served: true,
       },
       {
-        pattern: 'packages/playerx/test/test.js',
+        pattern: 'test/test.js',
         watched: false,
       },
     ],
 
     preprocessors: {
-      'packages/playerx*/**/test.js': ['rollup'],
+      'test/test.js': ['rollup'],
     },
 
     rollupPreprocessor: {
@@ -183,7 +183,7 @@ module.exports = function (config) {
         alias({
           entries: {
             tape: 'tape-browser',
-            playerx: 'packages/playerx/src/index.js',
+            playerx: 'src/playerx/index.js',
           },
         }),
         nodeResolve(),
@@ -194,9 +194,9 @@ module.exports = function (config) {
           compact: false,
         }),
         istanbul({
-          include: 'packages/**/src/**/*.js',
+          include: 'src/**/*.js',
           exclude: [
-            'packages/playerx/src/constants/events.js',
+            'src/playerx/constants/events.js',
           ],
         }),
       ].filter(Boolean),
