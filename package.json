@@ -118,6 +118,6 @@
   },
   "dependencies": {
     "mux-embed": "4.1.1",
-    "swiss": "2.2.0"
+    "swiss": "2.3.3"
   }
 }

@@ -20,10 +20,14 @@ export const Element = (def, Base) => {
       props: {
         ...props,
         ...def.props,
+        // handle shorthand for reflected properties
+        ...(def.props && swiss.reflect(def.props.reflect)),
       },
     },
     Base
   );
+
+  def.props && delete def.props.reflect;
 
   CE.mixins.push(StylesMixin);
   return CE;

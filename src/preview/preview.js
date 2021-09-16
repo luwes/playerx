@@ -1,5 +1,5 @@
-import { define, mixins } from 'swiss/element';
-import { StylesMixin, css } from 'swiss/styles';
+import { define, mixins } from 'swiss/element.js';
+import { StylesMixin, css } from 'swiss/styles.js';
 import {
   getThumbnailDimensions,
   requestJson,
@@ -9,7 +9,7 @@ import {
 
 mixins.push(StylesMixin);
 
-const IMAGE_EXTENSIONS = /\.(jpe?g|gif|a?png|svg|webp)($|\?)/i;
+const IMAGE_EXTENSIONS = /\.(jpe?g|gif|a?png|svg|webp|avif)($|\?)/i;
 
 const styles = (selector) => css`
   player-x ${selector} {
@@ -70,7 +70,6 @@ export const props = (el) => ({
 });
 
 function preview(el) {
-
   async function load() {
     let { width, height } = el.getBoundingClientRect();
     if (!width) width = el.parentNode && el.parentNode.clientWidth;
@@ -87,7 +86,7 @@ function preview(el) {
     };
 
     try {
-      if (!IMAGE_EXTENSIONS.test(src)) {
+      if (el.oembedurl.length && !IMAGE_EXTENSIONS.test(src)) {
         let url = `${el.oembedurl}?url=${encodeURIComponent(src)}`;
         if (width) url += `&maxwidth=${width}`;
         if (height) url += `&maxheight=${height}`;
@@ -145,6 +144,7 @@ function preview(el) {
 const setup = () => (el) => {
   let isInit;
   let api;
+  let loadPromise;
 
   async function connected() {
     if (shouldInit()) {
@@ -165,12 +165,18 @@ const setup = () => (el) => {
   }
 
   async function load() {
+    if (loadPromise) {
+      return loadPromise;
+    }
+
     // Init preview if it was not yet done.
     if (shouldInit()) {
-      await connected();
+      await (loadPromise = connected());
       return;
     }
-    await api.load();
+    await (loadPromise = api.load());
+
+    loadPromise = null;
   }
 
   function unload() {
@@ -178,7 +184,6 @@ const setup = () => (el) => {
   }
 
   return {
-    ...props(el),
     connected,
     attributeChanged,
     load,

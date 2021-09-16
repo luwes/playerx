@@ -9452,7 +9452,12 @@ svgo@^2.3.0:
     csso "^4.2.0"
     stable "^0.1.8"
 
-swiss@2.2.0, swiss@^2.1.0:
+swiss@2.3.3:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/swiss/-/swiss-2.3.3.tgz#b30541a79db949bfdb140b91b54f70f473e2848d"
+  integrity sha512-JGnOAq2jxWrs1xYtg6pRfUU6q/xB3jXnKEMjDnvHg24I+jHLzx60Ri8rR8+cJpsEjE8eaT+9KYkH+EACVYma+Q==
+
+swiss@^2.1.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/swiss/-/swiss-2.2.0.tgz#2735a06560f7fda186e4dcc1c6091487ad7bb9ad"
   integrity sha512-hO8Lzp128dz10HrDf2ZOs0SWwGTgyk3ohy89vyXkTU1yJpZHz+hxAbmjNdlMgmDYFZ6WsibRT8O0B73IYyrm/g==

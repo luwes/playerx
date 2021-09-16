@@ -162,13 +162,13 @@ module.exports = function (config) {
         served: true,
       },
       {
-        pattern: 'test/test.js',
+        pattern: 'test/*test.js',
         watched: false,
       },
     ],
 
     preprocessors: {
-      'test/test.js': ['rollup'],
+      'test/*test.js': ['rollup'],
     },
 
     rollupPreprocessor: {
