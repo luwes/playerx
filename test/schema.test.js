@@ -1,5 +1,5 @@
 import test from 'tape';
-import { PlxSchema } from '../dist/schema.js';
+import { PlxSchema } from '../src/schema/schema.js';
 
 // let container;
 // const src = 'https://vimeo.com/357274789';

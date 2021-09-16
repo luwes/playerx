@@ -1,6 +1,6 @@
 import test from 'tape';
 // import { Playerx } from '../dist/playerx.js';
-import { PlxPreview, styles } from '../dist/preview.js';
+import { PlxPreview, styles } from '../src/preview/preview.js';
 
 // let container;
 // const src = 'https://vimeo.com/357274789';
