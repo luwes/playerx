@@ -1,22 +1,40 @@
-import { define } from './element.js';
-import { loadScript } from './utils.js';
+import { defineCustomElement } from './element.js';
+import { loadScript, findAncestor } from './utils.js';
 
-const props = {
-  reflect: {
-    loading: undefined,
-    src: undefined,
-  },
-};
+export class PlxScript extends HTMLElement {
+  static get observedAttributes() {
+    return ['loading', 'src'];
+  }
 
-const setup = () => (el) => {
-  let didConnect;
-  connected();
+  get player() {
+    if (this.hasAttribute('player')) {
+      return document.querySelector(`#${this.getAttribute('player')}`);
+    }
+    return findAncestor(this, 'player-x');
+  }
 
-  function connected() {
-    const { player } = el;
-    if (!player || didConnect) return;
+  get loading() {
+    return this.getAttribute('loading');
+  }
 
-    didConnect = true;
+  set loading(loading) {
+    this.setAttribute('loading', loading);
+  }
+
+  get src() {
+    return this.getAttribute('src');
+  }
+
+  set src(src) {
+    this.setAttribute('src', src);
+  }
+
+  connectedCallback() {
+    const element = this;
+    const { player } = this;
+    if (!player || this._didConnect) return;
+
+    this._didConnect = true;
 
     if (customElements.get(player.localName)) {
       onDefined();
@@ -25,24 +43,18 @@ const setup = () => (el) => {
     }
 
     function onDefined() {
-      const { load } = player;
+      const proto = Object.getPrototypeOf(player);
+      const { load } = proto;
 
       // el.loading == player
-      Object.assign(player, {
+      Object.assign(proto, {
         async load() {
-          await loadScript(el.src);
-          return load();
+          await loadScript(element.src);
+          return load.call(this);
         },
       });
     }
   }
+}
 
-  return {
-    connected,
-  };
-};
-
-export const PlxScript = define('plx-script', {
-  props,
-  setup,
-});
+defineCustomElement('plx-script', PlxScript);

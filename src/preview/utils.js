@@ -1,3 +1,27 @@
+export const css = function (strings, ...values) {
+  let str = '';
+  strings.forEach((string, i) => {
+    str += string + (values[i] || '');
+  });
+  return str;
+};
+
+export function getStyle(target = document.head) {
+  let style = target.querySelector('style');
+  if (!style) {
+    style = target.insertBefore(createElement('style'), target.firstChild);
+    style.innerHTML = ' ';
+  }
+  return style;
+}
+
+export function defineCustomElement(name, element) {
+  if (!window.customElements.get(name)) {
+    window.customElements.define(name, element);
+    window[element.name] = element;
+  }
+}
+
 export function findAncestor(el, sel) {
   while ((el = el.parentElement) && !el.matches(sel));
   return el;

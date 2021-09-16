@@ -1,108 +1,104 @@
-import { getCurrentPlayerConfig } from './playerx.js';
+import { getCurrentPlayerConfigKey } from './playerx.js';
+import { options } from './options.js';
+import { reflect } from './element.js';
 import { createElement } from './utils.js';
 
-export const LoadingMixin = (CE) => {
-  CE.defineProp('loading', {
-    get: (el, val) => val,
-    set: (el, val) => val,
-    reflect: true,
-  });
-
-  return (element) => {
-    let { load } = element;
-    let observer;
-    let loadCalled;
-
-    element.addEventListener('click', onclick);
-
-    function onclick(e) {
-      // If this is a click in the media ignore it.
-      const media = element.querySelector('plx-media');
-      if (media && media.contains(e.target)) {
-        return;
-      }
-
-      if (element.loading) {
-        if (element.loading === 'user') {
-          element.load();
-        }
-      } else {
-        if (element.paused) {
-          element.play();
-        } else {
-          element.pause();
-        }
-      }
-    }
-
-    function newLoad() {
-      preconnect();
-
-      if (observer) {
-        observer.unobserve(element);
-      }
-
-      if (element.loading === 'user') {
-        loadCalled = false;
-        element.unload();
-        element.load = lazyLoad;
-        return;
-      }
-
-      if (element.loading === 'lazy') {
-        element.unload();
-        observer = initIntersectionObserver();
-        return;
-      }
-
-      return load();
-    }
-
-    async function lazyLoad() {
-      loadCalled = true;
-      try {
-        element.loading = null;
-        await load();
-        element.load = newLoad;
-      } catch (error) {
-        //...
-      }
-    }
-
-    function preconnect() {
-      const playerConfig = getCurrentPlayerConfig(element.src);
-      if (playerConfig.preconnect) {
-        playerConfig.preconnect.forEach((href) => {
-          document.head.appendChild(createElement('link', {
-            href,
-            rel: 'preconnect',
-            crossorigin: '',
-          }));
-        });
-      }
-    }
-
-    function initIntersectionObserver() {
-      if (
-        'IntersectionObserver' in window &&
-        'IntersectionObserverEntry' in window
-      ) {
-        const intersectionObserver = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting && !loadCalled) {
-              intersectionObserver.unobserve(element);
-              lazyLoad();
-            }
-          });
-        });
-
-        intersectionObserver.observe(element);
-        return intersectionObserver;
-      }
-    }
-
-    return {
-      load: newLoad,
-    };
+export const LoadingMixin = (CE) => class extends CE {
+  static props = {
+    ...CE.props,
+    ...reflect({
+      loading: undefined
+    })
   };
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.addEventListener('click', onclick);
+  }
+
+  load() {
+    preconnect(this);
+
+    if (this._observer) {
+      this._observer.unobserve(this);
+    }
+
+    if (this.loading === 'user') {
+      this._loadCalled = false;
+      this.unload();
+      return;
+    }
+
+    if (this.loading === 'lazy') {
+      this.unload();
+      this._observer = initIntersectionObserver(this);
+      return;
+    }
+
+    return super.load();
+  }
+
+  async _lazyLoad() {
+    this._loadCalled = true;
+    try {
+      this.loading = null;
+      await super.load();
+    } catch (error) {
+      //...
+    }
+  }
 };
+
+function onclick(e) {
+  const element = e.currentTarget;
+  // If this is a click in the media ignore it.
+  const media = element.querySelector('plx-media');
+  if (media && media.contains(e.target)) {
+    return;
+  }
+
+  if (element.loading) {
+    if (element.loading === 'user') {
+      element._lazyLoad();
+    }
+  } else {
+    if (element.paused) {
+      element.play();
+    } else {
+      element.pause();
+    }
+  }
+}
+
+function initIntersectionObserver(element) {
+  if (
+    'IntersectionObserver' in window &&
+    'IntersectionObserverEntry' in window
+  ) {
+    const intersectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !element._loadCalled) {
+          intersectionObserver.unobserve(element);
+          element._lazyLoad();
+        }
+      });
+    });
+
+    intersectionObserver.observe(element);
+    return intersectionObserver;
+  }
+}
+
+function preconnect(element) {
+  const playerConfigKey = getCurrentPlayerConfigKey(element.src);
+  const playerConfig = options.players[playerConfigKey];
+  if (playerConfig.preconnect) {
+    playerConfig.preconnect.forEach((href) => {
+      document.head.appendChild(createElement('link', {
+        href,
+        rel: 'preconnect',
+        crossorigin: '',
+      }));
+    });
+  }
+}

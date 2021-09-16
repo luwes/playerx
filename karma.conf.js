@@ -153,22 +153,19 @@ module.exports = function (config) {
     frameworks: ['tap'],
 
     files: [
-      'https://polyfill.io/v3/polyfill.min.js?features=Array.from%2CURLSearchParams%2CCustomEvent%2Cfetch%2CPromise',
-      'https://unpkg.com/@webcomponents/custom-elements@1.4.2/custom-elements.min.js',
-      'https://unpkg.com/@webcomponents/webcomponentsjs@2.4.4/custom-elements-es5-adapter.js',
       {
         pattern: 'site/src/_data/players.yaml',
         included: false,
         served: true,
       },
       {
-        pattern: 'test/*test.js',
+        pattern: 'test/test.js',
         watched: false,
       },
     ],
 
     preprocessors: {
-      'test/*test.js': ['rollup'],
+      'test/test.js': ['rollup'],
     },
 
     rollupPreprocessor: {

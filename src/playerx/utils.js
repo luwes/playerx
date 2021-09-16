@@ -1,4 +1,9 @@
 
+export function getInlineJSON(host) {
+  const script = host.querySelectorAll(`script[type$="json"]`)[0];
+  return (script && JSON.parse(script.textContent)) || {};
+}
+
 export function getStyle(target = document.head) {
   let style = target.querySelector('style');
   if (!style) {

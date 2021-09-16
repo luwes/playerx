@@ -1,6 +1,5 @@
 import test from 'tape';
 import { Playerx } from '../src/playerx/index.js';
-import { coreMethodNames } from '../src/playerx/playerx.js';
 
 const src = 'https://vimeo.com/357274789';
 
@@ -25,7 +24,7 @@ test('methods are functions and return promises', (t) => {
     );
   };
 
-  coreMethodNames.forEach(testMethod);
+  ['play', 'pause', 'get'].forEach(testMethod);
 
   t.end();
 });

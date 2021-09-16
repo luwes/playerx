@@ -1,18 +1,17 @@
-import { define, mixins } from 'swiss/element.js';
-import { StylesMixin, css } from 'swiss/styles.js';
 import {
   getThumbnailDimensions,
   requestJson,
   findAncestor,
   createElement,
+  defineCustomElement,
+  getStyle,
+  css,
 } from './utils.js';
-
-mixins.push(StylesMixin);
 
 const IMAGE_EXTENSIONS = /\.(jpe?g|gif|a?png|svg|webp|avif)($|\?)/i;
 
-const styles = (selector) => css`
-  player-x ${selector} {
+export const styles = css`
+  :host-context(player-x) {
     display: block;
     position: absolute;
     top: 0;
@@ -21,60 +20,75 @@ const styles = (selector) => css`
     height: 100%;
   }
 
-  ${selector} {
-    display: block;
-  }
-
-  ${selector} img {
+  :host img {
     position: relative;
     width: 100%;
     height: auto;
   }
 
-  ${selector}[hidden] {
+  :host[hidden] {
     pointer-events: none;
   }
 `;
 
-export const props = (el) => ({
-  get player() {
-    if (el.hasAttribute('player')) {
-      return document.querySelector(`#${el.hasAttribute('player')}`);
+export class PlxPreview extends HTMLElement {
+  static get observedAttributes() {
+    return ['loading', 'title', 'src', 'oembedurl'];
+  }
+
+  constructor() {
+    super();
+
+    if (!this.shadowRoot) {
+      const shadow = this.attachShadow({ mode: 'open' });
+      getStyle(shadow).firstChild.data += styles;
     }
-    return findAncestor(el, 'player-x');
-  },
+  }
+
+  get player() {
+    if (this.hasAttribute('player')) {
+      return document.querySelector(`#${this.getAttribute('player')}`);
+    }
+    return findAncestor(this, 'player-x');
+  }
+
   get oembedurl() {
-    return el.getAttribute('oembedurl') || 'https://api.playerx.io/oembed';
-  },
+    return this.getAttribute('oembedurl') || 'https://api.playerx.io/oembed';
+  }
+
   set oembedurl(url) {
-    el.setAttribute('oembedurl', url);
-  },
+    this.setAttribute('oembedurl', url);
+  }
+
   get loading() {
-    return el.getAttribute('loading');
-  },
+    return this.getAttribute('loading');
+  }
+
   set loading(loading) {
-    el.setAttribute('loading', loading);
-  },
+    this.setAttribute('loading', loading);
+  }
+
   get title() {
-    return el.getAttribute('title');
-  },
+    return this.getAttribute('title');
+  }
+
   set title(title) {
-    el.setAttribute('title', title);
-  },
+    this.setAttribute('title', title);
+  }
+
   get src() {
-    return el.getAttribute('src');
-  },
+    return this.getAttribute('src');
+  }
+
   set src(src) {
-    el.setAttribute('src', src);
-  },
-});
+    this.setAttribute('src', src);
+  }
 
-function preview(el) {
-  async function load() {
-    let { width, height } = el.getBoundingClientRect();
-    if (!width) width = el.parentNode && el.parentNode.clientWidth;
+  async load() {
+    let { width, height } = this.getBoundingClientRect();
+    if (!width) width = this.parentNode && this.parentNode.clientWidth;
 
-    const src = el.src || el.player.src;
+    const src = this.src || this.player.src;
     const devicePixelRatio = window.devicePixelRatio || 1;
     width *= devicePixelRatio;
     height *= devicePixelRatio;
@@ -82,117 +96,69 @@ function preview(el) {
 
     let data = {
       thumbnail_url: src,
-      title: el.title,
+      title: this.title,
+      loading: this.loading,
     };
 
     try {
-      if (el.oembedurl.length && !IMAGE_EXTENSIONS.test(src)) {
-        let url = `${el.oembedurl}?url=${encodeURIComponent(src)}`;
+      if (this.oembedurl.length && !IMAGE_EXTENSIONS.test(src)) {
+        let url = `${this.oembedurl}?url=${encodeURIComponent(src)}`;
         if (width) url += `&maxwidth=${width}`;
         if (height) url += `&maxheight=${height}`;
 
         Object.assign(data, await requestJson(url));
       }
 
-      await addThumbnail(data);
+      await addThumbnail(this.shadowRoot, data);
     } catch (error) {
-      //...
+      console.error(error);
     }
   }
 
-  function addThumbnail({ thumbnail_url, thumbnails, title }) {
-    let pic = el.querySelector('picture,img');
-    if (pic) return;
-
-    const sources = (thumbnails || []).map((t) => {
-      return createElement('source', {
-        srcset: t.url,
-        type: t.type,
-      });
-    });
-
-    let img = createElement('img', {
-      loading: el.loading,
-      src: thumbnail_url,
-      alt: title,
-      'aria-label': title,
-    });
-    sources.push(img);
-
-    pic = createElement('picture', {}, ...sources);
-    el.insertBefore(pic, el.firstChild);
-
-    return new Promise((resolve, reject) => {
-      img.addEventListener('load', resolve);
-      img.addEventListener('error', reject);
-    });
-  }
-
-  function unload() {
-    let pic = el.querySelector('picture,img');
+  unload() {
+    let pic = this.shadowRoot.querySelector('picture,img');
     if (pic) {
-      el.removeChild(pic);
+      this.shadowRoot.removeChild(pic);
     }
   }
 
-  return {
-    load,
-    unload,
-  };
+  connectedCallback() {
+    this.load();
+  }
+
+  attributeChangedCallback(name) {
+    if (name === 'src') {
+      this.load();
+    }
+  }
 }
 
-const setup = () => (el) => {
-  let isInit;
-  let api;
-  let loadPromise;
+defineCustomElement('plx-preview', PlxPreview);
 
-  async function connected() {
-    if (shouldInit()) {
-      isInit = true;
-      api = preview(el);
-      await api.load();
-    }
-  }
+function addThumbnail(el, { thumbnail_url, thumbnails, title, loading }) {
+  let pic = el.querySelector('picture,img');
+  if (pic) return;
 
-  function shouldInit() {
-    return !isInit && ((el.player && el.player.src) || el.src);
-  }
+  const sources = (thumbnails || []).map((t) => {
+    return createElement('source', {
+      srcset: t.url,
+      type: t.type,
+    });
+  });
 
-  function attributeChanged(name) {
-    if (name === 'src') {
-      load();
-    }
-  }
+  let img = createElement('img', {
+    loading: loading,
+    src: thumbnail_url,
+    alt: title,
+    'aria-label': title,
+  });
+  sources.push(img);
 
-  async function load() {
-    if (loadPromise) {
-      return loadPromise;
-    }
+  pic = createElement('picture', {}, ...sources);
+  el.appendChild(pic);
 
-    // Init preview if it was not yet done.
-    if (shouldInit()) {
-      await (loadPromise = connected());
-      return;
-    }
-    await (loadPromise = api.load());
-
-    loadPromise = null;
-  }
-
-  function unload() {
-    api.unload();
-  }
-
-  return {
-    connected,
-    attributeChanged,
-    load,
-    unload,
-  };
-};
-
-export const PlxPreview = define('plx-preview', {
-  styles,
-  props,
-  setup,
-});
+  return new Promise((resolve, reject) => {
+    img.addEventListener('load', resolve);
+    img.addEventListener('error', reject);
+  });
+}

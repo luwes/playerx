@@ -1,7 +1,11 @@
 // https://schema.org/VideoObject
 // https://developers.google.com/search/docs/data-types/video
-import { define } from 'playerx';
-import { requestJson, secondsToISOString } from './utils.js';
+import {
+  requestJson,
+  secondsToISOString,
+  defineCustomElement,
+  findAncestor,
+} from './utils.js';
 
 // https://schema.org -> oEmbed
 const required = {
@@ -17,46 +21,68 @@ const defaultTranslation = {
   embedUrl: ['html', '<iframe[^>]+src="([^"]+)'],
 };
 
-export const props = {
-  reflect: {
-    oembedurl: 'https://api.playerx.io/oembed',
-  },
-  seo: {
-    value: false,
-    set: (host, val) => val,
-  },
-  src: {
-    get: (el, src) => src,
-    set: (el, src, oldSrc) => {
-      if (src !== oldSrc) {
-        el.load();
-      }
-      return src;
-    },
-    reflect: true,
-  },
-  data: null,
-};
-
-/** @typedef { import('./index').PlxSchema } PlxSchema */
-
-/**
- * @type {(el: PlxSchema) => void}
- */
-function schema(el) {
-  const linkedData = getInlineJSON(el);
-  el.data = { ...linkedData };
-
-  function onloadsrc() {
-    el.data = { ...linkedData };
+export class PlxSchema extends HTMLElement {
+  static get observedAttributes() {
+    return ['seo', 'src', 'oembedurl'];
   }
 
-  async function onloadedsrc() {
-    let url = `${el.oembedurl}?url=${encodeURIComponent(
-      el.src || el.player.src
-    )}`;
+  constructor() {
+    super();
 
-    const { data } = el;
+    this._linkedData = getInlineJSON(this);
+    this.data = { ...this._linkedData };
+  }
+
+  get player() {
+    if (this.hasAttribute('player')) {
+      return document.querySelector(`#${this.getAttribute('player')}`);
+    }
+    return findAncestor(this, 'player-x');
+  }
+
+  get oembedurl() {
+    return this.getAttribute('oembedurl') || 'https://api.playerx.io/oembed';
+  }
+
+  set oembedurl(url) {
+    this.setAttribute('oembedurl', url);
+  }
+
+  get seo() {
+    return this.getAttribute('seo') != null;
+  }
+
+  set seo(value) {
+    this.setAttribute('seo', value);
+  }
+
+  get src() {
+    return this.getAttribute('src');
+  }
+
+  set src(value) {
+    this.setAttribute('src', value);
+  }
+
+  connectedCallback() {
+    this.load();
+  }
+
+  attributeChangedCallback(name) {
+    if (name === 'src') {
+      this.load();
+    }
+  }
+
+  async load() {
+    this.data = { ...this._linkedData };
+
+    const src = this.src || this.player.src;
+    if (!src) return;
+
+    let url = `${this.oembedurl}?url=${encodeURIComponent(src)}`;
+
+    const { data } = this;
     let oEmbedData = {};
 
     try {
@@ -74,25 +100,22 @@ function schema(el) {
       data.uploadDate = new Date(data.uploadDate).toISOString();
     }
 
-    if (!el.seo) return;
+    if (!this.seo) return;
 
     Object.keys(defaultTranslation).forEach((prop) => {
       if (data[prop] == null) {
-        if (required[prop] && el.seo) {
+        if (required[prop] && this.seo) {
           console.warn(`${prop} (${data['@type']}) data missing!`);
         }
         delete data[prop];
       }
     });
 
-    renderLinkedData(el, oEmbedData);
+    renderLinkedData(this, oEmbedData);
   }
-
-  return {
-    onloadsrc,
-    onloadedsrc,
-  };
 }
+
+defineCustomElement('plx-schema', PlxSchema);
 
 function getInlineJSON(host) {
   const script = host.querySelector(`script[type$="json"]`);
@@ -136,44 +159,3 @@ function renderLinkedData(el, oEmbedData) {
   ld.type = 'application/ld+json';
   ld.textContent = JSON.stringify(el.data);
 }
-
-/**
- * @type {(CE: Class, options: Object) => (el: PlxSchema) => void}
- */
-const setup = () => (el) => {
-  let isInit;
-  let api;
-  connected();
-
-  function connected() {
-    if (!isInit && (el.player || el.src)) {
-      isInit = true;
-      api = schema(el);
-
-      if (el.player) {
-        el.player.addEventListener('loadsrc', api.onloadsrc);
-        el.player.addEventListener('loadedsrc', api.onloadedsrc);
-      }
-    }
-  }
-
-  async function load() {
-    // Wait one tick so the `el.src` property is set.
-    await Promise.resolve();
-    // Init schema if it was not yet done.
-    connected();
-
-    await api.onloadsrc();
-    await api.onloadedsrc();
-  }
-
-  return {
-    connected,
-    load,
-  };
-};
-
-export const PlxSchema = define('plx-schema', {
-  props,
-  setup,
-});

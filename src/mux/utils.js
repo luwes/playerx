@@ -1,3 +1,10 @@
+export function defineCustomElement(name, element) {
+  if (!window.customElements.get(name)) {
+    window.customElements.define(name, element);
+    window[element.name] = element;
+  }
+}
+
 /**
  * Generates a unique ID. If `prefix` is given, the ID is appended to it.
  *

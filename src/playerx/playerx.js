@@ -1,9 +1,14 @@
-import { property, readonly, reflect } from 'swiss';
 import * as Events from './constants/events.js';
-import { css } from './element.js';
 import { createResponsiveStyle, getName, setName } from './helpers.js';
 import { options } from './options.js';
 import { createVideoShim } from './video-shim.js';
+import {
+  PlxElement,
+  css,
+  readonly,
+  reflect,
+  property,
+} from './element.js';
 import {
   getStyle,
   extend,
@@ -13,6 +18,7 @@ import {
   getProperty,
   getMethod,
   getPropertyDescriptor,
+  getInlineJSON,
 } from './utils.js';
 
 const sheet = getStyle();
@@ -47,39 +53,35 @@ sheet.firstChild.data += css`
   }
 `;
 
-const readonlyProps = readonly({
-  buffered: undefined,
-  currentSrc: '',
-  duration: NaN,
-  ended: false,
-  error: null,
-  paused: true,
-  readyState: 0,
-  videoHeight: 0,
-  videoWidth: 0,
-  api: undefined, // custom property
-  name: undefined, // custom property
-  key: undefined, // custom property
-  version: undefined, // custom property
-});
-
-const reflectProps = reflect({
-  aspectRatio: undefined, // custom property
-  autoplay: false,
-  controls: false,
-  height: undefined,
-  loop: false,
-  muted: false,
-  playing: false, // custom property
-  playsinline: false,
-  preload: undefined,
-  src: undefined,
-  width: undefined,
-});
-
 export const props = {
-  ...readonlyProps,
-  ...reflectProps,
+  ...readonly({
+    buffered: undefined,
+    currentSrc: '',
+    duration: NaN,
+    ended: false,
+    error: null,
+    paused: true,
+    readyState: 0,
+    videoHeight: 0,
+    videoWidth: 0,
+    api: undefined, // custom property
+    name: undefined, // custom property
+    key: undefined, // custom property
+    version: undefined, // custom property
+  }),
+  ...reflect({
+    aspectRatio: undefined, // custom property
+    autoplay: false,
+    controls: false,
+    height: undefined,
+    loop: false,
+    muted: false,
+    playing: false, // custom property
+    playsinline: false,
+    preload: undefined,
+    src: undefined,
+    width: undefined,
+  }),
 
   currentTime: 0,
   playbackRate: 1,
@@ -96,45 +98,49 @@ export const props = {
   }),
 };
 
-export const coreMethodNames = ['play', 'pause', 'get'];
+export class PlayerxElement extends PlxElement {
+  static props = props;
 
-/** @typedef { import('./index').Playerx } Playerx */
+  constructor() {
+    super();
+    console.dir(this);
 
-/**
- * @type {(CE: Class, options: Object) => (element: Playerx) => Object}
- */
-export const PlayerxMixin = (CE, { create }) => (element) => {
-  console.dir(element);
+    // Store original getProp because it's overridden.
+    // This method is used to get data directly from the property cache.
+    this.cache = super.getProp;
+    this.setCache = super.setProp;
 
-  element.config = getInlineJSON(element).config || {};
-  element.meta = getInlineJSON(element).meta || {};
+    this._player = {};
 
-  // Shortcuts to native DOM event listener methods.
-  element.on = element.addEventListener;
-  element.off = element.removeEventListener;
+    this.config = getInlineJSON(this).config || {};
+    this.meta = getInlineJSON(this).meta || {};
 
-  // Store original getProp because it's overridden.
-  // This method is used to get data directly from the property cache.
-  element.cache = element.getProp;
-  element.setCache = element.setProp;
+    // Shortcuts to native DOM event listener methods.
+    this.on = this.addEventListener;
+    this.off = this.removeEventListener;
 
-  let player = {};
-  let responsiveStyle = createResponsiveStyle(element);
-  extend(
-    player,
-    base(element, player),
-    responsiveStyle,
-    override(element, player)
-  );
+    this._responsiveStyle = createResponsiveStyle(this);
+    extend(
+      this._player,
+      base(this, this._player),
+      this._responsiveStyle,
+      override(this, this._player)
+    );
 
-  let elementReady = publicPromise();
-  let videoShim = createVideoShim(element);
+    this._elementReady = publicPromise();
+    this._videoShim = createVideoShim(this);
+  }
 
-  async function setProp(name, value, oldValue) {
-    element.setCache(name, value);
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.unload();
+  }
+
+  async setProp(name, value, oldValue) {
+    this.setCache(name, value);
 
     if (value !== oldValue) {
-      element.fire('prop', {
+      this.fire('prop', {
         name,
         value,
       });
@@ -142,185 +148,198 @@ export const PlayerxMixin = (CE, { create }) => (element) => {
       if (name === 'src') {
         // Give a chance to add more properties on load.
         await Promise.resolve();
-        element.load();
+        this.load();
       } else {
-        playerSet(name);
+        this._playerSet(name);
       }
     }
   }
 
-  function playerSet(name) {
-    const value = element.cache(name);
-    if (player.set) {
-      return player.set(name, value);
+  _playerSet(name) {
+    const value = this.cache(name);
+    if (this._player.set) {
+      return this._player.set(name, value);
     }
   }
 
-  function getProp(name) {
-    if (player.get) {
-      const value = player.get(name);
+  getProp(name) {
+    if (this._player.get) {
+      const value = this._player.get(name);
       if (value !== undefined && !(value instanceof Promise)) {
         return value;
       }
     }
-    return element.cache(name);
+    return this.cache(name);
   }
 
-  function disconnected() {
-    unload();
+  unload() {
+    this._videoShim.unload();
+    this._videoShim.detachEvents(this._player);
+
+    this._player.remove();
+    this._player = {};
   }
 
-  function unload() {
-    videoShim.unload();
-    videoShim.detachEvents(player);
+  async load() {
+    if (!this.cache('src')) return;
 
-    player.remove();
-    player = {};
-  }
-
-  async function load() {
-    if (!element.cache('src')) return;
-
-    videoShim.unload();
+    this._videoShim.unload();
 
     // The first time if player is null we use the promise defined at the top.
-    if (player.api) {
-      elementReady = publicPromise();
+    if (this._player.api) {
+      this._elementReady = publicPromise();
     }
 
-    element.fire(Events.LOADSRC);
+    this.fire(Events.LOADSRC);
 
-    if (canPlayerLoadSource()) {
-      const prevLoad = element.load;
+    if (canPlayerLoadSource(this)) {
+      const proto = Object.getPrototypeOf(this);
+      const prevLoad = proto.load;
 
       // If `element.load` is called in the player, re-attach events.
-      let initEvents = false;
+      this._initEvents = false;
       // Here to use `element.load()` in players. Preventing an endless loop.
       // When a player calls this it is meant to re-init the player.
-      element.load = () => (initEvents = true) && init();
+      proto.load = () => (this._initEvents = true) && this._init();
 
-      await playerSet('src');
-      element.load = prevLoad;
+      await this._playerSet('src');
+      proto.load = prevLoad;
 
-      await afterLoad(initEvents);
-      element.fire(Events.LOADEDSRC);
+      await this._afterLoad(this._initEvents);
+      this.fire(Events.LOADEDSRC);
 
       return;
     }
 
-    await init();
-    await afterLoad(true);
-    element.fire(Events.LOADEDSRC);
-    element.fire(Events.READY);
+    await this._init();
+    await this._afterLoad(true);
+    this.fire(Events.LOADEDSRC);
+    this.fire(Events.READY);
   }
 
-  function canPlayerLoadSource() {
-    const playerParam = getSrcParam(element.cache('src'), 'player');
-    if (playerParam && playerParam !== element.key) {
-      return false;
-    }
-    return (
-      player.api && options.players[element.key].canPlay(element.cache('src'))
-    );
-  }
-
-  async function init() {
-    if (player.api) {
-      unload();
+  async _init() {
+    if (this._player.api) {
+      this.unload();
     }
 
-    let media = element.querySelector('plx-media');
+    let media = this.querySelector('plx-media');
     if (!media) {
       media = document.createElement('plx-media');
-      element.insertBefore(media, element.firstChild);
+      this.insertBefore(media, this.firstChild);
     }
 
     const mediaContent = media.children[0];
 
-    player = {};
+    const playerConfigKey = getCurrentPlayerConfigKey(this.cache('src'));
+    const playerConfig = options.players[playerConfigKey];
+    const createPlayer = playerConfig.lazyPlayer
+      ? (await playerConfig.lazyPlayer()).createPlayer
+      : playerConfig;
+
+    this._player = {};
     extend(
-      player,
-      base(element, player),
-      await create(element, mediaContent),
-      responsiveStyle,
-      override(element, player)
+      this._player,
+      base(this, this._player),
+      await createPlayer(this, mediaContent),
+      this._responsiveStyle,
+      override(this, this._player)
     );
-    player.constructor = player.constructor || create;
+    this._player.constructor = this._player.constructor || createPlayer;
 
     // Don't clear to allow progressive enhancement.
-    if (mediaContent !== player.element) {
+    if (mediaContent !== this._player.element) {
       media.textContent = '';
-      media.appendChild(player.element);
+      media.appendChild(this._player.element);
     }
 
-    element.fire('media');
+    // Needed for apivideo
+    this.fire('media');
   }
 
-  async function afterLoad(initEvents) {
-    await player.ready();
+  async _afterLoad(initEvents) {
+    await this._player.ready();
 
     // Set volume before muted, some players (Vimeo) turn off muted if volume is set.
-    await playerSet('volume');
+    await this._playerSet('volume');
 
     await Promise.all([
-      playerSet('muted'),
+      this._playerSet('muted'),
 
       // The default value of preload is different for each browser.
       // The spec advises it to be set to metadata.
-      player.set('preload', element.cache('preload') || 'metadata'),
+      this._player.set('preload', this.cache('preload') || 'metadata'),
 
-      playerSet('playsinline'),
-      playerSet('loop'),
+      this._playerSet('playsinline'),
+      this._playerSet('loop'),
     ]);
 
-    if (initEvents) videoShim.attachEvents(player);
+    if (initEvents) this._videoShim.attachEvents(this._player);
 
     // const autoplay = element.cache('autoplay') || element.cache('playing');
     // await player.set('autoplay', autoplay);
 
-    await videoShim.updateProps();
-    elementReady.resolve();
+    await this._videoShim.updateProps();
+    this._elementReady.resolve();
   }
 
-  function fire(name, detail = {}) {
+  async play() {
+    await this._videoShim.ready();
+    return this._player.play();
+  }
+
+  async pause() {
+    await this._videoShim.ready();
+    return this._player.pause();
+  }
+
+  async get(...args) {
+    await this._videoShim.ready();
+    return this._player.get(...args);
+  }
+
+  fire(name, detail = {}) {
     const event = new CustomEvent(name, { detail });
-    element.dispatchEvent(event);
+    this.dispatchEvent(event);
   }
 
-  function ready() {
-    return elementReady;
+  ready() {
+    return this._elementReady;
   }
 
-  function supports(method) {
-    return player.supports(method);
+  supports(method) {
+    return this._player.supports(method);
+  }
+}
+
+function canPlayerLoadSource(element) {
+  const playerParam = getSrcParam(element.cache('src'), 'player');
+  if (playerParam && playerParam !== element.key) {
+    return false;
+  }
+  return (
+    element.api && options.players[element.key].canPlay(element.cache('src'))
+  );
+}
+
+export function getCurrentPlayerConfigKey(src) {
+  const playerParam = getSrcParam(src, 'player');
+  if (options.players[playerParam]) {
+    return playerParam;
   }
 
-  const methods = {
-    fire,
-    load,
-    unload,
-    disconnected,
-    getProp,
-    setProp,
-    ready,
-    supports,
-  };
+  for (let key in options.players) {
+    const playerConfig = options.players[key];
+    if (playerConfig.canPlay(src)) {
+      return key;
+    }
+  }
+  // Fallback to html player.
+  return 'html';
+}
 
-  coreMethodNames.forEach((name) => {
-    methods[name] = async function (...args) {
-      await videoShim.ready();
-      if (player[name]) {
-        return player[name](...args);
-      }
-    };
-  });
-
-  return methods;
-};
-
-function getInlineJSON(host) {
-  const script = host.querySelectorAll(`script[type$="json"]`)[0];
-  return (script && JSON.parse(script.textContent)) || {};
+function getSrcParam(src, key) {
+  const url = Array.isArray(src) ? src[0] : src;
+  return url && new URLSearchParams(url.split('?')[1]).get(key);
 }
 
 function base(element, player) {
@@ -453,25 +472,4 @@ export function flexApi(instance) {
       }
     },
   };
-}
-
-function getSrcParam(src, key) {
-  const url = Array.isArray(src) ? src[0] : src;
-  return url && new URLSearchParams(url.split('?')[1]).get(key);
-}
-
-export function getCurrentPlayerConfig(src) {
-  const playerParam = getSrcParam(src, 'player');
-  if (options.players[playerParam]) {
-    return options.players[playerParam];
-  }
-
-  for (let key in options.players) {
-    const playerConfig = options.players[key];
-    if (playerConfig.canPlay(src)) {
-      return playerConfig;
-    }
-  }
-  // Fallback to html player.
-  return options.players.html;
 }

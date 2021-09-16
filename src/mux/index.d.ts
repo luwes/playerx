@@ -1,5 +1,4 @@
 import { Playerx } from 'playerx';
-import { VideoObject } from 'schema-dts';
 
 export interface PlxMux extends HTMLElement {
 

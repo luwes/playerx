@@ -115,7 +115,7 @@ export function createVideoShim(element) {
           ].indexOf(event) === -1
       )
       .forEach((event) =>
-        listeners.push([event, element.fire.bind(null, event)])
+        listeners.push([event, element.fire.bind(element, event)])
       );
 
     listeners.forEach(([event, listener]) => player.on(event, listener));

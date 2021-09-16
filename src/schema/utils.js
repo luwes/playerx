@@ -1,3 +1,15 @@
+export function defineCustomElement(name, element) {
+  if (!window.customElements.get(name)) {
+    window.customElements.define(name, element);
+    window[element.name] = element;
+  }
+}
+
+export function findAncestor(el, sel) {
+  while ((el = el.parentElement) && !el.matches(sel));
+  return el;
+}
+
 export function requestJson(url) {
   return new Promise((resolve, reject) => {
     const req = new XMLHttpRequest();

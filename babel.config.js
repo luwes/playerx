@@ -14,13 +14,6 @@ module.exports = {
   ],
   plugins: [
     [
-      '@babel/plugin-transform-classes',
-      {
-        // must be false for custom elements to work in modern browsers with es5
-        loose: false,
-      },
-    ],
-    [
       'babel-plugin-transform-async-to-promises',
       {
         inlineHelpers: true,
