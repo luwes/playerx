@@ -47,7 +47,7 @@ test('PlxPreview defining html creates an img element with src, alt, aria-label'
 
 test('PlxPreview defining html with oembedurl', async (t) => {
   document.body.innerHTML =
-    '<plx-preview src="https://vimeo.com/357274789"></plx-preview>';
+    '<div style="width: 300px"><plx-preview src="https://vimeo.com/357274789"></plx-preview></div>';
 
   const preview = document.querySelector('plx-preview');
 
@@ -55,7 +55,7 @@ test('PlxPreview defining html with oembedurl', async (t) => {
 
   t.equal(
     preview.shadowRoot.innerHTML,
-    `<style> ${styles}</style><picture><img src="https://i.vimeocdn.com/video/810965406_1280" alt="Travis Scott - Made in America" aria-label="Travis Scott - Made in America"></picture>`
+    `<style> ${styles}</style><picture><img src="https://i.vimeocdn.com/video/810965406_295x166" alt="Travis Scott - Made in America" aria-label="Travis Scott - Made in America"></picture>`
   );
 
   preview.remove();
