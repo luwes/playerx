@@ -54,8 +54,8 @@ test('PlxPreview defining html with oembedurl', async (t) => {
   await preview.load();
 
   t.equal(
-    preview.shadowRoot.innerHTML,
-    `<style> ${styles}</style><picture><img src="https://i.vimeocdn.com/video/810965406_295x166" alt="Travis Scott - Made in America" aria-label="Travis Scott - Made in America"></picture>`
+    preview.shadowRoot.innerHTML.replace(/810965406[^"]*/, '810965406'),
+    `<style> ${styles}</style><picture><img src="https://i.vimeocdn.com/video/810965406" alt="Travis Scott - Made in America" aria-label="Travis Scott - Made in America"></picture>`
   );
 
   preview.remove();
