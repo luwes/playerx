@@ -1,5 +1,5 @@
 require('dotenv').config();
-const pkg = require('../playerx/package.json');
+const pkg = require('../package.json');
 
 const sauceOptions = {
   extendedDebugging: true,
