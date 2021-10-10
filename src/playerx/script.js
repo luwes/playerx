@@ -49,7 +49,14 @@ export class PlxScript extends HTMLElement {
       // el.loading == player
       Object.assign(proto, {
         async load() {
-          await loadScript(element.src);
+          await loadScript(
+            Object.fromEntries(
+              Array.from(element.attributes).map(({ name, value }) => [
+                name,
+                value,
+              ])
+            )
+          );
           return load.call(this);
         },
       });

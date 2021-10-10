@@ -69,11 +69,19 @@ export function loadScript(src, globalName, readyFnName) {
     return Promise.resolve(self[globalName]);
   }
 
+  if (typeof src === 'string') {
+    src = { src };
+  }
+
+  if ('noModule' in HTMLScriptElement.prototype && src.nomodule != null) {
+    return Promise.resolve();
+  }
+
   return new Promise(function(resolve, reject) {
     const script = createElement('script', {
-      src,
       defer: '',
       async: '',
+      ...src,
     });
 
     const ready = () => resolve(self[globalName]);
