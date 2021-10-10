@@ -33,7 +33,7 @@
     "build:demo": "yarn workspace site build",
     "coverage": "codecov",
     "dev": "cross-env NODE_ENV=dev run-p dev:*",
-    "dev:cdn": "http-server ./dist -g -s",
+    "dev:cdn": "http-server ./dist --cors --brotli",
     "dev:demo": "yarn workspace site dev",
     "dev:js": "rollup -wc --silent",
     "serve": "yarn workspace site serve",

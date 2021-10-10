@@ -25,6 +25,7 @@ module.exports = async () => {
 
 function fetchMetric(name, url) {
   return axios.get(url, {
+    timeout: 1000,
     headers: {
       'Authorization': `Basic ${token}`
     }
