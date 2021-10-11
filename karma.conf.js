@@ -42,7 +42,7 @@ var sauceLabsLaunchers = {
   sl_safari: {
     base: 'SauceLabs',
     browserName: 'safari',
-    browserVersion: '12.1',
+    browserVersion: '13',
     platformName: 'macOS 10.13',
   },
 
