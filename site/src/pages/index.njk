@@ -5,7 +5,7 @@ title: "Playerx for Developers"
 
 {% extends "layouts/base.njk" %}
 
-{% set hero %}
+{% block header %}
 <div class="min-h-screen flex flex-col">
   {% include "header.njk" %}
 
@@ -60,7 +60,7 @@ title: "Playerx for Developers"
     </div>
   </div>
 </div>
-{% endset %}
+{% endblock %}
 
 {% block content %}
 <main class="relative overflow-hidden flex-grow">

@@ -12,7 +12,7 @@
     {% block head %}
     {% endblock %}
   </head>
-  <body class="flex flex-col min-h-screen{% if bodyClass %} {{ bodyClass }}{% endif %}">
+  {% block body %}<body class="flex flex-col min-h-screen">{% endblock %}
     {% block main %}
     {% endblock %}
 

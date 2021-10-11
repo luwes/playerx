@@ -1,76 +1,75 @@
-<div class="flex-shrink-0 container mx-auto">
-  <nav class="flex-shrink-0 px-6 xl:px-12 py-8 lg:py-2 pb-4 lg:h-20 flex relative z-20" role="navigation" aria-label="main navigation">
-    <div class="w-full flex items-center justify-between flex-wrap">
-      <div class="flex items-center flex-shrink-0 text-white mr-10">
-        <a href="/">
-          <img class="logo h-8" src="/images/playerx-logo.svg" alt="Playerx">
-        </a>
-      </div>
-      <div class="block lg:hidden">
-        <button id="burger" class="flex items-center justify-center w-10 h-8">
-          <svg class="fill-current h-3" viewBox="0 0 22 11"><path d="M0 0h22v1H0zm0 10h22v1H0z"></path></svg>
-          <svg class="fill-current h-4 hidden" viewBox="0 0 18 17"><g><path d="M1 16.218L16.627.59l.778.778L1.778 16.995z"></path><path d="M1.778.59l15.627 15.628-.778.777L1 1.368z"></path></g></svg>
-        </button>
-      </div>
-      <div id="main-menu" class="w-full flex-grow hidden lg:flex lg:items-center lg:w-auto">
-        <div class="w-1/2 lg:w-auto lg:flex-grow mt-2 py-1 lg:mt-0">
+<nav class="flex-shrink-0 px-6 xl:px-12 py-8 lg:py-2 pb-4 lg:h-20 flex relative z-20" role="navigation" aria-label="main navigation">
+  <div class="w-full flex items-center justify-between flex-wrap">
+    <div class="flex items-center flex-shrink-0 text-white mr-10">
+      <a href="/">
+        <img class="logo h-8" src="/images/playerx-logo.svg" alt="Playerx">
+      </a>
+    </div>
+    <div class="block lg:hidden">
+      <button id="burger" class="flex items-center justify-center w-10 h-8">
+        <svg class="fill-current h-3" viewBox="0 0 22 11"><path d="M0 0h22v1H0zm0 10h22v1H0z"></path></svg>
+        <svg class="fill-current h-4 hidden" viewBox="0 0 18 17"><g><path d="M1 16.218L16.627.59l.778.778L1.778 16.995z"></path><path d="M1.778.59l15.627 15.628-.778.777L1 1.368z"></path></g></svg>
+      </button>
+    </div>
+    <div id="main-menu" class="w-full flex-grow hidden lg:flex lg:items-center lg:w-auto">
+      <div class="w-1/2 lg:w-auto lg:flex-grow mt-2 py-1 lg:mt-0">
 
-          {%- set navPages = collections.main | eleventyNavigation -%}
+        {%- set navPages = collections.main | eleventyNavigation -%}
+        {%- for parent in navPages -%}
+          <div id="menu-item-{{ parent.key | lower }}" class="relative inline-block text-left">
+            <a id="menu-link-{{ parent.key | lower }}" href="{% if parent.url %}{{ parent.url }}{% else %}#{% endif %}" class="inline-flex justify-center w-full rounded-md px-4 py-1 bg-white leading-5 text-gray-700 hover:text-gray-500 active:text-gray-800 transition ease-in-out duration-150"{% if parent.children | length %} aria-haspopup="true"{% endif %}>
+              {{- parent.key -}}
+              {%- if parent.children | length -%}
+                <!-- Heroicon name: chevron-down -->
+                <svg class="-mr-1 ml-1 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              {%- endif -%}
+            </a>
+            {% if parent.children | length %}
+              <!--
+                Dropdown panel, show/hide based on dropdown state.
+
+                Entering: "transition ease-out duration-100"
+                  From: "transform opacity-0 scale-95"
+                  To: "transform opacity-100 scale-100"
+                Leaving: "transition ease-in duration-75"
+                  From: "transform opacity-100 scale-100"
+                  To: "transform opacity-0 scale-95"
+              -->
+              <div class="menu-options" data-transition:enter="transition ease-out duration-100" data-transition:enter-start="transform opacity-0 scale-95" data-transition:enter-end="transform opacity-100 scale-100" data-transition:leave="transition ease-in duration-75" data-transition:leave-start="transform opacity-100 scale-100" data-transition:leave-end="transform opacity-0 scale-95" hidden>
+                <div class="rounded-md bg-white shadow-xs">
+                  <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="menu-link-{{ parent.key | lower }}">
+                    {%- for child in parent.children -%}
+                      <a href="{{ child.url }}" class="{% if child.url == page.url %}bg-gray-50{% endif %} block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900" role="menuitem">{{ child.key }}</a>
+                    {%- endfor -%}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+
+        {%- endfor -%}
+
+      </div>
+      <div id="navbar-end" class="lg:flex lg:flex-row lg:items-center mt-2 py-1 lg:mt-0">
+        <div class="block py-1 lg:inline-block lg:mt-0 text-gray-700 hover:text-gray-900">
+          {%- set navPages = collections.navEnd | eleventyNavigation -%}
           {%- for parent in navPages -%}
             <div id="menu-item-{{ parent.key | lower }}" class="relative inline-block text-left">
               <a id="menu-link-{{ parent.key | lower }}" href="{% if parent.url %}{{ parent.url }}{% else %}#{% endif %}" class="inline-flex justify-center w-full rounded-md px-4 py-1 bg-white leading-5 text-gray-700 hover:text-gray-500 active:text-gray-800 transition ease-in-out duration-150"{% if parent.children | length %} aria-haspopup="true"{% endif %}>
                 {{- parent.key -}}
-                {%- if parent.children | length -%}
-                  <!-- Heroicon name: chevron-down -->
-                  <svg class="-mr-1 ml-1 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                  </svg>
-                {%- endif -%}
               </a>
-              {% if parent.children | length %}
-                <!--
-                  Dropdown panel, show/hide based on dropdown state.
-
-                  Entering: "transition ease-out duration-100"
-                    From: "transform opacity-0 scale-95"
-                    To: "transform opacity-100 scale-100"
-                  Leaving: "transition ease-in duration-75"
-                    From: "transform opacity-100 scale-100"
-                    To: "transform opacity-0 scale-95"
-                -->
-                <div class="menu-options" data-transition:enter="transition ease-out duration-100" data-transition:enter-start="transform opacity-0 scale-95" data-transition:enter-end="transform opacity-100 scale-100" data-transition:leave="transition ease-in duration-75" data-transition:leave-start="transform opacity-100 scale-100" data-transition:leave-end="transform opacity-0 scale-95" hidden>
-                  <div class="rounded-md bg-white shadow-xs">
-                    <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="menu-link-{{ parent.key | lower }}">
-                      {%- for child in parent.children -%}
-                        <a href="{{ child.url }}" class="{% if child.url == page.url %}bg-gray-50{% endif %} block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900" role="menuitem">{{ child.key }}</a>
-                      {%- endfor -%}
-                    </div>
-                  </div>
-                </div>
-              {% endif %}
             </div>
-
           {%- endfor -%}
-
-        </div>
-        <div id="navbar-end" class="lg:flex lg:flex-row lg:items-center mt-2 py-1 lg:mt-0">
-          <div class="block py-1 lg:inline-block lg:mt-0 text-gray-700 hover:text-gray-900">
-            {%- set navPages = collections.navEnd | eleventyNavigation -%}
-            {%- for parent in navPages -%}
-              <div id="menu-item-{{ parent.key | lower }}" class="relative inline-block text-left">
-                <a id="menu-link-{{ parent.key | lower }}" href="{% if parent.url %}{{ parent.url }}{% else %}#{% endif %}" class="inline-flex justify-center w-full rounded-md px-4 py-1 bg-white leading-5 text-gray-700 hover:text-gray-500 active:text-gray-800 transition ease-in-out duration-150"{% if parent.children | length %} aria-haspopup="true"{% endif %}>
-                  {{- parent.key -}}
-                </a>
-              </div>
-            {%- endfor -%}
-            <a class="inline-block align-middle -mt-0.5" href="{{ site.githubUrl }}" target="_blank">
-              <svg class="icon icon-github w-6 h-6 fill-current">
-                <use xlink:href="/images/symbol-defs.svg#icon-github"></use>
-              </svg>
-            </a>
-          </div>
+          <a class="inline-block align-middle -mt-0.5" href="{{ site.githubUrl }}" target="_blank">
+            <svg class="icon icon-github w-6 h-6 fill-current">
+              <use xlink:href="/images/symbol-defs.svg#icon-github"></use>
+            </svg>
+          </a>
         </div>
       </div>
     </div>
-  </nav>
-</div>
+  </div>
+</nav>
+
