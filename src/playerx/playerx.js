@@ -59,6 +59,7 @@ export const props = {
     currentSrc: '',
     duration: NaN,
     ended: false,
+    seeking: false,
     error: null,
     paused: true,
     readyState: 0,

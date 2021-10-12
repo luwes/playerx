@@ -74,6 +74,14 @@ export function createVideoShim(element) {
         },
       ],
       [
+        Events.SEEKING,
+        () => element.setCache('seeking', true)
+      ],
+      [
+        Events.SEEKED,
+        () => element.setCache('seeking', false)
+      ],
+      [
         Events.ENDED,
         () => {
           if (element.loop) {

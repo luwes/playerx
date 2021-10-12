@@ -34,6 +34,7 @@ const duration = observable(0);
 const currentTime = observable(0);
 const currentTimeValue = observable(0);
 const ended = observable(false);
+const seeking = observable(false);
 const muted = observable(getParam('muted', defaults.muted));
 const mutedValue = observable(muted());
 const loop = observable(getParam('loop'));
@@ -70,6 +71,7 @@ const props = {
   ontimeupdate: () => {
     currentTimeValue(player.currentTime);
     ended(player.ended);
+    seeking(player.seeking);
   },
   onresize: () => {
     videoHeight(player.videoHeight);
@@ -197,6 +199,7 @@ hy(dhtml`
     <b /><i>${() => toHHMMSS(duration())}</i>
     <b /><i>${() => toHHMMSS(currentTimeValue())}</i>
     <b /><i>${() => String(ended())}</i>
+    <b /><i>${() => String(seeking())}</i>
     <b /><i>${() => String(quality())}</i>
   </div>
 `);
