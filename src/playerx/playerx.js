@@ -79,6 +79,7 @@ export const props = {
     muted: false,
     playing: false, // custom property
     playsinline: false,
+    poster: undefined,
     preload: undefined,
     src: undefined,
     width: undefined,
@@ -86,6 +87,7 @@ export const props = {
 
   currentTime: 0,
   playbackRate: 1,
+  defaultPlaybackRate: 1,
   volume: 1,
 
   config: property(undefined, {
