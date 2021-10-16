@@ -158,6 +158,7 @@ Event | Description
 
 To all the services that offered free plans for building, testing and measuring!
 
+- [Cloudflare](https://www.cloudflare.com/)
 - [MUX](https://mux.com/)
 - [JW Player](https://www.jwplayer.com/)
 - [BrowserStack](https://www.browserstack.com/)
