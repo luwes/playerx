@@ -15,6 +15,10 @@ const API_URL = 'https://play.vidyard.com/embed/v4.js';
 const API_GLOBAL = 'VidyardV4';
 const API_GLOBAL_READY = 'onVidyardAPI';
 
+addCssRule('.vidyard-player-container #backlink', {
+  display: 'none',
+});
+
 addCssRule(`.vidyard-player-container,.vidyard-player-container>div`, {
   position: 'absolute !important',
   height: '100% !important',
@@ -71,6 +75,7 @@ export function createPlayer(element) {
   const eventAliases = {
     volumechange: 'volumeChange',
     ended: 'playerComplete',
+    loadedmetadata: 'metadata'
   };
 
   const unsupportedEvents = {
@@ -78,7 +83,6 @@ export function createPlayer(element) {
     progress: undefined,
     durationchange: undefined,
     loadstart: undefined,
-    loadedmetadata: undefined,
     seeking: undefined,
     seeked: undefined,
     cuechange: undefined,
