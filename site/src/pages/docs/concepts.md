@@ -1,7 +1,7 @@
 ---
 permalink: false
 eleventyNavigation:
-  key: Concepts
+  key: concepts
   order: 1
 tags:
   - docs

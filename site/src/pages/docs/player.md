@@ -3,7 +3,7 @@ permalink: docs/playerx/
 title: "Playerx - Playerx element"
 eleventyNavigation:
   key: <player-x>
-  parent: Elements
+  parent: elements
   order: 1
 tags:
   - docs

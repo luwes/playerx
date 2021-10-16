@@ -3,7 +3,7 @@ permalink: docs/controls/
 title: "Playerx - Controls"
 eleventyNavigation:
   key: <plx-controls>
-  parent: Elements
+  parent: elements
   order: 3
 tags:
 layout: layouts/docs.njk

@@ -3,7 +3,7 @@ permalink: docs/schema/
 title: "Playerx - Schema element"
 eleventyNavigation:
   key: <plx-schema>
-  parent: Elements
+  parent: elements
   order: 3
 tags:
   - docs
@@ -72,6 +72,12 @@ Most of the major media platforms are supported, see the [Playerx oEmbed API](ht
 - JW Player
 
 ## Load from the CDN
+
+```html
+<script src="{% getCdnUrl 'schema' %}"></script>
+```
+
+With a regular `<script>` element or
 
 ```html
 <plx-script loading="player" src="{% getCdnUrl 'schema' %}"></plx-script>

@@ -3,7 +3,7 @@ permalink: docs/preview/
 title: "Playerx - Preview element"
 eleventyNavigation:
   key: <plx-preview>
-  parent: Elements
+  parent: elements
   order: 2
 tags:
   - docs

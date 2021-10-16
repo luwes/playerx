@@ -3,7 +3,7 @@ permalink: docs/mux/
 title: "Playerx - MUX Data"
 eleventyNavigation:
   key: <plx-mux>
-  parent: Elements
+  parent: elements
   order: 4
 tags:
   - docs

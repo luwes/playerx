@@ -3,7 +3,7 @@ permalink: docs/loading/
 title: "Playerx - Loading Attribute"
 eleventyNavigation:
   key: Loading
-  parent: Concepts
+  parent: concepts
   order: 1
 tags:
   - docs

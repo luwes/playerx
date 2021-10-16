@@ -1,7 +1,8 @@
 ---
 permalink: false
 eleventyNavigation:
-  key: Docs
+  key: docs
+  title: Docs
   url: /docs/loading/
   order: 1
 tags:

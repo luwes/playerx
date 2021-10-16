@@ -1,7 +1,7 @@
 ---
 permalink: false
 eleventyNavigation:
-  key: Elements
+  key: elements
   order: 2
 tags:
   - docs
