@@ -21,6 +21,7 @@ export function createVideoShim(element) {
   function unload() {
     clearAllTimeouts();
     apiReady = publicPromise();
+    element.setCache('readyState', 0); // HTMLMediaElement.HAVE_NOTHING
   }
 
   function clearAllTimeouts() {
@@ -50,6 +51,10 @@ export function createVideoShim(element) {
   function attachEvents(player) {
     listeners = [
       [
+        Events.LOADEDMETADATA,
+        () => element.setCache('readyState', 1) // HTMLMediaElement.HAVE_METADATA
+      ],
+      [
         Events.PAUSE,
         () => {
           element.setCache('playing', false);
@@ -69,6 +74,7 @@ export function createVideoShim(element) {
         () => {
           element.setCache('paused', false);
           element.setCache('playing', true);
+          element.setCache('readyState', 3); // HTMLMediaElement.HAVE_FUTURE_DATA
           updateDuration();
           playFired = false;
         },
@@ -79,7 +85,10 @@ export function createVideoShim(element) {
       ],
       [
         Events.SEEKED,
-        () => element.setCache('seeking', false)
+        () => {
+          element.setCache('seeking', false);
+          element.setCache('readyState', 1); // HTMLMediaElement.HAVE_METADATA
+        }
       ],
       [
         Events.ENDED,
@@ -152,6 +161,7 @@ export function createVideoShim(element) {
     if (playFired) {
       playFired = false;
       element.fire('playing');
+      element.setCache('readyState', 3); // HTMLMediaElement.HAVE_FUTURE_DATA
     }
 
     let old = currentTime;
@@ -224,6 +234,11 @@ export function createVideoShim(element) {
         progress = buffered.end(buffered.length - 1);
         if (progress !== old) {
           element.fire('progress');
+        }
+
+        let percent = Math.round(progress / duration);
+        if (percent === 1) {
+          element.setCache('readyState', 4); // HTMLMediaElement.HAVE_ENOUGH_DATA
         }
       }
     }

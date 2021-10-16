@@ -62,7 +62,7 @@ export const props = {
     seeking: false,
     error: null,
     paused: true,
-    readyState: 0,
+    readyState: 0, // HTMLMediaElement.HAVE_NOTHING
     videoHeight: 0,
     videoWidth: 0,
     api: undefined, // custom property

@@ -27,6 +27,7 @@ const src = observable();
 const showing = computedValue(() => !!src());
 const autoplay = observable(getParam('autoplay'));
 const playing = observable(false);
+const readyState = observable(0);
 const volume = observable(getParam('volume', defaults.volume));
 const volumeValue = observable(volume());
 const buffered = observable(0);
@@ -72,6 +73,7 @@ const props = {
     currentTimeValue(player.currentTime);
     ended(player.ended);
     seeking(player.seeking);
+    readyState(player.readyState);
   },
   onresize: () => {
     videoHeight(player.videoHeight);
@@ -81,15 +83,18 @@ const props = {
     mutedValue(player.muted);
   },
   onprogress: () => {
+    readyState(player.readyState);
     const len = player.buffered.length;
     if (len && duration()) {
       buffered(player.buffered.end(len - 1) / duration());
     }
   },
   onloadedsrc: () => {
+    readyState(player.readyState);
     unsupportsPlaybackRate(!player.supports('playbackRate'));
     unsupportsControls(!player.supports('controls'));
   },
+  onloadedmetadata: () => readyState(player.readyState)
 };
 
 /** @typedef { import('playerx').Playerx } Playerx */
@@ -194,6 +199,7 @@ hy(dhtml`
 hy(dhtml`
   <div class="state-values">
     <b /><i>${() => String(!playing())}</i>
+    <b /><i>${() => String(readyState())}</i>
     <b /><i>${() => round(volumeValue(), 2)}</i>
     <b /><i>${() => round(buffered(), 2)}</i>
     <b /><i>${() => toHHMMSS(duration())}</i>
