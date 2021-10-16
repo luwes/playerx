@@ -14,8 +14,8 @@ var coverage = String(process.env.COVERAGE) === 'true',
   pullRequest = !String(process.env.TRAVIS_PULL_REQUEST).match(
     /^(0|false|undefined)$/gi
   ),
-  masterBranch = String(process.env.TRAVIS_BRANCH).match(/^master$/gi),
-  automate = (ci && !pullRequest && masterBranch) || argv.automate;
+  mainBranch = String(process.env.TRAVIS_BRANCH).match(/^main$/gi),
+  automate = (ci && !pullRequest && mainBranch) || argv.automate;
 
 var sauceLabsLaunchers = {
   sl_chrome: {

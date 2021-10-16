@@ -33,7 +33,7 @@ tags:
   <div class="compare-grid md:grid" style="--cols: {{ compare.players | length }}">
     <div class="grid-cell">
       <h3 class="text-2xl">Compare platforms</h3>
-      <p class="text-xs ml-0.5">Based on this <a class="underline" href="https://github.com/playerxo/playerx/tree/master/bench" target="_blank">bench</a> measured with MUX data.</p>
+      <p class="text-xs ml-0.5">Based on this <a class="underline" href="https://github.com/playerxo/playerx/tree/main/bench" target="_blank">bench</a> measured with MUX data.</p>
     </div>
     {%- for player in players | sort(true, false, 'viewer_experience_score') -%}
       {% if compare.players[player.key] %}
