@@ -11,11 +11,7 @@ const argv = minimist(process.argv.slice(2));
 
 var coverage = String(process.env.COVERAGE) === 'true',
   ci = String(process.env.CI).match(/^(1|true)$/gi),
-  pullRequest = !String(process.env.TRAVIS_PULL_REQUEST).match(
-    /^(0|false|undefined)$/gi
-  ),
-  mainBranch = String(process.env.TRAVIS_BRANCH).match(/^main$/gi),
-  automate = (ci && !pullRequest && mainBranch) || argv.automate;
+  automate = ci && String(process.env.RUN_SAUCE_LABS) === 'true' || argv.automate;
 
 var sauceLabsLaunchers = {
   sl_chrome: {
@@ -85,18 +81,13 @@ module.exports = function (config) {
     sauceLabs: {
       extendedDebugging: true,
       public: 'public restricted',
-      build:
-        'CI #' +
-        process.env.TRAVIS_BUILD_NUMBER +
-        ' (' +
-        process.env.TRAVIS_BUILD_ID +
-        ')',
+      build: `CI #${process.env.GITHUB_RUN_NUMBER} (${process.env.GITHUB_RUN_ID})`,
       tunnelIdentifier:
-        process.env.TRAVIS_JOB_NUMBER ||
+        process.env.GITHUB_RUN_NUMBER ||
         'local' + require('./package.json').version,
       connectLocationForSERelay: 'localhost',
       connectPortForSERelay: 4445,
-      startConnect: false,
+      startConnect: !!automate,
     },
 
     // browserLogOptions: { terminal: true },
