@@ -14,7 +14,7 @@ layout: layouts/docs.njk
 
 The `<plx-schema>` element makes a request to an endpoint with oEmbed format and populates the `.data` property with the response. By default it will use the [Playerx oEmbed API](https://github.com/playerxo/oembed) which adds some additional structured data like duration, description and upload date.
 
-By adding the `seo` attribute it will render the [structured data](https://schema.org/VideoObject) for the embedded media in [JSON-LD](https://json-ld.org/) format.
+By adding the `seo` attribute it will render the [structured data](https://schema.org/VideoObject) for the embedded media in [JSON-LD](https://json-ld.org/) format.  See the validation at [validator.schema.org](https://validator.schema.org/#url=https%3A%2F%2Fdev.playerx.io%2Fdocs%2Fschema%2F) for the [current page](https://validator.schema.org/#url=https%3A%2F%2Fdev.playerx.io%2Fdocs%2Fschema%2F).
 
 The element can be used independently by defining a `src` attribute or it can be nested in a `<player-x>` element where it will use the current source.
 
