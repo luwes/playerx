@@ -1,4 +1,4 @@
-<aside class="menu">
+<aside class="menu sticky top-8">
   {% set navPages = collections.docs | eleventyNavigation %}
   {%- for parent in navPages -%}
     <p class="menu-label">
@@ -7,7 +7,9 @@
     <ul class="menu-list">
       {%- for child in parent.children -%}
         <li>
-          <a class="{% if child.url == page.url %}is-active{% endif %}" href="{{ child.url }}">{{ child.key }}</a>
+          <a class="{% if child.url == page.url %}is-active{% endif %}" href="{{ child.url }}">
+            {{ child.key }}
+          </a>
         </li>
       {%- endfor -%}
     </ul>
