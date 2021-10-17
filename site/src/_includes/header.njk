@@ -16,7 +16,7 @@
         {%- set navPages = collections.main | eleventyNavigation -%}
         {%- for entry in navPages -%}
           <div id="menu-item-{{ entry.key | lower }}" class="relative inline-block text-left">
-            <a id="menu-link-{{ entry.key | lower }}" href="{% if entry.url %}{{ entry.url }}{% else %}#{% endif %}" class="inline-flex justify-center w-full rounded-md px-4 py-1 bg-white leading-5 text-gray-700 hover:text-gray-500 active:text-gray-800 transition ease-in-out duration-150 {% if entry.url == page.url or entry.key in tags %} underline{% endif %}"{% if entry.children | length %} aria-haspopup="true"{% endif %}>
+            <a id="menu-link-{{ entry.key | lower }}" href="{% if entry.url %}{{ entry.url }}{% else %}#{% endif %}" class="inline-flex justify-center w-full rounded-md px-4 py-1 bg-white leading-5 text-gray-700 hover:text-gray-500 active:text-gray-800 transition ease-in-out duration-150 {% if entry.url == page.url or entry.key in tags|default([]) %} underline{% endif %}"{% if entry.children | length %} aria-haspopup="true"{% endif %}>
               {{- entry.title -}}
               {%- if entry.children | length -%}
                 <!-- Heroicon name: chevron-down -->
