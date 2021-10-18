@@ -35,13 +35,12 @@ var sauceLabsLaunchers = {
     platformName: 'Windows 10',
     acceptInsecureCerts: true,
   },
-  sl_safari: {
-    base: 'SauceLabs',
-    browserName: 'safari',
-    browserVersion: '13',
-    platformName: 'macOS 10.13',
-  },
-
+  // sl_safari: {
+  //   base: 'SauceLabs',
+  //   browserName: 'safari',
+  //   browserVersion: '13',
+  //   platformName: 'macOS 10.13',
+  // },
   // sl_ie_11: {
   //   base: 'SauceLabs',
   //   browserName: 'internet explorer',
