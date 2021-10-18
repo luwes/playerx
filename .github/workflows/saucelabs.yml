@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  karma:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -31,23 +31,14 @@ jobs:
             ${{ runner.os }}-yarn-
       - run: yarn install --frozen-lockfile
 
-      - name: Karma
+      - name: Run tests
         env:
           CI: true
           COVERAGE: true
           RUN_SAUCE_LABS: true
           SAUCE_USERNAME: ${{secrets.SAUCE_USERNAME}}
           SAUCE_ACCESS_KEY: ${{secrets.SAUCE_ACCESS_KEY}}
-        run: |
-          hostname -I
-          yarn test --single-run --console --stack
-
-  codecov:
-    needs: karma
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+        run: yarn test --single-run --console --stack
 
       - name: Code coverage
-        run: yarn run coverage
+        run: yarn coverage
