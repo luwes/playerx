@@ -38,7 +38,7 @@ Include this script before importing Playerx.
 <script src="https://unpkg.com/playerx/dist/polyfills.umd.js"></script>
 ```
 
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/playerx.svg?auth=69feae8b96b9220ac0137e4863ea91f8&sanitize=true&v=6)](https://saucelabs.com/u/luwes)
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/luwes.svg?auth=f009eb1eac940984cc9f7e82ac81de04&sanitize=true&v=6)](https://saucelabs.com/u/luwes)
 
 
 ## Status

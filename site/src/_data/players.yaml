@@ -46,10 +46,10 @@
     - https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8
     - https://stream.mux.com/KHdaCPpki1o4PUCMWfAXFbrHy2gBosxdxZISdvFJGLQ.m3u8
   video_startup_time: 100
-  viewer_experience_score: 0.9444311115756092
+  viewer_experience_score: 0.9444317332617156
   player_startup_time: 328.515625
-  smoothness_score: 0.8875230593853686
-  rebuffer_percentage: 0.012944175998566256
+  smoothness_score: 0.8875131422692949
+  rebuffer_percentage: 0.012945728585527002
 - key: videojs
   name: video.js
   compare_name: MUX
@@ -117,11 +117,11 @@
     - https://studio.brightcove.com/products/videocloud/media/videos/5686632036001
   options:
     account: 1752604059001
-  viewer_experience_score: 0.9043381619527473
+  viewer_experience_score: 0.904331625246042
   video_startup_time: 81
   player_startup_time: 676
-  smoothness_score: 0.8745772680325538
-  rebuffer_percentage: 0.01738516482457356
+  smoothness_score: 0.8745324937367218
+  rebuffer_percentage: 0.01739066481913824
 - key: vimeo
   name: Vimeo
   color: '#00ADEF'
