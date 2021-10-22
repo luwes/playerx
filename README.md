@@ -13,7 +13,7 @@
 - **Uniform player API** across player platforms. Mimics the `HTMLMediaElement` API when possible.
 - **UI framework independent**, intentionally uses no specific framework to have great interop across the board and keep the bundle size in check.
 - **Responsive** out of the box and easy attributes to maintain a specific aspect-ratio. 
-- **Extensible** with powerful add-ons like [custom previews](https://dev.playerx.io/docs/preview/), [analytics](https://dev.playerx.io/docs/mux/), [SEO](https://dev.playerx.io/docs/schema/), custom skins, etc.
+- **Extensible** with powerful add-ons like [custom previews](https://dev.playerx.io/docs/preview/), [analytics](https://dev.playerx.io/docs/mux/), [SEO](https://dev.playerx.io/docs/schema/), etc.
 
 
 ## Usage ([Codesandbox](https://codesandbox.io/s/hello-playerx-22ku4))
@@ -35,7 +35,7 @@ Playerx supports modern browsers and IE11+ (requires some polyfills).
 Include this script before importing Playerx.
 
 ```js
-<script src="//unpkg.com/playerx/dist/polyfills.umd.js"></script>
+<script src="https://unpkg.com/playerx/dist/polyfills.umd.js"></script>
 ```
 
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/playerx.svg?auth=69feae8b96b9220ac0137e4863ea91f8&sanitize=true&v=6)](https://saucelabs.com/u/luwes)
