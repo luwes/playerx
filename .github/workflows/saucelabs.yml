@@ -36,8 +36,8 @@ jobs:
           CI: true
           COVERAGE: true
           RUN_SAUCE_LABS: true
-          SAUCE_USERNAME: ${{secrets.SAUCE_USERNAME}}
-          SAUCE_ACCESS_KEY: ${{secrets.SAUCE_ACCESS_KEY}}
+          SAUCE_USERNAME: ${{secrets.KARMA_SAUCE_USERNAME}}
+          SAUCE_ACCESS_KEY: ${{secrets.KARMA_SAUCE_ACCESS_KEY}}
         run: yarn test --single-run --console --stack
 
       - name: Code coverage
