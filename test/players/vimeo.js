@@ -1,6 +1,6 @@
 import { testPlayer } from '../player.js';
 
-const src = 'https://vimeo.com/357274789';
+const src = 'https://vimeo.com/638369396';
 const duration = 46;
 
 const tests = {

@@ -3,7 +3,7 @@ import test from 'tape';
 import { PlxPreview, styles } from '../src/preview/preview.js';
 
 // let container;
-// const src = 'https://vimeo.com/357274789';
+// const src = 'https://vimeo.com/638369396';
 // const image = 'https://i.vimeocdn.com/video/810965406_960.jpg';
 
 test('PlxPreview creates an element', (t) => {
@@ -47,15 +47,15 @@ test('PlxPreview defining html creates an img element with src, alt, aria-label'
 
 test('PlxPreview defining html with oembedurl', async (t) => {
   document.body.innerHTML =
-    '<div style="width: 300px"><plx-preview src="https://vimeo.com/357274789"></plx-preview></div>';
+    '<div style="width: 300px"><plx-preview src="https://vimeo.com/638369396"></plx-preview></div>';
 
   const preview = document.querySelector('plx-preview');
 
   await preview.load();
 
   t.equal(
-    preview.innerHTML.replace(/810965406[^"]*/, '810965406'),
-    `<style> ${styles}</style><picture><img src="https://i.vimeocdn.com/video/810965406" alt="Travis Scott - Made in America" aria-label="Travis Scott - Made in America"></picture>`
+    preview.innerHTML.replace(/1283300311[^"]*/, '1283300311'),
+    `<style> ${styles}</style><picture><img src="https://i.vimeocdn.com/video/1283300311" alt="Travis Scott - Made in America" aria-label="Travis Scott - Made in America"></picture>`
   );
 
   preview.remove();

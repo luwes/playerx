@@ -46,14 +46,14 @@ title: "Playerx for Developers"
           <div aria-hidden="true" class="hidden md:block text-white font-extralight text-opacity-50 flex-none py-4 pr-4 text-right select-none" style="width:50px">1</div>
           <div class="highlight-dark highlight-clear pt-4 pb-4 flex-auto relative block text-white overflow-auto">
             {%- highlight "html" -%}
-              <player-x src="https://vimeo.com/357274789" controls></player-x>
+              <player-x src="{{ site.defaultPlayerSrc }}" controls></player-x>
             {%- endhighlight -%}
           </div>
         </pre>
 
-        <player-x class="bg-black shadow-lg" src="https://vimeo.com/357274789" controls>
+        <player-x class="bg-black shadow-lg" src="{{ site.defaultPlayerSrc }}" controls>
           <plx-media>
-            <iframe src="https://player.vimeo.com/video/357274789?autoplay=0&amp;controls=1&amp;url=https%3A%2F%2Fvimeo.com%2F357274789&amp;transparent=0&amp;autopause=0&amp;title=0&amp;byline=0&amp;portrait=0" width="100%" height="100%" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" data-ready="true"></iframe>
+            <iframe src="{{ site.defaultIframeSrc }}?autoplay=0&amp;controls=1&amp;transparent=0&amp;autopause=0&amp;title=0&amp;byline=0&amp;portrait=0" width="100%" height="100%" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" data-ready="true"></iframe>
           </plx-media>
         </player-x>
       </div>

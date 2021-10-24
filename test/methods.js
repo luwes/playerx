@@ -1,7 +1,7 @@
 import test from 'tape';
 import { Playerx } from '../src/playerx/index.js';
 
-const src = 'https://vimeo.com/357274789';
+const src = 'https://vimeo.com/638369396';
 
 test('creates an element', (t) => {
   const player = new Playerx();

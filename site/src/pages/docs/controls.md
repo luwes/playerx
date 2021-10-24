@@ -14,7 +14,7 @@ layout: layouts/docs.njk
 The `<plx-controls>` element 
 
 <div class="md:w-4/5 relative bg-black">
-  <player-x loading="user" controls autoplay>
+  <player-x loading="user" src="{{ site.defaultPlayerSrc }}" controls autoplay>
     <plx-media></plx-media>
     <plx-controls>
       <button is="plx-play-button"></button>
@@ -24,7 +24,7 @@ The `<plx-controls>` element
 </div>
 
 ```html
-<player-x loading="user" src="https://vimeo.com/357274789" controls autoplay>
+<player-x loading="user" src="{{ site.defaultPlayerSrc }}" controls autoplay>
   <plx-media></plx-media>
   <plx-controls>
     <button is="plx-play-button"></button>

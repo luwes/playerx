@@ -23,13 +23,13 @@ The element can be used independently by defining a `src` attribute or it can be
 Here your Vimeo video has SEO added just by dropping in the schema element with the `seo` attribute.
 
 <div class="md:w-4/5 relative bg-black">
-  <player-x src="https://vimeo.com/357274789" controls>
+  <player-x src="{{ site.defaultPlayerSrc }}" controls>
     <plx-schema seo oembedurl="{{ site.oEmbedUrl }}/oembed"></plx-schema>
   </player-x>
 </div>
 
 ```html
-<player-x src="https://vimeo.com/357274789" controls>
+<player-x src="{{ site.defaultPlayerSrc }}" controls>
   <plx-schema seo></plx-schema>
 </player-x>
 ```
@@ -39,13 +39,13 @@ Here your Vimeo video has SEO added just by dropping in the schema element with 
 Use the element independently with a regular Vimeo iframe embed to improve search engine optimization for your Vimeo videos.
 
 <div class="md:w-4/5 relative bg-black">
-  <div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/357274789" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
-  <plx-schema seo src="https://vimeo.com/357274789" oembedurl="{{ site.oEmbedUrl }}/oembed"></plx-schema>
+  <div style="padding:56.25% 0 0 0;position:relative;"><iframe src="{{ site.defaultIframeSrc }}" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
+  <plx-schema seo src="{{ site.defaultPlayerSrc }}" oembedurl="{{ site.oEmbedUrl }}/oembed"></plx-schema>
 </div>
 
 ```html
-<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/357274789" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
-<plx-schema seo src="https://vimeo.com/357274789"></plx-schema>
+<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="{{ site.defaultIframeSrc }}" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
+<plx-schema seo src="{{ site.defaultPlayerSrc }}"></plx-schema>
 ```
 
 ## Initial structured data
@@ -53,7 +53,7 @@ Use the element independently with a regular Vimeo iframe embed to improve searc
 It's possible to pre-populate the structured data by manually adding a script element on page load. Using progressive enhancement the `<plx-schema>` element will assign any properties it gets from the oEmbed response.
 
 ```html
-<plx-schema seo src="https://vimeo.com/357274789">
+<plx-schema seo src="{{ site.defaultPlayerSrc }}">
   <script type="application/ld+json">{"musicBy": "Neil Young"}</script>
 </plx-schema>
 ```

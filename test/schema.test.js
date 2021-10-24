@@ -2,7 +2,7 @@ import test from 'tape';
 import { PlxSchema } from '../src/schema/schema.js';
 
 // let container;
-// const src = 'https://vimeo.com/357274789';
+// const src = 'https://vimeo.com/638369396';
 // const image = 'https://i.vimeocdn.com/video/810965406_960.jpg';
 
 test('PlxSchema creates an element', (t) => {
@@ -19,9 +19,9 @@ test('PlxSchema setting src creates a script element', (t) => {
   container.appendChild(schema);
   t.equal(container.innerHTML, '<plx-schema></plx-schema>');
 
-  schema.src = 'https://vimeo.com/357274789';
+  schema.src = 'https://vimeo.com/638369396';
 
-  t.equal(container.innerHTML, '<plx-schema src="https://vimeo.com/357274789"></plx-schema>');
+  t.equal(container.innerHTML, '<plx-schema src="https://vimeo.com/638369396"></plx-schema>');
 
   document.body.removeChild(container);
 
