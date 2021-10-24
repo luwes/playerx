@@ -11,7 +11,7 @@ import {
 const IMAGE_EXTENSIONS = /\.(jpe?g|gif|a?png|svg|webp|avif)($|\?)/i;
 
 export const styles = css`
-  :host-context(player-x) {
+  player-x plx-preview {
     display: block;
     position: absolute;
     top: 0;
@@ -20,13 +20,13 @@ export const styles = css`
     height: 100%;
   }
 
-  :host img {
+  plx-preview img {
     position: relative;
     width: 100%;
     height: auto;
   }
 
-  :host[hidden] {
+  plx-preview[hidden] {
     pointer-events: none;
   }
 `;
@@ -39,10 +39,7 @@ export class PlxPreview extends HTMLElement {
   constructor() {
     super();
 
-    if (!this.shadowRoot) {
-      const shadow = this.attachShadow({ mode: 'open' });
-      getStyle(shadow).firstChild.data += styles;
-    }
+    getStyle(this).firstChild.data += styles;
   }
 
   get player() {
@@ -109,16 +106,16 @@ export class PlxPreview extends HTMLElement {
         Object.assign(data, await requestJson(url));
       }
 
-      await addThumbnail(this.shadowRoot, data);
+      await addThumbnail(this, data);
     } catch (error) {
       console.error(error);
     }
   }
 
   unload() {
-    let pic = this.shadowRoot.querySelector('picture,img');
+    let pic = this.querySelector('picture,img');
     if (pic) {
-      this.shadowRoot.removeChild(pic);
+      this.removeChild(pic);
     }
   }
 
