@@ -105,10 +105,11 @@ player = hy(dhtml`
   ${() => showing() && (player = dhtml`
     <player-x ...${props}>
       <plx-media></plx-media>
-      <plx-script src="${player?.children?.[1].src}"></plx-script>
+      <plx-schema></plx-schema>
+      <plx-script src="${player?.children?.[2].src}"></plx-script>
       <plx-mux
-        data-env-key="${getParam('muxenv', player?.children?.[2]?.dataset.envKey)}"
-        debug="${player?.children?.[2]?.debug}"
+        data-env-key="${getParam('muxenv', player?.children?.[3]?.dataset.envKey)}"
+        debug="${player?.children?.[3]?.debug}"
       ></plx-mux>
     <//>
   `)}
