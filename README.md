@@ -46,11 +46,6 @@ Include this script before importing Playerx.
 Playerx is in beta status, it can be used in production but use at your descretion.
 
 
-## ⚠️ License
-
-Be sure to read the [license](/LICENSE.md) terms. In most cases Playerx is free to use but if your project profits from this software you should buy a commercial license at [dev.playerx.io](https://dev.playerx.io/).
-
-
 ## Docs
 
 ### Properties
