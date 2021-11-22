@@ -3,5 +3,5 @@ url: http://dev.playerx.test
 apiUrl: http://api.playerx.test:1337
 oEmbedUrl: http://api.playerx.test:8787
 githubUrl: https://github.com/playerxo/playerx
-defaultPlayerSrc: https://vimeo.com/638369396
-defaultIframeSrc: https://player.vimeo.com/video/638369396
+defaultPlayerSrc: https://vimeo.com/648359100
+defaultIframeSrc: https://player.vimeo.com/video/648359100
