@@ -1,7 +1,7 @@
 // https://developer.jwplayer.com/jwplayer/docs/jw8-javascript-api-reference
 
 import { jwplayer as MATCH_SRC } from '../constants/src-regex.js';
-import { getMetaId, createPlayPromise, PlayerError } from '../helpers.js';
+import { getMetaId, PlayerError } from '../helpers.js';
 import {
   createElement,
   removeNode,
@@ -9,7 +9,6 @@ import {
   publicPromise,
   promisify,
   requestJson,
-  createTimeRanges,
 } from '../utils.js';
 
 const API_URL = 'https://ssl.p.jwpcdn.com/player/v/8.12.5/jwplayer.js';
@@ -66,6 +65,10 @@ export function createPlayer(element) {
     element.setCache('error', new PlayerError(code, message));
   }
 
+  function getVideo() {
+    return element.querySelector('.jw-video');
+  }
+
   const eventAliases = {
     ended: 'complete',
     playing: 'play',
@@ -93,17 +96,7 @@ export function createPlayer(element) {
     },
 
     get api() {
-      return api;
-    },
-
-    get videoWidth() {
-      const quality = api.getVisualQuality();
-      return quality ? quality.level.width : undefined;
-    },
-
-    get videoHeight() {
-      const quality = api.getVisualQuality();
-      return quality ? quality.level.height : undefined;
+      return getVideo();
     },
 
     ready() {
@@ -113,12 +106,6 @@ export function createPlayer(element) {
     remove() {
       api.remove();
       removeNode(div);
-    },
-
-    play() {
-      // jwplayer.play doesn't return a play promise.
-      api.play();
-      return createPlayPromise(element);
     },
 
     on(eventName, callback) {
@@ -134,42 +121,6 @@ export function createPlayer(element) {
     setSrc() {
       // Must return promise here to await ready state.
       return element.load();
-    },
-
-    set currentTime(seconds) {
-      api.seek(seconds);
-    },
-
-    get currentTime() {
-      return api.getPosition();
-    },
-
-    set volume(volume) {
-      api.setVolume(volume * 100);
-    },
-
-    get volume() {
-      return api.getVolume() / 100;
-    },
-
-    set muted(muted) {
-      api.setMute(muted);
-    },
-
-    get muted() {
-      return api.getMute();
-    },
-
-    set loop(repeat) {
-      api.setConfig({ repeat });
-    },
-
-    get loop() {
-      return api.getConfig().repeat;
-    },
-
-    getBuffered() {
-      return createTimeRanges(0, (api.getBuffer() / 100) * api.getDuration());
     },
   };
 
