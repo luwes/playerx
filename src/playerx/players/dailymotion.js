@@ -49,7 +49,7 @@ export function createPlayer(element) {
       width: '100%',
       height: '100%',
       events: {
-        apiready: ready.resolve,
+        videochange: ready.resolve,
       },
     });
     api.allow = allow;
