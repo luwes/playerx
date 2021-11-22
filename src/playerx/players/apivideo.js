@@ -43,7 +43,6 @@ export function createPlayer(element) {
   }
 
   async function init() {
-    const mediaAdded = promisify(element.addEventListener, element)('media');
     const opts = getOptions();
     const metaId = getMetaId(MATCH_SRC, element.src);
     const src = `${EMBED_BASE}/${metaId}#${serialize(opts)}`;
@@ -51,7 +50,6 @@ export function createPlayer(element) {
     iframe = createEmbedIframe({ src, id });
 
     const PlayerSdk = await loadScript(opts.apiUrl || API_URL, API_GLOBAL);
-    await mediaAdded;
     api = new PlayerSdk(`#${id}`);
     await promisify(api.addEventListener, api)('ready');
 

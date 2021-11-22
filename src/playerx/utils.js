@@ -64,9 +64,10 @@ export function removeNode(node) {
   if (parentNode) parentNode.removeChild(node);
 }
 
-export function loadScript(src, globalName, readyFnName) {
+export async function loadScript(src, globalName, readyFnName) {
   if (globalName && self[globalName]) {
-    return Promise.resolve(self[globalName]);
+    await delay(0);
+    return self[globalName];
   }
 
   if (typeof src === 'string') {
@@ -74,7 +75,7 @@ export function loadScript(src, globalName, readyFnName) {
   }
 
   if ('noModule' in HTMLScriptElement.prototype && src.nomodule != null) {
-    return Promise.resolve();
+    return;
   }
 
   return new Promise(function(resolve, reject) {
