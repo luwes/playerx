@@ -149,8 +149,6 @@ export class PlayerxElement extends PlxElement {
         value,
       });
 
-      await this._videoShim.ready();
-
       if (name === 'src') {
         // Give a chance to add more properties on load.
         await delay(0);
