@@ -10,6 +10,7 @@ import {
   property,
 } from './element.js';
 import {
+  delay,
   getStyle,
   extend,
   defaults,
@@ -115,6 +116,9 @@ export class PlayerxElement extends PlxElement {
 
     this._player = {};
 
+    this._elementReady = publicPromise();
+    this._videoShim = createVideoShim(this);
+
     this.config = getInlineJSON(this).config || {};
     this.meta = getInlineJSON(this).meta || {};
 
@@ -129,9 +133,6 @@ export class PlayerxElement extends PlxElement {
       this._responsiveStyle,
       override(this, this._player)
     );
-
-    this._elementReady = publicPromise();
-    this._videoShim = createVideoShim(this);
   }
 
   disconnectedCallback() {
@@ -148,9 +149,11 @@ export class PlayerxElement extends PlxElement {
         value,
       });
 
+      await this._videoShim.ready();
+
       if (name === 'src') {
         // Give a chance to add more properties on load.
-        await Promise.resolve();
+        await delay(0);
         this.load();
       } else {
         this._playerSet(name);
@@ -196,17 +199,16 @@ export class PlayerxElement extends PlxElement {
     this.fire(Events.LOADSRC);
 
     if (canPlayerLoadSource(this)) {
-      const proto = Object.getPrototypeOf(this);
-      const prevLoad = proto.load;
+      const prevLoad = this.load;
 
       // If `element.load` is called in the player, re-attach events.
       this._initEvents = false;
       // Here to use `element.load()` in players. Preventing an endless loop.
       // When a player calls this it is meant to re-init the player.
-      proto.load = () => (this._initEvents = true) && this._init();
+      this.load = () => (this._initEvents = true) && this._init();
 
       await this._playerSet('src');
-      proto.load = prevLoad;
+      this.load = prevLoad;
 
       await this._afterLoad(this._initEvents);
       this.fire(Events.LOADEDSRC);

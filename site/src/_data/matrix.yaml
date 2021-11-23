@@ -1,0 +1,12 @@
+players:
+  apivideo: true
+  vimeo: true
+  youtube: true
+  dailymotion: true
+  brightcove: false
+  facebook: true
+  streamable: true
+  wistia: true
+  jwplayer: true
+  vidyard: true
+  videojs: true

@@ -54,4 +54,13 @@ export default [
       name: 'site',
     },
   },
+  {
+    ...config,
+    input: 'src/js/matrix.js',
+    output: {
+      ...config.output,
+      file: 'public/js/matrix.js',
+      name: 'matrix',
+    },
+  },
 ];

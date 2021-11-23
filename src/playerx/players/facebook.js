@@ -43,6 +43,8 @@ export function createPlayer(element) {
       'data-autoplay': '' + opts.autoplay,
       'data-allowfullscreen': 'true',
       'data-controls': '' + opts.controls,
+      'data-width': '1920',
+      'data-height': '1080',
     });
 
     const FB = await loadScript(opts.apiUrl || API_URL, API_GLOBAL, API_GLOBAL_READY);

@@ -1,0 +1,71 @@
+---
+permalink: matrix/
+title: "Playerx - Video Matrix"
+menu: Matrix
+eleventyNavigation:
+  key: Matrix
+  order: 4
+tags:
+  - main
+---
+
+{% extends "layouts/base.njk" %}
+
+{% block head %}
+  {{ super() }}
+
+  <script defer src="/js/matrix.js"></script>
+{% endblock %}
+
+{% block content %}
+<main class="relative overflow-auto flex-grow flex flex-col">
+  <div class="controls py-4 px-4 border-t flex">
+    <div id="controls-1" class="w-full lg:w-6/12 flex">
+      <button class="btn btn-clip1 btn-active" data-clip="1" title="The World in HDR 4k 60fps">Clip 1</button>
+      <button class="btn btn-clip2" data-clip="2" title="Caminandes 1: Llama Drama in 4k">Clip 2</button>
+
+      <button class="btn play-pause ml-4">Play</button>
+      <button class="btn seek0">Seek to 0s</button>
+
+      <div class="ml-3 w-1/4 flex">
+        <input id="current-time-range" class="flex-grow self-center appearance-none bg-cool-gray-400 h-2 rounded-lg" type="range" min="0" max="1" step="any" value="0">
+      </div>
+    </div>
+    <div id="controls-2" class="w-full lg:w-6/12 flex justify-end">
+      <div class="hidden md:flex items-center text-cool-gray-600">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+        </svg>
+        <div id="grid-btns" class="flex">
+          <button class="grid-btn">2</button>
+          <button class="grid-btn">3</button>
+          <button class="grid-btn underline">4</button>
+          <button class="grid-btn">5</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="players" class="md:grid grid-cols-4">
+    {%- for player in players | sort(true, false, 'viewer_experience_score') -%}
+      {% if matrix.players[player.key] %}
+        <div class="bg-black relative">
+          <player-x muted src="{{ player.clips[0] }}" config="{{ playerconfig }}" data-clip1="{{ player.clips[0] }}" data-clip2="{{ player.clips[2] }}"></player-x>
+          <div class="info absolute bottom-3 right-5 bg-black bg-opacity-90 px-3 py-1 rounded-sm">
+            <h3 class="text-yellow-300 text-sm">
+              <a href="{{ player.url }}" target="_blank">
+                {% if player.compare_name %}
+                  {{ player.compare_name }}
+                {% else %}
+                  {{ player.name }}
+                {% endif %}
+              </a>
+            </h3>
+          </div>
+        </div>
+      {% endif %}
+    {%- endfor -%}
+  </div>
+
+</main>
+{% endblock %}
