@@ -1,5 +1,5 @@
 players:
-  apivideo: true
+
   vimeo: true
   youtube: true
   dailymotion: true
@@ -9,4 +9,4 @@ players:
   wistia: true
   jwplayer: true
   vidyard: true
-  videojs: true
+  mux: true

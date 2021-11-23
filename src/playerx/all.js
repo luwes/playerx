@@ -25,6 +25,10 @@ Object.assign(options.players, {
     canPlay: canPlay.jwplayer,
     lazyPlayer: () => import('./players/jwplayer.js'),
   },
+  muxvideo: {
+    canPlay: canPlay.muxvideo,
+    lazyPlayer: () => import('./players/muxvideo.js'),
+  },
   shakaplayer: {
     canPlay: canPlay.shakaplayer,
     lazyPlayer: () => import('./players/shakaplayer.js'),

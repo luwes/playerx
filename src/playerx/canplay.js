@@ -34,6 +34,7 @@ export const dashjs = (src) => MATCH_SRC.DASH_EXTENSIONS.test(src);
 export const facebook = (src) => MATCH_SRC.facebook.test(src);
 export const hlsjs = (src) => MATCH_SRC.HLS_EXTENSIONS.test(src);
 export const jwplayer = (src) => MATCH_SRC.jwplayer.test(src);
+export const muxvideo = (src) => MATCH_SRC.muxvideo.test(src);
 export const shakaplayer = (src) => MATCH_SRC.shakaplayer.test(src);
 export const soundcloud = (src) => MATCH_SRC.soundcloud.test(src);
 export const streamable = (src) => MATCH_SRC.streamable.test(src);

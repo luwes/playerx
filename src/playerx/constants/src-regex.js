@@ -20,3 +20,4 @@ export const apivideo = /api\.video\/(?:videos\/)?(\w+)/;
 export const videojs = /\?player=videojs/;
 export const shakaplayer = /\?player=shakaplayer/;
 export const theoplayer = /\?player=theoplayer/;
+export const muxvideo = /\?player=muxvideo/;
