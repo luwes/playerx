@@ -20,7 +20,13 @@ module.exports = {
     enabled: process.env.NODE_ENV === 'prod',
     mode: 'layers',
     layers: ['base', 'components', 'utilities'],
-    content: ['./src/**/*.{html,njk,md,js}']
+    content: ['./src/**/*.{html,njk,md,js}'],
+    safelist: [
+      'grid-cols-2',
+      'grid-cols-3',
+      'grid-cols-4',
+      'grid-cols-5',
+    ]
   },
   plugins: [
     ui,
