@@ -39,6 +39,7 @@ exports.config = {
 
   updateJob: false,
   specs: [
+    'players/muxvideo.js',
     'players/brightcove.js',
     'players/dailymotion.js',
     'players/hlsjs.js',
