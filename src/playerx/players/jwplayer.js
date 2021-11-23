@@ -1,7 +1,7 @@
 // https://developer.jwplayer.com/jwplayer/docs/jw8-javascript-api-reference
 
 import { jwplayer as MATCH_SRC } from '../constants/src-regex.js';
-import { getMetaId, PlayerError } from '../helpers.js';
+import { getMetaId, createPlayPromise, PlayerError } from '../helpers.js';
 import {
   createElement,
   removeNode,
@@ -101,6 +101,11 @@ export function createPlayer(element) {
 
     ready() {
       return ready;
+    },
+
+    play() {
+      getVideo().click();
+      return createPlayPromise(element);
     },
 
     remove() {
