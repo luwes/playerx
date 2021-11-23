@@ -9,4 +9,4 @@ players:
   wistia: true
   jwplayer: true
   vidyard: true
-  mux: true
+  muxvideo: true
