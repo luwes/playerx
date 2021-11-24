@@ -8,7 +8,7 @@ import {
   getFileName,
 } from '../utils.js';
 
-const MUX_VIDEO_URL = 'https://unpkg.com/@mux-elements/mux-video@0.1.6/dist/index.js';
+const API_URL = 'https://unpkg.com/@mux-elements/mux-video@0.1.6/dist/index.js';
 
 export function createPlayer(element) {
   let video;
@@ -34,7 +34,7 @@ export function createPlayer(element) {
   async function load(opts) {
     reset();
 
-    await loadScript(opts.muxVideoUrl || MUX_VIDEO_URL);
+    await loadScript(opts.apiUrl || API_URL);
     Object.assign(video, opts);
   }
 
@@ -81,7 +81,6 @@ export function createPlayer(element) {
 
     async setSrc() {
       ready = publicPromise();
-
       await load(getOptions());
       ready.resolve();
     },
