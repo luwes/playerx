@@ -21,3 +21,4 @@ export const videojs = /\?player=videojs/;
 export const shakaplayer = /\?player=shakaplayer/;
 export const theoplayer = /\?player=theoplayer/;
 export const muxvideo = /\?player=muxvideo/;
+export const bitmovin = /\?player=bitmovin/;

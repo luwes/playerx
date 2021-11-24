@@ -28,6 +28,7 @@ export const html = (src) => {
 };
 
 export const apivideo = (src) => MATCH_SRC.apivideo.test(src);
+export const bitmovin = (src) => MATCH_SRC.bitmovin.test(src);
 export const brightcove = (src) => MATCH_SRC.brightcove.test(src);
 export const dailymotion = (src) => MATCH_SRC.dailymotion.test(src);
 export const dashjs = (src) => MATCH_SRC.DASH_EXTENSIONS.test(src);

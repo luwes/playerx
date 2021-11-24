@@ -9,6 +9,10 @@ Object.assign(options.players, {
     canPlay: canPlay.apivideo,
     lazyPlayer: () => import('./players/apivideo.js'),
   },
+  bitmovin: {
+    canPlay: canPlay.bitmovin,
+    lazyPlayer: () => import('./players/bitmovin.js'),
+  },
   brightcove: {
     canPlay: canPlay.brightcove,
     lazyPlayer: () => import('./players/brightcove.js'),
