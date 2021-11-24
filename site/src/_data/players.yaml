@@ -60,11 +60,11 @@
     - https://stream.mux.com/r4rOE02cc95tbe3I00302nlrHfT023Q3IedFJW029w018KxZA.m3u8?player=muxvideo
     - https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8?player=muxvideo
     - https://stream.mux.com/KHdaCPpki1o4PUCMWfAXFbrHy2gBosxdxZISdvFJGLQ.m3u8?player=muxvideo
-  viewer_experience_score: 0.8754803488112014
+  viewer_experience_score: 0.8747721447419095
   player_startup_time: 506.25
   video_startup_time: 1296
-  smoothness_score: 0.8952771724084687
-  rebuffer_percentage: 0.010129291856957354
+  smoothness_score: 0.8941297736522313
+  rebuffer_percentage: 0.010230875605042244
 - key: wistia
   name: Wistia
   color: '#1E64F0'
@@ -155,11 +155,11 @@
     - https://studio.brightcove.com/products/videocloud/media/videos/5686632036001
   options:
     account: 1752604059001
-  viewer_experience_score: 0.828590637148355
+  viewer_experience_score: 0.8284497991969018
   video_startup_time: 81
   player_startup_time: 1181.640625
-  smoothness_score: 0.6805547521278448
-  rebuffer_percentage: 0.07364706437544608
+  smoothness_score: 0.6803539875477645
+  rebuffer_percentage: 0.07373190140061497
 - key: facebook
   name: Facebook
   color: '#1877F2'
