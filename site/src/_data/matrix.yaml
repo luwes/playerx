@@ -1,5 +1,5 @@
 players:
-
+  apivideo: true
   vimeo: true
   youtube: true
   dailymotion: true

@@ -50,6 +50,12 @@ export function createPlayer(element) {
     iframe = createEmbedIframe({ src, id });
 
     const PlayerSdk = await loadScript(opts.apiUrl || API_URL, API_GLOBAL);
+
+    // The api.video sdk script removes the window.default property while
+    // mux-embed relies on it to access window.default.XMLHttpRequest.
+    // Set it back here.
+    window.default = self;
+
     api = new PlayerSdk(`#${id}`);
     await promisify(api.addEventListener, api)('ready');
 
