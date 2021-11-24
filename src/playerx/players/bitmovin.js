@@ -1,6 +1,7 @@
 // https://bitmovin.com/docs/player/getting-started/web
 
 import {
+  addCssRule,
   createElement,
   loadScript,
   publicPromise,
@@ -8,6 +9,10 @@ import {
 
 const API_URL = 'https://cdn.bitmovin.com/player/web/8/bitmovinplayer.js';
 const API_GLOBAL = 'bitmovin';
+
+addCssRule('.bitmovin-no-controls .bmpui-ui-uicontainer', {
+  display: 'none',
+});
 
 export function createPlayer(element) {
   let api;
@@ -28,6 +33,7 @@ export function createPlayer(element) {
 
     ready = publicPromise();
     div = createElement('div');
+    div.classList.toggle('bitmovin-no-controls', !opts.controls);
 
     const bitmovin = await loadScript(opts.apiUrl || API_URL, API_GLOBAL);
     api = new bitmovin.player.Player(div, {
@@ -40,11 +46,15 @@ export function createPlayer(element) {
   }
 
   async function load(opts) {
+    div.classList.toggle('bitmovin-no-controls', !opts.controls);
+
     const srcConfig = {};
     if (opts.src.includes('.m3u8')) {
       srcConfig.hls = opts.src;
     }
+
     await api.load(srcConfig);
+
     if (opts.autoplay) {
       await api.play();
     }
@@ -57,19 +67,28 @@ export function createPlayer(element) {
   const methods = {
     key: 'bitmovin',
     name: 'Bitmovin',
-    version: '8.x.x',
     meta,
+
+    get version() { return api.version || ''; },
 
     get element() {
       return div;
     },
 
     get api() {
-      return api;
+      return api.getVideoElement();
     },
 
     ready() {
       return ready;
+    },
+
+    on(eventName, callback) {
+      api.getVideoElement().addEventListener(eventName, callback);
+    },
+
+    off(eventName, callback) {
+      api.getVideoElement().removeEventListener(eventName, callback);
     },
 
     async setSrc() {
@@ -78,24 +97,8 @@ export function createPlayer(element) {
       ready.resolve();
     },
 
-    set currentTime(seconds) {
-      api.seek(seconds);
-    },
-
-    set volume(volume) {
-      api.setVolume(volume * 100);
-    },
-
-    get volume() {
-      return api.getVolume() / 100;
-    },
-
-    set muted(muted) {
-      muted ? api.mute() : api.unmute();
-    },
-
-    get muted() {
-      return api.isMuted();
+    set controls(value) {
+      div.classList.toggle('bitmovin-no-controls', !value);
     },
   };
 
