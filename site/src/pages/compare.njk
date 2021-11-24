@@ -33,7 +33,7 @@ tags:
   <div class="compare-grid md:grid" style="--cols: {{ compare.players | length }}">
     <div class="grid-cell">
       <h3 class="text-2xl">Compare platforms</h3>
-      <p class="text-xs ml-0.5">Based on this <a class="underline" href="https://github.com/playerxo/playerx/tree/main/bench" target="_blank">bench</a> measured with MUX data.</p>
+      <p class="text-xs ml-0.5">Based on this <a class="underline" href="https://github.com/playerxo/playerx/tree/main/bench" target="_blank">bench</a> measured with <a class="underline" href="https://docs.mux.com/guides/data/understand-metric-definitions" target="_blank">MUX data</a>.</p>
     </div>
     {%- for player in players | sort(true, false, 'viewer_experience_score') -%}
       {% if compare.players[player.key] %}
@@ -87,6 +87,14 @@ tags:
             {% elif row.field == 'rebuffer_percentage' %}
               <span class="text-sm leading-none tracking-tight text-gray-900">
                 {{ (player.rebuffer_percentage * 100) | round }}%
+              </span>
+            {% elif row.field == 'video_quality_score' %}
+              <span class="text-sm leading-none tracking-tight text-gray-900">
+                {% if player.video_quality_score %}
+                  {{ (player.video_quality_score * 100) | round }}%
+                {% else %}
+                  N/A
+                {% endif %}
               </span>
             {% endif %}
           </div>
