@@ -72,6 +72,7 @@ exports.config = {
       'sauce:options': {
         ...sauceOptions,
         screenResolution: '1600x1200',
+        capturePerformance: true,
       },
       'plx:options': {
         page: 'players',
