@@ -17,6 +17,10 @@ Object.assign(options.players, {
     canPlay: canPlay.brightcove,
     lazyPlayer: () => import('./players/brightcove.js'),
   },
+  cloudflare: {
+    canPlay: canPlay.cloudflare,
+    lazyPlayer: () => import('./players/cloudflare.js'),
+  },
   dailymotion: {
     canPlay: canPlay.dailymotion,
     lazyPlayer: () => import('./players/dailymotion.js'),
