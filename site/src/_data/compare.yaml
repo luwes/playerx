@@ -42,3 +42,4 @@ players:
   jwplayer: true
   vidyard: true
   muxvideo: true
+  cloudflare: true
