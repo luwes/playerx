@@ -3,6 +3,7 @@
 import { jwplayer as MATCH_SRC } from '../constants/src-regex.js';
 import { getMetaId, createPlayPromise, PlayerError } from '../helpers.js';
 import {
+  addCssRule,
   createElement,
   removeNode,
   loadScript,
@@ -13,6 +14,10 @@ import {
 
 const API_URL = 'https://ssl.p.jwpcdn.com/player/v/8.12.5/jwplayer.js';
 const API_GLOBAL = 'jwplayer';
+
+addCssRule('.jw-no-controls [class*="jw-controls"], .jw-no-controls .jw-title', {
+  display: 'none !important',
+});
 
 export function createPlayer(element) {
   let api;
@@ -58,6 +63,13 @@ export function createPlayer(element) {
     api.on('error', onError);
 
     await promisify(api.on, api)('ready');
+
+    api.getContainer().classList.toggle('jw-no-controls', !opts.controls);
+
+    if (opts.autostart) {
+      element.play();
+    }
+
     ready.resolve();
   }
 
@@ -68,18 +80,6 @@ export function createPlayer(element) {
   function getVideo() {
     return element.querySelector('.jw-video');
   }
-
-  const eventAliases = {
-    ended: 'complete',
-    playing: 'play',
-    play: 'beforePlay',
-    ratechange: 'playbackRateChanged',
-    timeupdate: 'time',
-  };
-
-  const customEvents = {
-    ready: undefined,
-  };
 
   const meta = {
     get identifier() { return getMetaId(MATCH_SRC, element.src); },
@@ -114,18 +114,24 @@ export function createPlayer(element) {
     },
 
     on(eventName, callback) {
-      if (eventName in customEvents) return;
-      api.on(eventAliases[eventName] || eventName, callback);
+      getVideo().addEventListener(eventName, callback);
     },
 
     off(eventName, callback) {
-      if (eventName in customEvents) return;
-      api.off(eventAliases[eventName] || eventName, callback);
+      getVideo().removeEventListener(eventName, callback);
     },
 
     setSrc() {
       // Must return promise here to await ready state.
       return element.load();
+    },
+
+    set controls(value) {
+      api.getContainer().classList.toggle('jw-no-controls', !value);
+    },
+
+    get controls() {
+      return !api.getContainer().className.includes('jw-no-controls');
     },
   };
 

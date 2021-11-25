@@ -56,7 +56,7 @@ export function createPlayer(element) {
     await api.load(srcConfig);
 
     if (opts.autoplay) {
-      await api.play();
+      api.play();
     }
   }
 
