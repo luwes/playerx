@@ -100,6 +100,10 @@ export function createPlayer(element) {
     set controls(value) {
       div.classList.toggle('bitmovin-no-controls', !value);
     },
+
+    get controls() {
+      return !div.className.includes('bitmovin-no-controls');
+    },
   };
 
   init();
