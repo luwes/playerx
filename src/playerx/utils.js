@@ -255,7 +255,10 @@ function createTimeRangesObj(ranges) {
 
 export function serialize(props) {
   return Object.keys(props)
-    .map((key) => `${key}=${encodeURIComponent(props[key])}`)
+    .map((key) => {
+      if (props[key] == null) return '';
+      return `${key}=${encodeURIComponent(props[key])}`;
+    })
     .join('&');
 }
 

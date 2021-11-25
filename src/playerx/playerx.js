@@ -278,8 +278,10 @@ export class PlayerxElement extends PlxElement {
 
     if (initEvents) this._videoShim.attachEvents(this._player);
 
-    // const autoplay = element.cache('autoplay') || element.cache('playing');
-    // await player.set('autoplay', autoplay);
+    const autoplay = this.cache('autoplay') || this.cache('playing');
+    if (autoplay) {
+      this._player.play();
+    }
 
     await this._videoShim.updateProps();
     this._elementReady.resolve();

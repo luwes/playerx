@@ -66,10 +66,6 @@ export function createPlayer(element) {
 
     api.getContainer().classList.toggle('jw-no-controls', !opts.controls);
 
-    if (opts.autostart) {
-      element.play();
-    }
-
     ready.resolve();
   }
 

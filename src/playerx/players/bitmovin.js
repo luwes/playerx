@@ -54,10 +54,6 @@ export function createPlayer(element) {
     }
 
     await api.load(srcConfig);
-
-    if (opts.autoplay) {
-      api.play();
-    }
   }
 
   const meta = {
@@ -76,7 +72,7 @@ export function createPlayer(element) {
     },
 
     get api() {
-      return api.getVideoElement();
+      return api && api.getVideoElement();
     },
 
     ready() {
