@@ -74,8 +74,8 @@ module.exports = function(player) {
           }, 10000);
         }));
       } else {
-        // If we don't seek play the whole clip of ~1.5min.
-        browser.setTimeout({ script: 2 * 60 * 1000 });
+        // If we don't seek play the whole clip of ~2min.
+        browser.setTimeout({ script: 2.5 * 60 * 1000 });
       }
 
       console.warn(`Waiting until ended for ${player}`);
