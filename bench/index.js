@@ -25,7 +25,7 @@ module.exports = function(player) {
       }
 
       browser.url(url);
-      browser.setTimeout({ script: 30000 });
+      browser.setTimeout({ script: 60000 });
 
       expect(browser).toHaveTitleContaining('Playerx');
 
@@ -75,7 +75,7 @@ module.exports = function(player) {
         }));
       } else {
         // If we don't seek play the whole clip of ~2min.
-        browser.setTimeout({ script: 2.5 * 60 * 1000 });
+        browser.setTimeout({ script: 4 * 60 * 1000 });
       }
 
       console.warn(`Waiting until ended for ${player}`);
