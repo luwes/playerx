@@ -54,28 +54,8 @@ export function createPlayer(element) {
 
     api = await onReadyPromise;
 
-    api.elem().addEventListener('play', () => {
-      element.fire('play');
-    });
-
-    api.elem().addEventListener('durationchange', () => {
-      element.fire('durationchange');
-    });
-
     ready.resolve();
   }
-
-  const eventAliases = {
-    playing: 'play',
-    ratechange: 'playbackratechange',
-    timeupdate: 'timechange',
-    ended: 'end',
-  };
-
-  const customEvents = {
-    play: undefined,
-    durationchange: undefined,
-  };
 
   const meta = {
     get identifier() { return api.hashedId(); },
@@ -84,7 +64,7 @@ export function createPlayer(element) {
 
   const methods = {
     name: 'Wistia',
-    version: '1.x.x',
+    version: '2.x.x',
     meta,
 
     get element() {
@@ -92,19 +72,7 @@ export function createPlayer(element) {
     },
 
     get api() {
-      return api;
-    },
-
-    get videoWidth() {
-      return api.elem().videoWidth;
-    },
-
-    get videoHeight() {
-      return api.elem().videoHeight;
-    },
-
-    get error() {
-      return api.elem().error;
+      return api.elem();
     },
 
     ready() {
@@ -117,24 +85,17 @@ export function createPlayer(element) {
       return createPlayPromise(element);
     },
 
-    getPaused() {
-      // Possible values are beforeplay, playing, paused and ended.
-      return api.state() !== 'playing';
-    },
-
     remove() {
       api.remove();
       removeNode(div);
     },
 
     on(eventName, callback) {
-      if (eventName in customEvents) return;
-      api.bind(eventAliases[eventName] || eventName, callback);
+      api.elem().addEventListener(eventName, callback);
     },
 
     off(eventName, callback) {
-      if (eventName in customEvents) return;
-      api.unbind(eventAliases[eventName] || eventName, callback);
+      api.elem().removeEventListener(eventName, callback);
     },
 
     setSrc() {
@@ -145,29 +106,13 @@ export function createPlayer(element) {
       // api.replaceWith(getMetaId(MATCH_SRC, src), getOptions());
     },
 
-    set currentTime(seconds) {
-      api.time(seconds);
-    },
-
-    get currentTime() {
-      return api.time();
-    },
-
-    get buffered() {
-      return api.elem().buffered;
-    },
-
     set controls(controls) {
       api.bigPlayButtonEnabled(controls);
       controls ? api.releaseChromeless() : api.requestChromeless();
     },
 
-    set muted(muted) {
-      muted ? api.mute() : api.unmute();
-    },
-
-    get muted() {
-      return api.isMuted();
+    get controls() {
+      return element.cache('controls');
     },
   };
 
