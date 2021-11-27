@@ -16,7 +16,6 @@
     "@wdio/sauce-service": "^7.16.10",
     "browserstack-local": "^1.4.5",
     "dotenv": "^10.0.0",
-    "playwright": "^1.12.2",
     "webdriverio": "^7.16.10"
   },
   "devDependencies": {

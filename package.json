@@ -117,6 +117,6 @@
     "ua-parser-js": "^0.7.28"
   },
   "dependencies": {
-    "mux-embed": "4.1.1"
+    "mux-embed": "4.2.3"
   }
 }
