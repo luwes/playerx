@@ -8,7 +8,7 @@ import {
   getFileName,
 } from '../utils.js';
 
-const API_URL = 'https://unpkg.com/@mux-elements/mux-video@0.1.6/dist/index.js';
+const API_URL = 'https://cdn.jsdelivr.net/npm/@mux-elements/mux-video@0.1.6/dist/index.js';
 
 export function createPlayer(element) {
   let video;

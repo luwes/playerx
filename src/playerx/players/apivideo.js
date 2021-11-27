@@ -10,7 +10,7 @@ import {
 } from '../utils.js';
 
 const EMBED_BASE = 'https://embed.api.video/vod';
-const API_URL = 'https://unpkg.com/@api.video/player-sdk@1.2.6/dist/index.js';
+const API_URL = 'https://cdn.jsdelivr.net/npm/@api.video/player-sdk@1.2.6/dist/index.js';
 const API_GLOBAL = 'PlayerSdk';
 
 /**
