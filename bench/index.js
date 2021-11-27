@@ -5,7 +5,7 @@ module.exports = function(player) {
 
   describe(`Playback${plxo.saucenetwork ? ` (${plxo.saucenetwork})` : ''}: ${player}`, function() {
 
-    it(`plays the test video`, function() {
+    it(`plays the test video`, async function() {
       // Specify this test to only retry up to 2 times
       this.retries(2);
 
@@ -21,16 +21,16 @@ module.exports = function(player) {
       if (plxo.saucenetwork) {
         // @see https://webdriver.io/docs/api/saucelabs.html#parameters-1
         // network condition to set (e.g. 'online', 'offline', 'GPRS', 'Regular 2G', 'Good 2G', 'Regular 3G', 'Good 3G', 'Regular 4G', 'DSL', 'Wifi')
-        browser.throttleNetwork(plxo.saucenetwork);
+        await browser.throttleNetwork(plxo.saucenetwork);
       }
 
-      browser.url(url);
-      browser.setTimeout({ script: 60000 });
+      await browser.url(url);
+      await browser.setTimeout({ script: 60000 });
 
       expect(browser).toHaveTitleContaining('Playerx');
 
       console.warn(`Wait ready for ${player}`);
-      assert(browser.executeAsync(async function(done) {
+      assert(await browser.executeAsync(async function(done) {
         const plx = document.querySelector('player-x');
         await plx.ready();
         done(true);
@@ -40,15 +40,15 @@ module.exports = function(player) {
 
       if (player === 'facebook' && plxo.os === 'android') {
         // switch in the video iframe
-        const fbiframe = browser.$('iframe');
-        browser.switchToFrame(fbiframe);
+        const fbiframe = await browser.$('iframe');
+        await browser.switchToFrame(fbiframe);
         // find the facebook play button and click it
-        const playBtn = browser.$('div[data-sigil="m-video-play-button playInlineVideo"]');
-        playBtn.click();
-        browser.switchToParentFrame();
+        const playBtn = await browser.$('div[data-sigil="m-video-play-button playInlineVideo"]');
+        await playBtn.click();
+        await browser.switchToParentFrame();
       }
 
-      assert(browser.executeAsync(async function(done) {
+      assert(await browser.executeAsync(async function(done) {
         const plx = document.querySelector('player-x');
 
         // facebook on Android doesn't fire a playing event.
@@ -66,7 +66,7 @@ module.exports = function(player) {
 
       if (plxo.seek) {
         console.warn(`Seeking 10s from the end for ${player}`);
-        assert(browser.executeAsync(async function(done) {
+        assert(await browser.executeAsync(async function(done) {
           setTimeout(() => {
             const plx = document.querySelector('player-x');
             plx.currentTime = plx.duration - 10;
@@ -75,11 +75,11 @@ module.exports = function(player) {
         }));
       } else {
         // If we don't seek play the whole clip of ~2min.
-        browser.setTimeout({ script: 4 * 60 * 1000 });
+        await browser.setTimeout({ script: 4 * 60 * 1000 });
       }
 
       console.warn(`Waiting until ended for ${player}`);
-      assert(browser.executeAsync(async function(done) {
+      assert(await browser.executeAsync(async function(done) {
         const plx = document.querySelector('player-x');
         plx.on('ended', () => done(true));
 
