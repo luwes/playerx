@@ -72,7 +72,7 @@ export function createPlayer(element) {
     },
 
     get api() {
-      return api.elem();
+      return api && api.elem();
     },
 
     ready() {
