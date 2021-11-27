@@ -45,10 +45,19 @@ input[type="range"]::-ms-thumb {
   @apply leading-tight;
 }
 
-.logger p:first-child {
+.log:first-child {
   border-top: 0;
 }
 
-.logger p {
-  @apply px-2 border-t border-cool-gray-200;
+.log {
+  @apply px-2 border-t border-cool-gray-200 flex justify-between;
+}
+
+.log > div {
+  @apply truncate;
+  width: calc(100% - 3rem);
+}
+
+.log > i {
+  @apply text-cool-gray-400;
 }

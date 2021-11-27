@@ -31,10 +31,11 @@ const logger = hy(dhtml`
   <div id="logger">
     ${() => map(
       logs,
-      ({ type, target }) => html`
-        <p class="truncate">
-          ${type} event${getEventData({ type, target })}
-        </p>`
+      ({ type, target, elapsed }) => html`
+        <div class="log">
+          <div>${type} event${getEventData({ type, target })}</div>
+          <i>${round(elapsed / 1000, 1)}s</i>
+        </div>`
       )}
   </div>
 `);
@@ -57,8 +58,15 @@ export function ondisconnected() {
   console.log('DISCONNECTED');
 }
 
+let startTime;
+
 function log(e) {
-  if (e.type === 'loadsrc') logs([]);
+  if (e.type === 'loadsrc') {
+    logs([]);
+    startTime = performance.now();
+  }
+
+  e.elapsed = performance.now() - startTime;
 
   const prevLogs = logs();
   if (prevLogs.length > 100) prevLogs.shift();
