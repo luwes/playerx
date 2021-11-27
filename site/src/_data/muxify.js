@@ -19,7 +19,9 @@ module.exports = async () => {
 
     fetchMetric('rebuffer_percentage', 'https://api.mux.com/data/v1/metrics/rebuffer_percentage/breakdown?order_by=value&order_direction=asc&measurement=avg&timeframe%5B%5D=7%3Adays&group_by=player_software&limit=50&page=1'),
 
-    fetchMetric('video_quality_score', 'https://api.mux.com/data/v1/metrics/video_quality_score/breakdown?order_by=value&order_direction=asc&measurement=avg&timeframe%5B%5D=7%3Adays&group_by=player_software&limit=50&page=1')
+    fetchMetric('video_quality_score', 'https://api.mux.com/data/v1/metrics/video_quality_score/breakdown?order_by=value&order_direction=asc&measurement=avg&timeframe%5B%5D=7%3Adays&group_by=player_software&limit=50&page=1'),
+
+    fetchMetric('startup_time_score', 'https://api.mux.com/data/v1/metrics/startup_time_score/breakdown?order_by=value&order_direction=asc&measurement=avg&timeframe%5B%5D=7%3Adays&group_by=player_software&limit=50&page=1')
   ]);
 
   return yaml.load(fs.readFileSync(`${__dirname}/players.yaml`, 'utf8'));

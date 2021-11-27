@@ -47,7 +47,7 @@ tags:
                 {{ player.name }}
               {% endif %}
             </h3>
-            <a class="text-xs block text-blue-500 underline hover:text-blue-700" href="{{ player.url }}" target="_blank">{{ player.url }}</a>
+            <a class="text-xs block text-blue-500 underline hover:text-blue-700" href="{{ player.url }}" target="_blank">{{ player.url | replace('https://', '') | replace('www.', '') }}</a>
           </div>
         </div>
       {% endif %}
@@ -72,6 +72,10 @@ tags:
               <span class="text-2xl leading-none tracking-tight font-bold text-gray-900">
                 {{ (player.viewer_experience_score * 100) | round }}
               </span>
+            {% elif row.field == 'startup_time_score' %}
+              <span class="text-sm leading-none tracking-tight text-gray-900">
+                {{ (player.startup_time_score * 100) | round }}
+              </span>
             {% elif row.field == 'video_startup_time' %}
               <span class="text-sm leading-none tracking-tight text-gray-900">
                 {{ (player.video_startup_time / 1000) | round(2) }}s
@@ -91,7 +95,7 @@ tags:
             {% elif row.field == 'video_quality_score' %}
               <span class="text-sm leading-none tracking-tight text-gray-900">
                 {% if player.video_quality_score %}
-                  {{ (player.video_quality_score * 100) | round }}%
+                  {{ (player.video_quality_score * 100) | round }}
                 {% else %}
                   N/A
                 {% endif %}

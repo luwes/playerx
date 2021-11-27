@@ -4,6 +4,10 @@ rows:
     description: >-
       Overall Viewer Experience is a high-level score from 0 to 100 that
       measures the QoE (Quality of Experience).
+  - title: Startup Time Score
+    field: startup_time_score
+    description: >-
+      Startup Time is the time between when the user attempts to start playback and when they see the first frame of video.
   - title: Video Startup Time
     field: video_startup_time
     description: >-
