@@ -19,7 +19,7 @@ export function createPlayer(element) {
       autoplay: element.playing || element.autoplay,
       controls: element.controls,
       src: element.src,
-      ...element.config.mux,
+      ...element.config.muxvideo,
     };
   }
 
@@ -69,14 +69,6 @@ export function createPlayer(element) {
     remove() {
       reset();
       removeNode(video);
-    },
-
-    on(eventName, callback) {
-      video.addEventListener(eventName, callback);
-    },
-
-    off(eventName, callback) {
-      video.removeEventListener(eventName, callback);
     },
 
     async setSrc() {

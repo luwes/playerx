@@ -76,14 +76,6 @@ export function createPlayer(element) {
       removeNode(video);
     },
 
-    on(eventName, callback) {
-      video.addEventListener(eventName, callback);
-    },
-
-    off(eventName, callback) {
-      video.removeEventListener(eventName, callback);
-    },
-
     async setSrc() {
       ready = publicPromise();
       load(getOptions());

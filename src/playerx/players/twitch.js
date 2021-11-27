@@ -89,14 +89,6 @@ export function createPlayer(element) {
       return createPlayPromise(element);
     },
 
-    on(eventName, callback) {
-      api.addEventListener(eventName, callback);
-    },
-
-    off(eventName, callback) {
-      api.removeEventListener(eventName, callback);
-    },
-
     set src(value) {
       api.setVideo('v' + getMetaId(MATCH_SRC, element.src));
     },

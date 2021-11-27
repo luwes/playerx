@@ -109,14 +109,6 @@ export function createPlayer(element) {
       removeNode(div);
     },
 
-    on(eventName, callback) {
-      getVideo().addEventListener(eventName, callback);
-    },
-
-    off(eventName, callback) {
-      getVideo().removeEventListener(eventName, callback);
-    },
-
     setSrc() {
       // Must return promise here to await ready state.
       return element.load();

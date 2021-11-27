@@ -361,11 +361,19 @@ function base(element, player) {
     pause: flexMethod(player, 'pause'),
 
     on(eventName, callback) {
-      player.api.on(eventName, callback);
+      if (player.api.on) {
+        player.api.on(eventName, callback);
+      } else if (player.api.addEventListener) {
+        player.api.addEventListener(eventName, callback);
+      }
     },
 
     off(eventName, callback) {
-      player.api.off(eventName, callback);
+      if (player.api.off) {
+        player.api.off(eventName, callback);
+      } else if (player.api.removeEventListener) {
+        player.api.removeEventListener(eventName, callback);
+      }
     },
 
     setPlaying(playing) {

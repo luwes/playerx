@@ -75,14 +75,6 @@ export function createPlayer(element) {
       return ready;
     },
 
-    on(eventName, callback, options) {
-      api.addEventListener(eventName, callback, options);
-    },
-
-    off(eventName, callback, options) {
-      api.removeEventListener(eventName, callback, options);
-    },
-
     remove() {
       api.destroy();
     },

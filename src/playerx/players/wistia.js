@@ -90,14 +90,6 @@ export function createPlayer(element) {
       removeNode(div);
     },
 
-    on(eventName, callback) {
-      api.elem().addEventListener(eventName, callback);
-    },
-
-    off(eventName, callback) {
-      api.elem().removeEventListener(eventName, callback);
-    },
-
     setSrc() {
       // Must return promise here to await ready state.
       return element.load();

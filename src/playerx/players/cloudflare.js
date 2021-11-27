@@ -22,7 +22,7 @@ export function createPlayer(element, mediaContent) {
       autoplay: (element.playing || element.autoplay) ? true : undefined,
       controls: element.controls,
       src: element.src,
-      ...element.config.mux,
+      ...element.config.cloudflare,
     };
   }
 
@@ -65,14 +65,6 @@ export function createPlayer(element, mediaContent) {
 
     remove() {
       api.destroy();
-    },
-
-    on(eventName, callback) {
-      api.addEventListener(eventName, callback);
-    },
-
-    off(eventName, callback) {
-      api.removeEventListener(eventName, callback);
     },
   };
 
