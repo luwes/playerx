@@ -6734,11 +6734,6 @@ mute-stream@0.0.8:
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.8.tgz#1630c42b2251ff81e2a283de96a5497ea92e5e0d"
   integrity sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==
 
-mux-embed@4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/mux-embed/-/mux-embed-4.1.1.tgz#d61c297c6043c59793ec1837b778b294d60a66cd"
-  integrity sha512-AUjuWWRrKJ8byyd4vrZvLrA8yQGV3eoZ70u9n0HvA8AdY67xt+YBEAQbh5TYHEKfXLf1WpZlB9UScjgegUkrbQ==
-
 mux-embed@4.2.3:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/mux-embed/-/mux-embed-4.2.3.tgz#b7574d3f53e124bfa4c8eb51ef1f6edc5416ce8c"
@@ -7411,12 +7406,12 @@ pkg-up@^2.0.0:
   dependencies:
     find-up "^2.1.0"
 
-playerx@0.7.9:
-  version "0.7.9"
-  resolved "https://registry.yarnpkg.com/playerx/-/playerx-0.7.9.tgz#a98a0447f682099e3934b145139cf0706e617bc4"
-  integrity sha512-7rzMtJrfj43CrzEc95EBLOUCtiQ3R7CaINTba6KK9mN71yiL5Tu/cSFTg9LK4WbyAWoiCHkom0PxwXVmdt9sEg==
+playerx@0.7.10:
+  version "0.7.10"
+  resolved "https://registry.yarnpkg.com/playerx/-/playerx-0.7.10.tgz#72580013fa80e4abde8d7129c2e304d5bcb3bf44"
+  integrity sha512-wIkPjSEip9n1RJmRgavqZMP4SYabpCaA94EBFPHE7Fhkf2llTfCESjCMJykCzrJiF6R89Kk+FMoXU/AIzr52Jg==
   dependencies:
-    mux-embed "4.1.1"
+    mux-embed "4.2.3"
 
 please-upgrade-node@^3.2.0:
   version "3.2.0"
