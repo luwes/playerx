@@ -97,7 +97,6 @@ export function createPlayer(element) {
 
     async setSrc() {
       ready = publicPromise();
-
       await load(getOptions());
       ready.resolve();
     },

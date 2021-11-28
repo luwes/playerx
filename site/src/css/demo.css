@@ -45,6 +45,18 @@ input[type="range"]::-ms-thumb {
   @apply leading-tight;
 }
 
+.pill {
+  @apply bg-aquamarine-100 opacity-50 transition-opacity text-aquamarine-600 text-xs py-1 px-3 rounded-full mr-2;
+}
+
+.pill.pill-on {
+  @apply opacity-100;
+}
+
+.pill > i {
+  @apply font-bold font-mono text-aquamarine-700;
+}
+
 .log:first-child {
   border-top: 0;
 }

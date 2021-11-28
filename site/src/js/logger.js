@@ -1,12 +1,15 @@
 /* global playerx */
 import { observe } from 'disco';
 import { html } from 'sinuous';
-import { observable } from 'sinuous/observable';
+import { observable, computed } from 'sinuous/observable';
 import { map } from 'sinuous/map';
-import { dhtml, hydrate as hy } from 'sinuous/hydrate';
+import { dhtml, hydrate as hy, _ } from 'sinuous/hydrate';
 import { round } from './utils/utils.js';
 
 observe('player-x');
+
+const playerStartupTime = observable('0');
+const videoStartupTime = observable('0');
 
 const eventData = {
   loadsrc: (player) => player.src,
@@ -46,11 +49,32 @@ function getEventData({ type, target }) {
   }
 }
 
+const playerStartupClass = computed(() => {
+  return playerStartupTime() === '0' ? 'pill' : 'pill pill-on';
+});
+
+const videoStartupClass = computed(() => {
+  return videoStartupTime() === '0' ? 'pill' : 'pill pill-on';
+});
+
+hy(dhtml`
+  <div id="info-pills">
+    <p class=${playerStartupClass}>${_}<i>${() => formatTime(playerStartupTime())}s</i></p>
+    <p class=${videoStartupClass}>${_}<i>${() => formatTime(videoStartupTime())}s</i></p>
+  </div>`
+);
+
+function formatTime(time) {
+  return (time / 1000).toFixed(1);
+}
+
 export function onconnected({ target: player }) {
   if (player) {
     for (let event in playerx.Events) {
       player.addEventListener(playerx.Events[event], log);
     }
+    player.addEventListener('loadedsrc', onloadedsrc);
+    player.addEventListener('playing', onplaying);
   }
 }
 
@@ -59,11 +83,40 @@ export function ondisconnected() {
 }
 
 let startTime;
+let videoStartTime;
+let playerStartupAnim;
+let videoStartupAnim;
+
+function playerStartupStep() {
+  playerStartupTime(performance.now() - startTime);
+  playerStartupAnim = requestAnimationFrame(playerStartupStep);
+}
+
+function videoStartupStep() {
+  videoStartupTime(performance.now() - videoStartTime);
+  videoStartupAnim = requestAnimationFrame(videoStartupStep);
+}
+
+function onloadedsrc() {
+  cancelAnimationFrame(playerStartupAnim);
+  playerStartupTime(performance.now() - startTime);
+}
+
+function onplaying() {
+  cancelAnimationFrame(videoStartupAnim);
+  videoStartupTime(performance.now() - videoStartTime);
+}
 
 function log(e) {
   if (e.type === 'loadsrc') {
     logs([]);
     startTime = performance.now();
+    playerStartupAnim = requestAnimationFrame(playerStartupStep);
+    videoStartTime = 0;
+    videoStartupTime('0');
+  } else if (e.type === 'play' && !videoStartTime) {
+    videoStartTime = performance.now();
+    videoStartupAnim = requestAnimationFrame(videoStartupStep);
   }
 
   e.elapsed = performance.now() - startTime;
