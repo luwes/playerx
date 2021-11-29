@@ -68,6 +68,7 @@ export function createPlayer(element, mediaContent) {
       playing: YT.PlayerState.PLAYING,
       pause: YT.PlayerState.PAUSED,
       ended: YT.PlayerState.ENDED,
+      play: YT.PlayerState.BUFFERING,
       bufferstart: YT.PlayerState.BUFFERING,
       bufferend: YT.PlayerState.PLAYING,
     };
@@ -85,6 +86,7 @@ export function createPlayer(element, mediaContent) {
     error: 'onError',
     loadedmetadata: 'onStateChange',
     loadstart: 'onStateChange',
+    play: 'onStateChange',
     playing: 'onStateChange',
     pause: 'onStateChange',
     ended: 'onStateChange',

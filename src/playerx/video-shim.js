@@ -15,7 +15,8 @@ export function createVideoShim(element) {
   let videoWidth;
   let videoHeight;
   let hasDurationEvent;
-  let playFired;
+  let playFired = false;
+  let pauseFired = true;
   let { volume, muted, currentTime, duration } = element;
 
   function unload() {
@@ -59,6 +60,7 @@ export function createVideoShim(element) {
         () => {
           element.setCache('playing', false);
           element.setCache('paused', true);
+          pauseFired = true;
         },
       ],
       [
@@ -72,6 +74,13 @@ export function createVideoShim(element) {
       [
         Events.PLAYING,
         () => {
+          // Make sure a play event is fired before the playing event.
+          // For example YouTube doesn't have a play event.
+          if (pauseFired && !playFired) {
+            pauseFired = false;
+            element.fire('play');
+          }
+
           element.setCache('paused', false);
           element.setCache('playing', true);
           element.setCache('readyState', 3); // HTMLMediaElement.HAVE_FUTURE_DATA
@@ -152,21 +161,22 @@ export function createVideoShim(element) {
       // 15 to 250ms and is not still running event handlers for such an event,
       // then the user agent must queue a task to fire an event named timeupdate
       // at the element.
-      currentTimeTimeout = setTimeout(updateCurrentTime, 250);
+      currentTimeTimeout = setTimeout(updateCurrentTime, 150);
     }
 
     // Sometimes loading a new src the 3rd-party api is not ready yet, wait here.
     await apiReady;
 
-    if (playFired) {
-      playFired = false;
-      element.fire('playing');
-      element.setCache('readyState', 3); // HTMLMediaElement.HAVE_FUTURE_DATA
-    }
-
     let old = currentTime;
     currentTime = await element.get('currentTime');
     if (currentTime !== old) {
+      // Make sure the playhead is moving before checking this.
+      if (playFired) {
+        playFired = false;
+        element.fire('playing');
+        element.setCache('readyState', 3); // HTMLMediaElement.HAVE_FUTURE_DATA
+      }
+
       element.setCache('currentTime', currentTime);
       element.fire('timeupdate');
     }
