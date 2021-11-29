@@ -86,6 +86,7 @@ let startTime;
 let videoStartTime;
 let playerStartupAnim;
 let videoStartupAnim;
+let firstPlayingEvent;
 
 function playerStartupStep() {
   playerStartupTime(performance.now() - startTime);
@@ -103,6 +104,8 @@ function onloadedsrc() {
 }
 
 function onplaying() {
+  if (!firstPlayingEvent) return;
+  firstPlayingEvent = false;
   cancelAnimationFrame(videoStartupAnim);
   videoStartupTime(performance.now() - videoStartTime);
 }
@@ -114,6 +117,7 @@ function log(e) {
     playerStartupAnim = requestAnimationFrame(playerStartupStep);
     videoStartTime = 0;
     videoStartupTime('0');
+    firstPlayingEvent = true;
   } else if (e.type === 'play' && !videoStartTime) {
     videoStartTime = performance.now();
     videoStartupAnim = requestAnimationFrame(videoStartupStep);
