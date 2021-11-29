@@ -50,6 +50,7 @@ export function createVideoShim(element) {
   }
 
   function attachEvents(player) {
+    let firePlayEvent;
     listeners = [
       [
         Events.LOADEDMETADATA,
@@ -65,27 +66,41 @@ export function createVideoShim(element) {
       ],
       [
         Events.PLAY,
+        (firePlayEvent = () => {
+          if (!playFired) {
+            playFired = true;
+            element.setCache('paused', false);
+            element.setCache('playing', true);
+            element.fire('play');
+          }
+        }),
+      ],
+      [
+        Events.BUFFERSTART,
         () => {
-          element.setCache('paused', false);
-          element.setCache('playing', true);
-          playFired = true;
-        },
+          // Make sure a `play` event is fired before the bufferstart event.
+          // For example Vimeo's `play` event is delayed decreasing video startup time.
+          if (pauseFired) {
+            pauseFired = false;
+            firePlayEvent();
+          }
+        }
       ],
       [
         Events.PLAYING,
         () => {
-          // Make sure a play event is fired before the playing event.
-          // For example YouTube doesn't have a play event.
-          if (pauseFired && !playFired) {
+          // Make sure a `play` event is fired before the playing event.
+          // For example YouTube doesn't have a `play` event affecting video startup time.
+          if (pauseFired) {
             pauseFired = false;
-            element.fire('play');
+            firePlayEvent();
           }
 
+          playFired = false;
           element.setCache('paused', false);
           element.setCache('playing', true);
           element.setCache('readyState', 3); // HTMLMediaElement.HAVE_FUTURE_DATA
           updateDuration();
-          playFired = false;
         },
       ],
       [
@@ -132,6 +147,7 @@ export function createVideoShim(element) {
             Events.READY,
             Events.LOADSRC,
             Events.LOADEDSRC,
+            Events.PLAY,
             Events.ENDED,
             Events.TIMEUPDATE,
             Events.DURATIONCHANGE,
