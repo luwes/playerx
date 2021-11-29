@@ -37,7 +37,7 @@ const logger = hy(dhtml`
       ({ type, target, elapsed }) => html`
         <div class="log">
           <div>${type} event${getEventData({ type, target })}</div>
-          <i>${round(elapsed / 1000, 1)}s</i>
+          <i>${formatTime(elapsed)}s</i>
         </div>`
       )}
   </div>
@@ -70,11 +70,14 @@ function formatTime(time) {
 
 export function onconnected({ target: player }) {
   if (player) {
+    player.addEventListener('loadsrc', onloadsrc);
+    player.addEventListener('loadedsrc', onloadedsrc);
+    player.addEventListener('play', onplay);
+    player.addEventListener('playing', onplaying);
+
     for (let event in playerx.Events) {
       player.addEventListener(playerx.Events[event], log);
     }
-    player.addEventListener('loadedsrc', onloadedsrc);
-    player.addEventListener('playing', onplaying);
   }
 }
 
@@ -86,6 +89,7 @@ let startTime;
 let videoStartTime;
 let playerStartupAnim;
 let videoStartupAnim;
+let firstPlayEvent;
 let firstPlayingEvent;
 
 function playerStartupStep() {
@@ -98,14 +102,35 @@ function videoStartupStep() {
   videoStartupAnim = requestAnimationFrame(videoStartupStep);
 }
 
+function onloadsrc() {
+  startTime = performance.now();
+  playerStartupAnim = requestAnimationFrame(playerStartupStep);
+
+  videoStartupTime('0');
+
+  firstPlayEvent = true;
+  firstPlayingEvent = true;
+}
+
 function onloadedsrc() {
   cancelAnimationFrame(playerStartupAnim);
   playerStartupTime(performance.now() - startTime);
+
+  videoStartTime = performance.now();
+}
+
+function onplay() {
+  if (!firstPlayEvent) return;
+  firstPlayEvent = false;
+
+  videoStartTime = performance.now();
+  videoStartupAnim = requestAnimationFrame(videoStartupStep);
 }
 
 function onplaying() {
   if (!firstPlayingEvent) return;
   firstPlayingEvent = false;
+
   cancelAnimationFrame(videoStartupAnim);
   videoStartupTime(performance.now() - videoStartTime);
 }
@@ -113,14 +138,6 @@ function onplaying() {
 function log(e) {
   if (e.type === 'loadsrc') {
     logs([]);
-    startTime = performance.now();
-    playerStartupAnim = requestAnimationFrame(playerStartupStep);
-    videoStartTime = 0;
-    videoStartupTime('0');
-    firstPlayingEvent = true;
-  } else if (e.type === 'play' && !videoStartTime) {
-    videoStartTime = performance.now();
-    videoStartupAnim = requestAnimationFrame(videoStartupStep);
   }
 
   e.elapsed = performance.now() - startTime;
