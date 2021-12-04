@@ -1,0 +1,21 @@
+{% extends "layouts/root.njk" %}
+
+{% block head %}
+  <style>body{margin:0;}</style>
+  <script src="{% getCdnUrl 'polyfills' %}"></script>
+  <script src="{% getCdnUrl 'playerx' %}"></script>
+  <script src="{% getCdnUrl 'playerx/all' %}"></script>
+{% endblock %}
+
+{% block main %}
+<player-x src="{{ player.src }}" controls muted config="{{ playerconfig }}"></player-x>
+<script>
+  var player = document.querySelector('player-x');
+  player.addEventListener('media', function() {
+    var iframe = player.querySelector('iframe');
+    if (iframe) {
+      document.location = iframe.src;
+    }
+  });
+</script>
+{% endblock %}

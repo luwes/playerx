@@ -1,0 +1,28 @@
+---js
+{
+  eleventyComputed: {
+    title: "Playerx - {{ player.name }}",
+  },
+  layout: "layouts/lighthouse.njk",
+  tags: ["player"],
+  pagination: {
+    data: "players",
+    size: 1,
+    alias: "player",
+    before: function(data) {
+      const pages = [];
+      data.forEach(entry => {
+        entry.clips.forEach((src, i) => {
+          pages.push({
+            ...entry,
+            src: src,
+            clipIndex: i
+          })
+        })
+      });
+      return pages;
+    }
+  },
+  permalink: "/lighthouse/{{ player.name | slug }}/{% if player.clipIndex > 0 %}{{ player.clipIndex + 1 }}/{% endif %}"
+}
+---
