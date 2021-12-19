@@ -14,7 +14,7 @@
   player.addEventListener('media', function() {
     var iframe = player.querySelector('iframe');
     if (iframe) {
-      document.location = iframe.src;
+      location.replace(iframe.src);
     }
   });
 </script>
