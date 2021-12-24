@@ -7,13 +7,13 @@
     - https://go.api.video/videos/vi7pA8Iz9m3S466XPu8qUJr
     - https://go.api.video/videos/vi2xRj3mUz967QRSESwmwveX
     - https://go.api.video/videos/viM0Q6S2LqkdI8D7RqTDsBG
-  viewer_experience_score: 0.9734180577180922
+  viewer_experience_score: 0.9746253306871837
   video_startup_time: 16
-  player_startup_time: 3284.72265625
-  smoothness_score: 0.9416347193989115
-  rebuffer_percentage: 0.004040801927397346
-  video_quality_score: 0.9984802837425127
-  startup_time_score: 0.9948736868089453
+  player_startup_time: 3349.515625
+  smoothness_score: 0.9443895964278388
+  rebuffer_percentage: 0.004698189633400986
+  video_quality_score: 0.9978812949655355
+  startup_time_score: 0.994999658713226
 - key: wistia
   name: Wistia
   color: '#1E64F0'
@@ -23,13 +23,29 @@
     - https://wesleyluyten.wistia.com/medias/oifkgmxnkb
     - https://wesleyluyten.wistia.com/medias/oj8d7cwhbn
     - https://wesleyluyten.wistia.com/medias/1ekn652fs5
-  viewer_experience_score: 0.9443476763474693
-  video_startup_time: 1444
-  player_startup_time: 2882.34765625
-  smoothness_score: 0.9971722003023206
-  rebuffer_percentage: 0.00023462337978589947
-  video_quality_score: 0.9879086413269951
-  startup_time_score: 0.858597430254426
+  viewer_experience_score: 0.9450138432505549
+  video_startup_time: 1296
+  player_startup_time: 2848.890625
+  smoothness_score: 0.9985914758090058
+  rebuffer_percentage: 0.0001110758088441456
+  video_quality_score: 0.9891150073764586
+  startup_time_score: 0.8637518801605083
+- key: dailymotion
+  name: Dailymotion
+  color: '#0D0D0D'
+  url: https://www.dailymotion.com
+  favicon: https://static1.dmcdn.net/images/neon/favicons/android-icon-36x36.png
+  clips:
+    - https://www.dailymotion.com/video/x85qs0t
+    - https://www.dailymotion.com/video/x7sgasm
+    - https://www.dailymotion.com/video/x7ux420
+  viewer_experience_score: 0.9208007337555751
+  video_startup_time: 1089
+  player_startup_time: 2601
+  smoothness_score: 0.9175576192369489
+  rebuffer_percentage: 0.006558710975025953
+  video_quality_score: 0.9853621365778115
+  startup_time_score: 0.878775125108054
 - key: facebook
   name: Facebook
   color: '#1877F2'
@@ -41,28 +57,12 @@
     - https://www.facebook.com/wesleyluyten/videos/10222360036487458
   options:
     appId: 197575574668798
-  viewer_experience_score: 0.9292178934956171
+  viewer_experience_score: 0.9183013055461664
   video_startup_time: 576
-  player_startup_time: 4838.94140625
-  smoothness_score: 0.9319937915417803
-  rebuffer_percentage: 0.0034112894177348676
-  startup_time_score: 0.9251397226948336
-- key: dailymotion
-  name: Dailymotion
-  color: '#0D0D0D'
-  url: https://www.dailymotion.com
-  favicon: https://static1.dmcdn.net/images/neon/favicons/android-icon-36x36.png
-  clips:
-    - https://www.dailymotion.com/video/x85qs0t
-    - https://www.dailymotion.com/video/x7sgasm
-    - https://www.dailymotion.com/video/x7ux420
-  viewer_experience_score: 0.9195222115615406
-  video_startup_time: 1156
-  player_startup_time: 2684.53515625
-  smoothness_score: 0.9226623818121222
-  rebuffer_percentage: 0.006831631824145071
-  video_quality_score: 0.9845465664527123
-  startup_time_score: 0.8692949952176178
+  player_startup_time: 5662.5625
+  smoothness_score: 0.9152276431219265
+  rebuffer_percentage: 0.004497015235478622
+  startup_time_score: 0.9228169343913325
 - key: videojs
   name: video.js
   url: https://github.com/videojs/video.js
@@ -70,13 +70,13 @@
     - https://stream.mux.com/r4rOE02cc95tbe3I00302nlrHfT023Q3IedFJW029w018KxZA.m3u8?player=videojs
     - https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8?player=videojs
     - https://stream.mux.com/KHdaCPpki1o4PUCMWfAXFbrHy2gBosxdxZISdvFJGLQ.m3u8?player=videojs
-  viewer_experience_score: 0.914173035237535
-  player_startup_time: 1126.44140625
-  video_startup_time: 2401
-  smoothness_score: 0.9827851545311165
-  rebuffer_percentage: 0.001671232547373945
-  video_quality_score: 0.9938954879301913
-  startup_time_score: 0.7762049323810224
+  viewer_experience_score: 0.9168057836110319
+  player_startup_time: 1160.25390625
+  video_startup_time: 2304
+  smoothness_score: 0.9869120802304044
+  rebuffer_percentage: 0.0011064200713331923
+  video_quality_score: 0.9944336596851381
+  startup_time_score: 0.7786978815572574
 - key: hlsjs
   name: hls.js
   url: https://github.com/video-dev/hls.js
@@ -84,13 +84,13 @@
     - https://stream.mux.com/r4rOE02cc95tbe3I00302nlrHfT023Q3IedFJW029w018KxZA.m3u8
     - https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8
     - https://stream.mux.com/KHdaCPpki1o4PUCMWfAXFbrHy2gBosxdxZISdvFJGLQ.m3u8
-  video_startup_time: 2601
-  viewer_experience_score: 0.8941119810557696
-  player_startup_time: 830.16015625
-  smoothness_score: 0.9836542946164524
-  rebuffer_percentage: 0.0018140590016074115
-  video_quality_score: 0.993398016894353
-  startup_time_score: 0.7173050984809137
+  video_startup_time: 2500
+  viewer_experience_score: 0.9014243179316141
+  player_startup_time: 819.390625
+  smoothness_score: 0.9835896511076042
+  rebuffer_percentage: 0.0017133553772545774
+  video_quality_score: 0.9944128778957504
+  startup_time_score: 0.7379323280399913
 - key: youtube
   name: YouTube
   color: '#FF0000'
@@ -100,13 +100,13 @@
     - https://www.youtube.com/watch?v=uxsOYVWclA0
     - https://www.youtube.com/watch?v=ssdng3QeFnA
     - https://www.youtube.com/watch?v=zD6nk5byNGE
-  viewer_experience_score: 0.8866287126476824
-  video_startup_time: 1024
-  player_startup_time: 2133.28515625
-  smoothness_score: 0.8592038570341577
-  rebuffer_percentage: 0.013393359298315038
-  video_quality_score: 0.961652819500413
-  startup_time_score: 0.865181639589556
+  viewer_experience_score: 0.8890355157471844
+  video_startup_time: 1089
+  player_startup_time: 2087.34765625
+  smoothness_score: 0.8638273827575615
+  rebuffer_percentage: 0.0118061602865935
+  video_quality_score: 0.9638719251463106
+  startup_time_score: 0.8648561119795559
 - key: muxvideo
   name: MUX
   url: https://mux.com
@@ -115,13 +115,27 @@
     - https://stream.mux.com/r4rOE02cc95tbe3I00302nlrHfT023Q3IedFJW029w018KxZA.m3u8?player=muxvideo
     - https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8?player=muxvideo
     - https://stream.mux.com/KHdaCPpki1o4PUCMWfAXFbrHy2gBosxdxZISdvFJGLQ.m3u8?player=muxvideo
-  viewer_experience_score: 0.8810832053769735
-  player_startup_time: 851.91015625
-  video_startup_time: 1444
-  smoothness_score: 0.9069683920097869
-  rebuffer_percentage: 0.0074218287850978965
-  video_quality_score: 0.9944759821352039
-  startup_time_score: 0.770532912020539
+  viewer_experience_score: 0.8819633334666699
+  player_startup_time: 885.0625
+  video_startup_time: 1296
+  smoothness_score: 0.9080114508888568
+  rebuffer_percentage: 0.007204053509498412
+  video_quality_score: 0.9948102417932377
+  startup_time_score: 0.7729369081678368
+- key: shakaplayer
+  name: Shaka Player
+  url: https://github.com/google/shaka-player
+  clips:
+    - https://player.vimeo.com/external/648359100.mpd?s=a4419a2e2113cc24a87aef2f93ef69a8e4c8fb0c&player=shakaplayer
+    - https://player.vimeo.com/external/638371189.mpd?s=0d28be6fcde41d4a868f5e6be46cbdc8601f5748&player=shakaplayer
+    - https://player.vimeo.com/external/638371504.mpd?s=d154aa431bb3980bd039a7e2b1c389353ce44fdb&player=shakaplayer
+  viewer_experience_score: 0.878574949039821
+  player_startup_time: 2214.87890625
+  video_startup_time: 729
+  smoothness_score: 0.8429228988533424
+  rebuffer_percentage: 0.05711432330247227
+  video_quality_score: 0.9458211577879755
+  startup_time_score: 0.8809228744564576
 - key: brightcove
   name: Brightcove
   color: '#01EAE4'
@@ -133,13 +147,13 @@
     - https://studio.brightcove.com/products/videocloud/media/videos/5686632036001
   options:
     account: 1752604059001
-  viewer_experience_score: 0.8751589423873681
-  video_startup_time: 2916
-  player_startup_time: 1336.81640625
-  smoothness_score: 0.9967187312831187
-  rebuffer_percentage: 0.0005371330834962796
-  video_quality_score: 0.8626250195249398
-  startup_time_score: 0.7402321850872263
+  viewer_experience_score: 0.8769850501005608
+  video_startup_time: 2401
+  player_startup_time: 1314.0625
+  smoothness_score: 0.9974954206363225
+  rebuffer_percentage: 0.0003374275307195509
+  video_quality_score: 0.8582339162297238
+  startup_time_score: 0.7480280330030952
 - key: theoplayer
   name: THEOplayer
   url: https://www.theoplayer.com
@@ -150,27 +164,13 @@
   options:
     libraryLocation: https://cdn.myth.theoplayer.com/7d1ab703-8b6b-4c29-9598-d6c2f92cfe33
     license: sZP7IYe6T6frCKfz0KxK06klIKhiFSazIle-Tu5r36zLCSao0l0zIDXKCSe6FOPlUY3zWokgbgjNIOf9flXg0SbiCD3eFSCi3lC-3uRcTOk60l0kFS0L3DhrTSaiClbr0OfVfK4_bQgZCYxNWoryIQXzImf90SCZ3u5c0uai0u5i0Oi6Io4pIYP1UQgqWgjeCYxgflEc3lB_3Lfz0lai0LCcFOPeWok1dDrLYtA1Ioh6TgV6UQ1gWtAVCYggb6rlWoz6FOPVWo31WQ1qbta6FOfJfgzVfKxqWDXNWG3ybojkbK3gflNWfGxEIDjiWQXrIYfpCoj-f6i6WQjlCDcEWt3zf6i6v6PUFOPLIQ-LflNWfK1zWDikfgzVfG3gWKxydDkibK4LbogqW6f9UwPkIYz
-  viewer_experience_score: 0.8675040749613634
-  player_startup_time: 2401
-  video_startup_time: 3249
-  smoothness_score: 0.9351764579792461
-  rebuffer_percentage: 0.007018253854166244
-  video_quality_score: 0.9605952617745145
-  startup_time_score: 0.7208978086263834
-- key: shakaplayer
-  name: Shaka Player
-  url: https://github.com/google/shaka-player
-  clips:
-    - https://player.vimeo.com/external/648359100.mpd?s=a4419a2e2113cc24a87aef2f93ef69a8e4c8fb0c&player=shakaplayer
-    - https://player.vimeo.com/external/638371189.mpd?s=0d28be6fcde41d4a868f5e6be46cbdc8601f5748&player=shakaplayer
-    - https://player.vimeo.com/external/638371504.mpd?s=d154aa431bb3980bd039a7e2b1c389353ce44fdb&player=shakaplayer
-  viewer_experience_score: 0.865324997281518
-  player_startup_time: 2262.19140625
-  video_startup_time: 841
-  smoothness_score: 0.8251102611219605
-  rebuffer_percentage: 0.058204616411254066
-  video_quality_score: 0.9455618437492486
-  startup_time_score: 0.8629212399188361
+  viewer_experience_score: 0.871071295780048
+  player_startup_time: 2382.66015625
+  video_startup_time: 2916
+  smoothness_score: 0.9377632251526427
+  rebuffer_percentage: 0.006781946338296425
+  video_quality_score: 0.9611684638472456
+  startup_time_score: 0.7276926209959822
 - key: streamable
   name: Streamable
   color: '#0F90FA'
@@ -180,12 +180,26 @@
     - https://streamable.com/pz0lmz
     - https://streamable.com/wjzpkr
     - https://streamable.com/bp9znx
-  viewer_experience_score: 0.8371462877400577
+  viewer_experience_score: 0.8340221058150687
   video_startup_time: 16
-  player_startup_time: 1434.515625
-  smoothness_score: 0.728702119672793
-  rebuffer_percentage: 0.045395878265969386
-  startup_time_score: 0.9964655020872057
+  player_startup_time: 1444
+  smoothness_score: 0.7235646265129768
+  rebuffer_percentage: 0.04334739699075258
+  startup_time_score: 0.9962991503469573
+- key: dashjs
+  name: dash.js
+  url: https://github.com/Dash-Industry-Forum/dash.js
+  clips:
+    - https://player.vimeo.com/external/648359100.mpd?s=a4419a2e2113cc24a87aef2f93ef69a8e4c8fb0c&ext=.mpd
+    - https://dash.akamaized.net/envivio/EnvivioDash3/manifest.mpd
+    - https://amssamples.streaming.mediaservices.windows.net/634cd01c-6822-4630-8444-8dd6279f94c6/CaminandesLlamaDrama4K.ism/manifest(format=mpd-time-csf)?ext=.mpd
+  video_startup_time: 441
+  viewer_experience_score: 0.8212371492720617
+  player_startup_time: 953.265625
+  smoothness_score: 0.6639009445917309
+  rebuffer_percentage: 0.10216190484938638
+  video_quality_score: 0.9429396144935287
+  startup_time_score: 0.9326571629450957
 - key: jwplayer
   name: JW Player
   color: '#FF0046'
@@ -197,27 +211,13 @@
     - https://cdn.jwplayer.com/players/R12Nj7bO-Pd4r8gwe.html
   options:
     player: IxzuqJ4M
-  viewer_experience_score: 0.8150206791252649
-  video_startup_time: 1444
-  player_startup_time: 2214.87890625
-  smoothness_score: 0.9990619662592182
-  rebuffer_percentage: 0.00008736699350132276
-  video_quality_score: 0.8889678641822603
-  startup_time_score: 0.8379854115338816
-- key: dashjs
-  name: dash.js
-  url: https://github.com/Dash-Industry-Forum/dash.js
-  clips:
-    - https://player.vimeo.com/external/648359100.mpd?s=a4419a2e2113cc24a87aef2f93ef69a8e4c8fb0c&ext=.mpd
-    - https://dash.akamaized.net/envivio/EnvivioDash3/manifest.mpd
-    - https://amssamples.streaming.mediaservices.windows.net/634cd01c-6822-4630-8444-8dd6279f94c6/CaminandesLlamaDrama4K.ism/manifest(format=mpd-time-csf)?ext=.mpd
-  video_startup_time: 441
-  viewer_experience_score: 0.8144032300491911
-  player_startup_time: 949.41015625
-  smoothness_score: 0.6516090284853385
-  rebuffer_percentage: 0.10389917277635388
-  video_quality_score: 0.9377109919586321
-  startup_time_score: 0.927173128116928
+  viewer_experience_score: 0.8126919343611283
+  video_startup_time: 1369
+  player_startup_time: 2185.5625
+  smoothness_score: 0.9977912764439237
+  rebuffer_percentage: 0.0008328391846115737
+  video_quality_score: 0.8868023171897762
+  startup_time_score: 0.8477930217702813
 - key: vimeo
   name: Vimeo
   color: '#00ADEF'
@@ -227,13 +227,13 @@
     - https://vimeo.com/648359100
     - https://vimeo.com/638371189
     - https://vimeo.com/638371504
-  viewer_experience_score: 0.8095647880494271
+  viewer_experience_score: 0.810698461926673
   video_startup_time: 2304
-  player_startup_time: 1991.390625
-  smoothness_score: 0.7293771751305833
-  rebuffer_percentage: 0.0819838017835862
-  video_quality_score: 0.9992893678010782
-  startup_time_score: 0.7753386297827388
+  player_startup_time: 2127.515625
+  smoothness_score: 0.7340855089839825
+  rebuffer_percentage: 0.07930808667105561
+  video_quality_score: 0.9995906248308781
+  startup_time_score: 0.7725700717983823
 - key: vidyard
   name: Vidyard
   color: '#5E5CFA'
@@ -243,12 +243,12 @@
     - https://share.vidyard.com/watch/SpdS7bytPcF1Ztc8d7NxHC?
     - https://share.vidyard.com/watch/B4uvxTbjqshXVHf5fXX3po?
     - https://share.vidyard.com/watch/Xm2qXrsFL1vFHHHFMdf1UN?
-  viewer_experience_score: 0.8048490835784593
-  video_startup_time: 2601
-  player_startup_time: 3284.72265625
-  smoothness_score: 0.8422943673948377
-  rebuffer_percentage: 0.030847445824894213
-  startup_time_score: 0.7498368756891994
+  viewer_experience_score: 0.8066102503541374
+  video_startup_time: 2500
+  player_startup_time: 3327.84765625
+  smoothness_score: 0.8397324520077958
+  rebuffer_percentage: 0.035146346310006724
+  startup_time_score: 0.7579492399720635
 - key: cloudflare
   name: Cloudflare
   url: https://www.cloudflare.com
@@ -257,13 +257,28 @@
     - https://videodelivery.net/0ac7e0085e9d4ed83b2c0dc604fda32d
     - https://videodelivery.net/644822f93dcddab3e9441587d184ca2f
     - https://videodelivery.net/785a28a0c8a5833226e4aa4659e72cc9
-  viewer_experience_score: 0.7806699838313274
-  video_startup_time: 1089
-  player_startup_time: 637.5625
-  smoothness_score: 0.6920834535933724
-  rebuffer_percentage: 0.03555243668775702
-  video_quality_score: 0.9660509943819502
-  startup_time_score: 0.8536080529955212
+  viewer_experience_score: 0.7933775393537773
+  video_startup_time: 1156
+  player_startup_time: 672.75390625
+  smoothness_score: 0.7076052460354183
+  rebuffer_percentage: 0.028706552502206804
+  video_quality_score: 0.967378468394418
+  startup_time_score: 0.8609542654317142
+- key: cloudinary
+  name: Cloudinary
+  url: https://cloudinary.com/
+  favicon: https://cloudinary.com/favicon.ico
+  clips:
+    - https://res.cloudinary.com/dlzvjxfis/video/upload/sp_4k/v1640308723/the_world_in_4k_hdr.m3u8
+    - https://res.cloudinary.com/dlzvjxfis/video/upload/sp_4k/v1640317683/IMG_2396.m3u8
+    - https://res.cloudinary.com/dlzvjxfis/video/upload/sp_4k/v1640302062/llama_drama.m3u8
+  viewer_experience_score: 0.7933001190586061
+  video_startup_time: 1156
+  player_startup_time: 672.75390625
+  smoothness_score: 0.7079437737053327
+  rebuffer_percentage: 0.02876180816769821
+  video_quality_score: 0.9673752736100506
+  startup_time_score: 0.8606496005555149
 - key: bitmovin
   name: Bitmovin
   url: https://bitmovin.com
@@ -284,7 +299,7 @@
     - - https://stream.mux.com/r4rOE02cc95tbe3I00302nlrHfT023Q3IedFJW029w018KxZA/low.mp4
       - https://stream.mux.com/r4rOE02cc95tbe3I00302nlrHfT023Q3IedFJW029w018KxZA/medium.mp4
       - https://stream.mux.com/r4rOE02cc95tbe3I00302nlrHfT023Q3IedFJW029w018KxZA/high.mp4
-  player_startup_time: 50.765625
+  player_startup_time: 45.5625
   viewer_experience_score: 0
   smoothness_score: 1
   video_startup_time: 36

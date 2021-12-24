@@ -4,7 +4,7 @@ import * as canPlay from './canplay.js';
 export * from 'playerx';
 
 // See options.js for the default enabled players.
-Object.assign(options.players, {
+options.players = {
   apivideo: {
     canPlay: canPlay.apivideo,
     lazyPlayer: () => import('./players/apivideo.js'),
@@ -20,6 +20,10 @@ Object.assign(options.players, {
   cloudflare: {
     canPlay: canPlay.cloudflare,
     lazyPlayer: () => import('./players/cloudflare.js'),
+  },
+  cloudinary: {
+    canPlay: canPlay.cloudinary,
+    lazyPlayer: () => import('./players/cloudinary.js'),
   },
   dailymotion: {
     canPlay: canPlay.dailymotion,
@@ -65,4 +69,5 @@ Object.assign(options.players, {
     canPlay: canPlay.vidyard,
     lazyPlayer: () => import('./players/vidyard.js'),
   },
-});
+  ...options.players
+};

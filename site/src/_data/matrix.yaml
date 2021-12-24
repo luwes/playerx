@@ -10,3 +10,4 @@ players:
   jwplayer: true
   vidyard: true
   muxvideo: true
+  cloudinary: true
