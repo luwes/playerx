@@ -43,6 +43,7 @@ exports.config = {
 
   updateJob: false,
   specs: [
+    'players/cloudinary.js',
     'players/cloudflare.js',
     'players/muxvideo.js',
     'players/brightcove.js',
