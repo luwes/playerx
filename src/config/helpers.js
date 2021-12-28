@@ -34,7 +34,7 @@ export function getHtml(opts) {
     ...defaults,
     ...matches,
     metaId: matches[1],
-    id: 'plx-' + nanoid(),
+    id: 'plx-' + tinySimpleHash(opts.src),
     ...opts,
   };
 
@@ -62,7 +62,7 @@ export function populate(template, obj) {
     /\{\{\s*(\w+)([=?-\\:])?([\w-]+?)?\s*\}\}/g,
     function (match, key, mod, fallback) {
       let val = obj[key];
-      val = val != null ? val : fallback
+      val = val != null ? val : fallback;
       if (val != null) {
         // mod for adding json key/value
         if (mod === ':') {
@@ -86,6 +86,13 @@ export function populate(template, obj) {
   );
 }
 
-export function nanoid(length = 3) {
-  return Math.random().toString(36).slice(-length);
+/**
+ * Create a truncated hash based on an input string.
+ * So the returned id will be the same for a specific video src url.
+ * https://stackoverflow.com/a/52171480/268820
+ */
+function tinySimpleHash(s, len = 3) {
+  for (var i = 0, h = 9; i < s.length; )
+    h = Math.imul(h ^ s.charCodeAt(i++), 9 ** 9);
+  return String(h ^ (h >>> 9)).slice(-len);
 }
