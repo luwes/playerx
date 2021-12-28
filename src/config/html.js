@@ -1,0 +1,7 @@
+export const type = 'inline'
+export const key = 'html'
+export const name = 'HTML'
+export const srcPattern = '\\.(mp[43]|og[gva]|web[ma]|mov|m4[va])($|\\?)'
+export const version = '5'
+export const html = '{{video}}'
+export const setup = '{{html}}'
