@@ -11,3 +11,4 @@ players:
   vidyard: true
   muxvideo: true
   cloudinary: true
+  cloudflare: true
