@@ -1,4 +1,4 @@
-// https://support.brightcove.com/overview-player-api
+// https://player.support.brightcove.com/coding-topics/overview-player-api.html
 
 import { brightcove as MATCH_SRC } from '../constants/src-regex.js';
 import { getMetaId } from '../helpers.js';

@@ -12,6 +12,7 @@ import json from '@rollup/plugin-json';
 const production = !process.env.ROLLUP_WATCH;
 
 let bundles = [
+  ...createBundles('src/config/index.js', 'config', 'plxConfig'),
   ...createBundles('src/playerx/index.js', 'playerx', 'playerx'),
   ...createBundles('src/playerx/all.js', 'all', 'plxAll'),
   // ...createBundles('src/all.js', 'lazy', 'playerx', [], false),
