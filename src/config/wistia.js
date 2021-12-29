@@ -11,14 +11,15 @@ export const version = '2.x.x'
 export const html = '{{iframe}}'
 export const scriptText = `
 window._wq.push({
-  id: {{metaId}},
+  id: '{{metaId}}',
+  options: {{options}},
   onReady: function(api) {
     {{callback}}(api);
   }
 });
 `
 export const setup = `
-<div class="wistia_embed wistia_async_{{metaId}}"></div>
+<div class="wistia_embed wistia_async_{{metaId}}"{{id=}}></div>
 {{js}}
 {{script}}
 `

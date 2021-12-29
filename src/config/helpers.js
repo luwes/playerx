@@ -42,7 +42,7 @@ export function getHtml(opts) {
   render(opts);
   render(opts);
 
-  if (opts.type === 'inline' || opts.api) {
+  if (opts.type === 'inline' || [true, '1', 'true'].includes(opts.api)) {
     return opts.setup;
   }
   return opts.html;
@@ -59,7 +59,7 @@ function render(opts) {
 
 export function populate(template, obj) {
   return template.replace(
-    /\{\{\s*(\w+)([=?])?([\w-]+?)?\s*\}\}/g,
+    /\{\{\s*([\w-]+)([=?|])?([^\s}]+?)?\s*\}\}/g,
     function (match, key, mod, fallback) {
       let val = obj[key];
       val = val != null ? val : fallback;
