@@ -10,7 +10,7 @@ export const apiVar = 'shaka'
 export const version = '3.1.0'
 export const html = '{{video}}'
 export const scriptText = `
-  var api = new {{apiVar}}.Player({{node}});
-  api.load({{src}});
-  {{callback}}(api);
+var api = new {{apiVar}}.Player({{node}});
+api.load({{src}});
+{{callback}}(api);
 `

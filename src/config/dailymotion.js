@@ -11,11 +11,13 @@ export const apiReady = 'dmAsyncInit'
 export const version = '1.x.x'
 export const html = '{{iframe}}'
 export const scriptText = `
+function {{apiReady}}() {
   var api = {{apiVar}}.player({{node}}, Object.assign({
     video: {{metaId}}
   }, {{options}});
   if ({{allow}}) api.allow = {{allow}};
   {{callback}}(api);
+}
 `
 export const setup = `
 <div{{class}}{{id}}></div>

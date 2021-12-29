@@ -9,7 +9,7 @@ const defaults = {
 
   video: '<video{{videoAttrs}}></video>',
 
-  allow: `accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture`,
+  allow: `accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture`,
 
   iframe: `<iframe{{class=}}{{id=}}{{width=}}{{height=}} src="{{embedUrl}}" frameborder="0" allowfullscreen{{allow=}}></iframe>`,
 
@@ -34,10 +34,11 @@ export function getHtml(opts) {
     ...defaults,
     ...matches,
     metaId: matches[1],
-    id: 'plx-' + tinySimpleHash(opts.src),
+    id: 'plx' + tinySimpleHash(opts.src),
     ...opts,
   };
 
+  // Poor man's recursion
   render(opts);
   render(opts);
 
@@ -57,19 +58,12 @@ function render(opts) {
 }
 
 export function populate(template, obj) {
-  let delimiter = '';
   return template.replace(
-    /\{\{\s*(\w+)([=?-\\:])?([\w-]+?)?\s*\}\}/g,
+    /\{\{\s*(\w+)([=?])?([\w-]+?)?\s*\}\}/g,
     function (match, key, mod, fallback) {
       let val = obj[key];
       val = val != null ? val : fallback;
       if (val != null) {
-        // mod for adding json key/value
-        if (mod === ':') {
-          let out = `${delimiter}"${key}": "${val}"`;
-          delimiter = ', ';
-          return out;
-        }
         // mod for adding html value attributes
         if (mod === '=') {
           return ` ${key}="${val}"`;
