@@ -19,10 +19,5 @@ module.exports = {
         // 'https://dev.playerx.io/lighthouse/youtube/',
       ]
     },
-    upload: {
-      target: 'lhci',
-      serverBaseUrl: 'https://lhci.playerx.io',
-      token: process.env.LHCI_TOKEN, // could also use LHCI_TOKEN variable instead
-    },
   },
 };
