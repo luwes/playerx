@@ -6,7 +6,7 @@ module.exports = {
       // staticDistDir: './site/public/lighthouse/',
       url: [
         'https://api.playerx.io/render?url=https%3A%2F%2Fembed.api.video%2Fvod%2Fvi7pA8Iz9m3S466XPu8qUJr',
-        'https://api.playerx.io/render?url=https%3A%2F%2Fplayers.brightcove.net%2F1752604059001%2Fdefault_default%2Findex.html%3FvideoId%3D4883184247001',
+        // 'https://api.playerx.io/render?url=https%3A%2F%2Fplayers.brightcove.net%2F1752604059001%2Fdefault_default%2Findex.html%3FvideoId%3D4883184247001',
         // 'https://dev.playerx.io/lighthouse/cloudflare/',
         // 'https://dev.playerx.io/lighthouse/dailymotion/',
         // 'https://dev.playerx.io/lighthouse/facebook/',
@@ -20,7 +20,9 @@ module.exports = {
       ]
     },
     upload: {
-      target: 'temporary-public-storage',
+      target: 'lhci',
+      serverBaseUrl: 'https://lhci.playerx.io',
+      token: process.env.LHCI_TOKEN, // could also use LHCI_TOKEN variable instead
     },
   },
 };
