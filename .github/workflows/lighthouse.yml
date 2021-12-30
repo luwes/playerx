@@ -1,9 +1,9 @@
 name: Lighthouse CI
 on:
-  schedule:
-    # * is a special character in YAML so you have to quote this string
-    # deploy every 3 hours to update the MUX stats
-    - cron: '0 */3 * * *'
+  # Trigger the workflow on push but only for the lighthouse branch
+  push:
+    branches:
+      - lighthouse
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
