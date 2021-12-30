@@ -1,0 +1,28 @@
+# Creates new commit hashes that allows Lighthouse to upload new
+# results to our LHCI server each time.
+
+# The Lighthouse results are not dependent on code in this repo.
+
+name: Lighthouse Cron
+on:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    # deploy every 3 hours to update Lighthouse
+    - cron: '0 */3 * * *'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: lighthouse
+      - run: |
+          date > generated.txt
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "Updated: `date +'%Y-%m-%d %H:%M:%S'`"
+          git push
