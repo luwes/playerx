@@ -28,3 +28,4 @@ esm/
 # Local Netlify folder
 .netlify
 .env
+*.sublime-*
