@@ -26,7 +26,7 @@ jobs:
           ref: lighthouse
       - uses: fregante/setup-git-user@v1
       - run: |
-          git commit --allow-empty -m "Updated: `date +'%Y-%m-%d %H:%M:%S'`"
+          git commit --allow-empty -m "`date +'%Y-%m-%d %H:%M:%S'`"
           git push
 
   lighthouse:
