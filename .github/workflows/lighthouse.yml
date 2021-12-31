@@ -1,14 +1,41 @@
-name: Lighthouse CI
+# Creates new commit hashes that allows Lighthouse to upload new
+# results to our LHCI server each time.
+
+# The Lighthouse results are not dependent on code in this repo.
+
+# https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/getting-started.md
+# NOTE: If you run a matrix of environments in your tests, make sure you only run
+# lhci autorun ONCE per build. The Lighthouse CI server will only accept a single
+# upload per hash and future attempts to upload data for that hash will be rejected.
+
+name: Lighthouse
 on:
-  # Trigger the workflow on push but only for the lighthouse branch
-  push:
-    branches:
-      - lighthouse
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    # deploy every 3 hours to update Lighthouse
+    - cron: '0 */3 * * *'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 jobs:
-  lighthouse:
+  newhash:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: lighthouse
+      - uses: fregante/setup-git-user@v1
+      - run: |
+          git commit --allow-empty -m "Updated: `date +'%Y-%m-%d %H:%M:%S'`"
+          git push
+
+  lighthouse:
+    needs: newhash
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: lighthouse
       - name: Audit URLs using Lighthouse
         uses: treosh/lighthouse-ci-action@v8
         with:
