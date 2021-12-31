@@ -34,6 +34,10 @@ rows:
     field: video_quality_score
     description: >-
       Video Quality compares the resolution of the video stream to the dimensions of the player.
+  - title: Lighthouse Score
+    field: category_performance_median
+    description: >-
+      The Lighthouse Performance score is a weighted average of the metric scores. Naturally, more heavily weighted metrics have a bigger effect on your overall Performance score. The metric scores are not visible in the report, but are calculated under the hood.
 players:
   apivideo: true
   vimeo: true

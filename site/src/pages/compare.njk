@@ -15,6 +15,7 @@ tags:
   {{ super() }}
 
   <link rel="stylesheet" href="https://unpkg.com/microtip@0.2.2/microtip.css">
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.63/dist/components/progress-ring/progress-ring.js"></script>
 {% endblock %}
 
 {% block body %}<body class="flex flex-col min-h-screen">{% endblock %}
@@ -33,7 +34,7 @@ tags:
   <div class="compare-grid md:grid" style="--cols: {{ compare.players | length }}">
     <div class="grid-cell">
       <h3 class="text-2xl">Compare platforms</h3>
-      <p class="text-xs ml-0.5">Based on this <a class="underline" href="https://github.com/playerxo/playerx/tree/main/bench" target="_blank">bench</a> measured with <a class="underline" href="https://docs.mux.com/guides/data/understand-metric-definitions" target="_blank">MUX data</a>.</p>
+      <p class="text-xs ml-0.5"><a class="underline" href="https://github.com/playerxo/playerx/tree/main/bench" target="_blank">Benchmark</a> measured with <a class="underline" href="https://docs.mux.com/guides/data/understand-metric-definitions" target="_blank">MUX data</a> and <a class="underline" href="https://developers.google.com/web/tools/lighthouse" target="_blank">Lighthouse</a>.</p>
     </div>
     {%- for player in players | sort(true, false, 'viewer_experience_score') -%}
       {% if compare.players[player.key] %}
@@ -65,9 +66,31 @@ tags:
         </h4>
       </div>
 
+{% macro scorecolor(score) %}
+  {% set color = '#FF3333' %}
+  {% if score > 89 %}
+    {% set color = '#00CC66' %}
+  {% elif score > 49 %}
+    {% set color = '#FFAA33' %}
+  {% endif %}
+  {{- color -}}
+{% endmacro %}
+
+{% macro progressring(score, color, link) %}
+  {% if link %}
+  <a style="font-size: 1px;" href="{{ link }}" target="_blank">
+  {% endif %}
+    <sl-progress-ring class="text-sm" value="{{score}}" style="--track-width: 4px; --indicator-color: {{ color }}; --size: 50px; color: {{ color }};">
+      {{score}}
+    </sl-progress-ring>
+  {% if link %}
+  </a>
+  {% endif %}
+{% endmacro %}
+
       {%- for player in players | sort(true, false, 'viewer_experience_score') -%}
         {% if compare.players[player.key] %}
-          <div class="grid-cell lg:border-l flex flex-col items-center justify-center">
+          <div class="font-mono grid-cell lg:border-l flex flex-col items-center justify-center {{row.field}}">
             {% if row.field == 'viewer_experience_score' %}
               <span class="text-2xl leading-none tracking-tight font-bold text-gray-900">
                 {{ (player.viewer_experience_score * 100) | round }}
@@ -100,6 +123,9 @@ tags:
                   N/A
                 {% endif %}
               </span>
+            {% elif row.field == 'category_performance_median' %}
+              {% set score = (player.category_performance_median * 100) | round %}
+              {{ progressring(score, scorecolor(score), 'https://lhci.playerx.io/app/projects/lhci-playerx/dashboard?runUrl=' + player.lighthouse_test_url | urlencode) }}
             {% endif %}
           </div>
         {% endif %}
