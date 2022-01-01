@@ -1,7 +1,7 @@
 const plugins = [
   require('postcss-import'),
+  require('tailwindcss/nesting'),
   require('tailwindcss'),
-  require('postcss-nested'),
   require('autoprefixer'),
   // require('postcss-comment'),
   // require('postcss-mixins'),

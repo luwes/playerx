@@ -1,6 +1,5 @@
-const ui = require('@tailwindcss/ui');
-const { variants } = require('tailwindcss/defaultConfig');
 const { fontFamily } = require('tailwindcss/defaultTheme');
+const colors = require('tailwindcss/colors')
 
 const aquamarine = {
   50: '#E9FCF7',
@@ -16,25 +15,14 @@ const aquamarine = {
 };
 
 module.exports = {
-  purge: {
-    enabled: process.env.NODE_ENV === 'prod',
-    mode: 'layers',
-    layers: ['base', 'components', 'utilities'],
-    content: ['./src/**/*.{html,njk,md,js}'],
-    safelist: [
-      'grid-cols-2',
-      'grid-cols-3',
-      'grid-cols-4',
-      'grid-cols-5',
-    ]
-  },
-  plugins: [
-    ui,
+  content: ['./src/**/*.{html,njk,md,js}'],
+  safelist: [
+    'grid-cols-2',
+    'grid-cols-3',
+    'grid-cols-4',
+    'grid-cols-5',
+    'category_performance_median',
   ],
-  variants: {
-    opacity: [...variants.opacity, 'disabled'],
-    cursor: [...variants.cursor, 'disabled'],
-  },
   theme: {
     extend: {
       fontFamily: {
@@ -43,7 +31,8 @@ module.exports = {
         system: fontFamily.sans,
       },
       colors: {
-        aquamarine
+        aquamarine,
+        gray: colors.slate,
       },
       width: {
         '1/9': '11.111111111%',

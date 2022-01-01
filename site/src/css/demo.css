@@ -30,15 +30,15 @@ input[type="range"]::-ms-thumb {
 }
 
 .btn {
-  @apply bg-cool-gray-400 text-white text-sm py-1 px-2 rounded mr-1;
+  @apply bg-gray-400 text-white text-sm py-1 px-2 rounded mr-1;
 }
 
 .btn-active {
-  @apply bg-cool-gray-500 shadow-inner;
+  @apply bg-gray-500 shadow-inner;
 }
 
 .btn:hover:enabled {
-  @apply bg-cool-gray-600;
+  @apply bg-gray-600;
 }
 
 .src-btn {
@@ -62,7 +62,7 @@ input[type="range"]::-ms-thumb {
 }
 
 .log {
-  @apply px-2 border-t border-cool-gray-200 flex justify-between;
+  @apply px-2 border-t border-gray-200 flex justify-between;
 }
 
 .log > div {
@@ -71,5 +71,5 @@ input[type="range"]::-ms-thumb {
 }
 
 .log > i {
-  @apply text-cool-gray-400;
+  @apply text-gray-400;
 }

@@ -45,7 +45,7 @@
 
 .feature-list li:before {
   content: '•';
-  @apply absolute text-cool-gray-300 left-0;
+  @apply absolute text-gray-300 left-0;
 }
 
 .menu-options {

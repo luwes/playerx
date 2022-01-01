@@ -79,7 +79,7 @@
     @apply px-1;
     @apply leading-none;
     @apply whitespace-nowrap;
-    @apply text-cool-gray-600;
+    @apply text-gray-600;
     @apply font-mono;
     @apply align-baseline;
     font-weight: 400;
@@ -162,7 +162,7 @@
   > h2 code,
   > h3 code,
   > h4 code {
-    @apply text-cool-gray-600;
+    @apply text-gray-600;
     @apply font-mono;
   }
 
@@ -193,7 +193,7 @@
   }
 
   > ol {
-    @apply list-none;
+    list-style: none;
     counter-reset: item;
     > li {
       @apply relative pl-10;
