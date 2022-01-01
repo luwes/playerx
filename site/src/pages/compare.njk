@@ -30,17 +30,17 @@ tags:
 {% block content %}
 <main class="relative overflow-auto flex-grow flex flex-col pt-20">
 
-  <div class="compare-grid md:grid" style="--cols: {{ compare.players | length }}">
+  <div class="compare-grid grid" style="--cols: {{ compare.players | length }}">
     <div class="grid-cell">
       <h3 class="text-2xl">Compare platforms</h3>
-      <p class="text-xs ml-0.5"><a class="underline" href="https://github.com/playerxo/playerx/tree/main/bench" target="_blank">Benchmark</a> measured with <a class="underline" href="https://docs.mux.com/guides/data/understand-metric-definitions" target="_blank">MUX data</a> and <a class="underline" href="https://developers.google.com/web/tools/lighthouse" target="_blank">Lighthouse</a>.</p>
+      <p class="text-xs ml-0.5"><a class="underline" href="https://github.com/playerxo/playerx/tree/main/bench" target="_blank">Benchmark</a> by <a class="underline" href="https://docs.mux.com/guides/data/understand-metric-definitions" target="_blank">MUX data</a> and <a class="underline" href="https://developers.google.com/web/tools/lighthouse" target="_blank">Lighthouse</a>.</p>
     </div>
     {%- for player in players | sort(true, false, 'viewer_experience_score') -%}
       {% if compare.players[player.key] %}
-        <div class="grid-cell lg:border-l flex items-start">
+        <div class="platform-header grid-cell border-l flex items-start">
           <img class="w-4 h-4 mr-2 mt-2" src="{{ player.favicon }}" alt="{{ player.name }} favicon">
           <div>
-            <h3 class="text-xl leading-tight mt-1">
+            <h3 class="text-lg tracking-tight mt-1">
               {% if player.compare_name %}
                 {{ player.compare_name }}
               {% else %}
@@ -89,7 +89,7 @@ tags:
 
       {%- for player in players | sort(true, false, 'viewer_experience_score') -%}
         {% if compare.players[player.key] %}
-          <div class="font-mono grid-cell lg:border-l flex flex-col items-center justify-center {{row.field}}">
+          <div class="font-mono grid-cell border-l flex flex-col items-center justify-center {{row.field}}">
             {% if row.field == 'viewer_experience_score' %}
               <span class="text-2xl leading-none tracking-tight font-bold text-gray-900">
                 {{ (player.viewer_experience_score * 100) | round }}

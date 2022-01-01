@@ -1,8 +1,8 @@
 
 .compare-grid {
   grid-template-columns:
-    minmax(380px, 1fr)
-    repeat(var(--cols), minmax(180px, 1fr));
+    minmax(300px, 1fr)
+    repeat(var(--cols), minmax(155px, 1fr));
 }
 
 .grid-cell {
@@ -11,4 +11,8 @@
 
 .category_performance_median {
   @apply py-0;
+}
+
+.platform-header {
+  @apply px-4 py-3;
 }
