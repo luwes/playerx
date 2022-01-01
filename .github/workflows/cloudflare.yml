@@ -1,13 +1,13 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Cloudflare site deploy
+name: Cloudflare Site Deploy
 
 # Controls when the action will run.
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    # deploy every 3 hours to update the MUX stats
-    - cron: '0 */3 * * *'
+    # deploy every 2 hours to update the MUX stats
+    - cron: '0 */2 * * *'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
