@@ -6,6 +6,7 @@ import {
   loadScript,
   publicPromise,
   getFileName,
+  promisify,
 } from '../utils.js';
 
 const API_URL = 'https://cdn.jsdelivr.net/npm/@mux-elements/mux-video@0.2.0/dist/index.js';
@@ -40,6 +41,8 @@ export function createPlayer(element) {
 
     await loadScript(opts.apiUrl || API_URL);
     Object.assign(video, opts);
+
+    await promisify(video.hls.on, video.hls)('hlsManifestLoaded');
   }
 
   function reset() {

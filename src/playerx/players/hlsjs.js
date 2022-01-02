@@ -6,6 +6,7 @@ import {
   loadScript,
   publicPromise,
   getFileName,
+  promisify,
 } from '../utils.js';
 
 const HLS_URL = 'https://cdn.jsdelivr.net/npm/hls.js@1.0.7/dist/hls.min.js';
@@ -47,6 +48,7 @@ export function createPlayer(element) {
       api.config.maxMaxBufferLength = 6;
       api.attachMedia(video);
       api.loadSource(src);
+      await promisify(api.on, api)('hlsManifestLoaded');
     }
   }
 
