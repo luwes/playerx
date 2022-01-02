@@ -1,12 +1,23 @@
----
-permalink: compare/
-title: "Playerx - Compare platforms"
-menu: Compare
-eleventyNavigation:
-  key: Compare
-  order: 3
-tags:
-  - main
+---js
+{
+  pagination: {
+    data: "compare.rows",
+    size: 1,
+    alias: "metric",
+    before: function(data) {
+      return data.map(row => ({ ...row, order: '' }))
+        .concat(data.map(row => ({ ...row, order: 'asc' })))
+    }
+  },
+  permalink: "compare/sort/{{ metric.field | replace('_', '-') }}/{{ metric.order }}/",
+  title: "Playerx - Compare platforms",
+  menu: "Compare",
+  eleventyNavigation: {
+    key: "Compare",
+    order: 3
+  },
+  tags: ["main"]
+}
 ---
 
 {% extends "layouts/base.njk" %}
@@ -15,6 +26,7 @@ tags:
   <link rel="stylesheet" href="/css/playerx-dev.css">
   <link rel="stylesheet" href="https://unpkg.com/microtip@0.2.2/microtip.css">
   <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.63/dist/components/progress-ring/progress-ring.js"></script>
+  <script defer src="/js/compare.js"></script>
 {% endblock %}
 
 {% block body %}<body class="flex flex-col min-h-screen">{% endblock %}
@@ -35,7 +47,7 @@ tags:
       <h3 class="text-2xl">Compare platforms</h3>
       <p class="text-xs ml-0.5"><a class="underline" href="https://github.com/playerxo/playerx/tree/main/bench" target="_blank">Benchmark</a> by <a class="underline" href="https://docs.mux.com/guides/data/understand-metric-definitions" target="_blank">MUX data</a> and <a class="underline" href="https://developers.google.com/web/tools/lighthouse" target="_blank">Lighthouse</a>.</p>
     </div>
-    {%- for player in players | sort(true, false, 'viewer_experience_score') -%}
+    {%- for player in players | sort(not metric.order, false, metric.field) -%}
       {% if compare.players[player.key] %}
         <div class="platform-header grid-cell border-l flex items-start">
           <img class="w-4 h-4 mr-2 mt-2" src="{{ player.favicon }}" alt="{{ player.name }} favicon">
@@ -54,15 +66,30 @@ tags:
     {%- endfor -%}
 
     {%- for row in compare.rows -%}
-      <div class="grid-cell">
-        <h4>
-          <span>{{ row.title }}</span>
+      <div class="grid-cell flex">
+        <h4 class="grow">
+          <a href="/compare/sort/{{ row.field | replace('_', '-') }}">
+            <span>{{ row.title }}</span>
+          </a>
           <button class="leading-snug align-middle" aria-label="{{ row.description }}" data-microtip-position="bottom" data-microtip-size="medium" role="tooltip">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 stroke-current text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </button>
         </h4>
+        {% if row.field == metric.field %}
+          <a class="self-center justify-self-end" href="{% if metric.order %}..{% else %}asc{% endif %}">
+            {% if metric.order %}
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
+            {% else %}
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+              </svg>
+            {% endif %}
+          </a>
+        {% endif %}
       </div>
 
 {% macro scorecolor(score) %}
@@ -87,7 +114,7 @@ tags:
   {% endif %}
 {% endmacro %}
 
-      {%- for player in players | sort(true, false, 'viewer_experience_score') -%}
+      {%- for player in players | sort(not metric.order, false, metric.field) -%}
         {% if compare.players[player.key] %}
           <div class="font-mono grid-cell border-l flex flex-col items-center justify-center {{row.field}}">
             {% if row.field == 'viewer_experience_score' %}

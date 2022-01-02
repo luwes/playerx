@@ -63,4 +63,13 @@ export default [
       name: 'matrix',
     },
   },
+  {
+    ...config,
+    input: 'src/js/compare.js',
+    output: {
+      ...config.output,
+      file: 'public/js/compare.js',
+      name: 'compare',
+    },
+  },
 ];
