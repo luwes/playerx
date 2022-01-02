@@ -3,6 +3,8 @@
 {% block head %}
   <style>body{margin:0;}</style>
   <script src="{% getCdnUrl 'polyfills' %}"></script>
+
+  <script defer src="/js/rendition-observer.js"></script>
   <script defer src="{% getCdnUrl 'playerx' %}"></script>
   <script defer src="{% getCdnUrl 'playerx/all' %}"></script>
 {% endblock %}

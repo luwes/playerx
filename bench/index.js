@@ -36,6 +36,47 @@ module.exports = function(player) {
         done(true);
       }));
 
+      const hasIframe = await browser.execute(function() {
+        const plx = document.querySelector('player-x');
+        return plx.querySelectorAll('iframe').length > 0;
+      });
+
+      if (hasIframe) {
+        const playerIframe = await browser.$('iframe');
+        await browser.switchToFrame(playerIframe);
+      }
+
+      await browser.executeAsync(function(done) {
+        if (document.readyState === 'complete') {
+          done();
+        } else {
+          window.addEventListener("load", done);
+        }
+      });
+
+      await browser.execute(function() {
+        const video = document.querySelector('video');
+        video.addEventListener('resize', function() {
+          window.parent.postMessage({
+            event: 'plx-resize',
+            data: {
+              videoWidth: video.videoWidth,
+              videoHeight: video.videoHeight,
+            }
+          }, '*');
+        });
+      });
+
+      if (hasIframe) {
+        await browser.switchToParentFrame();
+      }
+
+      await browser.execute(function() {
+        window.addEventListener('message', function(e) {
+          console.log(JSON.stringify(e.data));
+        });
+      });
+
       console.warn(`Starting playback for ${player}`);
 
       if (player === 'facebook' && plxo.os === 'android') {
