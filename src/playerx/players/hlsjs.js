@@ -44,6 +44,7 @@ export function createPlayer(element) {
     Hls = await loadScript(opts.hlsUrl || HLS_URL, HLS_GLOBAL);
     if (Hls.isSupported()) {
       api = new Hls(element.config.hlsjs);
+      api.config.maxMaxBufferLength = 6;
       api.attachMedia(video);
       api.loadSource(src);
     }
