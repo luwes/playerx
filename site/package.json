@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "disco": "1.0.2",
-    "playerx": "0.8.5",
+    "playerx": "0.8.6",
     "sinuous": "0.27.12",
     "tailwindcss": "3.0.8"
   },
