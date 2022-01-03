@@ -29,8 +29,6 @@ export function createPlayer(element) {
     video = createElement('mux-video');
 
     await load(getOptions());
-
-    await customElements.whenDefined('mux-video');
     video.hls.config.maxMaxBufferLength = 6;
 
     ready.resolve();
