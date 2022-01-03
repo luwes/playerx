@@ -48,7 +48,7 @@ export function createPlayer(element) {
       api.config.maxMaxBufferLength = 6;
       api.attachMedia(video);
       api.loadSource(src);
-      await promisify(api.on, api)('hlsManifestLoaded');
+      await promisify(api.on, api)(Hls.Events.MANIFEST_LOADED);
     }
   }
 

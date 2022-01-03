@@ -29,7 +29,6 @@ export function createPlayer(element) {
     video = createElement('mux-video');
 
     await load(getOptions());
-    video.hls.config.maxMaxBufferLength = 6;
 
     ready.resolve();
   }
@@ -40,7 +39,13 @@ export function createPlayer(element) {
     await loadScript(opts.apiUrl || API_URL);
     Object.assign(video, opts);
 
-    await promisify(video.hls.on, video.hls)('hlsManifestLoaded');
+    // If video.hls is undefined the player is using native m3u8 playback.
+    if (video.hls) {
+      video.hls.config.maxMaxBufferLength = 6;
+
+      const Hls = video.hls.constructor;
+      await promisify(video.hls.on, video.hls)(Hls.Events.MANIFEST_LOADED);
+    }
   }
 
   function reset() {
