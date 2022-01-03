@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "playerx",
-  "version": "0.8.8",
+  "version": "0.8.9",
   "description": "Playerx",
   "keywords": [],
   "homepage": "https://github.com/playerxo/playerx#readme",
@@ -120,6 +120,6 @@
     "ua-parser-js": "^0.7.28"
   },
   "dependencies": {
-    "mux-embed": "4.2.3"
+    "mux-embed": "4.4.0"
   }
 }
