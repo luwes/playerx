@@ -17,6 +17,7 @@ const eventData = {
     console.error(error);
     return error && (error.message || error.code || error);
   },
+  resize: (player) => `${player.videoWidth}x${player.videoHeight}`,
   volumechange: (player) => `${round(player.volume, 2)}`,
   durationchange: (player) => `${round(player.duration, 2)}s`,
   ratechange: (player) => `${round(player.playbackRate, 1)}`,
