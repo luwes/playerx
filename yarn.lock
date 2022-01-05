@@ -7277,10 +7277,10 @@ pkg-up@^2.0.0:
   dependencies:
     find-up "^2.1.0"
 
-playerx@0.8.9:
-  version "0.8.9"
-  resolved "https://registry.yarnpkg.com/playerx/-/playerx-0.8.9.tgz#aa0c07ebe20c8ac6f40ad13c3421512a65bc32eb"
-  integrity sha512-w/lNKZUaOqgIalllL+gMkyJabPzfFoh3kb3Ofo1Spl7YpP0zNOTsRzwiMfyNcCBVaOBJFwBter34vWFT6wSpmA==
+playerx@0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/playerx/-/playerx-0.9.0.tgz#4113008f165e1f3faf01e0b730b15acba9c6ce78"
+  integrity sha512-vaCqYvJR9bDHeQFJ+f4ns5rzeAGxLclA/5lh9kW5/MtYm8GRRVfEss3ZoFgGRgDmTjX+25OWDMt2K+tDSdGcZA==
   dependencies:
     mux-embed "4.4.0"
 
