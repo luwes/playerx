@@ -3,7 +3,7 @@ players:
   vimeo: true
   youtube: true
   dailymotion: true
-  brightcove: false
+  brightcove: true
   facebook: true
   streamable: true
   wistia: true

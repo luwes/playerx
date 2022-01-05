@@ -64,8 +64,8 @@ export function removeNode(node) {
   if (parentNode) parentNode.removeChild(node);
 }
 
-export async function loadScript(src, globalName, readyFnName) {
-  if (globalName && self[globalName]) {
+export async function loadScript(src, globalName, readyFnName, cache = true) {
+  if (cache && globalName && self[globalName]) {
     await delay(0);
     return self[globalName];
   }

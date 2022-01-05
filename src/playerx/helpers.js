@@ -35,9 +35,9 @@ export function setName(name) {
   return prefixName('set', name);
 }
 
-export function getMetaId(matchUrl, src) {
+export function getMetaId(matchUrl, src, index = 1) {
   let match;
-  return (match = src.match(matchUrl)) && match[1];
+  return (match = src.match(matchUrl)) && match[index];
 }
 
 export function createPlayPromise(player) {

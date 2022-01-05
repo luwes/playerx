@@ -3,7 +3,7 @@ export const VIDEO_EXTENSIONS = /\.(mp4|og[gv]|webm|mov|m4v)($|\?)/i;
 export const HLS_EXTENSIONS = /\.m3u8($|\?)/i;
 export const DASH_EXTENSIONS = /\.mpd($|\?)/i;
 
-export const brightcove = /brightcove\.com\/.*?videos\/(\d+)/;
+export const brightcove = /players\.brightcove\.net\/(\d+)\/(\w+)_(\w+)\/.*?videoId=(\d+)/;
 export const dailymotion = /(?:(?:dailymotion\.com(?:\/embed)?\/video)|dai\.ly)\/(\w+)$/;
 export const facebook = /facebook\.com\/.*videos\/(\d+)/;
 export const jwplayer = /jwplayer\.com\/players\/(\w+)(?:-(\w+))?/;

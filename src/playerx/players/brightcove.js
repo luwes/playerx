@@ -28,7 +28,8 @@ export function createPlayer(element) {
     ready = publicPromise();
 
     const opts = getOptions();
-    const metaId = getMetaId(MATCH_SRC, element.src);
+    const accountId = getMetaId(MATCH_SRC, element.src, 1)
+    const metaId = getMetaId(MATCH_SRC, element.src, 4);
 
     div = createElement('video-js', {
       controls: opts.controls ? '' : null,
@@ -36,8 +37,8 @@ export function createPlayer(element) {
       style: 'width:100%;height:100%',
     });
 
-    const API_URL = `https://players.brightcove.net/${opts.account}/default_default/index.min.js`;
-    const BC = await loadScript(opts.apiUrl || API_URL, API_GLOBAL);
+    const API_URL = `https://players.brightcove.net/${accountId}/default_default/index.min.js`;
+    const BC = await loadScript(opts.apiUrl || API_URL, API_GLOBAL, null, false);
     api = BC(div);
     api.autoplay(element.playing || element.autoplay);
 
@@ -46,7 +47,7 @@ export function createPlayer(element) {
   }
 
   const meta = {
-    get identifier() { return getMetaId(MATCH_SRC, element.src); },
+    get identifier() { return getMetaId(MATCH_SRC, element.src, 4); },
   };
 
   const methods = {
