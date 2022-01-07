@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block main %}
-<player-x src="{{ player.src }}" controls muted config="{{ playerconfig }}">
+<player-x src="{{ player.src }}" controls muted preload="auto" config="{{ playerconfig }}">
   <plx-script loading="player" src="{% getCdnUrl 'mux' %}"></plx-script>
   <plx-mux data-env-key="ilc02s65tkrc2mk69b7q2qdkf" debug></plx-mux>
 </player-x>
