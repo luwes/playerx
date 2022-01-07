@@ -36,6 +36,9 @@ module.exports = function(player) {
         done(true);
       }));
 
+      console.warn(`Wait 2s after ready`);
+      await browser.pause(2000);
+
       console.warn(`Starting playback for ${player}`);
 
       if (player === 'facebook' && plxo.os === 'android') {
