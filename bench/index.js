@@ -1,7 +1,9 @@
 const assert = require('assert');
+const axios = require('axios');
 
 module.exports = function(player) {
   const plxo = browser.capabilities['plx:options'] || {};
+  const resizeObserverReq = axios.get('https://dev.playerx.io/js/rendition-observer.js');
 
   describe(`Playback${plxo.saucenetwork ? ` (${plxo.saucenetwork})` : ''}: ${player}`, function() {
 
@@ -28,6 +30,42 @@ module.exports = function(player) {
       await browser.setTimeout({ script: 60000 });
 
       expect(browser).toHaveTitleContaining('Playerx');
+
+      const hasIframe = await browser.executeAsync(function(done) {
+        const plx = document.querySelector('player-x');
+        const media = plx.querySelector('plx-media');
+        if (!media.children.length) {
+          plx.on('media', function() {
+            done(media.querySelectorAll('iframe').length > 0);
+          });
+          return;
+        }
+        done(media.querySelectorAll('iframe').length > 0);
+      });
+
+      if (hasIframe) {
+        const playerIframe = await browser.$('iframe');
+        await browser.switchToFrame(playerIframe);
+      }
+
+      const resizeObserver = (await resizeObserverReq).data;
+
+      await browser.execute(function(scriptContent) {
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.textContent = scriptContent;
+        document.head.appendChild(script);
+      }, resizeObserver);
+
+      if (hasIframe) {
+        await browser.switchToParentFrame();
+      }
+
+      await browser.execute(function() {
+        window.addEventListener('message', function(e) {
+          console.log(JSON.stringify(e.data));
+        });
+      });
 
       console.warn(`Wait ready for ${player}`);
       assert(await browser.executeAsync(async function(done) {
