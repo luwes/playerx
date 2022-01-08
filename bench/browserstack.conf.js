@@ -43,26 +43,26 @@ exports.config = {
 
   updateJob: false,
   specs: [
-    'players/cloudinary.js',
-    'players/cloudflare.js',
-    'players/muxvideo.js',
-    'players/brightcove.js',
-    'players/dailymotion.js',
-    'players/hlsjs.js',
-    'players/dashjs.js',
-    'players/videojs.js',
     'players/apivideo.js',
+    'players/brightcove.js',
+    'players/cloudflare.js',
+    'players/cloudinary.js',
+    'players/dailymotion.js',
+    // 'players/dashjs.js',
+    'players/facebook.js',       // facebook doesn't autoplay always
+    // 'players/hlsjs.js',
+    'players/jwplayer.js',
+    'players/muxvideo.js',
+    // 'players/shakaplayer.js',
+    // 'players/soundcloud.js',  // less useful to test compared to video players
     'players/streamable.js',
+    // 'players/theoplayer.js',
+    // 'players/twitch.js',      // twitch VOD is not good
+    // 'players/videojs.js',
     'players/vidyard.js',
     'players/vimeo.js',
     'players/wistia.js',
     'players/youtube.js',
-    'players/jwplayer.js',
-    'players/shakaplayer.js',
-    'players/theoplayer.js',
-    'players/facebook.js',       // facebook doesn't autoplay always
-    // 'players/soundcloud.js',  // less useful to test compared to video players
-    // 'players/twitch.js',      // twitch VOD is not good
   ],
   exclude: [],
 
