@@ -1,1 +1,1 @@
-require('../index.js')('dailymotion');
+require('../index.js')('dailymotion', true);

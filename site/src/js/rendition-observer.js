@@ -1,5 +1,9 @@
 import { observe } from 'disco';
 
+Array.from(document.querySelectorAll('video')).forEach((video) =>
+  onconnected({ target: video })
+);
+
 observe('video,mux-video');
 document.addEventListener('connected', onconnected, true);
 
@@ -39,7 +43,8 @@ function onloadstart() {
 
 function onloadedmetadata({ target: video }) {
   const mediaSource = video.srcObject || getMediaSourceByUrl(video.src);
-  const sourceBufferList = (mediaSource && mediaSource.activeSourceBuffers) || [];
+  const sourceBufferList =
+    (mediaSource && mediaSource.activeSourceBuffers) || [];
 
   for (let i = 0; i < sourceBufferList.length; i++) {
     const sourceBuffer = sourceBufferList[i];
@@ -58,12 +63,14 @@ function onupdateend(video, e) {
     !sourceBuffer.lastEnd ||
     sourceBuffer.buffered.end(0) > sourceBuffer.lastEnd
   ) {
-    segmentDuration = sourceBuffer.buffered.end(0) - (sourceBuffer.lastEnd || 0);
+    segmentDuration =
+      sourceBuffer.buffered.end(0) - (sourceBuffer.lastEnd || 0);
     sourceBuffer.lastEnd = sourceBuffer.buffered.end(0);
     // console.log('segmentDuration', segmentDuration);
   }
 
-  if (!sourceBuffer.lastSegmentSize || sourceBuffer.lastSegmentSize < 8e3) return;
+  if (!sourceBuffer.lastSegmentSize || sourceBuffer.lastSegmentSize < 8e3)
+    return;
 
   const bitrate = Math.round(
     (sourceBuffer.lastSegmentSize * 8) / segmentDuration / 1000
@@ -88,7 +95,6 @@ function onupdateend(video, e) {
 function onresize({ target: video }) {
   if (lastBitrate === 0) {
     fireOnFirstAppend = true;
-    return;
   }
 
   // if there is no parent window, window.parent refers to the current window.
@@ -98,7 +104,7 @@ function onresize({ target: video }) {
       data: {
         videoWidth: video.videoWidth,
         videoHeight: video.videoHeight,
-        bitrate: lastBitrate * 1000,
+        bitrate: lastBitrate ? lastBitrate * 1000 : undefined,
       },
     },
     '*'

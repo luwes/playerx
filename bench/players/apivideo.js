@@ -1,1 +1,1 @@
-require('../index.js')('api.video');
+require('../index.js')('api.video', true);

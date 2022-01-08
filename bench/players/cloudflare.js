@@ -1,1 +1,1 @@
-require('../index.js')('cloudflare');
+require('../index.js')('cloudflare', true);

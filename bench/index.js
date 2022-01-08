@@ -1,7 +1,7 @@
 const assert = require('assert');
 const axios = require('axios');
 
-module.exports = function(player) {
+module.exports = function(player, hasIframe) {
   const plxo = browser.capabilities['plx:options'] || {};
   const resizeObserverReq = axios.get('https://dev.playerx.io/js/rendition-observer.js');
 
@@ -31,21 +31,12 @@ module.exports = function(player) {
 
       expect(browser).toHaveTitleContaining('Playerx');
 
-      const hasIframe = await browser.executeAsync(function(done) {
-        const plx = document.querySelector('player-x');
-        const media = plx.querySelector('plx-media');
-        if (!media.children.length) {
-          plx.on('media', function() {
-            done(media.querySelectorAll('iframe').length > 0);
-          });
-          return;
-        }
-        done(media.querySelectorAll('iframe').length > 0);
-      });
-
       if (hasIframe) {
-        const playerIframe = await browser.$('iframe');
-        await browser.switchToFrame(playerIframe);
+        if (await browser.$('iframe').waitForExist({ timeout: 5000 })) {
+          await browser.switchToFrame(await browser.$('iframe'));
+        } else {
+          hasIframe = false;
+        }
       }
 
       const resizeObserver = (await resizeObserverReq).data;
@@ -54,7 +45,7 @@ module.exports = function(player) {
         var script = document.createElement('script');
         script.type = 'text/javascript';
         script.textContent = scriptContent;
-        document.head.appendChild(script);
+        document.getElementsByTagName('head')[0].appendChild(script);
       }, resizeObserver);
 
       if (hasIframe) {

@@ -1,1 +1,1 @@
-require('../index.js')('facebook');
+require('../index.js')('facebook', true);

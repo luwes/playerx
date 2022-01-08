@@ -1,1 +1,1 @@
-require('../index.js')('vimeo');
+require('../index.js')('vimeo', true);

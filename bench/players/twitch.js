@@ -1,1 +1,1 @@
-require('../index.js')('twitch');
+require('../index.js')('twitch', true);

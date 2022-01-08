@@ -1,1 +1,1 @@
-require('../index.js')('youtube');
+require('../index.js')('youtube', true);

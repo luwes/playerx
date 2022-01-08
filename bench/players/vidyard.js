@@ -1,1 +1,1 @@
-require('../index.js')('vidyard');
+require('../index.js')('vidyard', true);

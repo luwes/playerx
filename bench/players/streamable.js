@@ -1,1 +1,1 @@
-require('../index.js')('streamable');
+require('../index.js')('streamable', true);
