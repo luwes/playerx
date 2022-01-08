@@ -72,7 +72,7 @@ exports.config = {
       ...commonCapabilities,
       'sauce:options': {
         ...sauceOptions,
-        screenResolution: '1600x1200',
+        screenResolution: '2560x1600',
         // capturePerformance: true,
       },
       'plx:options': {
