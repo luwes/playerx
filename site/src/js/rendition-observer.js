@@ -73,7 +73,7 @@ function onupdateend(video, e) {
     return;
 
   const bitrate = Math.round(
-    (sourceBuffer.lastSegmentSize * 8) / segmentDuration / 1000
+    (sourceBuffer.lastSegmentSize * 8) / segmentDuration
   );
 
   if (sourceBuffer.mimeType.includes('audio')) {
@@ -104,7 +104,7 @@ function onresize({ target: video }) {
       data: {
         videoWidth: video.videoWidth,
         videoHeight: video.videoHeight,
-        bitrate: lastBitrate ? lastBitrate * 1000 : undefined,
+        bitrate: lastBitrate ? lastBitrate : undefined,
       },
     },
     '*'
@@ -115,7 +115,7 @@ function onresize({ target: video }) {
     video.videoWidth,
     video.videoHeight,
     lastBitrate,
-    'kbps'
+    'bps'
   );
 }
 
