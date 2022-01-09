@@ -59,7 +59,7 @@ export function createPlayer(element) {
 
   const methods = {
     key: 'muxvideo',
-    name: 'MUX Video',
+    name: 'Mux Video',
     meta,
 
     get version() { return '0.2.0'; },

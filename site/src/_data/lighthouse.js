@@ -54,7 +54,7 @@ function fetchMetric(name, url) {
       for (let player of players) {
         if (!playerx[player.key]) continue;
 
-        // There is a bug where hls.js is given a LH performance score of MUX
+        // There is a bug where hls.js is given a LH performance score of Mux
         // ignore for now as the standalone players are not on the compare page.
         const metric = metrics.find((item) => {
           return new RegExp(playerx[player.key].srcPattern).test(item.testUrl);

@@ -45,7 +45,7 @@
   <div class="compare-grid grid" style="--cols: {{ compare.players | length }}">
     <div class="grid-cell">
       <h3 class="text-2xl">Compare platforms</h3>
-      <p class="text-xs ml-0.5"><a class="underline" href="https://github.com/playerxo/playerx/tree/main/bench" target="_blank">Benchmark</a> by <a class="underline" href="https://docs.mux.com/guides/data/understand-metric-definitions" target="_blank">MUX data</a> and <a class="underline" href="https://developers.google.com/web/tools/lighthouse" target="_blank">Lighthouse</a>.</p>
+      <p class="text-xs ml-0.5"><a class="underline" href="https://github.com/playerxo/playerx/tree/main/bench" target="_blank">Benchmark</a> by <a class="underline" href="https://docs.mux.com/guides/data/understand-metric-definitions" target="_blank">Mux data</a> and <a class="underline" href="https://developers.google.com/web/tools/lighthouse" target="_blank">Lighthouse</a>.</p>
     </div>
     {%- for player in players | sort(not metric.order, false, metric.field) -%}
       {% if compare.players[player.key] %}
