@@ -1,9 +1,6 @@
 ---
 permalink: demo/
 title: "Playerx - API Demo"
-herotitle: ""
-subtitle: ""
-layout: layouts/demo-player.njk
 menu: Demo
 eleventyNavigation:
   key: Demo
@@ -11,6 +8,11 @@ eleventyNavigation:
 tags:
   - main
   - demo
-player:
-  name: api.video
 ---
+
+{% extends "layouts/root.njk" %}
+
+{% block head %}
+  <meta http-equiv="refresh" content="0; URL='/demo/{{ players[0].name | lower | replace(" ", "-") }}/'" />
+  {{ super() }}
+{% endblock %}
