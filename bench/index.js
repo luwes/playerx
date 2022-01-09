@@ -54,7 +54,19 @@ module.exports = function(player, hasIframe) {
 
       await browser.execute(function() {
         window.addEventListener('message', function(e) {
-          console.log(JSON.stringify(e.data));
+          const message = e.data;
+          if (message) {
+            console.log(JSON.stringify(message));
+
+            if (message.event === 'plx-resize' && message.data.bitrate) {
+              const plxMux = document.querySelector('plx-mux');
+              if (plxMux) {
+                plxMux.emit('renditionchange', {
+                  video_source_bitrate: message.data.bitrate
+                });
+              }
+            }
+          }
         });
       });
 
