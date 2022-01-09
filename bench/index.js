@@ -62,7 +62,9 @@ module.exports = function(player, hasIframe) {
               const plxMux = document.querySelector('plx-mux');
               if (plxMux) {
                 plxMux.emit('renditionchange', {
-                  video_source_bitrate: message.data.bitrate
+                  video_source_bitrate: message.data.bitrate,
+                  video_source_width: message.data.videoWidth,
+                  video_source_height: message.data.videoHeight
                 });
               }
             }
