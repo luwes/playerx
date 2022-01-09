@@ -58,14 +58,14 @@ export class PlxMux extends HTMLElement {
       const event = VideoEvents[key];
       this.player.addEventListener(event, async () => {
         await this._readyPromise;
-        this.emit(this._playerId, event);
+        this.emit(event);
       });
     });
   }
 
   emit(...args) {
     try {
-      muxData.emit(...args);
+      muxData.emit(this._playerId, ...args);
     } catch (error) {
       console.error(error);
     }
@@ -73,7 +73,7 @@ export class PlxMux extends HTMLElement {
 
   async onready() {
     await this._readyPromise;
-    this.emit(this._playerId, 'playerready');
+    this.emit('playerready');
   }
 
   onloadsrc() {
@@ -86,7 +86,7 @@ export class PlxMux extends HTMLElement {
     await player.ready();
 
     if (this._currentPlayer === player.name) {
-      this.emit(this._playerId, 'videochange', {
+      this.emit('videochange', {
         ...(await getConfigurableMetadata(this.player)),
         ...camelToSnakeKeys(this.dataset),
       });
