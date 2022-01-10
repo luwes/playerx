@@ -50,7 +50,7 @@ exports.config = {
     'players/dailymotion.js',
     // 'players/dashjs.js',
     'players/facebook.js',       // facebook doesn't autoplay always
-    // 'players/hlsjs.js',
+    'players/hlsjs.js',
     'players/jwplayer.js',
     'players/muxvideo.js',
     // 'players/shakaplayer.js',
@@ -58,7 +58,7 @@ exports.config = {
     'players/streamable.js',
     // 'players/theoplayer.js',
     // 'players/twitch.js',      // twitch VOD is not good
-    // 'players/videojs.js',
+    'players/videojs.js',
     'players/vidyard.js',
     'players/vimeo.js',
     'players/wistia.js',
