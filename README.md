@@ -43,7 +43,7 @@ Include this script before importing Playerx.
 
 ## Status
 
-Playerx is in beta status, it can be used in production but use at your descretion.
+Playerx is in beta status; it can be used in production but use at your discretion.
 
 
 ## Docs
