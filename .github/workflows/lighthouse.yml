@@ -10,10 +10,10 @@
 
 name: Lighthouse
 on:
-  schedule:
-    # * is a special character in YAML so you have to quote this string
-    # deploy every 3 hours to update Lighthouse
-    - cron: '0 */3 * * *'
+  # schedule:
+  #   # * is a special character in YAML so you have to quote this string
+  #   # deploy every 3 hours to update Lighthouse
+  #   - cron: '0 */3 * * *'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
