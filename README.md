@@ -35,6 +35,7 @@ Playerx is in beta status; it can be used in production but use at your discreti
 * YouTube videos use the [YouTube iFrame Player API](https://developers.google.com/youtube/iframe_api_reference)
 * Vimeo videos use the [Vimeo Player API](https://developer.vimeo.com/player/sdk)
 * Wistia videos use the [Wistia Player API](https://wistia.com/doc/player-api)
+* JW Player videos use the [JW Player API](https://developer.jwplayer.com/jwplayer/docs/jw8-javascript-api-reference)
 * [Supported file types](https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats) are playing using [`<video>`](https://developer.mozilla.org/en/docs/Web/HTML/Element/video) or [`<audio>`](https://developer.mozilla.org/en/docs/Web/HTML/Element/audio) elements
   * HLS streams are played using [`hls.js`](https://github.com/video-dev/hls.js)
   * DASH streams are played using [`dash.js`](https://github.com/Dash-Industry-Forum/dash.js)
