@@ -13,14 +13,16 @@ module.exports = async () => {
     await axios.get(`${apiUrl}/builds?limit=1&lifecycle=sealed`, {
       timeout: 1000,
     })
-  ).data[0].id;
+  ).data[0]?.id;
 
-  await Promise.all([
-    fetchMetric(
-      'category_performance_median',
-      `${apiUrl}/builds/${buildId}/statistics`
-    ),
-  ]);
+  if (buildId) {
+    await Promise.all([
+      fetchMetric(
+        'category_performance_median',
+        `${apiUrl}/builds/${buildId}/statistics`
+      ),
+    ]);
+  }
 
   return yaml.load(fs.readFileSync(`${__dirname}/players.yaml`, 'utf8'));
 };
