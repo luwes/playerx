@@ -12,7 +12,7 @@ layout: layouts/docs.njk
 
 # Schema Element (SEO)
 
-The `<plx-schema>` element makes a request to an endpoint with oEmbed format and populates the `.data` property with the response. By default it will use the [Playerx oEmbed API](https://github.com/playerxo/oembed) which adds some additional structured data like duration, description and upload date.
+The `<plx-schema>` element makes a request to an endpoint with oEmbed format and populates the `.data` property with the response. By default it will use the [Playerx oEmbed API](https://github.com/luwes/oembed) which adds some additional structured data like duration, description and upload date.
 
 By adding the `seo` attribute it will render the [structured data](https://schema.org/VideoObject) for the embedded media in [JSON-LD](https://json-ld.org/) format.  See the validation at [validator.schema.org](https://validator.schema.org/#url=https%3A%2F%2Fdev.playerx.io%2Fdocs%2Fschema%2F) for the [current page](https://validator.schema.org/#url=https%3A%2F%2Fdev.playerx.io%2Fdocs%2Fschema%2F).
 
@@ -60,7 +60,7 @@ It's possible to pre-populate the structured data by manually adding a script el
 
 ## Supported platforms
 
-Most of the major media platforms are supported, see the [Playerx oEmbed API](https://github.com/playerxo/oembed) for more details.
+Most of the major media platforms are supported, see the [Playerx oEmbed API](https://github.com/luwes/oembed) for more details.
 
 - Vimeo
 - YouTube
