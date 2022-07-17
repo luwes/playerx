@@ -16,7 +16,6 @@ let bundles = [
   ...createBundles('src/playerx/index.js', 'playerx', 'playerx'),
   ...createBundles('src/playerx/all.js', 'all', 'plxAll'),
   // ...createBundles('src/all.js', 'lazy', 'playerx', [], false),
-  ...createBundles('src/controls/index.js', 'controls', 'plxControls'),
   ...createBundles('src/mux/mux.js', 'mux', 'plxMux'),
   ...createBundles('src/preview/preview.js', 'preview', 'plxPreview'),
   ...createBundles('src/schema/schema.js', 'schema', 'plxSchema'),
