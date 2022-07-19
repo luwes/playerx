@@ -1,6 +1,6 @@
 import { SuperVideoElement } from 'super-media-element';
 import { options } from './options.js';
-import { loadScript } from './utils.js';
+import { loadScript, populate } from './utils.js';
 
 const templateLightDOM = document.createElement('template');
 templateLightDOM.innerHTML = `
@@ -70,14 +70,16 @@ class Playerx extends SuperVideoElement {
     await Promise.resolve();
 
     this.key = getCurrentPlayerConfigKey(this.src);
-    const { pkg, type, jsUrl } = options.players[this.key];
+    const config = options.players[this.key];
+    config.npmCdn = options.npmCdn;
 
-    if (jsUrl || pkg) {
-      await loadScript(jsUrl ?? `${options.npmCdn}/${pkg}`);
+    const jsUrl = populate(config.jsUrl, config);
+    if (jsUrl) {
+      await loadScript(jsUrl);
     }
 
     if (!canLoadSource) {
-      this.nativeEl = this.appendChild(document.createElement(type));
+      this.nativeEl = this.appendChild(document.createElement(config.type));
       this.nativeEl.className = 'plx-media';
     }
 
@@ -156,7 +158,7 @@ function canPlayerLoadSource(element) {
   );
 }
 
-export function getCurrentPlayerConfigKey(src) {
+function getCurrentPlayerConfigKey(src) {
   const playerParam = getSrcParam(src, 'player');
   if (options.players[playerParam]) {
     return playerParam;

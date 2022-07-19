@@ -1,3 +1,17 @@
+export function populate(template, obj) {
+  return template.replace(
+    /\{\{\s*([\w-]+)([=?|])?([^\s}]+?)?\s*\}\}/g,
+    function (match, key, mod, fallback) {
+      let val = obj[key];
+      val = val != null ? val : fallback;
+      if (val != null) {
+        return val;
+      }
+      return '';
+    }
+  );
+}
+
 const loadScriptCache = {};
 export async function loadScript(src, globalName, readyFnName) {
   if (loadScriptCache[src]) return loadScriptCache[src];
@@ -10,7 +24,7 @@ export async function loadScript(src, globalName, readyFnName) {
     script.type = 'module';
     script.src = src;
     const ready = () => resolve(self[globalName]);
-    if (readyFnName) (self[readyFnName] = ready);
+    if (readyFnName) self[readyFnName] = ready;
     script.onload = () => !readyFnName && ready();
     script.onerror = reject;
     document.head.append(script);
