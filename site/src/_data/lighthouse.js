@@ -9,20 +9,20 @@ const projectId = '49de72e2-f68e-40c4-be22-26ab2a2917b0';
 const apiUrl = `https://lhci.playerx.io/v1/projects/${projectId}`;
 
 module.exports = async () => {
-  const buildId = (
-    await axios.get(`${apiUrl}/builds?limit=1&lifecycle=sealed`, {
-      timeout: 1000,
-    })
-  ).data[0]?.id;
+  // const buildId = (
+  //   await axios.get(`${apiUrl}/builds?limit=1&lifecycle=sealed`, {
+  //     timeout: 1000,
+  //   })
+  // ).data[0]?.id;
 
-  if (buildId) {
-    await Promise.all([
-      fetchMetric(
-        'category_performance_median',
-        `${apiUrl}/builds/${buildId}/statistics`
-      ),
-    ]);
-  }
+  // if (buildId) {
+  //   await Promise.all([
+  //     fetchMetric(
+  //       'category_performance_median',
+  //       `${apiUrl}/builds/${buildId}/statistics`
+  //     ),
+  //   ]);
+  // }
 
   return yaml.load(fs.readFileSync(`${__dirname}/players.yaml`, 'utf8'));
 };
