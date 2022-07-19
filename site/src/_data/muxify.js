@@ -8,21 +8,21 @@ const token = Buffer.from(`${process.env.MUX_TOKEN_ID}:${process.env.MUX_TOKEN_S
 
 module.exports = async () => {
 
-  await Promise.all([
-    fetchMetric('viewer_experience_score', 'https://api.mux.com/data/v1/metrics/viewer_experience_score/breakdown?order_by=value&order_direction=desc&measurement=avg&timeframe%5B%5D=1%3Adays&group_by=player_software&limit=50&page=1'),
+  // await Promise.all([
+  //   fetchMetric('viewer_experience_score', 'https://api.mux.com/data/v1/metrics/viewer_experience_score/breakdown?order_by=value&order_direction=desc&measurement=avg&timeframe%5B%5D=1%3Adays&group_by=player_software&limit=50&page=1'),
 
-    fetchMetric('video_startup_time', 'https://api.mux.com/data/v1/metrics/video_startup_time/breakdown?order_by=value&order_direction=asc&measurement=median&timeframe%5B%5D=1%3Adays&group_by=player_software&limit=50&page=1'),
+  //   fetchMetric('video_startup_time', 'https://api.mux.com/data/v1/metrics/video_startup_time/breakdown?order_by=value&order_direction=asc&measurement=median&timeframe%5B%5D=1%3Adays&group_by=player_software&limit=50&page=1'),
 
-    fetchMetric('player_startup_time', 'https://api.mux.com/data/v1/metrics/player_startup_time/breakdown?order_by=value&order_direction=asc&measurement=median&timeframe%5B%5D=1%3Adays&group_by=player_software&limit=50&page=1'),
+  //   fetchMetric('player_startup_time', 'https://api.mux.com/data/v1/metrics/player_startup_time/breakdown?order_by=value&order_direction=asc&measurement=median&timeframe%5B%5D=1%3Adays&group_by=player_software&limit=50&page=1'),
 
-    fetchMetric('smoothness_score', 'https://api.mux.com/data/v1/metrics/smoothness_score/breakdown?order_by=value&order_direction=desc&measurement=avg&timeframe%5B%5D=1%3Adays&group_by=player_software&limit=50&page=1'),
+  //   fetchMetric('smoothness_score', 'https://api.mux.com/data/v1/metrics/smoothness_score/breakdown?order_by=value&order_direction=desc&measurement=avg&timeframe%5B%5D=1%3Adays&group_by=player_software&limit=50&page=1'),
 
-    fetchMetric('rebuffer_percentage', 'https://api.mux.com/data/v1/metrics/rebuffer_percentage/breakdown?order_by=value&order_direction=asc&measurement=avg&timeframe%5B%5D=1%3Adays&group_by=player_software&limit=50&page=1'),
+  //   fetchMetric('rebuffer_percentage', 'https://api.mux.com/data/v1/metrics/rebuffer_percentage/breakdown?order_by=value&order_direction=asc&measurement=avg&timeframe%5B%5D=1%3Adays&group_by=player_software&limit=50&page=1'),
 
-    fetchMetric('video_quality_score', 'https://api.mux.com/data/v1/metrics/video_quality_score/breakdown?order_by=value&order_direction=asc&measurement=avg&timeframe%5B%5D=1%3Adays&group_by=player_software&limit=50&page=1'),
+  //   fetchMetric('video_quality_score', 'https://api.mux.com/data/v1/metrics/video_quality_score/breakdown?order_by=value&order_direction=asc&measurement=avg&timeframe%5B%5D=1%3Adays&group_by=player_software&limit=50&page=1'),
 
-    fetchMetric('startup_time_score', 'https://api.mux.com/data/v1/metrics/startup_time_score/breakdown?order_by=value&order_direction=asc&measurement=avg&timeframe%5B%5D=1%3Adays&group_by=player_software&limit=50&page=1')
-  ]);
+  //   fetchMetric('startup_time_score', 'https://api.mux.com/data/v1/metrics/startup_time_score/breakdown?order_by=value&order_direction=asc&measurement=avg&timeframe%5B%5D=1%3Adays&group_by=player_software&limit=50&page=1')
+  // ]);
 
   return yaml.load(fs.readFileSync(`${__dirname}/players.yaml`, 'utf8'));
 };
