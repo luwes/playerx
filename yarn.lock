@@ -4659,10 +4659,10 @@ pkg-up@^2.0.0:
   dependencies:
     find-up "^2.1.0"
 
-playerx@1.0.0-beta.0:
-  version "1.0.0-beta.0"
-  resolved "https://registry.yarnpkg.com/playerx/-/playerx-1.0.0-beta.0.tgz#b52169611f0a169b8f99b68531b6b703b2bbb880"
-  integrity sha512-J6pEiAbTDWXfoFmbnhx4dVIhgA+o2DMda7ApHoSCZbFJsSGdG46PMKzGAurvFk2wfN29zqmtHyFjWoiqXI0eNw==
+playerx@1.0.0-beta.1:
+  version "1.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/playerx/-/playerx-1.0.0-beta.1.tgz#63a269d69e49dcc4c1bf4f7b25be245da2cbcdd5"
+  integrity sha512-zTb1PVwW9R0h0KA9WXRQo5MmNNJZ2Dm+X91rQ2iQKd1Wi35f76p9V6PJkwR+hHYDuqw4upeJKHphAp9eHBjJYw==
   dependencies:
     super-media-element "^0.3.0"
 
