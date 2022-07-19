@@ -1,3 +1,21 @@
+- key: vimeo
+  name: Vimeo
+  color: '#00ADEF'
+  url: https://vimeo.com
+  favicon: https://vimeo.com/favicon.ico
+  clips:
+    - https://vimeo.com/648359100
+    - https://vimeo.com/638371189
+    - https://vimeo.com/638371504
+- key: youtube
+  name: YouTube
+  color: '#FF0000'
+  url: https://www.youtube.com
+  favicon: https://www.youtube.com/s/desktop/e109ce07/img/favicon.ico
+  clips:
+    - https://www.youtube.com/watch?v=uxsOYVWclA0
+    - https://www.youtube.com/watch?v=ssdng3QeFnA
+    - https://www.youtube.com/watch?v=zD6nk5byNGE
 - key: wistia
   name: Wistia
   color: '#1E64F0'
@@ -7,31 +25,6 @@
     - https://wesleyluyten.wistia.com/medias/oifkgmxnkb
     - https://wesleyluyten.wistia.com/medias/oj8d7cwhbn
     - https://wesleyluyten.wistia.com/medias/1ekn652fs5
-  viewer_experience_score: 0.9717322960495949
-  video_startup_time: 324
-  player_startup_time: 2025
-  smoothness_score: 0.9785002008080482
-  rebuffer_percentage: 0.003400387232083032
-  video_quality_score: 0.9771614044904708
-  startup_time_score: 0.9598467588424683
-  category_performance_median: 0.85
-  lighthouse_test_url: https://api.playerx.io/render?url=https%3A%2F%2Fwesleyluyten.wistia.com%2Fmedias%2Foifkgmxnkb
-- key: hls
-  name: hls.js
-  url: https://github.com/video-dev/hls.js
-  clips:
-    - https://stream.mux.com/r4rOE02cc95tbe3I00302nlrHfT023Q3IedFJW029w018KxZA.m3u8
-    - https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8
-    - https://stream.mux.com/KHdaCPpki1o4PUCMWfAXFbrHy2gBosxdxZISdvFJGLQ.m3u8
-  video_startup_time: 25
-  viewer_experience_score: 0.9444827370240655
-  player_startup_time: 1216.265625
-  smoothness_score: 0.9676126959458203
-  rebuffer_percentage: 0.0032805633751680804
-  video_quality_score: 0.9946437133869654
-  startup_time_score: 0.881112233014174
-  category_performance_median: 0.69
-  lighthouse_test_url: https://api.playerx.io/render?url=https%3A%2F%2Fstream.mux.com%2Fr4rOE02cc95tbe3I00302nlrHfT023Q3IedFJW029w018KxZA.m3u8
 - key: jwplayer
   name: JW Player
   color: '#FF0046'
@@ -43,33 +36,6 @@
     - https://cdn.jwplayer.com/players/R12Nj7bO-Pd4r8gwe.html
   options:
     player: IxzuqJ4M
-  viewer_experience_score: 0.9404533774387546
-  video_startup_time: 400
-  player_startup_time: 1996.97265625
-  smoothness_score: 0.966284750801761
-  rebuffer_percentage: 0.004633678713554262
-  video_quality_score: 0.8786253005993075
-  startup_time_score: 0.9545090830907589
-  category_performance_median: 0.79
-  lighthouse_test_url: https://api.playerx.io/render?url=https%3A%2F%2Fcdn.jwplayer.com%2Fplayers%2FV073end4-Pd4r8gwe.html
-- key: youtube
-  name: YouTube
-  color: '#FF0000'
-  url: https://www.youtube.com
-  favicon: https://www.youtube.com/s/desktop/e109ce07/img/favicon.ico
-  clips:
-    - https://www.youtube.com/watch?v=uxsOYVWclA0
-    - https://www.youtube.com/watch?v=ssdng3QeFnA
-    - https://www.youtube.com/watch?v=zD6nk5byNGE
-  viewer_experience_score: 0.8941781641561773
-  video_startup_time: 784
-  player_startup_time: 2030.62890625
-  smoothness_score: 0.8664018824885164
-  rebuffer_percentage: 0.016228112079331874
-  video_quality_score: 0.9430887248271551
-  startup_time_score: 0.8913844280605074
-  category_performance_median: 0.43
-  lighthouse_test_url: https://www.youtube.com/embed/uxsOYVWclA0
 - key: dash
   name: dash.js
   url: https://github.com/Dash-Industry-Forum/dash.js
@@ -77,28 +43,10 @@
     - https://player.vimeo.com/external/648359100.mpd?s=a4419a2e2113cc24a87aef2f93ef69a8e4c8fb0c&ext=.mpd
     - https://dash.akamaized.net/envivio/EnvivioDash3/manifest.mpd
     - https://amssamples.streaming.mediaservices.windows.net/634cd01c-6822-4630-8444-8dd6279f94c6/CaminandesLlamaDrama4K.ism/manifest(format=mpd-time-csf)?ext=.mpd
-  video_startup_time: 25
-  viewer_experience_score: 0.8513193337813668
-  player_startup_time: 787.50390625
-  smoothness_score: 0.6879695210119953
-  rebuffer_percentage: 0.09805351084027049
-  video_quality_score: 0.9451368367847275
-  startup_time_score: 0.9757691725440647
-- key: vimeo
-  name: Vimeo
-  color: '#00ADEF'
-  url: https://vimeo.com
-  favicon: https://vimeo.com/favicon.ico
+- key: hls
+  name: hls.js
+  url: https://github.com/video-dev/hls.js
   clips:
-    - https://vimeo.com/648359100
-    - https://vimeo.com/638371189
-    - https://vimeo.com/638371504
-  viewer_experience_score: 0.7985606101297197
-  video_startup_time: 2401
-  player_startup_time: 1919.53515625
-  smoothness_score: 0.7243652537997279
-  rebuffer_percentage: 0.09067007749431208
-  video_quality_score: 0.9984721426504204
-  startup_time_score: 0.7739223234624748
-  category_performance_median: 0.81
-  lighthouse_test_url: https://player.vimeo.com/video/648359100
+    - https://stream.mux.com/r4rOE02cc95tbe3I00302nlrHfT023Q3IedFJW029w018KxZA.m3u8
+    - https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8
+    - https://stream.mux.com/KHdaCPpki1o4PUCMWfAXFbrHy2gBosxdxZISdvFJGLQ.m3u8
