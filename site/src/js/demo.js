@@ -1,5 +1,5 @@
 /* global selectPlayer, selectClip */
-import { observable, computed } from 'sinuous/observable';
+import { observable, computed, subscribe } from 'sinuous/observable';
 import { dhtml, hydrate as hy } from 'sinuous/hydrate';
 import { onconnected, ondisconnected } from './logger.js';
 import {
@@ -43,8 +43,6 @@ const controls = observable(getParam('controls', defaults.controls));
 const preload = observable(getParam('preload', defaults.preload));
 const videoHeight = observable();
 const quality = computed(() => prettyQuality(videoHeight()));
-const unsupportsPlaybackRate = observable(true);
-const unsupportsControls = observable(true);
 const playsinline = true;
 
 setSrc(getParam('src', defaults.src));
@@ -52,9 +50,9 @@ setSrc(getParam('src', defaults.src));
 const props = {
   src,
   autoplay,
-  playing,
   currentTime,
   muted,
+  defaultMuted: muted,
   loop,
   controls,
   preload,
@@ -91,8 +89,6 @@ const props = {
   },
   onloadedsrc: () => {
     readyState(player.readyState);
-    unsupportsPlaybackRate(!player.supports('playbackRate'));
-    unsupportsControls(!player.supports('controls'));
   },
   onloadedmetadata: () => readyState(player.readyState)
 };
@@ -103,15 +99,7 @@ const props = {
 let player;
 player = hy(dhtml`
   ${() => showing() && (player = dhtml`
-    <player-x ...${props}>
-      <plx-media></plx-media>
-      <plx-schema></plx-schema>
-      <plx-script src="${player?.children?.[2].src}"></plx-script>
-      <plx-mux
-        data-env-key="${getParam('muxenv', player?.children?.[3]?.dataset.envKey)}"
-        debug="${player?.children?.[3]?.debug}"
-      ></plx-mux>
-    <//>
+    <player-x ...${props}><//>
   `)}
 `);
 
@@ -169,6 +157,13 @@ hy(dhtml`
   </div>
 `);
 
+subscribe(() => {
+  const isPaused = !playing();
+  if (player.paused !== isPaused) {
+    !isPaused ? player.play() : player.pause();
+  }
+});
+
 function remove() {
   playing(false);
   src('');
@@ -176,12 +171,9 @@ function remove() {
 
 hy(dhtml`
   <div id="controls-2">
-    <button onclick=${() =>
-      player.set('playbackRate', 0.5)} disabled=${unsupportsPlaybackRate} />
-    <button onclick=${() =>
-      player.set('playbackRate', 1)} disabled=${unsupportsPlaybackRate} />
-    <button onclick=${() =>
-      player.set('playbackRate', 2)} disabled=${unsupportsPlaybackRate} />
+    <button onclick=${() => (player.playbackRate = 0.5)} />
+    <button onclick=${() => (player.playbackRate = 1)} />
+    <button onclick=${() => (player.playbackRate = 2)} />
   </div>
 `);
 
@@ -226,7 +218,7 @@ hy(dhtml`
 `);
 
 hy(dhtml`
-  <input id="controls" disabled=${unsupportsControls} oninput=${(e) =>
+  <input id="controls" oninput=${(e) =>
   controls(e.target.checked)} checked=${controls} />
 `);
 

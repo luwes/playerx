@@ -6,12 +6,7 @@
     <div class="flex flex-wrap mb-4 px-6 xl:px-12 -mx-4">
       <div class="w-full lg:w-6/12 px-4">
         <div id="player-container" class="player bg-black">
-          <player-x config="{{ playerconfig }}">
-            <plx-media></plx-media>
-            <plx-schema seo oembedurl="{{ site.oEmbedUrl }}/oembed"></plx-schema>
-            <plx-script loading="player" src="{% getCdnUrl 'mux' %}"></plx-script>
-            <plx-mux data-env-key="ilc02s65tkrc2mk69b7q2qdkf" debug></plx-mux>
-          </player-x>
+          <player-x></player-x>
         </div>
         <div class="controls mt-4">
           <div class="flex flex-wrap">

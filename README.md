@@ -2,7 +2,6 @@
 
 [![Version](https://img.shields.io/npm/v/playerx.svg?color=success&style=flat-square)](https://www.npmjs.com/package/playerx)
 ![Badge size](https://img.badgesize.io/https://unpkg.com/playerx/dist/playerx.min.js?compression=gzip&label=gzip&style=flat-square)
-[![codecov](https://img.shields.io/codecov/c/github/luwes/playerx.svg?style=flat-square&color=success)](https://codecov.io/gh/luwes/playerx)
 
 **npm**: `npm i playerx`  
 **cdn**: https://unpkg.com/playerx  

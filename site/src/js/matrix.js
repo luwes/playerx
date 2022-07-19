@@ -1,4 +1,4 @@
-import { observable, computed } from 'sinuous/observable';
+import { observable, computed, subscribe } from 'sinuous/observable';
 import { dhtml, hydrate as hy } from 'sinuous/hydrate';
 
 const clip = observable(1);
@@ -41,7 +41,6 @@ hy(dhtml`
 
 const props = {
   src,
-  playing,
   currentTime,
   ondurationchange: () => player.duration && duration(player.duration),
   onseeking: () => currentTimeValue(player.currentTime),
@@ -65,6 +64,15 @@ let players = hy(dhtml`
 `);
 
 let player = players.querySelector('player-x');
+
+subscribe(() => {
+  const isPaused = !playing();
+  for (let p of players.querySelectorAll('player-x')) {
+    if (p.paused !== isPaused) {
+      !isPaused ? p.play() : p.pause();
+    }
+  }
+});
 
 let underlineClass = function () {
   const { el } = this;

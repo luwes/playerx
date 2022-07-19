@@ -1,34 +1,39 @@
-import * as canPlay from './canplay.js';
-import * as preconnect from './preconnect.js';
-
 export const options = {
+  npmCdn: 'https://cdn.jsdelivr.net/npm',
   players: {
     html: {
-      canPlay: canPlay.html,
-      lazyPlayer: () => import('./players/html.js'),
+      type: 'video',
     },
-    hlsjs: {
-      canPlay: canPlay.hlsjs,
-      lazyPlayer: () => import('./players/hlsjs.js'),
+    hls: {
+      pattern: /\.m3u8($|\?)/i,
+      type: 'hls-video',
+      pkg: 'hls-video-element',
     },
-    dashjs: {
-      canPlay: canPlay.dashjs,
-      lazyPlayer: () => import('./players/dashjs.js'),
+    dash: {
+      pattern: /\.mpd($|\?)/i,
+      type: 'dash-video',
+      pkg: 'dash-video-element',
+    },
+    jwplayer: {
+      pattern: /jwplayer\.com\/players\/(\w+)(?:-(\w+))?/,
+      type: 'jwplayer-video',
+      pkg: 'jwplayer-video-element',
     },
     vimeo: {
-      canPlay: canPlay.vimeo,
-      preconnect: preconnect.vimeo,
-      lazyPlayer: () => import('./players/vimeo.js'),
+      pattern: /vimeo\.com\/(?:video\/)?(\d+)/,
+      type: 'vimeo-video',
+      pkg: 'vimeo-video-element',
+      // jsUrl: 'http://127.0.0.1:8000/dist/vimeo-video-element.js',
     },
     youtube: {
-      canPlay: canPlay.youtube,
-      preconnect: preconnect.youtube,
-      lazyPlayer: () => import('./players/youtube.js'),
+      pattern: /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})/,
+      type: 'youtube-video',
+      pkg: '@luwes/youtube-video-element',
     },
     wistia: {
-      canPlay: canPlay.wistia,
-      preconnect: preconnect.wistia,
-      lazyPlayer: () => import('./players/wistia.js'),
+      pattern: /(?:wistia\.com|wi\.st)\/(?:medias|embed)\/(.*)$/,
+      type: 'wistia-video',
+      pkg: 'wistia-video-element',
     },
   },
 };
