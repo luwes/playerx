@@ -24,9 +24,10 @@ input[type="range"]::-ms-thumb {
   cursor: pointer;
 }
 
-.player {
-  padding-bottom: 56.25%;
-  height: 0;
+player-x {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
 }
 
 .btn {

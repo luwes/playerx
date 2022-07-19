@@ -6,13 +6,32 @@ import { map } from 'sinuous/map';
 import { dhtml, hydrate as hy, _ } from 'sinuous/hydrate';
 import { round } from './utils/utils.js';
 
+const Events = {
+  CUECHANGE: 'cuechange',
+  DURATIONCHANGE: 'durationchange',
+  ENDED: 'ended',
+  ERROR: 'error',
+  LOADEDMETADATA: 'loadedmetadata',
+  LOADSTART: 'loadstart',
+  PAUSE: 'pause',
+  PLAY: 'play',
+  PLAYING: 'playing',
+  PROGRESS: 'progress',
+  RATECHANGE: 'ratechange',
+  RESIZE: 'resize',
+  SEEKED: 'seeked',
+  SEEKING: 'seeking',
+  TIMEUPDATE: 'timeupdate',
+  VOLUMECHANGE: 'volumechange',
+}
+
 observe('player-x');
 
 const playerStartupTime = observable('0');
 const videoStartupTime = observable('0');
 
 const eventData = {
-  loadsrc: (player) => player.src,
+  loadstart: (player) => player.src,
   error: ({ error }) => {
     console.error(error);
     return error && (error.message || error.code || error);
@@ -71,13 +90,13 @@ function formatTime(time) {
 
 export function onconnected({ target: player }) {
   if (player) {
-    player.addEventListener('loadsrc', onloadsrc);
-    player.addEventListener('loadedsrc', onloadedsrc);
+    player.addEventListener('loadstart', onloadstart);
+    player.addEventListener('loadedmetadata', onloadedmetadata);
     player.addEventListener('play', onplay);
     player.addEventListener('playing', onplaying);
 
-    for (let event in playerx.Events) {
-      player.addEventListener(playerx.Events[event], log);
+    for (let event in Events) {
+      player.addEventListener(Events[event], log);
     }
   }
 }
@@ -103,7 +122,7 @@ function videoStartupStep() {
   videoStartupAnim = requestAnimationFrame(videoStartupStep);
 }
 
-function onloadsrc() {
+function onloadstart() {
   startTime = performance.now();
   playerStartupAnim = requestAnimationFrame(playerStartupStep);
 
@@ -113,7 +132,7 @@ function onloadsrc() {
   firstPlayingEvent = true;
 }
 
-function onloadedsrc() {
+function onloadedmetadata() {
   cancelAnimationFrame(playerStartupAnim);
   playerStartupTime(performance.now() - startTime);
 
@@ -137,7 +156,7 @@ function onplaying() {
 }
 
 function log(e) {
-  if (e.type === 'loadsrc') {
+  if (e.type === 'loadstart') {
     logs([]);
   }
 
