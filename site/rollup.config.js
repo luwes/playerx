@@ -63,22 +63,22 @@ export default [
       name: 'matrix',
     },
   },
-  {
-    ...config,
-    input: 'src/js/compare.js',
-    output: {
-      ...config.output,
-      file: 'public/js/compare.js',
-      name: 'compare',
-    }
-  },
-  {
-    ...config,
-    input: 'src/js/rendition-observer.js',
-    output: {
-      ...config.output,
-      file: 'public/js/rendition-observer.js',
-      name: 'renditionObserver',
-    },
-  },
+  // {
+  //   ...config,
+  //   input: 'src/js/compare.js',
+  //   output: {
+  //     ...config.output,
+  //     file: 'public/js/compare.js',
+  //     name: 'compare',
+  //   }
+  // },
+  // {
+  //   ...config,
+  //   input: 'src/js/rendition-observer.js',
+  //   output: {
+  //     ...config.output,
+  //     file: 'public/js/rendition-observer.js',
+  //     name: 'renditionObserver',
+  //   },
+  // },
 ];

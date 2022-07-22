@@ -3,7 +3,6 @@
   "name": "playerx",
   "version": "1.0.0-beta.1",
   "description": "Playerx",
-  "keywords": [],
   "homepage": "https://github.com/luwes/playerx#readme",
   "bugs": {
     "url": "https://github.com/luwes/playerx/issues"
@@ -18,15 +17,9 @@
     "src",
     "dist"
   ],
-  "workspaces": {
-    "packages": [
-      "site",
-      "bench"
-    ],
-    "nohoist": [
-      "**/esm/**"
-    ]
-  },
+  "workspaces": [
+    "site"
+  ],
   "scripts": {
     "build": "run-s build:*",
     "build:js": "rollup -c --silent",
@@ -38,9 +31,6 @@
     "serve": "yarn workspace site serve",
     "lint": "eslint src/*/",
     "test": "yarn lint",
-    "docs": "run-p docs:*",
-    "docs:playerx": "jsdoc2md src/playerx/index.js",
-    "bench": "yarn workspace bench start",
     "release": "PRIVATE=false yarn update-private && yarn publish",
     "prepublishOnly": "yarn lint && yarn build:js",
     "postpublish": "PRIVATE=true yarn update-private",
@@ -50,30 +40,28 @@
     "super-media-element": "^0.3.0"
   },
   "devDependencies": {
-    "@rollup/plugin-alias": "^3.1.5",
-    "@rollup/plugin-commonjs": "^20.0.0",
+    "@rollup/plugin-alias": "^3.1.9",
+    "@rollup/plugin-commonjs": "^22.0.1",
     "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^13.0.4",
-    "@rollup/plugin-replace": "^3.0.0",
-    "@rollup/plugin-virtual": "^2.0.3",
-    "@types/node": "^16.6.1",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-replace": "^4.0.0",
+    "@rollup/plugin-virtual": "^2.1.0",
     "@webcomponents/custom-elements": "^1.5.0",
     "cross-env": "^7.0.3",
-    "dotenv": "^10.0.0",
-    "eslint": "^7.32.0",
-    "eslint-plugin-fp": "^2.3.0",
-    "eslint-plugin-import": "^2.24.0",
-    "fs-extra": "^10.0.0",
-    "http-server": "^13.0.0",
+    "dotenv": "^16.0.1",
+    "eslint": "^8.20.0",
+    "eslint-plugin-import": "^2.26.0",
+    "fs-extra": "^10.1.0",
+    "http-server": "^14.1.1",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.3.2",
-    "rollup": "^2.56.2",
-    "rollup-plugin-istanbul": "^2.0.1",
+    "prettier": "^2.7.1",
+    "rollup": "^2.77.0",
+    "rollup-plugin-istanbul": "^3.0.0",
     "rollup-plugin-size": "^0.2.2",
     "rollup-plugin-sourcemaps": "^0.6.3",
     "rollup-plugin-terser": "^7.0.2",
-    "typescript": "^4.3.5",
-    "ua-parser-js": "^0.7.28"
+    "schema-dts": "^1.1.0",
+    "typescript": "^4.7.4"
   },
   "prettier": {
     "tabWidth": 2,
