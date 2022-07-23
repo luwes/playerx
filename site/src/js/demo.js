@@ -19,7 +19,7 @@ const defaults = {
   controls: true,
   loop: false,
   muted: true,
-  preload: 'auto',
+  preload: 'metadata',
   volume: 1,
 };
 
