@@ -1,7 +1,7 @@
 const axios = require('axios');
 const yaml = require('js-yaml');
 const fs = require('fs');
-const playerx = require('playerx/dist/config.umd.js');
+// const playerx = require('playerx/dist/config.umd.js');
 
 require('dotenv').config();
 

@@ -4383,12 +4383,12 @@ pify@^4.0.1:
   resolved "https://registry.yarnpkg.com/pify/-/pify-4.0.1.tgz#4b2cd25c50d598735c50292224fd8c6df41e3231"
   integrity sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==
 
-playerx@1.0.0-beta.3:
-  version "1.0.0-beta.3"
-  resolved "https://registry.yarnpkg.com/playerx/-/playerx-1.0.0-beta.3.tgz#4fda275dfb07f0c786a24a18725260a5217851af"
-  integrity sha512-SxJ9Kd32UZRKCT0DpYZrwCipOn2BIYRZa/oZ02eEa9l/phd3pECibDsrRQ/3NQutFNPBvb1pGn5T/DS5tfc0jQ==
+playerx@1.0.0-beta.4:
+  version "1.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/playerx/-/playerx-1.0.0-beta.4.tgz#e013aa5b5bc5139c8f1cf1c2daff403edb095cbb"
+  integrity sha512-SPgAL2gsnIG40rJbJrw0NTOVoKm2XeyKv7Sr9QluzJiIehs7d9eaCR9uJYkHcqBq3ORgHzSw1PQmFCIGOT2Jiw==
   dependencies:
-    super-media-element "^0.3.0"
+    super-media-element "^0.3.1"
 
 please-upgrade-node@^3.2.0:
   version "3.2.0"
@@ -5611,11 +5611,6 @@ stylehacks@^5.1.1:
   dependencies:
     browserslist "^4.21.4"
     postcss-selector-parser "^6.0.4"
-
-super-media-element@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/super-media-element/-/super-media-element-0.3.0.tgz#acf0464d302f781987966d89abd94fac8d8910e8"
-  integrity sha512-PbUSjLF+OrX82YI4d+UX1h1IKFwWNSS60jAkCo/cQZ+dPefHMQ8iW9QR9s5N3+Nv29qOOz/4ZHfx19a7NrWTdg==
 
 super-media-element@^0.3.1:
   version "0.3.1"

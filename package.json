@@ -21,7 +21,7 @@
     "site"
   ],
   "scripts": {
-    "build": "run-s build:**",
+    "build": "run-s build:*",
     "build:js": "run-s build:js:*",
     "build:js:playerx": "esbuild src/playerx/index.js --outfile=dist/playerx.js --bundle --format=esm",
     "build:js:config": "esbuild src/config/index.js --outfile=dist/config.js --bundle --format=esm",
