@@ -55,6 +55,7 @@
     "semi": true
   },
   "eslintConfig": {
+    "root": true,
     "globals": {
       "globalThis": "writable"
     },
