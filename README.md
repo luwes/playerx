@@ -1,11 +1,11 @@
 # <a href="https://github.com/luwes/playerx"><img src="https://dev.playerx.io/images/playerx-logo.svg?sanitize=true" height="36" alt="playerx" /></a>
 
 [![Version](https://img.shields.io/npm/v/playerx.svg?color=success&style=flat-square)](https://www.npmjs.com/package/playerx)
-![Badge size](https://img.badgesize.io/https://unpkg.com/playerx/dist/playerx.min.js?compression=gzip&label=gzip&style=flat-square)
+![Badge size](https://img.badgesize.io/https://cdn.jsdelivr.net/npm/playerx/dist/playerx.min.js?compression=gzip&label=gzip&style=flat-square)
 
 **npm**: `npm i playerx`  
-**cdn**: https://unpkg.com/playerx  
-**module**: https://unpkg.com/playerx?module
+**cdn**: https://cdn.jsdelivr.net/npm/playerx  
+**module**: https://cdn.jsdelivr.net/npm/playerx/dist/playerx.js
 
 ## Features
 
@@ -16,7 +16,7 @@
 ## Usage ([Codesandbox](https://codesandbox.io/s/hello-playerx-22ku4))
 
 ```html
-<script src="https://unpkg.com/playerx"></script>
+<script src="https://cdn.jsdelivr.net/npm/playerx"></script>
 <player-x src="https://vimeo.com/638369396" controls></player-x>
 ```
 

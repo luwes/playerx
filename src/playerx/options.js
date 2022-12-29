@@ -1,5 +1,5 @@
 export const options = {
-  npmCdn: 'https://unpkg.com',
+  npmCdn: 'https://cdn.jsdelivr.net/npm',
   players: {
     html: {
       type: 'video',
