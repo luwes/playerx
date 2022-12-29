@@ -1,4 +1,4 @@
-import { SuperVideoElement } from 'super-media-element';
+import { SuperVideoElement } from '../../node_modules/super-media-element/dist/index.js';
 import { options } from './options.js';
 import { loadScript, populate } from './utils.js';
 

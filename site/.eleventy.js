@@ -73,11 +73,11 @@ module.exports = function (eleventyConfig) {
       const version = deps.playerx || 'latest';
 
       const [pkg, mod] = name.split('/');
-      return `https://cdn.jsdelivr.net/npm/playerx@${version}/dist/${mod || pkg}.umd.js`;
+      return `https://cdn.jsdelivr.net/npm/playerx@${version}/dist/${mod || pkg}.js`;
 
     } else {
       const [pkg, mod] = name.split('/');
-      return `http://dev.playerx.test:8080/${mod || pkg}.umd.js`;
+      return `http://dev.playerx.test:8000/${mod || pkg}.js`;
     }
   });
 
