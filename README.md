@@ -5,7 +5,6 @@
 
 **npm**: `npm i playerx`  
 **cdn**: https://cdn.jsdelivr.net/npm/playerx  
-**module**: https://cdn.jsdelivr.net/npm/playerx/dist/playerx.js
 
 ## Features
 
@@ -16,7 +15,7 @@
 ## Usage ([Codesandbox](https://codesandbox.io/s/hello-playerx-22ku4))
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/playerx"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/playerx"></script>
 <player-x src="https://vimeo.com/638369396" controls></player-x>
 ```
 
