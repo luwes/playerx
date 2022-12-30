@@ -42,7 +42,6 @@
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@tailwindcss/typography": "^0.5.8",
     "cross-env": "^7.0.3",
-    "cssnano": "^5.1.14",
     "dotenv": "^16.0.3",
     "eslint": "^8.30.0",
     "eslint-plugin-import": "^2.26.0",
