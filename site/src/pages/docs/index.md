@@ -3,6 +3,6 @@ permalink: false
 eleventyNavigation:
   key: docs
   title: Docs
-  url: /docs/loading/
+  url: /docs/playerx/
   order: 1
 ---
