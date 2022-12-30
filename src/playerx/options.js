@@ -18,6 +18,13 @@ export const options = {
       version: '0.0.3',
       jsUrl: '{{npmCdn}}/{{pkg}}@{{version}}/dist/{{pkg}}.js',
     },
+    muxplayer: {
+      pattern: /stream\.mux\.com\/(\w+)|\?player=muxplayer/,
+      type: 'mux-player',
+      pkg: '@mux/mux-player',
+      version: '1.5.1',
+      jsUrl: '{{npmCdn}}/{{pkg}}@{{version}}/dist/mux-player.js',
+    },
     jwplayer: {
       pattern: /jwplayer\.com\/players\/(\w+)(?:-(\w+))?/,
       type: 'jwplayer-video',
