@@ -4383,10 +4383,10 @@ pify@^4.0.1:
   resolved "https://registry.yarnpkg.com/pify/-/pify-4.0.1.tgz#4b2cd25c50d598735c50292224fd8c6df41e3231"
   integrity sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==
 
-playerx@1.0.0-beta.4:
-  version "1.0.0-beta.4"
-  resolved "https://registry.yarnpkg.com/playerx/-/playerx-1.0.0-beta.4.tgz#e013aa5b5bc5139c8f1cf1c2daff403edb095cbb"
-  integrity sha512-SPgAL2gsnIG40rJbJrw0NTOVoKm2XeyKv7Sr9QluzJiIehs7d9eaCR9uJYkHcqBq3ORgHzSw1PQmFCIGOT2Jiw==
+playerx@1.0.0-beta.5:
+  version "1.0.0-beta.5"
+  resolved "https://registry.yarnpkg.com/playerx/-/playerx-1.0.0-beta.5.tgz#b3efc16a8d4f8031d51db252280085ca1c2a7e8e"
+  integrity sha512-bWgfZkr/oUcSK6TPXzvsjHQqQB9YEym0eIUxhX012DLTcgxLUxcdR+WdTDG0XbJGXw7vMj+ovdIIClKJDS5PXw==
   dependencies:
     super-media-element "^0.3.1"
 
