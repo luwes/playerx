@@ -21,8 +21,5 @@ module.exports = {
     ['sinuous/babel-plugin-htm', {
       import: 'sinuous'
     }],
-    ['babel-plugin-transform-async-to-promises', {
-      inlineHelpers: true
-    }]
   ],
 };
