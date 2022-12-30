@@ -1,7 +1,9 @@
 html {
   font-size: 14px;
+}
 
-  @media (min-width: 420px) {
+@media (min-width: 420px) {
+  html {
     font-size: 16px;
   }
 }

@@ -20,8 +20,8 @@
     "dev": "cross-env NODE_ENV=dev run-p css:dev js:dev serve",
     "js:dev": "rollup -wc --silent",
     "js:prod": "rollup -c --silent",
-    "css:prod": "postcss src/css/main.css -o public/css/playerx-dev.css",
-    "css:dev": "postcss src/css/main.css -o public/css/playerx-dev.css -w",
+    "css:prod": "tailwindcss -i src/css/main.css -o public/css/playerx-dev.css",
+    "css:dev": "tailwindcss -i src/css/main.css -o public/css/playerx-dev.css -w",
     "lint": "eslint src/js",
     "serve": "eleventy --serve --quiet",
     "eleventy": "eleventy"
@@ -29,8 +29,7 @@
   "dependencies": {
     "disco": "1.0.2",
     "playerx": "1.0.0-beta.5",
-    "sinuous": "0.29.0",
-    "tailwindcss": "3.2.4"
+    "sinuous": "0.29.0"
   },
   "devDependencies": {
     "@11ty/eleventy": "^2.0.0-canary.23",
@@ -41,6 +40,7 @@
     "@babel/core": "^7.18.9",
     "@babel/preset-env": "^7.18.9",
     "@rollup/plugin-node-resolve": "^15.0.1",
+    "@tailwindcss/typography": "^0.5.8",
     "cross-env": "^7.0.3",
     "cssnano": "^5.1.14",
     "dotenv": "^16.0.3",
@@ -49,13 +49,11 @@
     "html-minifier": "^4.0.0",
     "js-yaml": "^4.1.0",
     "luxon": "^3.2.0",
-    "postcss": "^8.4.20",
-    "postcss-cli": "^10.1.0",
-    "postcss-import": "^15.1.0",
     "rollup": "^2.79.0",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-size": "^0.2.2",
     "rollup-plugin-sourcemaps": "^0.6.3",
-    "rollup-plugin-terser": "^7.0.2"
+    "rollup-plugin-terser": "^7.0.2",
+    "tailwindcss": "3.2.4"
   }
 }

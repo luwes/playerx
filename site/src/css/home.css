@@ -10,13 +10,11 @@
   display: block;
 }
 
-.highlight-clear {
-  pre[class*="language-"] {
-    margin: 0;
-    padding: 0;
-    background: none;
-    overflow: hidden;
-  }
+.highlight-clear pre[class*="language-"] {
+  margin: 0;
+  padding: 0;
+  background: none;
+  overflow: hidden;
 }
 
 .buy-button {

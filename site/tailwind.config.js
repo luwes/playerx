@@ -51,5 +51,8 @@ module.exports = {
         '-12': '-3rem',
       }
     }
-  }
+  },
+  plugins: [
+    require('@tailwindcss/typography'),
+  ]
 };
