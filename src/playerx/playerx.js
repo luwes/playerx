@@ -13,11 +13,16 @@ templateLightDOM.innerHTML = `
 `;
 
 class Playerx extends SuperVideoElement {
+  #hasStyle = false;
+  #hasLoaded = false;
+  #loadResolve;
+
   constructor() {
     super();
 
+    // loadComplete is a getter/setter in SuperVideoElement
     this.loadComplete = new Promise((resolve) => {
-      this.loadResolve = resolve;
+      this.#loadResolve = resolve;
     });
   }
 
@@ -46,19 +51,24 @@ class Playerx extends SuperVideoElement {
     }
   }
 
-    connectedCallback() {
-      super.connectedCallback();
+  connectedCallback() {
+    super.connectedCallback();
 
+    if (!this.#hasStyle) {
+      this.#hasStyle = true;
       this.append(templateLightDOM.content.cloneNode(true));
     }
+  }
 
   async load() {
-    if (this.hasLoaded) {
+    // Reset the load complete promise if there has been loading before.
+    if (this.#hasLoaded) {
+      // loadComplete is a getter/setter in SuperVideoElement
       this.loadComplete = new Promise((resolve) => {
-        this.loadResolve = resolve;
+        this.#loadResolve = resolve;
       });
     }
-    this.hasLoaded = true;
+    this.#hasLoaded = true;
 
     const canLoadSource = canPlayerLoadSource(this);
     if (!canLoadSource) {
@@ -91,7 +101,7 @@ class Playerx extends SuperVideoElement {
       this.nativeEl.setAttribute('muted', '');
     }
 
-    this.loadResolve();
+    this.#loadResolve();
   }
 
   get api() {
