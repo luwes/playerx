@@ -48,6 +48,7 @@ const props = {
   ontimeupdate: throttle(() => {
     currentTimeValue(player.currentTime);
   }, 500),
+  style: '--controls: none;'
 };
 
 let gridColsClass = observable('grid-cols-4');

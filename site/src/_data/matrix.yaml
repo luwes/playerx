@@ -1,4 +1,5 @@
 players:
+  muxplayer: true
   apivideo: true
   vimeo: true
   youtube: true
@@ -9,6 +10,5 @@ players:
   wistia: true
   jwplayer: true
   vidyard: true
-  muxvideo: true
   cloudinary: true
   cloudflare: true
