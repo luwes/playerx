@@ -12,16 +12,11 @@ module.exports = function (eleventyConfig) {
   // make the seed target act like prod
   env = env == 'seed' ? 'prod' : env;
 
-  eleventyConfig.setBrowserSyncConfig({
-    watch: true,
+  eleventyConfig.setServerOptions({
+    enabled: true,
     // https: true,
     // port: 443,
     port: 80,
-    server: {
-      baseDir: './public',
-      middleware: [compress()],
-    },
-    files: ['public/css', 'public/js', '../**/dist/*.js'],
   });
 
   eleventyConfig.addPlugin(pluginRss);
