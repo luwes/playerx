@@ -1,6 +1,5 @@
 const path = require('path');
 const yaml = require('js-yaml');
-const compress = require('compression');
 const { DateTime } = require('luxon');
 const pluginRss = require("@11ty/eleventy-plugin-rss");
 const eleventyNavigationPlugin = require('@11ty/eleventy-navigation');
