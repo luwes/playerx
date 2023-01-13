@@ -43,9 +43,9 @@ export const options = {
     youtube: {
       pattern: /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})/,
       type: 'youtube-video',
-      pkg: '@luwes/youtube-video-element',
-      version: '0.4.0',
-      jsUrl: '{{npmCdn}}/{{pkg}}@{{version}}/dist/youtube-video-element.js',
+      pkg: 'youtube-video-element',
+      version: '0.1.0',
+      jsUrl: '{{npmCdn}}/{{pkg}}@{{version}}/youtube-video-element.min.js',
     },
     wistia: {
       pattern: /(?:wistia\.com|wi\.st)\/(?:medias|embed)\/(.*)$/,
