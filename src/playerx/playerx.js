@@ -83,7 +83,7 @@ class Playerx extends SuperVideoElement {
     const config = options.players[this.key];
     config.npmCdn = options.npmCdn;
 
-    const jsUrl = populate(config.jsUrl, config);
+    const jsUrl = config.jsUrl && populate(config.jsUrl, config);
     if (jsUrl) {
       await loadScript(jsUrl);
     }
@@ -191,7 +191,6 @@ function getSrcParam(src, key) {
 
 if (!globalThis.customElements.get('player-x')) {
   globalThis.customElements.define('player-x', Playerx);
-  globalThis.Playerx = Playerx;
 }
 
 export { Playerx };
