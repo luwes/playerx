@@ -41,7 +41,7 @@ export const options = {
       // jsUrl: 'http://127.0.0.1:8000/dist/vimeo-video-element.js',
     },
     youtube: {
-      pattern: /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})/,
+      pattern: /(?:youtu\.be\/|youtube\.com\/(?:shorts\/|embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})/,
       type: 'youtube-video',
       pkg: 'youtube-video-element',
       version: '0.1.0',
