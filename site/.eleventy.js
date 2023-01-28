@@ -67,7 +67,7 @@ module.exports = function (eleventyConfig) {
       const version = deps.playerx || 'latest';
 
       const [pkg, mod] = name.split('/');
-      return `https://cdn.jsdelivr.net/npm/playerx@${version}/dist/${mod || pkg}.js`;
+      return `https://cdn.jsdelivr.net/npm/playerx@${version}/+esm`;
 
     } else {
       const [pkg, mod] = name.split('/');

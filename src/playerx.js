@@ -1,11 +1,10 @@
-import { SuperVideoElement } from '../../node_modules/super-media-element/dist/index.js';
+import { SuperVideoElement } from 'super-media-element';
 import { options } from './options.js';
-import { loadScript, populate } from './utils.js';
 
-const templateLightDOM = document.createElement('template');
-templateLightDOM.innerHTML = `
+const templateShadowDOM = document.createElement('template');
+templateShadowDOM.innerHTML = `
 <style>
-  .plx-media {
+  ::slotted([src]) {
     width: 100%;
     height: 100%;
   }
@@ -28,7 +27,7 @@ class Playerx extends SuperVideoElement {
 
   async attributeChangedCallback(attrName, oldValue, newValue) {
     // This is required to come before the await for resolving loadComplete.
-    if (attrName === 'src' && newValue) {
+    if (attrName === 'src' && newValue != oldValue) {
       this.load();
       return;
     }
@@ -56,7 +55,7 @@ class Playerx extends SuperVideoElement {
 
     if (!this.#hasStyle) {
       this.#hasStyle = true;
-      this.append(templateLightDOM.content.cloneNode(true));
+      this.shadowRoot.prepend(templateShadowDOM.content.cloneNode(true));
     }
   }
 
@@ -76,6 +75,11 @@ class Playerx extends SuperVideoElement {
       this.nativeEl = null;
     }
 
+    if (!this.getAttribute('src')) {
+      this.#loadResolve();
+      return;
+    }
+
     // Wait 1 tick to allow other attributes to be set.
     await Promise.resolve();
 
@@ -90,7 +94,6 @@ class Playerx extends SuperVideoElement {
 
     if (!canLoadSource) {
       this.nativeEl = this.appendChild(document.createElement(config.type));
-      this.nativeEl.className = 'plx-media';
     }
 
     this.nativeEl.setAttribute('src', this.getAttribute('src'));
@@ -189,8 +192,44 @@ function getSrcParam(src, key) {
   return url && new URLSearchParams(url.split('?')[1]).get(key);
 }
 
+function populate(template, obj) {
+  return template.replace(
+    /\{\{\s*([\w-]+)([=?|])?([^\s}]+?)?\s*\}\}/g,
+    function (match, key, mod, fallback) {
+      let val = obj[key];
+      val = val != null ? val : fallback;
+      if (val != null) {
+        return val;
+      }
+      return '';
+    }
+  );
+}
+
+const loadScriptCache = {};
+async function loadScript(src, globalName, readyFnName) {
+  if (loadScriptCache[src]) return loadScriptCache[src];
+  if (globalName && self[globalName]) {
+    await delay(0);
+    return self[globalName];
+  }
+  return (loadScriptCache[src] = new Promise(function (resolve, reject) {
+    const script = document.createElement('script');
+    script.type = 'module';
+    script.src = src;
+    const ready = () => resolve(self[globalName]);
+    if (readyFnName) self[readyFnName] = ready;
+    script.onload = () => !readyFnName && ready();
+    script.onerror = reject;
+    document.head.append(script);
+  }));
+}
+
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+
 if (!globalThis.customElements.get('player-x')) {
   globalThis.customElements.define('player-x', Playerx);
 }
 
-export { Playerx };
+export { options, Playerx };
