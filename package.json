@@ -2,16 +2,13 @@
   "name": "playerx",
   "version": "1.0.0-beta.8",
   "description": "Playerx",
-  "homepage": "https://github.com/luwes/playerx#readme",
-  "bugs": {
-    "url": "https://github.com/luwes/playerx/issues"
-  },
-  "repository": "luwes/playerx",
-  "license": "MIT",
-  "author": "Wesley Luyten <me@wesleyluyten.com> (https://wesleyluyten.com)",
+  "type": "module",
   "main": "src/playerx.js",
-  "module": "src/playerx.js",
   "types": "src/playerx.d.ts",
+  "exports": {
+    ".": "./src/playerx.js",
+    "./config": "./src/config/index.js"
+  },
   "files": [
     "src"
   ],
@@ -21,6 +18,13 @@
     "serve": "pnpm --filter=site serve",
     "lint": "eslint src/*/",
     "test": "pnpm lint"
+  },
+  "repository": "luwes/playerx",
+  "author": "Wesley Luyten <me@wesleyluyten.com> (https://wesleyluyten.com)",
+  "license": "MIT",
+  "homepage": "https://github.com/luwes/playerx#readme",
+  "bugs": {
+    "url": "https://github.com/luwes/playerx/issues"
   },
   "dependencies": {
     "super-media-element": "^0.4.1"
