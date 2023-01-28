@@ -8,7 +8,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
       - uses: actions/setup-node@v3
-      - run: yarn install --frozen-lockfile
-      - run: yarn test
-      - run: yarn build
+        with:
+          cache: 'pnpm'
+      - run: pnpm install
+      - run: pnpm test
