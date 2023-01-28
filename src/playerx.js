@@ -1,18 +1,20 @@
 import { SuperVideoElement } from 'super-media-element';
 import { options } from './options.js';
 
-const templateShadowDOM = document.createElement('template');
-templateShadowDOM.innerHTML = `
-<style>
-  ::slotted([src]) {
-    width: 100%;
-    height: 100%;
-  }
-</style>
+const template = document.createElement('template');
+template.innerHTML = `
+  ${SuperVideoElement.template.innerHTML}
+  <style>
+    ::slotted([src]) {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
 `;
 
 class Playerx extends SuperVideoElement {
-  #hasStyle = false;
+  static template = template;
+
   #hasLoaded = false;
   #loadResolve;
 
@@ -47,15 +49,6 @@ class Playerx extends SuperVideoElement {
           this.nativeEl.removeAttribute(attrName);
         }
       }
-    }
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-
-    if (!this.#hasStyle) {
-      this.#hasStyle = true;
-      this.shadowRoot.prepend(templateShadowDOM.content.cloneNode(true));
     }
   }
 
@@ -192,8 +185,8 @@ function getSrcParam(src, key) {
   return url && new URLSearchParams(url.split('?')[1]).get(key);
 }
 
-function populate(template, obj) {
-  return template.replace(
+function populate(tpl, obj) {
+  return tpl.replace(
     /\{\{\s*([\w-]+)([=?|])?([^\s}]+?)?\s*\}\}/g,
     function (match, key, mod, fallback) {
       let val = obj[key];

@@ -6,10 +6,10 @@ importers:
     specifiers:
       eslint: ^8.32.0
       schema-dts: ^1.1.0
-      super-media-element: ^0.4.1
+      super-media-element: 0.4.2
       typescript: ^4.9.4
     dependencies:
-      super-media-element: 0.4.1
+      super-media-element: 0.4.2
     devDependencies:
       eslint: 8.32.0
       schema-dts: 1.1.0_typescript@4.9.4
@@ -4492,8 +4492,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /super-media-element/0.4.1:
-    resolution: {integrity: sha512-y37luDYBCOJWptHk0v0loIoe/b6Hc1sC0yC36DCvTKJ9/RW3BvVAuLnZgn7EJ/XDgra1pxoYRRovCNW0UZu86g==}
+  /super-media-element/0.4.2:
+    resolution: {integrity: sha512-KESwFpOizQowbSLr+zBO4xjQ1ioBmsQXiHY5u2aYU11Z7lLNRHPp/zZA/M+AH8r5PjNfZqhA0W1OHNNNEyQ/nA==}
     dev: false
 
   /supports-color/5.5.0:
