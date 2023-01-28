@@ -1,6 +1,6 @@
 {
   "name": "playerx",
-  "version": "1.0.0-beta.8",
+  "version": "1.0.0-beta.9",
   "description": "Playerx",
   "type": "module",
   "main": "src/playerx.js",
