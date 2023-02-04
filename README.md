@@ -1,7 +1,7 @@
 # <a href="https://github.com/luwes/playerx"><img src="https://dev.playerx.io/images/playerx-logo.svg?sanitize=true" height="36" alt="playerx" /></a>
 
 [![Version](https://img.shields.io/npm/v/playerx.svg?color=success&style=flat-square)](https://www.npmjs.com/package/playerx)
-[![Badge size](https://img.badgesize.io/https://cdn.jsdelivr.net/npm/playerx/dist/playerx.min.js?compression=gzip&label=gzip&style=flat-square)](https://bundlephobia.com/result?p=playerx)
+[![Badge size](https://img.badgesize.io/https://cdn.jsdelivr.net/npm/playerx/+esm?compression=gzip&label=gzip&style=flat-square)](https://bundlephobia.com/result?p=playerx)
 
 **npm**: `npm i playerx`  
 **cdn**: https://cdn.jsdelivr.net/npm/playerx  
