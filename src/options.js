@@ -8,8 +8,8 @@ export const options = {
       pattern: /\.m3u8($|\?)/i,
       type: 'hls-video',
       pkg: '@luwes/hls-video-element',
-      version: '0.1',
-      jsUrl: '{{npmCdn}}/{{pkg}}@{{version}}/dist/hls-video-element.js',
+      version: '0.2',
+      jsUrl: '{{npmCdn}}/{{pkg}}@{{version}}/+esm',
     },
     dash: {
       pattern: /\.mpd($|\?)/i,
