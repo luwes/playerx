@@ -15,52 +15,23 @@ template.innerHTML = `
 class Playerx extends SuperVideoElement {
   static template = template;
 
-  #hasLoaded = false;
-  #loadResolve;
-
   constructor() {
     super();
-
-    // loadComplete is a getter/setter in SuperVideoElement
-    this.loadComplete = new Promise((resolve) => {
-      this.#loadResolve = resolve;
-    });
+    this.loadStart();
   }
 
   async attributeChangedCallback(attrName, oldValue, newValue) {
     // This is required to come before the await for resolving loadComplete.
     if (attrName === 'src' && newValue != oldValue) {
       this.load();
-      return;
     }
 
     super.attributeChangedCallback(attrName, oldValue, newValue);
-
-    await this.loadComplete;
-
-    switch (attrName) {
-      case 'autoplay':
-      case 'controls':
-      case 'loop':
-      case 'muted': {
-        if (newValue != null) {
-          this.nativeEl.setAttribute(attrName, '');
-        } else {
-          this.nativeEl.removeAttribute(attrName);
-        }
-      }
-    }
   }
 
   async load() {
-    // Reset the load complete promise if there has been loading before.
-    if (this.#hasLoaded) {
-      // loadComplete is a getter/setter in SuperVideoElement
-      this.loadComplete = new Promise((resolve) => {
-        this.#loadResolve = resolve;
-      });
-    }
-    this.#hasLoaded = true;
+    // Kick off load & wait 1 tick to allow other attributes to be set.
+    await this.loadStart();
 
     const canLoadSource = canPlayerLoadSource(this);
     if (!canLoadSource) {
@@ -69,12 +40,9 @@ class Playerx extends SuperVideoElement {
     }
 
     if (!this.getAttribute('src')) {
-      this.#loadResolve();
+      this.loadEnd();
       return;
     }
-
-    // Wait 1 tick to allow other attributes to be set.
-    await Promise.resolve();
 
     this.key = getCurrentPlayerConfigKey(this.src);
     const config = options.players[this.key];
@@ -89,68 +57,16 @@ class Playerx extends SuperVideoElement {
       this.nativeEl = this.appendChild(document.createElement(config.type));
     }
 
-    this.nativeEl.setAttribute('src', this.getAttribute('src'));
-    if (this.autoplay) this.nativeEl.setAttribute('autoplay', '');
-    if (this.loop) this.nativeEl.setAttribute('loop', '');
-    if (this.controls) this.nativeEl.setAttribute('controls', '');
-    if (this.defaultMuted || this.muted) {
-      this.nativeEl.setAttribute('muted', '');
-    }
+    this.nativeEl.toggleAttribute('autoplay', this.autoplay);
+    this.nativeEl.toggleAttribute('loop', this.loop);
+    this.nativeEl.toggleAttribute('controls', this.controls);
+    this.nativeEl.toggleAttribute('muted', this.defaultMuted || this.muted);
 
-    this.#loadResolve();
+    this.loadEnd();
   }
 
   get api() {
     return this.nativeEl;
-  }
-
-  get autoplay() {
-    return this.hasAttribute('autoplay');
-  }
-
-  set autoplay(val) {
-    if (this.autoplay == val) return;
-    if (val) this.setAttribute('autoplay', '');
-    else this.removeAttribute('autoplay');
-  }
-
-  get defaultMuted() {
-    return this.hasAttribute('muted');
-  }
-
-  set defaultMuted(val) {
-    if (this.defaultMuted == val) return;
-    if (val) this.setAttribute('muted', '');
-    else this.removeAttribute('muted');
-  }
-
-  get loop() {
-    return this.hasAttribute('loop');
-  }
-
-  set loop(val) {
-    if (this.loop == val) return;
-    if (val) this.setAttribute('loop', '');
-    else this.removeAttribute('loop');
-  }
-
-  get src() {
-    return this.getAttribute('src');
-  }
-
-  set src(val) {
-    if (this.src == val) return;
-    this.setAttribute('src', val);
-  }
-
-  get controls() {
-    return this.hasAttribute('controls');
-  }
-
-  set controls(val) {
-    if (this.controls == val) return;
-    if (val) this.setAttribute('controls', '');
-    else this.removeAttribute('controls');
   }
 }
 
@@ -200,26 +116,19 @@ function populate(tpl, obj) {
 }
 
 const loadScriptCache = {};
-async function loadScript(src, globalName, readyFnName) {
+async function loadScript(src, globalName) {
+  if (!globalName) return import(src);
   if (loadScriptCache[src]) return loadScriptCache[src];
-  if (globalName && self[globalName]) {
-    await delay(0);
-    return self[globalName];
-  }
-  return (loadScriptCache[src] = new Promise(function (resolve, reject) {
+  if (self[globalName]) return self[globalName];
+  return (loadScriptCache[src] = new Promise((resolve, reject) => {
     const script = document.createElement('script');
-    script.type = 'module';
+    script.defer = true;
     script.src = src;
-    const ready = () => resolve(self[globalName]);
-    if (readyFnName) self[readyFnName] = ready;
-    script.onload = () => !readyFnName && ready();
+    script.onload = () => resolve(self[globalName]);
     script.onerror = reject;
     document.head.append(script);
   }));
 }
-
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
 
 if (!globalThis.customElements.get('player-x')) {
   globalThis.customElements.define('player-x', Playerx);

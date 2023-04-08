@@ -5,8 +5,8 @@ importers:
   .:
     dependencies:
       super-media-element:
-        specifier: 0.4.2
-        version: 0.4.2
+        specifier: 1.1.0
+        version: 1.1.0
     devDependencies:
       eslint:
         specifier: ^8.32.0
@@ -3602,6 +3602,7 @@ packages:
   /nunjucks@3.2.3(chokidar@3.5.3):
     resolution: {integrity: sha512-psb6xjLj47+fE76JdZwskvwG4MYsQKXUtMsPh6U0YMvmyjRtKRFcxnlXGWglNybtNTNVmGdp94K62/+NjF5FDQ==}
     engines: {node: '>= 6.9.0'}
+    hasBin: true
     peerDependencies:
       chokidar: ^3.3.0
     peerDependenciesMeta:
@@ -4478,8 +4479,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /super-media-element@0.4.2:
-    resolution: {integrity: sha512-KESwFpOizQowbSLr+zBO4xjQ1ioBmsQXiHY5u2aYU11Z7lLNRHPp/zZA/M+AH8r5PjNfZqhA0W1OHNNNEyQ/nA==}
+  /super-media-element@1.1.0:
+    resolution: {integrity: sha512-Iy0ODrQvatlivf66WnBi1INc3rwH2llc40/MSO0UYGAxsC6C51zomKlYgeiFt0KP//EH0kScNz4Q6XlwEsENnQ==}
     dev: false
 
   /supports-color@5.5.0:
@@ -4504,6 +4505,7 @@ packages:
   /tailwindcss@3.2.4(postcss@8.4.21):
     resolution: {integrity: sha512-AhwtHCKMtR71JgeYDaswmZXhPcW9iuI9Sp2LvZPo9upDZ7231ZJ7eA9RaURbhpXGVlrjX4cFNlB4ieTetEb7hQ==}
     engines: {node: '>=12.13.0'}
+    hasBin: true
     peerDependencies:
       postcss: ^8.0.9
     dependencies:
@@ -4659,6 +4661,7 @@ packages:
 
   /update-browserslist-db@1.0.10(browserslist@4.21.4):
     resolution: {integrity: sha512-OztqDenkfFkbSG+tRxBeAnCVPckDBcvibKd35yDONx6OU8N7sqgwc7rCbkJ/WcYtVRZ4ba68d6byhC21GFh7sQ==}
+    hasBin: true
     peerDependencies:
       browserslist: '>= 4.21.0'
     dependencies:
