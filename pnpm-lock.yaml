@@ -5,8 +5,8 @@ importers:
   .:
     dependencies:
       super-media-element:
-        specifier: 1.1.3
-        version: 1.1.3
+        specifier: 1.2.0
+        version: 1.2.0
     devDependencies:
       eslint:
         specifier: ^8.32.0
@@ -4479,8 +4479,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /super-media-element@1.1.3:
-    resolution: {integrity: sha512-83lpzeFs5vw6SBbCjTdhEgogsbrB/jRBIy8mXhH35Blj8zTkuaDUXb1AxVmEW7CgHJuJno9Qm6/cWAyBvyYFxQ==}
+  /super-media-element@1.2.0:
+    resolution: {integrity: sha512-ooOsMHRpfZvx3YyZgV8w9hlQdxH7PGPa2DxUXFadqkH2HqCxorJuDgo0+0Edip4JxstmTd24JHC3WahaMaNakQ==}
     dev: false
 
   /supports-color@5.5.0:
