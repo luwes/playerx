@@ -15,6 +15,11 @@ template.innerHTML = `
 class Playerx extends SuperVideoElement {
   static template = template;
 
+  attributeChangedCallback(attrName, oldValue, newValue) {
+    if (newValue == oldValue) return;
+    super.attributeChangedCallback(attrName, oldValue, newValue);
+  }
+
   async load() {
     const canLoadSource = canPlayerLoadSource(this);
     if (!canLoadSource) {
@@ -22,7 +27,7 @@ class Playerx extends SuperVideoElement {
       this.nativeEl = null;
     }
 
-    if (!this.getAttribute('src')) {
+    if (!this.src) {
       return;
     }
 
@@ -35,7 +40,7 @@ class Playerx extends SuperVideoElement {
       await loadScript(jsUrl);
     }
 
-    if (!canLoadSource) {
+    if (!canLoadSource && !this.querySelector(config.type)) {
       this.nativeEl = this.appendChild(document.createElement(config.type));
     }
 
