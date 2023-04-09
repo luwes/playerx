@@ -15,24 +15,7 @@ template.innerHTML = `
 class Playerx extends SuperVideoElement {
   static template = template;
 
-  constructor() {
-    super();
-    this.loadStart();
-  }
-
-  async attributeChangedCallback(attrName, oldValue, newValue) {
-    // This is required to come before the await for resolving loadComplete.
-    if (attrName === 'src' && newValue != oldValue) {
-      this.load();
-    }
-
-    super.attributeChangedCallback(attrName, oldValue, newValue);
-  }
-
   async load() {
-    // Kick off load & wait 1 tick to allow other attributes to be set.
-    await this.loadStart();
-
     const canLoadSource = canPlayerLoadSource(this);
     if (!canLoadSource) {
       this.nativeEl?.remove();
@@ -40,7 +23,6 @@ class Playerx extends SuperVideoElement {
     }
 
     if (!this.getAttribute('src')) {
-      this.loadEnd();
       return;
     }
 
@@ -61,8 +43,6 @@ class Playerx extends SuperVideoElement {
     this.nativeEl.toggleAttribute('loop', this.loop);
     this.nativeEl.toggleAttribute('controls', this.controls);
     this.nativeEl.toggleAttribute('muted', this.defaultMuted || this.muted);
-
-    this.loadEnd();
   }
 
   get api() {

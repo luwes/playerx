@@ -53,6 +53,7 @@ export const options = {
       pkg: 'wistia-video-element',
       version: '1.0',
       jsUrl: '{{npmCdn}}/{{pkg}}@{{version}}/+esm',
+      // jsUrl: 'http://127.0.0.1:8002/wistia-video-element.js',
     },
   },
 };
