@@ -4,7 +4,7 @@
 [![Badge size](https://img.badgesize.io/https://cdn.jsdelivr.net/npm/playerx/+esm?compression=gzip&label=gzip&style=flat-square)](https://bundlephobia.com/result?p=playerx)
 
 **npm**: `npm i playerx`  
-**cdn**: https://cdn.jsdelivr.net/npm/playerx  
+**cdn**: https://cdn.jsdelivr.net/npm/playerx/+esm  
 
 ## Features
 
