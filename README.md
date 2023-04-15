@@ -8,8 +8,8 @@
 
 ## Features
 
-- **Uniform player API** across player platforms. Mimics the `HTMLMediaElement` API when possible.
-- **UI framework independent**, intentionally uses no specific framework to have great interop across the board and keep the bundle size in check.
+- 🏄‍♂️ Compatible [`HTMLMediaElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement) API
+- 🕺 Seamlessly integrates with [Media Chrome](https://github.com/muxinc/media-chrome)
 
 
 ## Usage ([Codesandbox](https://codesandbox.io/s/hello-playerx-22ku4))
