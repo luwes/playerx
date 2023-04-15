@@ -14,15 +14,15 @@ export const options = {
     dash: {
       pattern: /\.mpd($|\?)/i,
       type: 'dash-video',
-      pkg: 'dash-video-element',
-      version: '0.0',
-      jsUrl: '{{npmCdn}}/{{pkg}}@{{version}}/dist/{{pkg}}.js',
+      pkg: '@luwes/dash-video-element',
+      version: '1.0',
+      jsUrl: '{{npmCdn}}/{{pkg}}@{{version}}/+esm',
     },
     muxplayer: {
       pattern: /stream\.mux\.com\/(\w+)|\?player=muxplayer/,
       type: 'mux-player',
       pkg: '@mux/mux-player',
-      version: '1.9',
+      version: '1.10',
       jsUrl: '{{npmCdn}}/{{pkg}}@{{version}}/dist/mux-player.js',
     },
     jwplayer: {
