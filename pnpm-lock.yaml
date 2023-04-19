@@ -24,7 +24,7 @@ importers:
         specifier: 1.0.2
         version: 1.0.2
       playerx:
-        specifier: ~1.0.0
+        specifier: ~1.0.1
         version: link:..
       sinuous:
         specifier: 0.29.0
