@@ -27,7 +27,7 @@
     "url": "https://github.com/luwes/playerx/issues"
   },
   "dependencies": {
-    "super-media-element": "~1.2.3"
+    "super-media-element": "~1.2.5"
   },
   "devDependencies": {
     "eslint": "^8.32.0",

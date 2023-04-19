@@ -1,16 +1,18 @@
 import { SuperVideoElement } from 'super-media-element';
 import { options } from './options.js';
 
-const template = document.createElement('template');
-template.innerHTML = `
-  ${SuperVideoElement.template.innerHTML}
-  <style>
-    ::slotted([src]) {
-      width: 100%;
-      height: 100%;
-    }
-  </style>
-`;
+const template = globalThis.document?.createElement('template');
+if (template) {
+  template.innerHTML = `
+    ${SuperVideoElement.template.innerHTML}
+    <style>
+      ::slotted([src]) {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  `;
+}
 
 class Playerx extends SuperVideoElement {
   static template = template;
@@ -115,7 +117,7 @@ async function loadScript(src, globalName) {
   }));
 }
 
-if (!globalThis.customElements.get('player-x')) {
+if (globalThis.customElements && !globalThis.customElements.get('player-x')) {
   globalThis.customElements.define('player-x', Playerx);
 }
 
