@@ -30,7 +30,14 @@
     "url": "https://github.com/luwes/playerx/issues"
   },
   "dependencies": {
-    "super-media-element": "~1.2.5"
+    "@luwes/dash-video-element": "^1.0.1",
+    "@mux/mux-player": "^1.11.4",
+    "hls-video-element": "^0.4.0",
+    "jwplayer-video-element": "^1.0.5",
+    "super-media-element": "~1.2.5",
+    "vimeo-video-element": "^1.0.1",
+    "wistia-video-element": "^1.0.8",
+    "youtube-video-element": "^0.2.0"
   },
   "devDependencies": {
     "eslint": "^8.32.0",
