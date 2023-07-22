@@ -12,12 +12,15 @@
   "files": [
     "src"
   ],
+  "workspaces": [
+    "site"
+  ],
   "scripts": {
-    "build": "pnpm --filter=site build",
-    "dev": "npx serve --cors -p 8000 src & pnpm --filter=site dev",
-    "serve": "pnpm --filter=site serve",
+    "build": "npm run build --workspace=site",
+    "dev": "npx serve --cors -p 8000 src & npm run dev --workspace=site",
+    "serve": "npm run serve --workspace=site",
     "lint": "eslint src/*/",
-    "test": "pnpm lint"
+    "test": "npm run lint"
   },
   "repository": "luwes/playerx",
   "author": "Wesley Luyten <me@wesleyluyten.com> (https://wesleyluyten.com)",

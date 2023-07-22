@@ -8,11 +8,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 7
       - uses: actions/setup-node@v3
         with:
-          cache: 'pnpm'
-      - run: pnpm install
-      - run: pnpm test
+          cache: 'npm'
+      - run: npm ci
+      - run: npm test
