@@ -1,6 +1,6 @@
 {
   "name": "playerx",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Playerx",
   "type": "module",
   "main": "src/playerx.js",
