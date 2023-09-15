@@ -8,7 +8,7 @@ export const options = {
       pattern: /\.m3u8($|\?)/i,
       type: 'hls-video',
       pkg: 'hls-video-element',
-      version: '0.4',
+      version: '1.0',
       jsUrl: '{{npmCdn}}/{{pkg}}@{{version}}/+esm',
     },
     dash: {
@@ -22,7 +22,7 @@ export const options = {
       pattern: /stream\.mux\.com\/(\w+)|\?player=muxplayer/,
       type: 'mux-player',
       pkg: '@mux/mux-player',
-      version: '1.11',
+      version: '1.14',
       jsUrl: '{{npmCdn}}/{{pkg}}@{{version}}/dist/mux-player.js',
     },
     jwplayer: {
@@ -44,7 +44,7 @@ export const options = {
       pattern: /(?:youtu\.be\/|youtube\.com\/(?:shorts\/|embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})/,
       type: 'youtube-video',
       pkg: 'youtube-video-element',
-      version: '0.2',
+      version: '1.0',
       jsUrl: '{{npmCdn}}/{{pkg}}@{{version}}/+esm',
     },
     wistia: {

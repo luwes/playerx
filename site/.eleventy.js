@@ -71,7 +71,7 @@ module.exports = function (eleventyConfig) {
 
     } else {
       const [pkg, mod] = name.split('/');
-      return `http://dev.playerx.test:8000/${mod || pkg}.js`;
+      return `http://localhost:8000/${mod || pkg}.js`;
     }
   });
 

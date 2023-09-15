@@ -31,18 +31,18 @@
   },
   "dependencies": {
     "@luwes/dash-video-element": "^1.0.1",
-    "@mux/mux-player": "^1.11.4",
-    "hls-video-element": "^0.4.0",
+    "@mux/mux-player": "^1.14.2",
+    "hls-video-element": "^1.0.0",
     "jwplayer-video-element": "^1.0.5",
-    "super-media-element": "~1.2.5",
-    "vimeo-video-element": "^1.0.1",
+    "super-media-element": "~1.3.0",
+    "vimeo-video-element": "^1.0.2",
     "wistia-video-element": "^1.0.8",
-    "youtube-video-element": "^0.2.0"
+    "youtube-video-element": "^1.0.0"
   },
   "devDependencies": {
-    "eslint": "^8.32.0",
-    "schema-dts": "^1.1.0",
-    "typescript": "^4.9.4"
+    "eslint": "^8.49.0",
+    "schema-dts": "^1.1.2",
+    "typescript": "^5.2.2"
   },
   "prettier": {
     "tabWidth": 2,
