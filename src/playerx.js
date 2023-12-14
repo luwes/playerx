@@ -50,6 +50,7 @@ class Playerx extends SuperVideoElement {
     this.nativeEl.toggleAttribute('loop', this.loop);
     this.nativeEl.toggleAttribute('controls', this.controls);
     this.nativeEl.toggleAttribute('muted', this.defaultMuted || this.muted);
+    this.nativeEl.toggleAttribute('playsinline', this.playsInline);
   }
 
   get api() {
