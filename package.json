@@ -2,6 +2,13 @@
   "name": "playerx",
   "version": "1.0.5",
   "description": "Playerx",
+  "author": "Wesley Luyten <me@wesleyluyten.com> (https://wesleyluyten.com)",
+  "license": "MIT",
+  "repository": "luwes/playerx",
+  "homepage": "https://github.com/luwes/playerx#readme",
+  "bugs": {
+    "url": "https://github.com/luwes/playerx/issues"
+  },
   "type": "module",
   "main": "src/playerx.js",
   "types": "src/playerx.d.ts",
@@ -22,27 +29,20 @@
     "lint": "eslint src/*/",
     "test": "npm run lint"
   },
-  "repository": "luwes/playerx",
-  "author": "Wesley Luyten <me@wesleyluyten.com> (https://wesleyluyten.com)",
-  "license": "MIT",
-  "homepage": "https://github.com/luwes/playerx#readme",
-  "bugs": {
-    "url": "https://github.com/luwes/playerx/issues"
-  },
   "dependencies": {
     "@luwes/dash-video-element": "^1.0.1",
-    "@mux/mux-player": "^1.14.2",
-    "hls-video-element": "^1.0.0",
-    "jwplayer-video-element": "^1.0.5",
+    "@mux/mux-player": "^2.5.0",
+    "hls-video-element": "^1.1.4",
+    "jwplayer-video-element": "^1.0.6",
     "super-media-element": "~1.3.0",
-    "vimeo-video-element": "^1.0.2",
-    "wistia-video-element": "^1.0.8",
-    "youtube-video-element": "^1.0.0"
+    "vimeo-video-element": "^1.0.3",
+    "wistia-video-element": "^1.0.9",
+    "youtube-video-element": "^1.0.1"
   },
   "devDependencies": {
     "eslint": "^8.49.0",
     "schema-dts": "^1.1.2",
-    "typescript": "^5.2.2"
+    "typescript": "^5.4.5"
   },
   "prettier": {
     "tabWidth": 2,

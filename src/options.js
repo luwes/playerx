@@ -8,7 +8,7 @@ export const options = {
       pattern: /\.m3u8($|\?)/i,
       type: 'hls-video',
       pkg: 'hls-video-element',
-      version: '1.0',
+      version: '1.1',
       jsUrl: '{{npmCdn}}/{{pkg}}@{{version}}/+esm',
     },
     dash: {
@@ -22,7 +22,7 @@ export const options = {
       pattern: /stream\.mux\.com\/(\w+)|\?player=muxplayer/,
       type: 'mux-player',
       pkg: '@mux/mux-player',
-      version: '1.14',
+      version: '2.5',
       jsUrl: '{{npmCdn}}/{{pkg}}@{{version}}/dist/mux-player.js',
     },
     jwplayer: {
