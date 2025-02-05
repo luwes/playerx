@@ -22,7 +22,7 @@ export const options = {
       pattern: /stream\.mux\.com\/(\w+)|\?player=muxplayer/,
       type: 'mux-player',
       pkg: '@mux/mux-player',
-      version: '2.5',
+      version: '3.2',
       jsUrl: '{{npmCdn}}/{{pkg}}@{{version}}/dist/mux-player.js',
     },
     jwplayer: {
